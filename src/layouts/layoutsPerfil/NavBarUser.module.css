@@ -1,0 +1,148 @@
+
+@media screen and (min-width:320px) {
+    .navigation {
+        width: 90%;
+        display: flex;
+        justify-content: space-between;
+        margin: 2em auto 1em auto;
+        padding: 1em 0em;
+    }
+    .navigation a:not(:first-child) {
+        text-decoration: none;
+        color: #000;
+        font-weight: 600;
+        font-size: 1.2em;
+        position: relative;
+        text-align: center;
+        display: block;
+    }
+    .navigation a:hover {
+        background-color: rgb(219, 255, 255);
+        border-radius: 5px;
+        color: #000 !important;
+    }
+    .view_desk {
+        display: none;
+    }
+    .cont_range{
+        width: 40px;
+        height: 25px;
+        background-color: #dbdbdb;
+        border-radius: 20px;
+        padding: 0.3em;
+        position: relative;
+        cursor: pointer;
+        margin-right: 0.4em;
+    }
+    .btn_range {
+        position: absolute;
+        height: 15px;
+        width: 15px;
+        background-color: #FF9100 !important;
+        border-radius: 50%;
+        transition: 0.2s ease;
+    }
+    .isLeft {
+        left: 0.2em;
+    }
+    .isRight {
+        right: 0.2em;
+        background-color: #000 !important;
+    }
+    .cont_mod {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        background-color: #fff;
+        padding: 0.2em;
+        color: #FF9100;
+        border-radius: 10px;
+        width: 95%;
+        margin: 0em auto 3em auto !important;
+    }
+    .isTest {
+        background-color: #5c5c5c !important;
+        color: #fff;
+    }
+    .cont_mod a {
+        padding: 0em !important;
+    }
+}
+@media screen and (min-width:764px) {
+    .navigation {
+        display: none;
+    }
+    .view_desk {
+        display: block;
+        padding: 2em 0em 8em 0em;
+        height:  100% !important;
+        background-color: #FF9100;
+        position: relative;
+        width: 100%;
+    }
+    .view_desk a {
+        margin: 0.5em 0em !important;
+        padding: 1em 0em ;
+        transition: 0.1s ease;
+        color: #fff;
+    }
+    .isActive::after {
+        content: '';
+        width: 20px;
+        height: 5px;
+        border-radius: 10px;
+        background-color: #FF9100;
+        position: absolute;
+        right: 1em;
+        top: 0em;
+        bottom: 0em;
+        margin: auto 0em;
+    }
+}
+
+.isActive {
+    text-decoration: none!important;
+    display: block;
+    font-weight: 600;
+    padding-left: 0.5em;
+    text-indent: 10px;
+    position: relative;
+    transition: 0.1s ease;
+    background-color: #fff;
+    color: #000 !important;
+    text-decoration: none;
+}
+.isPending {
+    color: #000 ;
+    display: block ;
+    text-decoration: none;
+    border-bottom: 1px solid #fff;
+    border-radius: 3px;
+    transition: 0.1s ease;
+    text-indent: 0.3em;
+    text-decoration: none;
+}
+.isPending:hover {
+    text-indent: 3px;
+    background-color: rgb(243, 243, 243);
+    color: #000;
+}
+.isActiveMob {
+    color: #fff;
+    position: relative;
+    text-decoration: none;
+    background-color: #FF9100 !important;
+    padding: 0.6em;
+    
+}
+.icon {
+    margin-right: 0.3em;
+}
+.isPendingMob {
+    color: #000;
+    text-decoration: none;
+}
+.col {
+    margin: 0em !important;
+    padding: 0em !important;
+}

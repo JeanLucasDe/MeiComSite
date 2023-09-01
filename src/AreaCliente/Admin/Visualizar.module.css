@@ -1,0 +1,181 @@
+
+.img {
+    width: 100%;
+    height: 100%;
+}
+.btn_img {
+    border: none;
+    background-color: transparent;
+}
+.img_small {
+    width: 50px;
+    height: 50px;
+    margin: 1em 0.2em 0em 0em;
+    cursor: pointer;
+}
+.Dark .cont_bottom {
+    display: flex;
+    justify-content: space-between;
+}
+.Dark .cont_img {
+    width: 100%;
+}
+.item {
+    border-right: 1px solid #000;
+    padding-right: 0.7em;
+    width: 100%;
+}
+.Dark .cont_text {
+    font-size: 1em;
+    margin-top: 1em;
+    padding-top: 1em;
+    border-top: 1px solid #000;
+    font-family: 'Outfit', sans-serif;  
+}
+.Dark .cont_text strong {
+    margin-bottom: 0.6em;
+}
+.Dark .title {
+    font-size: 1.4em;
+}
+.Dark .desc {
+    color: #969696;
+}
+.Dark .cores {
+    margin-top: 2.3em;
+}
+.Dark .cont_text strong {
+    display: block;
+}
+.Dark .cont_buttons {
+    display: flex;
+}
+.Dark .cont_buttons button {
+    border: none;
+    margin: 0em 0.2em;
+    padding: 0.4em;
+}
+.Dark .input_color {
+    width: 30px;
+    height: 20px;
+}
+.Dark .btn_buy {
+    background-color: #000;
+    color: #fff;
+    width: 100%;
+    padding: 0.7em;
+    border-radius: 5px;
+    display: block;
+    margin-bottom: 0.8em;
+}
+.Dark .first_img {
+    width: 100%;
+    height: 240px;
+}
+.Dark .second_img {
+    width: 100%;
+    height: 300px;
+}
+/*Light*/
+.Light .cont_text {
+    font-size: 0.9em;
+    margin-top: 1em;
+    padding-top: 1em;
+    border-top: 1px solid #000;
+    font-family: 'Outfit', sans-serif; 
+    background-color: #EBECF0; 
+}
+.Light .nome {
+    margin-bottom: 0.2em;
+}
+.Light .small_desc {
+    margin-bottom: 0.2em;
+    font-size: 0.9em;
+    color: #616161;
+}
+.Light .cont_buttons {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+.Light .btn_buy {
+    padding: 0.5em;
+    background-color: #FF0000;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    width: 100%;
+    margin: 0.3em 0.3em 0.8em 0em;
+}
+.Light .icon {
+    border: none;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.Light .cont_info {
+    display: flex;
+    height: 100%;
+    align-items: flex-end;
+}
+.Light .info {
+    width: 100%;
+    background-color: #fff;
+    padding: 0.7em;
+    border-radius: 20px 20px 0px 0px;
+    font-size: 0.9em;
+}
+.Light .header {
+    text-align: center;
+}
+.Light .cont_ss {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+.Light .icon {
+    margin: 0em 0.3em;
+}
+.Light .cont_price {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+.Light .cont_button_qtd {
+    display: flex;
+    width: 80px;
+    background-color: #EBECF0;
+    padding: 0.6em;
+    border-radius: 20px;
+}
+.Light .cont_button_qtd button {
+    width: 40px;
+    height: 20px;
+    border-radius: 50%;
+    border: none;
+}
+.Light .cont_button_qtd input {
+    width: 100%;
+    border: none;
+}
+.Light .btn_active {
+    background-color: #FF0000;
+    color: #fff;
+}
+.Light .btn_disable {
+    background-color: #fff;
+    color: #000;
+}
+.Light .listSabores {
+    list-style-type: none;
+    padding: 0.4em;
+}
+.Light .listSabores li strong {
+    font-size: 1.1em;
+    text-transform: capitalize;
+}
+.Light .listSabores li p {
+    font-size: 1em;
+}

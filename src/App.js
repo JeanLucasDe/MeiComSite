@@ -1,0 +1,96 @@
+import Home from "./Pages/Home"
+import Suporte from "./Pages/Suporte";
+import Container from "./components/Container"
+import Response from "./layouts/layoutsSuporte/Response";
+import ControlSuporte from "./layouts/layoutsSuporte/ControlSuporte";
+import PlanosPreços from "./Pages/PlanosPreços"
+import Perfil from "./Pages/Perfil"
+import { BrowserRouter as Router, Routes, Route} from "react-router-dom";
+import FormularioEdit from "./Formularios/Cliente/FormularioEdit";
+import FormularioCadastro from "./Formularios/Cadastro/FormularioCadastro";
+import Produto from "./AreaCliente/components/Produto";
+import Negocio from "./Formularios/Cliente/Negocio";
+import Links from "./Formularios/Cliente/Links";
+import HomeCliente from "./AreaCliente/HomeCliente"
+import CategoriasProdutos from "./Formularios/Cliente/Categorias"
+import MarketHome from "./AreaCliente/components/MarketHome";
+import Catalogo from "./Pages/Catálogo";
+import Categorias from "./AreaCliente/components/Categorias";
+import Carrinho from "./AreaCliente/components/Carrinho";
+import ItensSacola from "./AreaCliente/components/ItensSacola";
+import FormularioDetalhesComprador from "./AreaCliente/Formularios/FormularioDetalhesComprador"
+import Vendas from "./Formularios/Cliente/Vendas";
+import Produtos from "./Formularios/Cliente/Produtos";
+import Fotos from "./Duvidas/Fotos";
+import Pagamentos from "./Duvidas/Pagamentos";
+import ComoComeçar from "./Duvidas/ComoComeçar";
+import Politica from "./Duvidas/PoliticadePrivacidade";
+import Gravação from "./Gravação";
+import TodasVendas from "./Formularios/Cliente/TodasVendas";
+import FiltroVendas from "./Formularios/Cliente/FiltroVendas";
+import AreaTeste from "./AreaTesteCliente/AreaTeste";
+import Online from "./Formularios/Cliente/Online";
+
+
+
+
+function App() {
+  return (
+      <Router>
+        <Container>
+            <Routes>
+              
+              <Route path="/" element={<Home/>}/>
+              <Route path="/record" element={<Gravação/>}/>
+
+              <Route path="suporte" element={<Suporte/>}>
+                <Route index element={<ControlSuporte/>}/>
+                <Route path="/suporte/:query" element={<Response/>}/>
+                <Route path="/suporte/fotos" element={<Fotos/>}/>
+                <Route path="/suporte/pagamentos" element={<Pagamentos/>}/>
+                <Route path="/suporte/passos" element={<ComoComeçar/>}/>
+                <Route path="/suporte/politica" element={<Politica/>}/>
+              </Route>
+              
+              
+              <Route path="/planos" element={<PlanosPreços/>}/>
+              <Route path="/:site/testarea" element={<AreaTeste/>}/>
+
+              <Route path="perfil" element={<Perfil/>}>
+                <Route path="/perfil/user/negocio" element={<Negocio/>}/>
+                <Route path="/perfil/user/categorias" element={<CategoriasProdutos/>}/>
+                <Route path="/perfil/user/online" element={<Online/>}/>
+                <Route path="/perfil/user/categorias/:categoriaa" element={<Produtos/>}/>
+                <Route path="/perfil/user/membros" element={<Links/>}/>
+                <Route path="/perfil/user/config" element={<FormularioEdit/>}/>
+                <Route path="/perfil/cadastro" element={<FormularioCadastro/>}/>
+                <Route path="/perfil/user/vendas" element={<Vendas/>}>
+                    <Route index element={<FiltroVendas/>}/>
+                    <Route path="/perfil/user/vendas/todas" element={<TodasVendas/>}/>
+                </Route>
+
+              </Route>
+
+              <Route path="/catalogo/:modalidade" element={<Catalogo/>}/>
+
+
+
+              <Route path="/:site" element={<HomeCliente/>}>
+                <Route index element={<MarketHome/>}/>
+                <Route path="/:site/:categoria" element={<Categorias/>}/>
+                <Route path="/:site/compras" element={<Carrinho/>}>
+                  <Route index element={<ItensSacola/>}/>
+                  <Route path="/:site/compras/detalhes" element={<FormularioDetalhesComprador/>}/>
+                </Route>
+
+                <Route path="/:site/:categoria/:nome" element={<Produto/>}/>
+
+              </Route>
+            </Routes>
+        </Container>
+      </Router>
+    
+  );
+}
+
+export default App;

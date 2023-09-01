@@ -1,0 +1,72 @@
+.container {
+    padding: 1em;
+    background-color: #fff;
+}
+.content strong, .content input {
+    display: block;
+}
+.btn_entrega {
+    background-color: #fd9d30;
+    border: none;
+    margin-right: 1em;
+    padding: 0.6em;
+    color: #fff;
+    border-radius: 10px;
+    font-weight: 600;
+}
+.select {
+    background-color: #f3f3f3;
+    color: #000;
+    border: 1px solid #fd9d30;
+}
+.btn_confirm {
+    padding: 0.7em;
+    background-color: #fd9d30;
+    margin-top: 2em;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+}
+.input {
+    width: 100%;
+    margin-bottom: 1em;
+}
+.box_produto {
+    margin: 1em 0em;
+    border-bottom: 1px  solid #999999dd;
+    padding: 0.7em 0.4em;
+}
+.datalist {
+    width: 100%;
+}
+.btn_add {
+    background-color: #38ff11;
+    border: none;
+    float: right;
+    padding: 0.3em;
+    color: #fff;
+    font-weight: 600;
+}
+.show_compras {
+    padding: 0.5em;
+    border: none;
+    margin-top: 1em;
+    width: 100%;
+    background-color: #000000;
+    color: #fff;
+    font-weight: 600;
+}
+.list {
+    list-style-type: none;
+    padding: 0em;
+}
+.list li {
+    margin: 0.5em 0em;
+    padding: 0.4em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.icon {
+    margin-right: 1.5em;
+}

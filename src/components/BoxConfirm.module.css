@@ -1,0 +1,15 @@
+.container {
+background-color: #fff;
+padding: 1em;
+}
+.confirm,.cancel {
+    border: none;
+    padding: 0.5em;
+    background-color: #ff8800;
+    color: #fff;
+    margin-right: 1em;
+}
+.cancel {
+    background-color: #c7c7c7;
+
+}

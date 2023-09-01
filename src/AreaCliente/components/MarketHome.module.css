@@ -1,0 +1,365 @@
+.container {
+    padding-bottom: 6em;
+}
+@media screen and (min-width:320px) {
+    .Dark .list {
+        margin-top: 4em;
+    }
+    .Dark .list ul {
+        list-style-type: none;
+    }
+    .Dark .list ul li {
+        margin-bottom: 2em;
+    }
+    .Dark .li {
+        position: relative;
+        padding: 0em;
+        margin: 0em;
+    }
+    .Dark .cont_slides_destaque .li {
+        margin: 2em 0em;
+    }
+    .Dark .cont_desc {
+        width: 100%;
+        background-color: #070707b2;
+        position: absolute;
+        padding: 0.7em;
+        bottom: 0em;
+        color: #fff;
+        left: 0em;
+        z-index: 800;
+        border-radius: 0px 0px 5px 5px;
+        font-family: 'Libre Baskerville', serif;
+    }
+    .Dark .input {
+        display: none;
+    }
+    .Dark .img {
+        margin-bottom: 0em;
+        padding: 0em;
+        width: 100%;
+        height: 160px;
+        cursor: pointer;
+        transition: 0.2s ease;
+        object-fit: cover;
+    }
+    .Dark .cont_img_destaque {
+        margin: 1.3em 0em 0em 0em;
+    }
+    .Dark .img_destaque {
+        margin-bottom: 0em;
+        padding: 0em;
+        width: 100%;
+        height: 130px;
+        transform: rotate(5deg);
+        cursor: pointer;
+        transition: 0.2s ease;
+        display: block;
+        box-shadow: 4px 1px 5px 1px #363636;
+    }
+    .Dark .link_destaque {
+        background-color: #000;
+        color: #fff;
+        padding: 0.5em;
+        margin-top: 0.9em;
+        display: table;
+        border-radius: 5px;
+        text-decoration: none;
+        font-size: 1.1em;
+    }
+    .Dark .link_categorias {
+        text-decoration: none;
+    }
+    .Dark .cont_text_destaque {
+        display: flex;
+        align-items: flex-end;
+        height: 100%;
+    }
+    .Dark .price_from {
+        text-decoration: line-through;
+        color: #979797;
+        font-size: 0.9em !important;
+        margin-bottom: 0em;
+    }
+    .Dark .text_destaque {
+        font-size: 1.8em;
+        font-family: 'Raleway', sans-serif;
+    }
+    .Dark .text_info {
+        font-size: 1em;
+        font-weight: 600;
+        font-family: 'Raleway', sans-serif;
+    }
+    .Dark .cont_slides_destaque {
+        margin: 1em 0em 3em 0em;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+    .Dark .text_categoria {
+        text-align: center;
+        font-size: 1.1em;
+        font-weight: 600;
+        color: #000;
+        text-decoration: none !important;
+    }
+    .Dark .img_categoria {
+        width: 80px;
+        border-radius: 50%;
+        height: 80px;
+        display: block;
+        margin: 0.6em auto;
+    }
+    .Dark .img_examples{
+        width: 100%;
+        height: 150px;
+    }
+    .Dark .cont_prod {
+        width: 100%;
+    }
+    .Dark .title_categoria {
+        margin: 1em 0em;
+        font-size: 1.4em;
+        font-family: 'Varela Round', sans-serif;
+    }
+    .Dark .info_produto {
+        padding: 0em 0.5em;
+        margin-top: 0.3em;
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.9em;
+    }
+    .Dark .img:hover {
+        filter: sepia(80%);
+        filter: brightness(90%);
+    }
+    .Dark .cont_img {
+        border-radius: 5px;
+        width:  100%;
+    }
+    .Light .list {
+        list-style-type: none;
+        padding: 0em 0em;
+    }
+    .Light .img {
+        width: 100%;
+        height: 100%;
+    }
+    .Light .list .item {
+        border-radius: 5px;
+        background-color: #fff;
+        box-shadow: 1px 1px 4px #bbbbbb;
+        margin-bottom: 1.5em;
+        position: relative;
+    }
+    .Light .list .item .cont_text {
+        padding: 0.8em;
+    }
+    .Light .cont_buttons {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+    }
+    .Light .nome_prod {
+        margin-bottom: 0.2em;
+        text-transform: capitalize;
+        font-size: 1.1em;
+        font-family: 'Open Sans', sans-serif;
+    }
+    .Light .desc_prod {
+        margin-bottom: 0.2em;
+        font-family: 'Montserrat', sans-serif;
+        font-size: 0.9em;
+        color: #616161;
+    }
+    .Light .preço_prod {
+        font-size: 1.1em;
+        font-weight: 600;
+        margin-bottom: 0.2em;
+        font-family: 'Noto Sans', sans-serif;
+    }
+    .Light .cont_buttons a{
+        padding: 0.4em;
+        border: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 5px;
+        text-decoration: none;
+        color: #000;
+        width: 80%;
+        background-color: rgb(255, 0, 0);
+        color: #fff;
+    }
+    .Light .cont_buttons button {
+        border: none;
+        border-radius: 5px;
+        font-size: 1.1em;
+    }
+    .Light .cont_img {
+        width: 100%;
+        height: 100px;
+    }
+    .no_padding_no_margin {
+        margin: 0em;
+        padding: 0em;
+    }
+    .Wpp {
+        background-color: #D9DDD6;
+        width: 100%;
+        height: 100vh;
+        overflow: hidden;
+        position: fixed;
+        top: 0em;
+    }
+    .Wpp .content {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        height: 100vh;
+        padding: 0em !important;
+        background-color: #000;
+        overflow: hidden;
+    }
+    .Wpp .block_green {
+        width: 100%;
+    }
+    .Wpp .cont_left {
+        display: none;
+        width: 50%;
+        height: 100%;
+        border-right: 1px solid #F0F2F5;
+    }
+    .Wpp .cont_user {
+        width: 100%;
+        padding: 1em;
+        background-color: #EEEDEF;
+        display: flex;
+        align-items: center;
+    }
+    .Wpp .user {
+        font-size: 2em;
+    }
+    .Wpp .logo {
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+    }
+    .Wpp .cont_persons {
+        width: 100%;
+        height:100%;
+        background-color: #fff;
+    }
+    .Wpp .person {
+        padding: 1em;
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: nowrap;
+        cursor: pointer;
+    }
+    .Wpp .cont_input {
+        padding: 1em 0em;
+        border-bottom: 1px solid #F0F2F5;
+    }
+    .Wpp .cont_input input {
+        background-color: #F0F2F5;
+        border: none;
+        border-radius: 7px;
+        width: 90%;
+        margin: auto;
+        display: block;
+        padding: 0.3em;
+        text-indent: 5px;
+    }
+    .Wpp .info_person {
+        margin-left: 1em;
+        border-bottom: 1px solid #F0F2F5;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+    }
+    .Wpp .info_person p:first-child{
+        font-size: 1em;
+        font-weight: 600 ;
+        text-transform: capitalize ;
+        margin-bottom: 0.1em;
+        color: #000;
+    }
+    .Wpp .info_person p {
+        font-weight: 400;
+        font-size: 0.9em;
+        color: #b3b3b3;
+    }
+    .Wpp .cont_right{
+        display: block;
+        width: 100%;
+        background-color: #F9F9FB;
+    }
+    .Wpp .icon_check {
+        color: #D7D6D7 !important;
+        font-size: 0.8em !important;
+    }
+    .Wpp .start_mob {
+        background-color: #70ff5d;
+        display: block;
+        padding: 0.6em 1em;
+        border: none;
+        font-size: 1.2em;
+        color: #fff;
+        font-weight: 600;
+        width: 100%;
+    }
+}
+@media screen and (min-width:576px) {
+    .Dark .cont_img {
+        border-radius: 5px;
+        height: 400px;
+        width:  100%;
+        overflow: hidden;
+    }
+    .Dark .input {
+        display: block;
+    }
+    .Light .cont_img {
+        width: 100%;
+        height: 200px;
+    }
+    .Dark .img_destaque {
+        height: 200px;
+    }
+    .Dark .text_destaque {
+        font-size: 3em;
+    }
+    .Dark .cont_slides {
+        height: 300px;
+    }
+    .Dark .cont_img_destaque {
+        margin: 2.6em 1em 0em 3em;
+    }
+    .Dark .img_examples{
+        height: 350px;
+    } 
+    .Dark .link_destaque {
+        font-size: 1.2em;
+    }
+    .Dark .info_produto {
+        font-size: 1.1em;
+    }
+    .Wpp .cont_right{
+        width: 75%;
+    }
+    .Wpp .cont_left { 
+        display: block;
+    }
+    .Wpp .start_mob {
+        display: none;
+    }
+}
+
+.text_align_center {
+    text-align: center;
+}
+.flex {
+display: flex;
+width: 100%;
+}

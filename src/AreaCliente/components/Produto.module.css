@@ -1,0 +1,185 @@
+@media screen and (min-width:320px) {
+    .container {
+        margin-top: 3em;
+        width: 100%;
+    }
+    .Light {
+        padding: 2em 1em 0em 1em;
+        width: 100%;
+        display: block;
+        background-color: #EBECF0;
+        height: 100% !important;
+    }
+    .Light .icon {
+        font-size: 1.1em;
+        margin-right: 0.3em;
+    }
+    .Light .cont_card {
+        width: 100%;
+        box-shadow: 1px 1px 4px #02020200 !important;
+        background-color: #fff;
+        height: 100%;
+        border-radius: 40px 40px 0px 0px;
+        text-align: center;
+        padding: 1em;
+    }
+    .Light .flex {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        margin-top: 1em;
+    }
+    .Light .flex p {
+        margin-left: 1em;
+        font-weight: 600;
+    }
+    .Light .cont_price {
+        text-align: left;
+        margin-top: 1.5em;
+        width: 100%;
+    }
+    .Light .c_price {
+        display: flex;
+        height: 100%;
+        align-items: flex-end;
+    }
+    .Light .counter {
+        display: flex;
+        width: 100%;
+        background-color: #EBECF0;
+        padding: 0.6em;
+        border-radius: 40px;
+    }
+    .Light .counter button {
+        width: 70px;
+        height: 30px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: none;
+        padding: 0.5em;
+        border-radius: 50%;
+        background-color: #fff;
+    }
+    .Light .counter button:last-child {
+        background-color: #ff0000;
+        color: #fff;
+    }
+    .Light .counter input {
+        width: 100%;
+        margin: 0em 0.6em;
+        border: none;
+        background-color: #EBECF0;
+        text-align: center;
+    }
+    .Light .price {
+        font-size: 1.8em;
+    }
+    .Light .about {
+        text-align: left;
+        margin-top: 1em;
+    }
+    .Light .listSabores {
+        text-align: left;
+        list-style-type: none;
+        padding-left: 0em;
+
+    }
+    .Light .listSabores li {
+        margin: 0.2em 0em 0.8em 0em;
+        display: flex;
+        align-items: flex-start;
+        border-bottom: 1px solid #000;
+    }
+    .Light .listSabores li input {
+        margin-right: 0.7em;
+    }
+    .Light .btn_comprar button {
+        width: 100%;
+        border: none;
+        padding: 0.6em;
+        border-radius: 5px;
+        background-color: #fd0000;
+        color: #fff;
+        font-size: 1.2em;
+        margin: 2em 0em 0.7em 0em;
+    }
+    .Light .btn_return {
+        border: none;
+        height: 40px;
+        width: 40px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #fff;
+        border-radius: 50%;
+        padding: 0.7em;
+        margin-bottom: 1em;
+        font-size: 1.2em;
+    }
+    /*Dark*/
+    .Dark {
+        margin-top: 6em;
+        padding-bottom: 5em;
+    }
+    .Dark .cont_right .name {
+        text-transform: capitalize;
+    }
+    .Dark .cont_right .desc {
+        font-size: 1rem;
+        color: #969696;
+    }
+    .Dark .cont_right {
+        margin-top: 3em;
+        padding-left: 0em;
+        font-family: 'Outfit', sans-serif;  
+    }
+    .Dark .header {
+        margin-bottom: 4em;
+    }
+    .Dark strong {
+        display: block;
+        margin-bottom: 0.6em;
+    }
+    .Dark .cont_colors input{
+        display: flex;
+        margin-right: 1.5em;
+    }   
+    .Dark .cont_colors {
+        display: flex;
+        margin-bottom: 1.5em;
+    }
+    .Dark .cont_tam button {
+        margin-right: 1em;
+        border: none;
+        padding: 0.6em 0.9em;
+        border-radius: 5px;
+    }
+    .Dark .btn_buy {
+        margin: 1em 0em 1em 0em;
+        width: 100%;
+        padding: 0.8em;
+        border: none;
+        background-color: #000;
+        color: #fff;
+        font-size: 1.1em;
+        border-radius: 5px;
+    }
+    .img {
+        width: 100%;
+        height: 200px;
+        margin-bottom: 1em;
+    }
+}
+@media screen and (min-width:576px) {
+    .img {
+        width: 100%;
+        height: 400px;
+        margin-bottom: 1em;
+    }
+}
+.line {
+    width: 100%;
+    background-color: #EBECF0;
+    height: 1px;
+}

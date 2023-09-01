@@ -1,0 +1,8 @@
+.container {
+    display: table;
+    margin: 3em auto;
+}
+.spinner {
+    width: 100px !important;
+    height: 100px !important;
+}

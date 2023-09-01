@@ -1,0 +1,208 @@
+.container {
+    width: 100%;
+    height: 93.3%;
+    background-color: rgb(238, 238, 238);
+}
+.content {
+    display: flex;
+    height: 100%;
+    overflow: scroll;
+    margin-bottom: 0em;
+    padding-bottom: 0em;
+    flex-direction: column-reverse;
+}
+.content::-webkit-scrollbar {
+    width: 5px;   
+    scroll-behavior: smooth;
+}
+.content::-webkit-scrollbar-track {
+background: rgb(253, 253, 253);        /* color of the tracking area */
+}
+  
+.content::-webkit-scrollbar-thumb {
+background-color: #c3ffb8;    /* color of the scroll thumb */
+border-radius: 20px;       /* roundness of the scroll thumb */
+}
+.list {
+    padding: 0em;
+    list-style-type: none;
+}
+.box {
+    width: 85%;
+    margin: 1em 0em;
+    background-color: #fff;
+    padding: 1em;
+    border-radius: 0px 10px 10px 10px;
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+}
+.box:nth-child(4), .box:nth-child(14) {
+    background-color: #D9FDD3;
+    border-radius: 10px 0px 10px 10px;
+    float: right;
+    margin-right: 1em;
+}
+.li {
+    width: 100%;
+}
+
+.rem {
+    margin-left: 1em;
+}
+.btn {
+    border: none;
+    display: block;
+    text-align: center;
+    width: 100%;
+    padding: 0.7em 1em;
+    border-radius: 10px;
+    background-color: #D9FDD3;
+}
+.p_title {
+    font-weight: 800;
+    text-transform: capitalize;
+    margin-bottom: 0em;
+}
+.p_sub_title {
+    margin-bottom: 0em;
+    font-weight: 600;
+}
+.p_preço {
+    font-weight: 600;
+}
+.item_sabor {
+    margin: 1em 0em 0.8em 0em;
+    width: 100% ;
+    padding: 0.4em 1em;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+}
+.item_sabor:hover {
+    border-radius: 10px;
+    background-color: #b4fda7;
+}
+.input_qtd_sabor {
+    border: none;
+    width: 50px;
+}
+.item_sabor p{
+    margin-bottom: 0.2em;
+    text-transform: capitalize;
+}
+.ingredientes {
+    font-size: 0.9em;
+}
+.select {
+    background-color: rgb(200, 233, 199);
+    border-radius: 10px;
+    font-weight: 600;
+}
+.select:hover {
+    background-color: rgb(203, 255, 198) !important;
+}
+.btn_continue {
+    background-color: #D9FDD3;
+    width: 100%;
+    border: none;
+    border-radius: 10px;
+    padding: 1em;
+    margin-top: 1em;
+}
+.saboresEscolhidos {
+    margin-bottom: 0.2em;
+    font-weight: 600;
+    text-transform: capitalize;
+}
+.btn_escolha {
+    padding: 1em;
+    border: none;
+    border-radius: 10px;
+    background-color: #fff;
+    width: 100%;
+    margin-top: 1em;
+}
+.preço_item {
+    margin-top: 1em;
+    font-weight: 600;
+}
+.text_area {
+    width: 100%;
+}
+.btn_control {
+    border: none;
+    margin: 1em 1em 1em 0em;
+    border-radius: 20px;
+    display: block;
+    font-size: 1.1em;
+    z-index: 1000;
+}
+.cont_buttons {
+    display: flex;
+    align-items: center;
+    
+    flex-wrap: wrap;
+}
+.error {
+    background-color: #e2a1a1;
+}
+.m_bottom {
+    margin-bottom: 1em;
+    display: block;
+}
+.list_escolha {
+    padding: 0em;
+    list-style-type: none;
+    margin-bottom: 1em;
+}
+.list_escolha_sabores {
+    margin: 1em 0em;
+    list-style-type: none;
+}
+.item_escolha {
+    display: flex;
+    align-items: center;
+}
+.btn_delete_item {
+    height: 15px;
+    width: 15px;
+    cursor: pointer;
+}
+.input {
+    border: none;
+    border-radius: 3px;
+    border-bottom: 1px solid #a5a5a5;
+}
+.icon_edit {
+    margin-left: 0.7em;
+    color: #3b3b3b;
+}
+.cont_pedido {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100vh;
+    align-items: center;
+    text-align: center;
+}
+.cont_pedido .img {
+    width: 150px;
+    height: 150px;
+    margin-bottom: 2em;
+}
+.btn_acompanhar {
+    background-color: #ff8818;
+    color: #fff;
+    border: none;
+    padding: 0.6em;
+    border-radius: 5px;
+    font-weight: 600;
+    margin-top: 0.6em;
+}
+#back-to-top {
+    position: fixed;
+    bottom: 50px;
+    right: 50px;
+  }

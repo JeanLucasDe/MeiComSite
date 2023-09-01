@@ -1,0 +1,105 @@
+@media screen and (min-width:320px) {
+    .container {
+        margin: 2em auto;
+    }
+    .cont_box_pedidos {
+        display: flex;
+        justify-content: center;
+    }
+    .box_pedidos {
+        margin: 0em 1em;
+        padding: 1em;
+        background-color: #e9e9e9;
+        width: 90%;
+        border-radius: 6px;
+        text-align: center;
+    }
+    .list {
+        list-style-type: none;
+        padding: 0em;
+        margin-top: 2em;
+    }
+    .item_list {
+        margin-bottom: 1.5em;
+        display: block;
+        background-color: #fff;
+        border-radius: 6px;
+        padding: 1em;
+        box-shadow: 1px 1px 4px #919191dd;
+        text-align: left;
+    }
+    .acc {
+        background-color: #FF9100;
+        color: #fff;
+        border: none;
+        border-radius: 7px;
+        padding: 0.5em;
+        margin-right: 0.6em;
+    }
+    .del {
+        border-radius: 7px;
+        background-color: transparent;
+        padding: 0.5em;
+        border-color: #ccc;
+    }
+    .mob_Version {
+        display: block;
+    }
+    .container {
+        display: none;
+    }
+    .box_mob {
+        width: 90%;
+        margin: 0em auto;
+        text-align: left;
+    }
+    .box_mob_content {
+        text-align: center;
+        padding: 1em 0em;
+        margin: 1em 0em;
+        border-radius: 5px;
+    }
+    .clock {
+        margin-bottom: 0.6em;
+        display: block;
+    }
+}
+@media screen and (min-width:576px) {
+    .mob_Version {
+        display: none;
+    }
+    .container {
+        display: block;
+    }
+}
+.f_space_bet {
+    display: flex;
+    justify-content: space-between;
+}
+.aberto {
+    background-color: #e2e2e2;
+}
+.preparo {
+    background-color: #ffd986;
+}
+.entrega {
+    background-color: #ff8801;
+}
+.text_center {
+    text-align: center;
+}
+.title {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+.btn_new {
+    padding: 0.6em;
+    border: none;
+    display: table !important;
+    margin: 1em auto 2em auto;
+    background-color: rgb(53, 255, 53);
+    color: #fff;
+    font-weight: 600;
+    border-radius: 5px;
+}

@@ -1,0 +1,44 @@
+.container {
+    width: 90%;
+    margin: 2em auto;
+}
+.razao {
+    text-transform: capitalize;
+}
+.cont_info {
+    font-size: 1.1em;
+}
+.cont_img {
+    font-size: 1.2em;
+}
+.dash_text {
+    font-weight: 300;
+}
+.line {
+    height: 1px;
+    background-color: #bdbdbd;
+    width: 100%;
+    margin: 1em 0em;
+}
+.img {
+    width: 100%;
+    margin: 1em 0em;
+}
+.link {
+    color: #000;
+    font-weight: 600;
+}
+.cont_button {
+    margin-bottom: 0.6em;
+}
+.cont_button button {
+    border: none;
+    text-decoration: underline;
+    margin-right: 0.4em;
+    padding: 0.2em 0.5em;
+}
+.container_off {
+    width: 90%;
+    margin: 3em auto;
+    text-align: center;
+}

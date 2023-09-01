@@ -1,0 +1,68 @@
+.td {
+    padding: 1.2em 0.9em;
+}
+.td_header {
+    padding: 0.9em;
+    background-color: #ddd;
+}
+.list {
+    list-style-type: none;
+}
+.table {
+    display: table;
+    width: 90%;
+    margin: 0em auto 5em auto;
+    border: 1px solid #e0e0e0;
+    border-radius: 0px 0px 7px 7px !important;
+    box-shadow: 1px 1px 4px inset #ddd;
+}
+.control_vendas {
+    width: 90%;
+    margin: 3em auto 0em auto; 
+}
+.isActiveMob {
+    padding: 0em;
+    text-decoration: none;
+    color: #000;
+    padding: 0.4em 0.4em 0.1em 0.4em;
+    background-color: #ddd;
+    font-size: 1.1em;
+    font-weight: 600;
+}
+.isPendingMob {
+    font-size: 1.1em;
+    background-color: #fff;
+    padding: 0.4em 0.4em 0.1em 0.4em;
+    text-decoration: none;
+    color: #000;
+    border: 1px solid #bebebe;
+}
+.td_button {
+    cursor: pointer;
+}
+.title_result {
+    padding: 0.4em;
+    margin: 2em auto 0em auto;
+    box-shadow: 1px 1px 4px inset #ddd;
+    width: 90% !important;
+    display: block;
+    border-radius: 7px 7px 0px 0px;
+    font-size: 1em;
+}
+.title_empty {
+    width: 90%;
+    margin: 1em auto;
+}
+
+
+
+@media screen and (min-width:320px) {
+    .view_desk {
+        display: none;
+    }
+}
+@media screen and (min-width:576px) {
+    .view_desk {
+        display: table-cell;
+    }
+}

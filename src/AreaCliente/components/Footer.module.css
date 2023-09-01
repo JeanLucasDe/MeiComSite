@@ -1,0 +1,10 @@
+.footer {
+    padding-top: 8em;
+    padding: 0.8em 0em;
+    text-align: center;
+    display: block;
+
+}
+.footer a {
+    color: #000;
+}

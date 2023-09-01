@@ -1,0 +1,33 @@
+.flex {
+    display: flex;
+    align-items: center;
+}
+.flex p {
+    margin: 0px 0px 0px 0.6em;
+}
+.container {
+    width: 90%;
+    margin: 3em auto;
+}
+.info {
+    margin-top: 3em;
+}
+.title {
+    margin-bottom: 1.7em;
+}
+@media screen and (min-width:320px) {
+    .img {
+        display: block;
+        width: 95%;
+        margin: 0em auto 6em auto;
+        object-fit: contain;
+    }
+}
+@media screen and (min-width:576px) {
+    .img {
+        display: block;
+        width: 65%;
+        margin: 0em auto 6em auto;
+        object-fit: contain;
+    }
+}

@@ -1,0 +1,29 @@
+.container {
+    background-color: #fff;
+    height: 100vh;
+    width: 100%;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+.title {
+    font-weight: 300;
+    text-transform: capitalize;
+    font-weight: 600;
+}
+.par {
+    color: #535353;
+}
+.start_button {
+    background-color: #4fff30;
+    color: #fff;
+    border: none;
+    padding: 0.6em;
+    border-radius: 5px;
+    font-weight: 600;
+}
+.logo {
+    background-color: transparent;
+}

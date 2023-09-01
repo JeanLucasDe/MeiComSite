@@ -1,0 +1,61 @@
+.container {
+    height: 100%;
+    overflow: scroll;
+}
+.container::-webkit-scrollbar {
+    width: 5px;   
+    scroll-behavior: smooth;
+}
+.container::-webkit-scrollbar-track {
+background: rgb(253, 253, 253);        /* color of the tracking area */
+}
+  
+.container::-webkit-scrollbar-thumb {
+background-color: #c3ffb8;    /* color of the scroll thumb */
+border-radius: 20px;       /* roundness of the scroll thumb */
+}
+.content {
+    background-color: #fff;
+    padding: 1em;
+    box-shadow: 1px 1px 4px #dddd;
+    border-radius: 5px;
+    height: auto;
+    width: 90%;
+    margin: 1em auto 7em auto;
+}
+.line {
+    height: 1px;
+    background-color: #dddd;
+    width: 100%;
+    margin: 1em 0em;
+}
+.tr {
+    margin: 0.6em 0em ;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+.td {
+    margin-right: 0.3em;
+}
+.cont_preço {
+    display: flex;
+    justify-content: flex-end;
+    flex-direction: column;
+}
+.ok {
+    background-color: rgb(37, 252, 55);
+    z-index: 100;
+}
+.m_bottom {
+    margin-bottom: 1em;
+}
+.cont_states {
+    display: flex;
+    justify-content: center;
+    margin-top: 1em;
+}
+.state {
+    text-align: center;
+    margin: 0em 1em;
+}

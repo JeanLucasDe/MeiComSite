@@ -1,0 +1,29 @@
+.container {
+    text-align: center;
+    padding: 1em;
+}
+.list {
+    padding: 0em;
+    list-style-type: none;
+    text-align: left;
+}
+.list li {
+    margin-bottom: 1em;
+}
+.flex {
+    display: flex;
+}
+.flex_flex_end {
+    display: flex;
+    align-items: flex-end;
+}
+.flex_space_between {
+    display: flex;
+    justify-content: space-between;
+}
+.container strong {
+    margin-right: 0.6em;
+}
+.flex_flex_end h5 {
+    margin-right: 0.6em;
+}

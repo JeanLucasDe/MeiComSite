@@ -1,0 +1,26 @@
+.container {
+    margin: 2em 1em;
+}
+.content {
+margin-top: 2em;
+}
+.response {
+    font-size: 1.2em;
+}
+.passos {
+display: flex;
+align-items: center;
+height: 100%;
+font-size: 1.5em;
+}
+.passos p {
+margin-bottom: 0px;}
+.cont_button {
+    margin: 5em 0em;
+    display: flex;
+    justify-content: flex-end;
+}
+.cont_button button {
+    padding: 1em;
+    border: none;
+}

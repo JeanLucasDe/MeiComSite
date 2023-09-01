@@ -1,0 +1,10 @@
+.text_footer {
+    display: block;
+    text-align: center;
+    margin: 0em auto;
+    width: 100%;
+    background-color: #fff;
+}
+.text_footer a {
+    color: #000;
+}

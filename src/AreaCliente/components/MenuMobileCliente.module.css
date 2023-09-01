@@ -1,0 +1,18 @@
+.list {
+    padding: 0em;
+    list-style-type: none;
+}
+.list a {
+    display: block;
+    padding: 1em;
+    color: #000;
+    text-decoration: none;
+    margin-bottom: 0.6em;
+}
+.list li {
+    margin-bottom: 0.6em;
+}
+.icon {
+    font-size: 1.2em;
+    margin: 0.8em;
+}

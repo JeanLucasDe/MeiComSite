@@ -1,0 +1,60 @@
+[
+    {
+        "pergunta":"passos",
+        "titulo":"Como começar?",
+        "resposta": 
+        [
+            {
+                "titulo":"1º passo:",
+                "conteudo": "Preencha o formulário"
+
+            },
+            {
+                "titulo": "2º passo:",
+                "conteudo":"Escolha o layout"
+            }
+        ]
+        
+        
+    },
+    {
+        "pergunta":"pagamentos",
+        "titulo":"Como funciona os pagamentos?",
+        "resposta":[
+            {
+                "titulo":"Pagamento por pix",
+                "conteudo":"Disponível apartir do plano plus, cadastrando seu token do mercado pago. O valor das compras irá direto para a mesma, seu intermédio da MeiComSite"
+            },
+            {
+                "titulo":"",
+                "conteudo":""
+            }
+            
+        ]
+    },
+    {
+        "pergunta":"fotos",
+        "titulo":"Como coloco minhas fotos?",
+        "resposta":[
+            {
+                "titulo":"",
+                "conteudo":"Utilizamos o método de pagamento do pix do mercado pago."
+            }
+        ]
+    },
+    {
+        "pergunta":"preços",
+        "titulo":"Quanto custa?",
+        "resposta":[]
+    },
+    {
+        "pergunta":"criticasesugestoes",
+        "titulo":"Críticas e Sugestões",
+        "resposta":[]
+    },
+    {
+        "pergunta":"politicaeprivacidade",
+        "titulo":"Política e privacidade",
+        "resposta":[]
+    }
+]

@@ -1,0 +1,123 @@
+.list_produtos {
+    list-style-type: none;
+    padding: 1em;
+    margin: 1.6em auto 0em auto;
+    width: 90%;
+}
+.list_produtos a {
+    color: #fff !important;
+    text-decoration: none;
+    padding: 1em;
+    display: table;
+    background-color: #fcab33;
+    font-weight: 600;
+    font-size: 0.9em;
+}
+.li {
+    border-bottom: 1px solid #8f8f8f;
+    padding: 0.7em;
+    margin-bottom: 1.5em;
+}
+.li:hover {
+    background-color: #eeeeee;
+}
+.item {
+    display: flex;
+    align-items: flex-end !important;
+}
+.cont_item {
+    height: 100%;
+    margin: 0.8em auto 0em auto;
+}
+.icon {
+    margin-right: 0.6em;
+    font-size: 1.1em;
+    cursor: pointer;
+}
+.img {
+    width: 100%;
+    height: 230px;
+    object-fit: contain;
+    margin-bottom: 0.8em;
+}
+.item p {
+    margin-right: 1em;
+    margin-bottom: 0em;
+}
+.cont_btn {
+    width: 90%;
+    margin: 1em auto 0.2em auto;
+}
+.btn, .btn_disabled {
+    border: none;
+    padding: 0.6em;
+    background-color: #FF9100;
+    color: #fff;
+    border-radius: 20px;
+}
+.btn_disabled {
+    background-color: #8f8f8f !important;
+    margin-right: 1em;
+}
+.cont_new_categorie {
+    padding: 1em;
+}
+.cont_new_categorie input {
+    padding: 0.3em;
+    border-radius: 15px;
+    border: 1px solid #8f8f8f;
+    text-indent: 5px;
+    width: 100%;
+    margin-bottom: 0.6em;
+}
+.cont_new_categorie button {
+    border: none;
+    background-color: #FF9100;
+    color: #fff;
+    border-radius: 15px;
+    display: block;
+    width: 100%;
+    padding: 0.8em;
+    margin-top: 1em;
+}
+.info_categorie strong{
+    display: block;
+}
+.container_off {
+    width: 90%;
+    margin: 3em auto;
+    text-align: center;
+}
+.input {
+    width: 100%;
+}
+.on {
+    color: #4fe20b !important;
+    margin-right: 0.4em;
+}
+.off {
+    color: #8f8f8f !important;
+    margin-right: 0.4em;
+}
+.contador {
+    font-size: 0.8em;
+    font-weight: 600;
+}
+.cont_input_checkbox {
+    display: flex;
+    align-items: center;
+    margin: 1em 0em;
+}
+.cont_input_checkbox input {
+    width: 15px;
+    margin-right: 0.5em;
+    display: block;
+    height: 15px;
+    margin-top: 0.5em;
+}
+.line {
+    width: 100%;
+    height: 1px;
+    background-color: #fcab33;
+    margin-top: 1em;
+}

@@ -1,0 +1,52 @@
+.Dark, .Light {
+    box-shadow: 1px 1px 4px #b6b6b6;
+    background-color: #f5f5f5;
+    border-radius: 20px;
+    padding: 2em 1em;
+    margin: 0.7em 0.7em 2em 0.7em;
+}
+.Dark input, .Dark select, .Light input, .Light select {
+    border-radius: 10px;
+    text-indent: 0.6em;
+    border: 1px solid #e0e0e0;
+    padding: 0.3em;
+    width: 100%;
+    margin-bottom: 0.7em;
+}
+.Dark .btn_finalizar, .Light .btn_finalizar {
+    display: block;
+    margin: 1em 0em;
+    width: 100%;
+    background-color: #09ff00;
+    border-radius: 15px;
+    padding: 1em;
+    text-decoration: none;
+    text-align: center;
+    color: #fff;
+    font-size: 1em;
+    font-weight: 600;
+}
+.Dark .btn_disabled, .Light .btn_disabled {
+    display: block;
+    margin: 1em 0em;
+    width: 100%;
+    background-color: #cacaca;
+    border-radius: 15px;
+    padding: 1em;
+    text-decoration: none;
+    text-align: center;
+    color: #707070;
+    font-size: 1em;
+    font-weight: 600;
+}
+.Dark .cont_total, .Light .cont_total {
+    margin: 1em 0em ;
+}
+.line {
+    background-color: #707070;
+    height: 1px;
+    width: 100%;
+}
+.flex {
+    display: flex;
+}

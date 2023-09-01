@@ -1,0 +1,225 @@
+
+@media screen and (min-width:320px) {
+    .container {
+        width: 90%;
+        margin: 2em auto;
+        background-color: #fafafa;
+        padding: 1em;
+        box-shadow: 1px 1px 4px #85858563;
+        border-radius: 20px;
+    }
+    .container h4 {
+        margin-bottom: 1em;
+    }
+    .form label {
+    display: block;
+    }
+    .form input {
+        border: 1px solid #d7d7d7;
+        border-radius: 20px;
+        padding: 0.3em;
+        text-indent: 5px;
+        width: 100%;
+        margin-bottom: 0.6em;
+    }
+    .cont_dashed_no_padding {
+        width: 100%;
+        border: 1px dashed #c7c7c7;
+        padding: 0.3em;
+    }
+    .cont_token {
+        margin: 1em 0em;
+    }
+    .cont_token input {
+        margin-left: 1em;
+    }
+    .title_small {
+        font-size: 0.8em;
+        font-weight: 600;
+    }
+    .cont_save {
+        width: 80%;
+        display: flex;
+        justify-content: flex-end;
+    }
+    .cont_save button {
+        padding: 0.4em 1em;
+        border: none;
+        margin: 1em 0em;
+        background-color: #ff9100 ;
+        color: #fff;
+    }
+    .disabled {
+        background-color: #c7c7c7 !important;
+    }
+    .center {
+        margin: 3em auto;
+        text-align: center;
+    }
+    /*Formulario Negocio*/
+    .cont_dashed {
+        width: 100%;
+        border: 1px dashed #c7c7c7;
+        padding: 0.3em ;
+    }
+    .cont_plan input {
+        border: 1px solid #c7c7c7;
+        border-radius: 10px;
+        text-indent: 5px;
+
+    }
+    .cont_theme {
+        display: flex;
+        align-items: flex-end;
+        height: 100%;
+        padding: 1em 0em;
+    }
+    .cont_theme label, .cont_theme strong {
+        margin-right: 1em;
+    }
+    .img {
+        display: block;
+        width: 90%;
+        margin: 0.6em auto;
+        height: 230px;
+    }
+    .btn_save, .cont_btn_save {
+        display: flex;
+        justify-content: flex-end;
+    }
+    .cont_btn_save {
+
+        margin-bottom: 1em;
+    }
+    .cont_btn_save button {
+        border: none;
+        padding: 0.5em 1em;
+        margin: 0em 2.5em 0em 0em;
+        background-color: #dbdbdb;
+        color: #000;
+    
+    }
+    .cont_btn_save button:last-child {
+        border: none;
+        padding: 0.5em 1em;
+        margin: 0em 2.5em 0em 0em;
+        background-color: #FF9D00;
+        color: #fff;
+    }
+    .btn_theme {
+        border: none;
+        background-color:transparent;
+        text-decoration: underline;
+        color: #000;
+    }
+    .item {
+        width: 100%;
+        cursor: pointer;
+    }
+    .item p {
+        margin-left: 1em;
+    }
+    .item:hover {
+        border: 1px solid #c7c7c7;
+    }
+    .cont_slides {
+        margin-top: 2em;
+        padding: 1em;
+    }
+    .cont_plan {
+        display: flex;
+        margin-top: 1em;
+    }
+    .cont_plan label,.cont_plan strong {
+        margin-right: 1em;
+    }
+    .cont_plan a {
+        margin-left:1em;
+    }
+    .status {
+        margin: 1em auto;
+        padding: 0.2em 0em;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2em;
+        background-color: #c7c7c7;
+    }
+    .status p {
+        margin-bottom: 0px;
+    }
+    .cont_user {
+        width: 90%;
+        border-radius: 5px;
+        padding: 1em;
+        box-shadow: 1px 1px 4px #cccccc;
+        margin: 0em auto;
+    }
+    .name {
+        margin: 0.6em 0em;
+    }
+    .state {
+        font-size: 0.6em;
+        background-color: #c7c7c7;
+        padding: 0.2em 0.6em;
+        border-radius: 10px;
+        margin-left: 0.7em;
+        color: #161616;
+    }
+    .cont_header {
+        display: flex;
+        justify-content: space-between;
+    }
+    .line {
+        width: 100%;
+        height: 1px;
+        background-color: #dbdbdb;
+        margin: 1em 0em;
+    }
+    .block {
+        display: block;
+    }
+    .btn_save {
+        border: none;
+        border-radius: 10px;
+    }
+    .btn_add_cidade {
+        border: none;
+        background-color: transparent;
+        margin: 0.6em 0em;
+        text-decoration: underline;
+    }
+    .flex {
+        display: flex;
+        align-items: center;
+    }
+    .btn_save {
+        font-size: 1.1em;
+        margin-left: 0.7em;
+    }
+    .link_help  {
+        display: block;
+        margin-bottom: 0.5em;
+    }
+    .btn_add_cidade {
+        border: none;
+        background-color: transparent;
+        margin: 0.6em 0em;
+        text-decoration: underline;
+    }
+    .logo {
+        width: 30px;
+        height: 30px;
+    }
+    .flex_space_around {
+        display: flex;
+        align-items: center;
+        height: 100%;
+        justify-content: space-around;
+    }
+}
+@media screen and (min-width:576px) {
+    .container {
+        width: 80%;
+    }
+}
