@@ -101,7 +101,7 @@ export default function FormEdit (props) {
                 <div className={styles.content}>
                     <h1 className={styles.title}>{obj && obj.dados && obj.dados.nome}</h1>
                     <div className="row">
-                        <div className="col-md-7">
+                        <div className="col-md-0">
                             <div className={styles.cont_left}>
                                 <Visualizar
                                 tema={props.tema}
@@ -113,19 +113,10 @@ export default function FormEdit (props) {
                                 />
                             </div>
                         </div>
-                        <div className="col-md-5">
+                        <div className="col-md-12">
                             <div className={styles.cont_right}>
                                 <div className="row">
                                     <div className="col-md-6">
-                                        <p
-                                        className={styles.label}
-                                        >Imagem:</p>
-                                        <input
-                                        type="text"
-                                        className={styles.input}
-                                        onChange={(el) => setImg(el.target.value)}
-                                        defaultValue={obj && obj.dados && obj.dados.img}
-                                        />
                                         <p
                                         className={styles.label}
                                         >Nome:</p>
@@ -134,24 +125,6 @@ export default function FormEdit (props) {
                                         className={styles.input}
                                         onChange={(el) => setNome(el.target.value)}
                                         defaultValue={obj && obj.dados && obj.dados.nome}
-                                        />
-                                        <p
-                                        className={styles.label}
-                                        >Descrição Curta:</p>
-                                        <input
-                                        type="text"
-                                        className={styles.input}
-                                        onChange={(el) => setSmallDesc(el.target.value)}
-                                        defaultValue={obj && obj.dados && obj.dados.small_desc}
-                                        />
-                                        <p
-                                        className={styles.label}
-                                        >Descrição Longa:</p>
-                                        <textarea
-                                        type="text"
-                                        className={styles.input}
-                                        onChange={(el) => setDesc(el.target.value)}
-                                        defaultValue={obj && obj.dados && obj.dados.desc}
                                         />
                                         <div className={styles.cont_input_check}>
                                             <input type="checkbox" onChange={()=> setPromo(!promo)}

@@ -14,6 +14,7 @@ import "swiper/css/pagination";
 import 'swiper/css/navigation';
 import moment from "moment"
 import NovoPedido from "./NovoPedido"
+import { ToastContainer, toast } from "react-toastify"
 
 
 export default function Online () {
@@ -23,15 +24,33 @@ export default function Online () {
     var [seg, SetSeg] = useState(120)
     const [count, setCounte] = useState(1)
     const [obj, setObj] = useState()
+    var [countDelete, setCountDelete] = useState(0)
+    const [pedidoDelete, setPedidoDelete] = useState('')
 
 
     const DeletarPedido = async(dados) => {
-        dados.state = 0
-        const ref = doc(db, `MeiComSite/${usuario.length > 0 && usuario[0].email}/vendas`, dados && dados.id)
-        await deleteDoc(ref)
-        setObj(dados)
-    }
+        
 
+        setCountDelete(countDelete += 1)
+        
+        if (countDelete == 1) {
+            toast.error('Clique 2 vezes para confirmar')
+            setPedidoDelete(dados.iden)
+        }
+        if (countDelete == 2) {
+            if (pedidoDelete != dados.iden) {
+                return toast.error('Clique 2 vezes para confirmar')
+            }
+            dados.state = 0
+            const ref = doc(db, `MeiComSite/${usuario.length > 0 && usuario[0].email}/vendas`, dados && dados.id)
+            await deleteDoc(ref)
+            setObj(dados)
+            window.location.reload()
+        }
+        setTimeout(() => {
+            setCountDelete(0)
+        }, 1000);
+    }
 
     const AceitarPedido = async (dados) => {
         dados.state = 2
@@ -234,6 +253,7 @@ export default function Online () {
                                     if (dados.state == 1) {
                                         return (
                                             <li className={`${dados.lugar == 2 && styles.home} ${styles.item_list}`} key={dados.iden}>
+                                            {dados.lugar == 2 && <span>*Aqui*</span>}
                                             <div className={styles.f_space_bet}>
                                                 {dados.lugar == 2 && <span>(casa)</span>}
                                                 <h5>Pedido #{dados.iden}</h5>
@@ -278,6 +298,7 @@ export default function Online () {
                                     if (dados.state == 2) {
                                         return (
                                             <li className={`${dados.lugar == 2 && styles.home} ${styles.item_list}`} key={dados.iden}>
+                                            {dados.lugar == 2 && <span>*Aqui*</span>}
                                             <div className={styles.f_space_bet}>
                                                 <h5>Pedido #{dados.iden}</h5>
                                                 <FaBars
@@ -321,6 +342,7 @@ export default function Online () {
                                     if (dados.state == 3) {
                                         return (
                                             <li className={`${dados.lugar == 2 && styles.home} ${styles.item_list}`} key={dados.iden}>
+                                            {dados.lugar == 2 && <span>*Aqui*</span>}
                                             <div className={styles.f_space_bet}>
                                                 <h5>Pedido #{dados.iden}</h5>
                                                 <FaBars
@@ -387,7 +409,7 @@ export default function Online () {
                     </div>
                 </div>
             </div>
-        
+            <ToastContainer/>
         </>
         )
 }

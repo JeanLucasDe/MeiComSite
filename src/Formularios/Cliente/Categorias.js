@@ -276,12 +276,6 @@ export default function Informations () {
                                     <input type="text"
                                     onChange={(el)=> setCategoria(el.target.value)}
                                     />
-                                    <strong>Imagem:</strong>
-                                    <input type="text"
-                                    onChange={(el)=> setImagem(el.target.value)}
-                                    />
-                                    
-
                                 </div>
                                 
                                 <div className={styles.cont_check_box}>
@@ -346,14 +340,6 @@ export default function Informations () {
                                     defaultValue={produto && produto.categoria}
                                     onChange={(el)=> setCategoria(el.target.value)}
                                     />
-                                    <strong>Imagem:</strong>
-                                    <input type="text"
-                                    defaultValue={produto && produto.img}
-                                    onChange={(el)=> setImagem(el.target.value)}
-                                    />
-
-
-
                                     <div className={styles.cont_check_box}>
                                         <div className={styles.cont_input_checkbox}>
                                             <input type="checkbox"

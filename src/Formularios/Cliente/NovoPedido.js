@@ -90,7 +90,6 @@ export default function NovoPedido () {
         setListaEscolha([])
         SetEscolhaProduto('')
         LimpaQtds()
-        console.log(listaPedido)
         toast.success('Pedido Adicionado com Sucesso!')
     }
     
@@ -282,6 +281,16 @@ export default function NovoPedido () {
                                 className={styles.input}
                                 placeholder="Digite aqui"
                                 />
+                                <strong>Pagamento</strong>
+                                <select
+                                onChange={(el)=> setPagamento(el.target.value)}
+                                className={styles.input}
+                                >
+                                    <option>--</option>
+                                    <option>Cartão</option>
+                                    <option>Pix</option>
+                                    <option>Avista</option>
+                                </select>
                             </div>
                             }
                         </div>

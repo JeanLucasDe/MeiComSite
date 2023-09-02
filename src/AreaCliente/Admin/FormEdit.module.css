@@ -19,6 +19,7 @@
 .cont_left {
     border: 1px solid #000;
     padding: 1em;
+    display: none;
 }
 .title {
     border-bottom: 1px solid #000;
