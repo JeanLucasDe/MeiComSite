@@ -24,6 +24,12 @@ export default function Informations () {
     const [id, setId] = useState()
 
 
+
+    const geraId = () => {
+        const numeroAleatorio = Math.floor(Math.random() * 10000);
+        return numeroAleatorio
+    }
+    const idCat = geraId()
     const addCategoria = async () => {
         await setDoc(doc(db, `MeiComSite/${usuario && usuario[0].email}/produtos`, `${categoria}`), {
             categoria: categoria.trim(),
@@ -31,7 +37,8 @@ export default function Informations () {
             mostrar:mostrar ? mostrar : false,
             destaque:destaque ? destaque : false,
             text:text ? text : '',
-            produtos: []
+            produtos: [],
+            id:idCat
         });
         window.location.reload()
     }

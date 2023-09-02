@@ -2,8 +2,17 @@
     padding: 1em;
     background-color: #fff;
 }
-.content strong, .content input {
+.content {
+    margin: 1em 0em;
+}
+.container strong {
     display: block;
+}
+.header {
+    border-bottom: 1px solid #000;
+}
+.header h4{
+    margin-bottom: 2em;
 }
 .btn_entrega {
     background-color: #fd9d30;
@@ -13,6 +22,7 @@
     color: #fff;
     border-radius: 10px;
     font-weight: 600;
+    margin-bottom: 1em;
 }
 .select {
     background-color: #f3f3f3;
@@ -30,20 +40,21 @@
 .input {
     width: 100%;
     margin-bottom: 1em;
+    border: none;
+    border-bottom: 1px solid #818181;
 }
 .box_produto {
     margin: 1em 0em;
-    border-bottom: 1px  solid #999999dd;
     padding: 0.7em 0.4em;
 }
 .datalist {
     width: 100%;
 }
 .btn_add {
-    background-color: #38ff11;
+    background-color: #fd9d30;
     border: none;
     float: right;
-    padding: 0.3em;
+    padding: 0.5em;
     color: #fff;
     font-weight: 600;
 }
@@ -55,6 +66,7 @@
     background-color: #000000;
     color: #fff;
     font-weight: 600;
+    text-align: center !important;
 }
 .list {
     list-style-type: none;
@@ -67,6 +79,29 @@
     justify-content: space-between;
     align-items: center;
 }
+.list_pedido {
+    list-style-type: none;
+    padding: 0em;
+}
 .icon {
     margin-right: 1.5em;
+}
+.cont_pedido {
+    border-right: 1px solid #383838;
+    border-left: 1px solid #383838;
+    border-bottom: 1px solid #383838;
+    box-shadow: 1px 1px 4px #ccc;
+}
+.cont_btn_local button {
+    display: block;
+    margin: 1em auto;
+    width: 70%;
+}
+.select_item {
+    background-color: #ff9c2a;
+    border: none;
+    color: #fff;
+}
+.total {
+    text-align: right;
 }

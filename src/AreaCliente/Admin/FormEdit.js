@@ -42,7 +42,6 @@ export default function FormEdit (props) {
         if (ação == "Excluir") {
             let index = obj.dados.saborComida.findIndex(prop => prop.sabor == escolhaSabor)
             obj.dados.saborComida.splice(index,1)
-            console.log(obj)
             await updateDoc(doc(db, `MeiComSite/${id && id}/produtos`, obj.categoriaa), {
                 produtos: obj.lista
             });
@@ -51,10 +50,10 @@ export default function FormEdit (props) {
         }
         if (ação == "add") {
             let index = obj.dados.saborComida.findIndex(prop => prop.sabor == sabor)
-            
+
             if (index < 0) {
                 obj.dados.saborComida.push(saborPizza)
-                await updateDoc(doc(db, `MeiComSite/${id && id}/produtos`, obj.categoriaa), {
+                await updateDoc(doc(db, `MeiComSite/${id && id}/produtos`, obj.id), {
                     produtos: obj.lista
                 });
                 toast.success('Sabor adicionado com sucesso!')

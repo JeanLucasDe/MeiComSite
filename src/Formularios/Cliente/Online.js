@@ -97,7 +97,8 @@ export default function Online () {
                                 {vendasOrdenadas.length > 0 && vendasOrdenadas.map(dados => {
                                     if (dados.state == 1) {
                                         return (
-                                            <li className={styles.item_list} key={dados.iden}>
+                                            <li className={`${dados.lugar == 2 && styles.home} ${styles.item_list}`} key={dados.iden}>
+                                            {dados.lugar == 2 && <span>*Aqui*</span>}
                                             <div className={styles.f_space_bet}>
                                                 <h5>Pedido #{dados.iden}</h5>
                                                 <FaBars
@@ -137,7 +138,8 @@ export default function Online () {
                         {vendas.length > 0 && vendas.map(dados => {
                             if (dados.state == 2) {
                                 return (
-                                    <li className={styles.item_list} key={dados.iden}>
+                                    <li className={`${dados.lugar == 2 && styles.home} ${styles.item_list}`} key={dados.iden}>
+                                    {dados.lugar == 2 && <span>*Aqui*</span>}
                                     <div className={styles.f_space_bet}>
                                         <h5>Pedido #{dados.iden}</h5>
                                         <FaBars
@@ -171,7 +173,8 @@ export default function Online () {
                         {vendas.length > 0 && vendas.map(dados => {
                             if (dados.state == 3) {
                                 return (
-                                    <li className={styles.item_list} key={dados.iden}>
+                                    <li className={`${dados.lugar == 2 && styles.home} ${styles.item_list}`} key={dados.iden}>
+                                    {dados.lugar == 2 && <span>*Aqui*</span>}
                                     <div className={styles.f_space_bet}>
                                         <h5>Pedido #{dados.iden}</h5>
                                         <FaBars
@@ -230,8 +233,9 @@ export default function Online () {
                                 {vendas.length > 0 && vendas.map(dados => {
                                     if (dados.state == 1) {
                                         return (
-                                            <li className={styles.item_list} key={dados.iden}>
+                                            <li className={`${dados.lugar == 2 && styles.home} ${styles.item_list}`} key={dados.iden}>
                                             <div className={styles.f_space_bet}>
+                                                {dados.lugar == 2 && <span>(casa)</span>}
                                                 <h5>Pedido #{dados.iden}</h5>
                                                 <FaBars
                                                 type="button"
@@ -273,7 +277,7 @@ export default function Online () {
                                 {vendas.length > 0 && vendas.map(dados => {
                                     if (dados.state == 2) {
                                         return (
-                                            <li className={styles.item_list} key={dados.iden}>
+                                            <li className={`${dados.lugar == 2 && styles.home} ${styles.item_list}`} key={dados.iden}>
                                             <div className={styles.f_space_bet}>
                                                 <h5>Pedido #{dados.iden}</h5>
                                                 <FaBars
@@ -316,7 +320,7 @@ export default function Online () {
                                 {vendas.length > 0 && vendas.map(dados => {
                                     if (dados.state == 3) {
                                         return (
-                                            <li className={styles.item_list} key={dados.iden}>
+                                            <li className={`${dados.lugar == 2 && styles.home} ${styles.item_list}`} key={dados.iden}>
                                             <div className={styles.f_space_bet}>
                                                 <h5>Pedido #{dados.iden}</h5>
                                                 <FaBars

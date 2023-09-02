@@ -209,6 +209,7 @@ export default function BoxConversation (props) {
             telefone, 
             pagamento, 
             Total, 
+            lugar: 1,
             state: 1, 
             iden: id,
             produtos: ListaEscolha,

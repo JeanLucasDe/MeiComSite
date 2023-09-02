@@ -82,6 +82,7 @@ export default function Produtos () {
     const destaque = cat && cat[0].destaque
     const mostrar = cat && cat[0].mostrar
     const text = cat && cat[0].text
+    const id = cat && cat[0].id
     listProdutosTemp.push(cat && cat[0].produtos)
 
     const FormataValor = (valor) => {
@@ -95,7 +96,8 @@ export default function Produtos () {
         dados,
         ação,
         lista: indexProd.length > 0 && indexProd[0].produtos,
-        categoriaa
+        categoriaa,
+        id
     }
 
     const [index, setIndex] = useState()
