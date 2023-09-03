@@ -8,7 +8,7 @@ import { getFirestore, collection, getDocs, setDoc, doc} from "@firebase/firesto
 import FormAdd from "../../AreaCliente/Admin/FormAdd"
 import FormEdit from "../../AreaCliente/Admin/FormEdit"
 import Loading from "../../components/Loading"
-import { FaCircle, FaEdit, FaTrashAlt } from "react-icons/fa"
+import { FaCircle, FaEdit, FaPlusCircle, FaTrashAlt } from "react-icons/fa"
 import BoxConfirm from "../../components/BoxConfirm"
 
 
@@ -135,64 +135,68 @@ export default function Produtos () {
                     type="button" 
                     data-bs-toggle="modal" 
                     data-bs-target={`#ModalAdd`}
-                    >Novo produto</button>
-                    <h4  className={styles.title}>{categoriaa}</h4>
+                    ><FaPlusCircle/> Novo produto</button>
+                    <h2 className={styles.title}>{categoriaa}</h2>
                     <ul className={styles.list}>
-                        {produtos && produtos.length > 0 ? listReturn.map(dados => {
+                        {produtos.length > 0 && listReturn.map(dados => {
                             if (dados.produtos) {
                                 if (dados.categoria == categoriaa) {
-                                    return (
-                                        dados.produtos.map(item => {
+                                    if (dados.produtos.length > 0) {
                                         return (
-                                                <li key={dados.nome} className={`row ${styles.cont_item}`}>
-                                                    <div className="col-12">
-                                                        <h4>&#9679; {item.nome}</h4>
-                                                        <div className={styles.cont_buttons}>
-                                                            <FaEdit
-                                                            type="button"
-                                                            data-bs-toggle="modal"
-                                                            data-bs-target={`#ModalEdit`}
-                                                            onClick={()=> setDados(item)}
-                                                            className={styles.icon}
-                                                            />
-                                                            <FaTrashAlt
-                                                            type="button"
-                                                            data-bs-toggle="modal"
-                                                            data-bs-target={`#ModalTrash`}
-                                                            className={styles.icon}
-                                                            onClick={()=> {
-                                                                setDados(item)
-                                                                setAção("Deletar Produto")
-                                                                setIndex(1)
-                                                            }}
-                                                            />
-                                                        </div>
-                                                        <div className={styles.info}>
-                                                            <div className={styles.info_item}>
-                                                                <p><strong>Preço:</strong>{FormataValor(item.preço)}</p>
+                                            dados.produtos.map(item => {
+                                            return (
+                                                    <li key={dados.nome} className={`row ${styles.cont_item}`}>
+                                                        <div className="col-12">
+                                                            <h4>&#9679; {item.nome}</h4>
+                                                            <div className={styles.cont_buttons}>
+                                                                <FaEdit
+                                                                type="button"
+                                                                data-bs-toggle="modal"
+                                                                data-bs-target={`#ModalEdit`}
+                                                                onClick={()=> setDados(item)}
+                                                                className={styles.icon}
+                                                                />
+                                                                <FaTrashAlt
+                                                                type="button"
+                                                                data-bs-toggle="modal"
+                                                                data-bs-target={`#ModalTrash`}
+                                                                className={styles.icon}
+                                                                onClick={()=> {
+                                                                    setDados(item)
+                                                                    setAção("Deletar Produto")
+                                                                    setIndex(1)
+                                                                }}
+                                                                />
                                                             </div>
-                                                            <div className={styles.line}/>
+                                                            <div className={styles.info}>
+                                                                <div className={styles.info_item}>
+                                                                    <p><strong>Preço:</strong>{FormataValor(item.preço)}</p>
+                                                                </div>
+                                                                <div className={styles.line}/>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                </li>
+                                                    </li>
+                                                )
+                                        })
+                                        )
+                                    } else {
+                                        return (
+                                            <div className={styles.cont_empty}>
+                                                <h3>Ainda não há nada aqui.</h3>
+                                                <p>Comece a adicionar</p>
+                                            </div>
                                             )
-                                    })
-                                    )
+                                    }
                                 }
                             } 
                         })
-                        :
-                        <div>
-                            <h4>Ainda não há nada aqui</h4>
-                        </div>
-                        }
+                    }
 
                     </ul>
                     </div>
 
-
                 <div className="modal fade" id="ModalAdd" tabindex="-1" aria-labelledby="exampleModalLabel">
-                <div className={`modal-dialog modal-xl`}>
+                <div className={`modal-dialog modal-md`}>
                     <div className="modal-content">
                         <FormAdd
                             type="button"
@@ -207,18 +211,19 @@ export default function Produtos () {
                             mostrar={mostrar}
                             modo={mod}
                             text={text}
-                            img={img}
                             />
                     </div>
                 </div>
             </div>
             <div className="modal fade" id="ModalEdit" tabindex="-1" aria-labelledby="exampleModalLabel">
-                <div className={`modal-dialog modal-xl`}>
+                <div className={`modal-dialog modal-md`}>
                     <div className="modal-content">
                         <FormEdit
                             type="button"
                             dismiss="modal"
                             aria_label="Close"
+                            data_bs_toggle="modal"
+                            data_bs_target={'#ModalEdit'}
                             dados={obj}
                             tema = {usuario.length > 0 && usuario[0].theme} 
                             produtos = {listProdutosTemp && listProdutosTemp}

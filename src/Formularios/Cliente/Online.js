@@ -71,13 +71,13 @@ export default function Online () {
     const contador = () => {
         setTimeout(() => {
             window.location.reload()
-        }, 120000);
+        }, 180000);
         setTimeout(() => {
             SetSeg(seg -= 1)
         }, 1000);
     }
 
-    //contador()
+    contador()
     
     
 

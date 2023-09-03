@@ -10,6 +10,26 @@
     padding: 0.4em;
     border-bottom: 1px solid #c7c7c7;
 }
+.btn_add {
+    background-color: #FA8E01;
+    border-radius: 7px;
+    color: #fff;
+    border: none;
+    padding: 0.5em;
+    margin-right: 0.4em;
+}
+.btn_cancel {
+    background-color: #c7c7c7;
+    padding: 0.5em;
+    border: none;
+}
+.btn_delete_sabor {
+    width: 100%;
+    background-color: rgb(255, 180, 180);
+    border: none;
+    padding: 0.5em;
+    margin-bottom: 0.5em;
+}
 .input:focus {
     border-color: #c7c7c7;
 }
@@ -32,11 +52,20 @@
     width: 100%;
     display: flex;
     justify-content: flex-end;
+    margin-top: 1em;
 }
 .cont_buttons button {
     padding: 1em;
     margin-left: 1em;
     border: none;
+    border-radius: 7px;
+}
+.btn_save {
+    background-color: #FA8E01;
+    color: #fff;
+    border: none;
+    border-radius: 7px;
+
 }
 .listaSabores {
     align-items: center;

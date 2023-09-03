@@ -20,6 +20,18 @@
     padding: 0.4em;
     text-indent: 5px;
 }
+.box_sabores {
+    margin-top: 1em;
+}
+.btn_save {
+    width: 100%;
+    background-color: #ffae00;
+    color: #fff;
+    padding: 0.5em;
+    border: none;
+    border-radius: 7px;
+    margin-top: 1em;
+}
 .img {
     width: 100%;
 }

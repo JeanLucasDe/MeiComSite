@@ -48,24 +48,20 @@ export default function BoxConfirm (props) {
             data: moment().format('DD/MM/YYYY'),
             email: user && user.email,
             mod:obj.mod,
-            theme:obj.theme,
-            idtheme:obj.idtheme,
             iduser:user && user.id,
             status:"Em análise",
             nome:obj.nome,
+            theme: 'Wpp',
             telefone: obj.phone,
             razao:obj.razao,
-            cidade:obj.cidade,
-            plan:obj.plan,
-            abre: obj.abre,
-            fecha: obj.fecha,
+            abre: moment(obj.abre).format('HH:mm').toString(),
+            fecha: moment(obj.fecha).format('HH:mm').toString(),
             site: obj.site,
             nascimento: obj.nascimento,
             listCidades: props.listCidades,
             listBairros: props.listBairros,
             logo:obj.logo,
             admin: true,
-            token:obj.token ? obj.token : ""
             });
 
         window.location.reload()
@@ -95,16 +91,10 @@ export default function BoxConfirm (props) {
             telefone: !obj.phone ? prod[0].telefone : obj.phone
         });
         await updateDoc(doc(db, "MeiComSite", user.email), {
-            token: !obj.token ? prod[0].token : obj.token
-        });
-        await updateDoc(doc(db, "MeiComSite", user.email), {
-            cidade: !obj.cidade ? prod[0].cidade : obj.cidade
-        });
-        await updateDoc(doc(db, "MeiComSite", user.email), {
             site: !obj.site ? prod[0].site : obj.site
         });
         await updateDoc(doc(db, "MeiComSite", user.email), {
-            plan: !obj.plan ? prod[0].plan : obj.plan
+            mod: !obj.mod ? prod[0].mod : obj.mod
         });
         window.location.reload()
     }
@@ -160,7 +150,7 @@ export default function BoxConfirm (props) {
     }
 
     const deletarBairro = async () => {
-        const index = obj.listBairros.findIndex(prop => prop.local == obj.novoBairro)
+        const index = obj.listBairros.findIndex(prop => prop.local == obj.deletebairro)
         obj.listBairros.splice(index, 1)
         await updateDoc(doc(db, `MeiComSite`, user.email), {
             listBairros: obj.listBairros
@@ -168,7 +158,7 @@ export default function BoxConfirm (props) {
          window.location.reload()
     }
     const deletarCidade = async () => {
-        const index = obj.listCidades.findIndex(prop => prop.cidade == obj.novaCidade)
+        const index = obj.listCidades.findIndex(prop => prop.cidade == obj.deleteCidade)
         obj.listCidades.splice(index, 1)
         await updateDoc(doc(db, `MeiComSite`, user.email), {
             listCidades: obj.listCidades
@@ -363,7 +353,7 @@ export default function BoxConfirm (props) {
         {obj.ação == "Deletar Bairro" &&
         <div className={styles.container}>
             <h4>Deletar Bairro?</h4>
-            <strong>{obj.novoBairro}</strong>
+            <strong>{obj.deletebairro}</strong>
             <div className='line'></div>
             <div className={styles.cont_btn}>
 
@@ -387,7 +377,7 @@ export default function BoxConfirm (props) {
         {obj.ação == "Deletar Cidade" &&
         <div className={styles.container}>
             <h4>Deletar Cidade?</h4>
-            <strong>{obj.novaCidade}</strong>
+            <strong>{obj.deleteCidade}</strong>
             <div className='line'></div>
             <div className={styles.cont_btn}>
 

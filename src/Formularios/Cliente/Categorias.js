@@ -33,7 +33,6 @@ export default function Informations () {
     const addCategoria = async () => {
         await setDoc(doc(db, `MeiComSite/${usuario && usuario[0].email}/produtos`, `${categoria}`), {
             categoria: categoria.trim(),
-            img: imagem,
             mostrar:mostrar ? mostrar : false,
             destaque:destaque ? destaque : false,
             text:text ? text : '',
@@ -121,10 +120,11 @@ export default function Informations () {
         window.location.reload()
     }
     
-    
     return (
             <>
-            {usuario && usuario.length > 0 ?  
+            {usuario && usuario.length > 0 && usuario[0].mod == "Alimentação" &&
+            <div>
+                {usuario && usuario.length > 0 ?  
             <>
                 {usuario &&
                 <>
@@ -164,11 +164,12 @@ export default function Informations () {
                 </>
                 }
 
-
+                <div>
+                    <h4 className={styles.title}>Categorias</h4>
+                </div>
                 <ul className={styles.list_produtos}>
-                    {mod ? produtos && produtos.map(dados => {
+                    {mod ? produtos.length > 0 ? produtos.map(dados => {
                         //Modo Real
-
                         if (dados.status != "inerit") {
                             return (
                                     
@@ -212,6 +213,12 @@ export default function Informations () {
                                 )
                         }
                     }):
+                    <div className={styles.cont_empty}>
+                        <h3>Ainda não há nada Aqui.</h3>
+                        <p>Comece a adicionar</p>
+                    </div>
+                    
+                    :
                     //Modo de Teste
 
 
@@ -421,6 +428,10 @@ export default function Informations () {
                 <Link to="/perfil/cadastro">Cadastrar agora!</Link>
             </div>
             }
+
+            </div>
+            }
+            
             </>
         )
 }

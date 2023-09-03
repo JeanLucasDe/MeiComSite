@@ -61,16 +61,14 @@ export default function FormAdd (props) {
 
     async function addItem () {
 
-        if (props.modalidade == "Restaurante") {
+        if (props.modalidade == "Alimentação") {
             props.produtos[0].push(
                 {
                     nome:nome.trim(),
                     preço:parseFloat(preço),
                     qtdSabores: parseFloat(qtdSabores),
                     preço: parseFloat(preço),
-                    qtdpessoas: parseFloat(qtdpessoas),
-                    espera: moment(espera).format('HH:MM'),
-                    estoque: parseFloat(estoque),
+                    qtdPessoas: parseFloat(qtdpessoas),
                     saborComida,
                 }
             )
@@ -190,216 +188,92 @@ export default function FormAdd (props) {
 
     return (
             <>
-            {props.modalidade == "Restaurante" &&
+            {props.modalidade == "Alimentação" &&
                 <div className={styles.container}>
                 <form className={styles.form}>
                     <h1>Novo produto</h1>
                     <div className={styles.line}></div>
-                    <div className="row">
-                        <div className="col-lg-6">
-                            <div className={styles.view_add}>
-                                <div className={styles.visu}>
-                                    {img1 || nome || desc || preço ?
-                                        <Visualizar 
-                                        tema={props.tema}
-                                        nome={nome}
-                                        imagem={driveimg1 ? `https://docs.google.com/uc?id=${img1}`: img1}
-                                        imagem2={driveimg2 ? `https://docs.google.com/uc?id=${img2}`: img2}
-                                        imagem3={driveimg3 ? `https://docs.google.com/uc?id=${img3}`: img3}
-                                        imagem4={driveimg4 ? `https://docs.google.com/uc?id=${img4}`: img4}
-                                        preço={preço}
-                                        desc={desc}
-                                        small_desc={small_desc}
-                                        cor={cor}
-                                        p={p}
-                                        m={m}
-                                        g={g}
-                                        serve={qtdpessoas}
-                                        espera={espera}
-                                        listaSabores={dados}
-                                        />
-                                        :
-                                        <h2>Comece a adicionar seu produto</h2>
-                                    }
+                    <div>
+                        <div className={styles.info}>
+                                    
+                            <strong>Nome:</strong>
+                            <input type="text" onChange={(el)=> setNome(el.target.value)}/>
+                            <div>
+                                <strong>Escolhe quantos sabores?</strong>
+                                <input type="number" onChange={(el)=> setQtdSabores(el.target.value)}/>
+                            </div>
+                            <strong>Preço:</strong>
+                            <input type="number" onChange={(el)=> setPreço(el.target.value)}/>
+                            <strong>Servem quantas pessoas:</strong>
+                            <input type="number" onChange={(el)=> setQtdPessoas(el.target.value)}/>
+                            <div className={`accordion ${styles.box_sabores}`} id="accordionExample" >
+                                <div className="accordion-item">
+                                    <h2 className="accordion-header">
+                                        <button className="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#sabores" aria-expanded="false" aria-controls="collapseOne">
+                                        Sabores
+                                        </button>
+                                    </h2>
+                                    <div id="sabores" className="accordion-collapse collapse">
+                                        <div className="accordion-body" >
+
+                                            <ul className={`${styles.saborescomida} saborescomida`}>
+                                                {saborComida.length > 0 && saborComida.map(item => {
+                                                    return (
+                                                            <li key={item.sabor}>
+                                                                <strong>{item.sabor}</strong>
+                                                                <FaTrash
+                                                                type="button"
+                                                                onClick={()=> retirarSabor(item.sabor)}
+                                                                />
+                                                            </li>
+                                                        )
+                                                })}
+                                            </ul>
+                                            <div>
+                                                <strong>Sabor</strong>
+                                                <input placeholder="Sabor" onChange={(el)=> setSabor(el.target.value)}
+                                                value={sabor}
+                                                />
+                                                <strong>Ingredientes</strong>
+                                                <input placeholder="Ingedientes" onChange={(el)=> setIngredientes(el.target.value)}
+                                                value={ingredientes}
+                                                />
+                                                {sabor && ingredientes && <button
+                                                onClick={()=> {
+                                                    if (!sabor && !ingredientes) return
+                                                    addSabor(sabor)}}
+                                                className={styles.btn_save}
+                                                >Salvar</button>}
+                                            </div>
+                                        </div>
+                                    </div>
+
                                 </div>
                             </div>
                         </div>
-                        <div className="col-lg-6">
-                                <div className={styles.info}>
-                                    <div className="row">
-                                        <div className="col-sm-6">
-                                            <strong>Imagem:</strong>
-
-                                            <div className={styles.check_box}>
-                                                <input type="checkbox"
-                                                checked={driveimg1}
-                                                onChange={()=> setDriveImg1(!driveimg1)}
-                                                />
-                                                <label>Ondrive</label>
-                                            </div>
-                                            
-                                            <input type="text" 
-                                            onChange={(el)=> 
-                                                setImg1(el.target.value)
-                                            }
-                                            
-                                            />
-                                            <div className="accordion" id="accordionExample">
-                                                <div className="accordion-item">
-                                                    <h2 className="accordion-header">
-                                                        <button className="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#imagens" aria-expanded="false" aria-controls="collapseOne">
-                                                        Imagens
-                                                        </button>
-                                                    </h2>
-                                                    <div id="imagens" className="accordion-collapse collapse">
-                                                        <div className="accordion-body">
-                                                            <strong>Imagem 2:</strong>
-                                                            <div className={styles.check_box}>
-                                                                <input type="checkbox"
-                                                                onClick={() => setDriveImg2(!driveimg2)} defaultChecked
-                                                                />
-                                                                <label>drive</label>
-                                                            </div>
-                                                            
-                                                            <input type="text" onChange={(el)=> {
-                                                                if (driveimg2) {
-                                                                    setImg2(formataTextoGoogleDrive(el.target.value))
-                                                                } else {
-                                                                    setImg2(el.target.value)
-                                                                }
-                                                            }
-
-                                                                }/> 
-                                                            <strong>Imagem 3:</strong>
-                                                            <div className={styles.check_box}>
-                                                                <input type="checkbox"
-                                                                onClick={() => setDriveImg3(!driveimg3)} defaultChecked
-                                                                />
-                                                                <label>drive</label>
-                                                            </div>
-                                                            
-                                                            <input type="text" onChange={(el)=> {
-                                                                if (driveimg3) {
-                                                                    setImg3(formataTextoGoogleDrive(el.target.value))
-                                                                } else {
-                                                                    setImg3(el.target.value)
-                                                                }
-                                                                }}/>
-
-                                                            <strong>Imagem 4:</strong>
-                                                            <div className={styles.check_box}>
-                                                                <input type="checkbox"
-                                                                onClick={() => setDriveImg4(!driveimg4)} defaultChecked
-                                                                />
-                                                                <label>drive</label>
-                                                            </div>
-                                                            
-                                                            <input type="text" onChange={(el)=> {
-                                                                if (driveimg4) {
-                                                                    setImg4(formataTextoGoogleDrive(el.target.value))
-                                                                } else {
-                                                                    setImg4(el.target.value)
-                                                                }
-                                                                }}/>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <strong>Nome:</strong>
-                                            <input type="text" onChange={(el)=> setNome(el.target.value)}/>
-                                            <strong>Descrição:</strong>
-                                            <textarea type="text" onChange={(el)=> setDesc(el.target.value)}/>
-
-                                            
-                                            <div>
-                                                <strong>Quantos sabores?</strong>
-                                                <input type="number" onChange={(el)=> setQtdSabores(el.target.value)}/>
-                                            </div>
-                                            
-
-                                            <strong>Preço:</strong>
-                                            <input type="number" onChange={(el)=> setPreço(el.target.value)}/>
-                                            <strong>Servem quantas pessoas:</strong>
-                                            <input type="number" onChange={(el)=> setQtdPessoas(el.target.value)}/>
-                                            <strong>Temp. Espera:</strong>
-                                            <input type="time" onChange={(el)=> setEspera(el.target.value)}/>
-                                            <strong>Estoque:</strong>
-                                            <input type="number" onChange={(el)=> setEstoque(el.target.value)}/>
-                                        </div>
-                                        <div className="col-sm-6">
-                                            <div className="accordion" id="accordionExample">
-                                                <div className="accordion-item">
-                                                    <h2 className="accordion-header">
-                                                        <button className="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#sabores" aria-expanded="false" aria-controls="collapseOne">
-                                                        Sabores
-                                                        </button>
-                                                    </h2>
-                                                    <div id="sabores" className="accordion-collapse collapse">
-                                                        <div className="accordion-body" >
-
-                                                            <ul className={`${styles.saborescomida} saborescomida`}>
-                                                                {saborComida.length > 0 && saborComida.map(item => {
-                                                                    return (
-                                                                            <li key={item.sabor}>
-                                                                                <strong>{item.sabor}</strong>
-                                                                                <FaTrash
-                                                                                type="button"
-                                                                                onClick={()=> retirarSabor(item.sabor)}
-                                                                                />
-                                                                            </li>
-                                                                        )
-                                                                })}
-                                                            </ul>
-                                                            <div>
-                                                                <strong>Sabor</strong>
-                                                                <input placeholder="Sabor" onChange={(el)=> setSabor(el.target.value)}
-                                                                value={sabor}
-                                                                />
-                                                                <strong>Ingredientes</strong>
-                                                                <input placeholder="Ingedientes" onChange={(el)=> setIngredientes(el.target.value)}
-                                                                value={ingredientes}
-                                                                />
-                                                                <FaPlusCircle type="button"
-                                                                onClick={()=> {
-                                                                    if (!sabor && !ingredientes) return
-                                                                    addSabor(sabor)}}
-                                                                />
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className={styles.cont_buttons}>
-                                    <button
-                                    onClick={(el)=> {
-                                        el.preventDefault()
-                                    }}
-                                    type={props.type}
-                                    data-bs-dismiss={props.dismiss}
-                                    aria-label={props.aria_label}
-                                    >Cancelar</button>
-                                    
-                                    {img1 && nome && desc && qtdSabores && qtdpessoas &&preço && espera && estoque && saborComida.length > 0 ? 
-                                    <button
-                                    onClick={(el)=> {
-                                        el.preventDefault()
-                                        addItem()
-                                    }}
-                                    className={styles.btn_confirm}
-                                    >Confirmar</button>:
-                                    <button
-                                    disabled
-                                    className={`${styles.btn_disabled} ${styles.btn_confirm}`}
-                                    >Confirmar</button>
-                                    }
-                                        
-                                    
-                                </div>
+                        <div className={styles.cont_buttons}>
+                            <button
+                            onClick={(el)=> {
+                                el.preventDefault()
+                            }}
+                            type={props.type}
+                            data-bs-dismiss={props.dismiss}
+                            aria-label={props.aria_label}
+                            >Cancelar</button>
+                            
+                            {nome && qtdSabores && preço && qtdpessoas && saborComida.length > 0 ? 
+                            <button
+                            onClick={(el)=> {
+                                el.preventDefault()
+                                addItem()
+                            }}
+                            className={styles.btn_confirm}
+                            >Confirmar</button>:
+                            <button
+                            disabled
+                            className={`${styles.btn_disabled} ${styles.btn_confirm}`}
+                            >Confirmar</button>
+                            }
                         </div>
                     </div>
                 </form>

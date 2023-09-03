@@ -9,6 +9,7 @@ import App from "../../Hooks/App"
 import '@firebase/firestore';
 import { getFirestore, collection, getDocs,updateDoc, doc} from "@firebase/firestore";
 import { Link } from "react-router-dom"
+import moment from "moment"
 
 
 
@@ -55,6 +56,8 @@ export default function Negocio () {
         nome = nome.split(' ')
         return nome[0] + " " + nome[1]
     }
+   
+    console.log(moment().format('HH:mm').toString())
 
     
     return (
@@ -64,44 +67,25 @@ export default function Negocio () {
                         return (
                                 <div className={styles.container} key={dados.iduser}>
                                     <h2 className={styles.razao}>Olá, {FormataNome(dados.nome)}</h2>
-                                    <div className="row">
-                                        <div className="col-sm-6 order-2">
-                                            <div className={styles.cont_info}>
-                                                <h3>Informações</h3>
-                                                <div className={styles.line}></div>
-                                                <p>Plano: <strong>{dados.plan}</strong></p>
-                                                <p>Membro desde: <strong>{dados.data}</strong></p>
-                                                <p>Modalidade: <strong>{dados.mod}</strong></p>
-                                                <p>Tema: <strong>{dados.theme}</strong></p>
-                                                <p>Funcionamento: 
-                                                    <strong> {dados.abre}:00h </strong> às  
-                                                    <strong> {dados.fecha}:00h </strong>
-                                                </p>
-                                                <p>Site: </p>{dados.status == "pronto" ? 
-                                                <span>
-                                                    <Link to={`/${dados.site}`} className={styles.link}
-                                                    target="_blank"
-                                                    >meicomsite.netlify.app/{dados.site}</Link>
-                                                </span>:
-                                                <strong className={styles.link}>{dados.status}</strong>
-                                                }
-                                                
-                                            </div>
-                                        </div>
-                                        <div className="col-sm-6 order-1">
-                                            <div className={styles.cont_theme}>
-                                                {Themes.map(item => {
-                                                    if (item.id == dados.idtheme) {
-                                                        return (
-                                                            <div className={styles.cont_img}>
-                                                                <img src={item.img} className={styles.img}/>
-                                                                <div className={styles.line}/>
-                                                            </div>
-                                                            )
-                                                        }
-                                                })}
-                                            </div>
-                                        </div>
+                                    <div className={styles.cont_info}>
+                                        <h5>Suas Informações</h5>
+                                        <div className={styles.line}></div>
+                                        <p>Membro desde: <strong>{dados.data}</strong></p>
+                                        <p>Modalidade: <strong>{dados.mod}</strong></p>
+                                        <p>Tema: <strong>{dados.theme}</strong></p>
+                                        <p>Funcionamento: 
+                                            <strong> {dados.abre}:00h </strong> às  
+                                            <strong> {dados.fecha}:00h </strong>
+                                        </p>
+                                        <p>Site: {dados.status == "pronto" ? 
+                                        <span>
+                                            <Link to={`/${dados.site}`} className={styles.link}
+                                            target="_blank"
+                                            >meicomsite.netlify.app/{dados.site}</Link>
+                                        </span>:
+                                        <strong className={styles.link}>{dados.status}</strong>
+                                        }
+                                        </p>
                                     </div>
                                 </div>
                             )

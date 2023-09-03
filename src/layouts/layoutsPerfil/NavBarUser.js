@@ -92,7 +92,7 @@ export default function NavBarUser () {
                     className={({ isActive, isPending }) =>
                         isPending ? styles.isPendingMob : isActive ? styles.isActiveMob : styles.isPendingMob
                     }
-                    >Produtos
+                    >Loja
                     </NavLink>  
                 </SwiperSlide>
                 <SwiperSlide>
@@ -165,7 +165,7 @@ export default function NavBarUser () {
                         className={({ isActive, isPending }) =>
                             isPending ? styles.isPending : isActive ? styles.isActive : styles.isPending
                         }
-                        ><FaLayerGroup className={styles.icon}/> Produtos
+                        ><FaLayerGroup className={styles.icon}/> Loja
                         </NavLink>
                         <NavLink
                         to="/perfil/user/online"

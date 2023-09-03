@@ -8,7 +8,7 @@ import {auth} from "../../Service/firebase"
 import App from "../../Hooks/App"
 import '@firebase/firestore';
 import { getFirestore, collection, getDocs, updateDoc, doc} from "@firebase/firestore";
-import {FaPlusCircle, FaRegSave, FaTrashAlt} from "react-icons/fa"
+import {FaEdit, FaPlusCircle, FaRegSave, FaTrashAlt} from "react-icons/fa"
 import moment from 'moment/moment';
 import { Link } from "react-router-dom"
 import FormularioCadastro from "../Cadastro/FormularioCadastro"
@@ -25,6 +25,9 @@ export default function FormularioEdit () {
     const [ação, setAção] = useState()
     const [novaCidade, setNovaCidade] = useState()
     const [novoBairro, setNovoBairro] = useState()
+    const [deleteCidade, setDeleteCidade] = useState()
+    var [seed, setSeed] = useState(0)
+    const [deletebairro, setDeleteBairro] = useState()
     const [taxa, setTaxa] = useState()
     const UserCollection = collection(db, "MeiComSite")
 
@@ -70,13 +73,13 @@ export default function FormularioEdit () {
     const [site, setSite]= useState()
     const [logo, setLogo] = useState()
     const [plan, setPlan] = useState()
-    const [modplan, setModPlan] = useState(false)
     const [stateTheme,setStateTheme] = useState(false)
     const [stateMod,setStateMod] = useState(false)
     const [theme, setTheme] = useState()
     const [mod, setMod] = useState()
-    const [addCidade, setAddCidade] = useState(false)
-    const [addBairro, setAddBairro] = useState(false)
+    const [alterMod, setAlterMod] = useState(false)
+    const [addCidade, setAddCidade] = useState()
+    const [addBairro, setAddBairro] = useState()
     
 
    const Edit = (tema) => {
@@ -101,27 +104,25 @@ export default function FormularioEdit () {
         }
     })
     
-
-
     const salvarLocal = async () => {
         listCidades.push({local: novaCidade})
         listBairros.push({local: novoBairro, taxa:parseFloat(taxa)})
+        setSeed(seed += 1)
 
         if (novaCidade) {
             await updateDoc(doc(db, `MeiComSite`, user.email), {
                 listCidades: listCidades
             });
+            setAddCidade(!addCidade)
+            toast.success('Cidade Adicionada!')
         }
         if (novoBairro && taxa) {
             await updateDoc(doc(db, `MeiComSite`, user.email), {
                 listBairros: listBairros
             });
-        } else {
-            toast.error('Informa a taxa de entrega!')
-            return
-        }
-        
-        window.location.reload()
+            setAddBairro(!addBairro)
+            toast.success('Bairro Adicionado!')
+        } 
     }
 
     const obj = {
@@ -136,6 +137,8 @@ export default function FormularioEdit () {
         logo, 
         novoBairro,
         novaCidade,
+        deletebairro,
+        deleteCidade,
         listBairros,
         listCidades,
         ação:ação
@@ -155,8 +158,12 @@ export default function FormularioEdit () {
             if (dados.iduser == user.id) {
                 return (
                     <>
+                        {dados.status != "pronto" && 
+                        <div className={styles.status}>
+                            <p>Status : <strong>{dados.status}</strong></p>
+                        </div>}
                         <div className={styles.container} key={dados.id}>
-                            <h4>Dados Pessoais Edit</h4>
+                            <h4>Meu Perfil</h4>
                             <form className={`row ${styles.form}`}>
                                 <div className={`row ${styles.dados}`}>
                                     <div className="col-lg-6">
@@ -202,49 +209,9 @@ export default function FormularioEdit () {
                                             setPhone(el.target.value)
                                         }}
                                         defaultValue={dados.telefone}/>
-                                        {dados.plan != "Basic" &&
-                                            <div>
-                                                <label>Token Mercado Pago *</label>
-                                                <input type="text"
-                                                onChange={(el)=> {
-                                                    setToken(el.target.value)
-                                                }}
-                                                defaultValue={dados.token}/>
-                                            </div>
-                                        
-                                        }
-                                        
-                                        <div className={styles.cont_plan}>
-                                            <label>Plano:</label>
-                                            {!modplan ? 
-                                            <strong>{dados.plan}</strong>:
-                                            
-                                            <select defaultValue={dados.plan}
-                                            onChange={(el)=> setPlan(el.target.value)}
-                                            >
-                                                <option>Basic</option>
-                                                <option>Plus</option>
-                                                <option>Premium</option>
-                                            </select>
-
-                                            }
-
-                                            <button className="button_link"
-                                            onClick={(el)=> {
-                                                el.preventDefault()
-                                                setModPlan(!modplan)
-                                            }}
-                                            >
-                                                alterar
-                                            </button>
-                                        </div>
-                                    </div>
-
-                                    <div className={styles.status}>
-                                        <p>status : <strong>{dados.status}</strong></p>
                                     </div>
                                     <div className={styles.cont_save}>
-                                        {nome || phone || razao || token  || plan || site || logo ?
+                                        {nome || phone || razao || site || logo ?
                                             <button
                                             type="button" 
                                             data-bs-toggle="modal" 
@@ -254,7 +221,7 @@ export default function FormularioEdit () {
                                                 setAção("Editar")
                                             }}
                                             >
-                                                salvar
+                                                Salvar
                                             </button>
                                         :
                                         <button
@@ -262,7 +229,7 @@ export default function FormularioEdit () {
                                         onClick={(el)=> {
                                             el.preventDefault()
                                         }}
-                                        >salvar</button>
+                                        >Salvar</button>
                                         }   
                                     </div>
                                 </div>
@@ -271,47 +238,61 @@ export default function FormularioEdit () {
 
 
 
-
+                        <div className={styles.line}/>
                         <div className={styles.container}>
-                            <label className={styles.title_small}>Áreas Atendidas</label>
-                            <div className={styles.cont_dashed_no_padding}>
+                            <h4>Áreas Atendidas</h4>
+                            <div>
                                 <div className="row">
                                     <div className="col-md-6">
                                         <p className={styles.p}>Cidades</p>
                                         {addCidade && 
-                                        <div className={styles.flex}>
+                                        <div>
                                             <input type="text" 
                                             onChange={(el)=> setNovaCidade(el.target.value)}
                                             placeholder="Nome da Cidade"
+                                            className={styles.input}
                                             />
-
-                                            <FaRegSave
-                                            className={styles.btn_save}
-                                            onClick={(e)=> {
-                                                e.preventDefault()
-                                                if (!novaCidade) return 
-                                                salvarLocal()
-                                            }}
-                                            />
+                                            <div className={styles.flex}>
+                                                <button
+                                                className={styles.btn_save}
+                                                onClick={(e)=> {
+                                                    e.preventDefault()
+                                                    if (!novaCidade) return 
+                                                    salvarLocal()
+                                                }}
+                                                >Salvar</button>
+                                                <button
+                                                onClick={(e)=> {
+                                                    e.preventDefault()
+                                                    setAddCidade(!addCidade)
+                                                }}
+                                                className={styles.btn_cancel}
+                                                >Cancelar</button>
+                                            </div>
                                         </div>
                                         }
-                                        {!addBairro &&
+                                        {!addCidade &&
                                             <button
                                             className={styles.btn_add_cidade}
                                             onClick={(e)=> {
                                                 e.preventDefault()
                                                 setAddCidade(!addCidade)
                                             }}
-                                            >{!addCidade ? <span><FaPlusCircle/> Adicionar</span>: "Cancelar"}</button>
+                                            ><FaPlusCircle/> Adicionar
+                                            </button>
                                         }
                                     </div>
+
+
+
                                     <div className="col-md-6">
-                                        <div className={styles.flex_space_around}>
+                                        <div>
                                             <select
-                                            onChange={(el)=> setNovaCidade(el.target.value)
-                                            
-                                            }
+                                            onChange={(el)=> setDeleteCidade(el.target.value)}
+                                            className={styles.input}
+                                            key={seed}
                                             >
+                                                <option>--</option>
                                                 {dados.listCidades && dados.listCidades.map(item => {
                                                     return (
                                                         <option value={item.local}>
@@ -320,8 +301,8 @@ export default function FormularioEdit () {
                                                         )
                                                 })}
                                             </select>
-                                            {novaCidade &&
-                                                <FaTrashAlt
+                                            {!deleteCidade || deleteCidade != "--" &&
+                                                <button
                                                 type="button" 
                                                 data-bs-toggle="modal" 
                                                 data-bs-target="#ModalAdd"
@@ -329,7 +310,8 @@ export default function FormularioEdit () {
                                                     el.preventDefault()
                                                     setAção("Deletar Cidade")
                                                 }}
-                                                />
+                                                className={styles.btn_delete}
+                                                >Apagar</button>
                                             }
                                         </div>
                                     </div>
@@ -338,47 +320,64 @@ export default function FormularioEdit () {
                                 <div className="row">
                                     <div className="col-md-6">
                                         <p className={styles.p}>Bairros</p>
-                                        {addBairro && 
+                                        {!addCidade && addBairro && 
                                         <div className={styles.cont_input}>
                                             <input type="text" 
                                             placeholder="Nome do bairro"
                                             onChange={(el)=> setNovoBairro(el.target.value)}
+                                            className={styles.input}
                                             />
                                             <input type="number" 
                                             placeholder="Taxa de Entrega"
                                             onChange={(el)=> setTaxa(el.target.value)}
+                                            className={styles.input}
                                             />
-                                            <FaRegSave
-                                            className={styles.btn_save}
-                                            onClick={(e)=> {
-                                                e.preventDefault()
-                                                if (!novoBairro) return 
-                                                salvarLocal()
-                                            }}
-                                            />
+                                            <div className={styles.flex}>
+                                                <button
+                                                className={styles.btn_save}
+                                                onClick={(e)=> {
+                                                    e.preventDefault()
+                                                    if (!novoBairro && !taxa) return 
+                                                    salvarLocal()
+                                                }}
+                                                >Salvar</button>
+                                                <button
+                                                onClick={(e)=> {
+                                                    e.preventDefault()
+                                                    setAddBairro(!addBairro)
+                                                }}
+                                                className={styles.btn_cancel}
+                                                >Cancelar</button>
+                                            </div>
                                         </div>
                                         }
-                                        {!addCidade &&
+                                        {!addBairro &&
                                         <button
                                         className={styles.btn_add_cidade}
                                         onClick={(e)=> {
                                             e.preventDefault()
                                             setAddBairro(!addBairro)
                                         }}
-                                        >{!addBairro ? <span><FaPlusCircle/> Adicionar</span> : "Cancelar"}</button>
+                                        ><FaPlusCircle/> Adicionar</button>
                                         }
                                     </div>
                                     <div className="col-md-6">
-                                        <div className={styles.flex_space_around}>
-                                            <select onChange={(el)=> setNovoBairro(el.target.value)}>
+                                        <div >
+                                            <select onChange={(el)=> setDeleteBairro(el.target.value)}
+                                            className={styles.input}
+                                            key={seed}
+                                            >
+                                                <option>--</option>
                                                 {dados.listBairros && dados.listBairros.map(item => {
                                                     return (
-                                                        <option value={item.local} key={item.local}>{item.local}</option>
+                                                        <option value={item.local} key={item.local}>
+                                                            {item.local} - {item.taxa}
+                                                        </option>
                                                         )
                                                 })}
                                             </select>
-                                            {novoBairro &&
-                                                <FaTrashAlt
+                                            {!deletebairro || deletebairro != "--" &&
+                                                <button
                                                 type="button" 
                                                 data-bs-toggle="modal" 
                                                 data-bs-target="#ModalAdd"
@@ -386,7 +385,8 @@ export default function FormularioEdit () {
                                                     el.preventDefault()
                                                     setAção("Deletar Bairro")
                                                 }}
-                                                />
+                                                className={styles.btn_delete}
+                                                >Apagar</button>
                                             }
                                         </div>
                                     </div>
@@ -396,96 +396,65 @@ export default function FormularioEdit () {
 
 
 
-
+                        <div className={styles.line}/>
 
                         <div className={styles.container}>
                             <h4>Seu negócio</h4>
                             <div className={`col-sm-12`}>
-                                <div className={styles.cont_dashed}>
+                                <div>
                                     <div className="row">
                                         <div className="col-md-6">
                                             <div className={styles.cont_theme}>
-                                                <label>Modalidade</label>
-                                                <strong>{dados.mod}</strong>
-                                            </div>
-                                            </div>
-                                            <div className="col-md-6">
-                                                <div className={styles.cont_theme}>
-                                                    <label>Tema:</label>
-                                                    {!stateTheme ? 
-                                                        <div className={styles.flex}>
-                                                            <strong>{dados.theme}</strong>
-                                                        </div>
-                                                    
-                                                    :
-                                                    <strong>{theme}</strong>
-                                                }
-                                                <button
-                                                onClick={(el)=>
-                                                {
-                                                    el.preventDefault()
-                                                    Edit(dados.theme)
-                                                }
-                                                }
-                                                className={styles.btn_theme}
-                                                >alterar</button>
-                                                    
+                                                <label>Segmento:</label>
+                                                {!alterMod &&
+                                                <div>
+                                                    <strong>{dados.mod}</strong>
+                                                    <FaEdit
+                                                    onClick={() => setAlterMod(!alterMod)}
+                                                    type="button"
+                                                    />
                                                 </div>
-                                            </div>
-                                        </div>
-                                        {stateTheme && <div className={styles.container_themes}>
-                                        <Swiper
-                                        spaceBetween={10}
-                                        className={styles.cont_slides}
-                                        breakpoints={{
-                                            320: {
-                                            width: 320,
-                                            slidesPerView: 1,
-                                            },
-                                            768: {
-                                                width: 768,
-                                                slidesPerView: 2,
-                                            },
-                                        }}
-                                        >
-                                            {Themes.map(item => {
-                                                if (item.modalidade == dados.mod) {
-                                                    return (
-                                                        <SwiperSlide key={item.id} className={styles.item}
+                                                }
+                                                {alterMod && alterMod != "--" &&
+                                                <div>
+                                                    <select
+                                                    onChange={(el)=> setMod(el.target.value)}
+                                                    className={styles.input}
+                                                    >
+                                                        <option>--</option>
+                                                        <option>Alimentação</option>
+                                                        <option>Prest. Serviços</option>
+                                                    </select>
+                                                    {mod && mod != "--" &&
+                                                        <button
+                                                        className={`${styles.save} ${styles.btn_delete}`}
+                                                        type="button" 
+                                                        data-bs-toggle="modal" 
+                                                        data-bs-target="#ModalAdd"
                                                         onClick={(el)=> {
                                                             el.preventDefault()
-                                                            setTheme(item.name)
+                                                            setAção("Editar")
                                                         }}
                                                         >
-                                                            <img src={""} className={styles.img}/>
-                                                            <div className={styles.cont_escolha}>
-                                                                <p>{item.name}</p>
-                                                            </div>
-                                                        </SwiperSlide>
-                                                        )
+                                                            Salvar
+                                                        </button>
+                                                    }
+
+                                                    <button
+                                                    className={`${styles.btn_delete}`}
+                                                    onClick={()=> {
+                                                        setMod('')
+                                                        setAlterMod(false)
+                                                    }}
+                                                    >
+                                                        Cancelar
+                                                    </button>
+                                                </div>
                                                 }
-                                            })}
-                                        </Swiper>
-                                        <div className={styles.cont_btn_save}>
-                                            <button
-                                            onClick={(el)=> {
-                                            el.preventDefault()
-                                            Edit()
-                                            }}
-                                            >cancelar</button>
-                                            
-                                            <button
-                                            onClick={(el)=> {
-                                                setAção("Editar negocio")
-                                                el.preventDefault()
-                                                }}
-                                                type="button" 
-                                                data-bs-toggle="modal" 
-                                                data-bs-target="#ModalAdd"
-                                            >salvar</button>
+                                                
+                                            </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                    }
                                 </div>
                             </div>
                     </div>

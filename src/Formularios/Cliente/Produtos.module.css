@@ -8,6 +8,7 @@
     border-radius: 25px;
     background-color: #fa8e01;
     color: #fff;
+    margin-top: 3em;
 }
 .info {
     margin-left: 1em;
@@ -18,9 +19,15 @@
     margin-top: 3em;
 }
 .list li {
-    border-bottom: 1px solid #afafaf;
     margin-bottom: 1em;
-    padding: 1em;
+}
+.cont_empty {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    flex-direction: column;
+    margin: 4em 0em ;
 }
 .img {
     width: 100%;
@@ -55,6 +62,7 @@
 .title {
     text-transform: capitalize;
     margin-top: 0.8em;
+    text-align: center;
 }
 .container_off {
     width: 90%;
