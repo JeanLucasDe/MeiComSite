@@ -1,14 +1,15 @@
 .container {
-    width: 90%;
+    width: 100%;
     margin: 1em auto;
 }
 .container button {
     border: none;
-    padding: 0.9em;
+    padding: 0.7em;
     border-radius: 25px;
     background-color: #fa8e01;
     color: #fff;
-    margin-top: 3em;
+    margin: 2em auto;
+    width: 100%;
 }
 .info {
     margin-left: 1em;
@@ -17,6 +18,8 @@
     list-style-type: disc;
     padding: 0em;
     margin-top: 3em;
+    width: 90%;
+    margin: 0em auto;
 }
 .list li {
     margin-bottom: 1em;

@@ -132,7 +132,7 @@ export default function Produtos () {
                     data-bs-toggle="modal" 
                     data-bs-target={`#ModalAdd`}
                     ><FaPlusCircle/> Novo produto</button>
-                    <h2 className={styles.title}>{categoriaa}</h2>
+                    <h3 className={styles.title}>{categoriaa}</h3>
                     <ul className={styles.list}>
                         {produtos.length > 0 && listReturn.map(dados => {
                             if (dados.produtos) {

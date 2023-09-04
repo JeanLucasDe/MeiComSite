@@ -127,9 +127,6 @@ export default function Informations () {
                 <>
                     {usuario && usuario[0].status == "Em análise" ?
                     mod ? 
-
-
-
                     <div className={styles.cont_btn}>
                         <button className={styles.btn}
                         type="button" 
