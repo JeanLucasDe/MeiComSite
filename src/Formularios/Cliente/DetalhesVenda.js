@@ -35,12 +35,6 @@ export default function DetalhesVenda (props) {
                             <p className={styles.info}>Nome: <span>{obj && obj.nome}</span></p>
                             <p className={styles.info}>Telefone: <span>{obj && obj.telefone}</span></p>
                             <p className={styles.info}>Pagamento: <span>{obj && obj.pagamento}</span></p>
-                            <p className={styles.info}>Status: <span
-                            className={obj && obj.state == 4 ? styles.ok : styles.off}
-
-                            >{obj && obj.state == 4 ? <span><FaCheck/> {obj && obj.state}</span> : 
-                            <span
-                            ><FaExclamation/>{obj && obj.state}</span>}</span></p>
                         </div>
                         <div className="col-sm-6">
                             <p className={styles.info}>Cidade: <span>{obj && obj.cidade}</span></p>

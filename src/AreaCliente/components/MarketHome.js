@@ -231,6 +231,7 @@ export default function MarketHome () {
 
                             <div className={styles.cont_user}>
                                 <FaUserCircle className={styles.user}/>
+                                <p>{usuario.length > 0 && usuario[0].telefone}</p>
                             </div>
 
                             <div className={styles.cont_persons}>

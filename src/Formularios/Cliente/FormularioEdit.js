@@ -7,10 +7,9 @@ import { useState,useEffect } from "react"
 import {auth} from "../../Service/firebase"
 import App from "../../Hooks/App"
 import '@firebase/firestore';
-import { getFirestore, collection, getDocs, updateDoc, doc} from "@firebase/firestore";
-import {FaEdit, FaPlusCircle, FaRegSave, FaTrashAlt} from "react-icons/fa"
+import { getFirestore, collection, getDocs, updateDoc, doc, deleteDoc} from "@firebase/firestore";
+import {FaEdit, FaPlusCircle} from "react-icons/fa"
 import moment from 'moment/moment';
-import { Link } from "react-router-dom"
 import FormularioCadastro from "../Cadastro/FormularioCadastro"
 import { toast, ToastContainer } from "react-toastify"
 import 'react-toastify/dist/ReactToastify.css';
@@ -80,12 +79,13 @@ export default function FormularioEdit () {
     const [alterMod, setAlterMod] = useState(false)
     const [addCidade, setAddCidade] = useState()
     const [addBairro, setAddBairro] = useState()
+    const [deleteEmail, setDeleteEmail] = useState()
     
 
-   const Edit = (tema) => {
-        setStateTheme(!stateTheme)
-        setStateMod(!stateMod)
-        setTheme(tema)
+   const ApagaUsuário = async () => {
+    const ref = doc(db, `MeiComSite`, user && user.email)
+    await deleteDoc(ref)
+    window.location.reload()
     }
     
 
@@ -458,29 +458,68 @@ export default function FormularioEdit () {
                                 </div>
                             </div>
                     </div>
+                    <div className={styles.line}/>
+
+                    <div className={styles.container}>
+                        <h4>Área de Perigo</h4>
+                        <button
+                        type="button" 
+                        data-bs-toggle="modal" 
+                        data-bs-target="#ModalDeleteUser"
+                        className={styles.btn_delete_account}
+                        >Deletar esta conta</button>
+                    </div>
                 </>
                 )
             }
-        })        }
+        })        
+        
+        }
          
 
         {usuario && usuario.length == 0 &&
         <FormularioCadastro/>
         }
+        <div className="modal fade" id="ModalDeleteUser" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div className={`modal-dialog modal-md`}>
+                <div className="modal-content">
+                    <div className={styles.cont_delete_user}>
+                        <div className={styles.title_delete}>
+                            <h4>Você Tem Certeza?</h4>
+                            <p>Escreva seu email para continuar:</p>
+                        </div>
+                        <strong>{user && user.email}</strong>
+                        <input type="text" 
+                        className={styles.input}
+                        placeholder="Digite aqui seu email..."
+                        onChange={(el)=> setDeleteEmail(el.target.value)}
+                        />
+                        {user && deleteEmail == user.email &&
+                        <button
+                        className={`${styles.all_right} ${styles.btn_delete_account}`}
+                        onClick={()=> {
+                            ApagaUsuário()
+                        }}
+                        >Apagar Usuário</button>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
 
 
         <div className="modal fade" id="ModalAdd" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div className={`modal-dialog modal-md`}>
-            <div className="modal-content">
-                <BoxConfirm
-                obj={obj}
-                type="button" 
-                data_bs_toggle="modal" 
-                data_bs_target="#ModalAdd"
-                />
+                <div className="modal-content">
+                    <BoxConfirm
+                    obj={obj}
+                    type="button" 
+                    data_bs_toggle="modal" 
+                    data_bs_target="#ModalAdd"
+                    />
+                </div>
             </div>
         </div>
-    </div>
             <ToastContainer/>
         </>
         )

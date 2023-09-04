@@ -116,12 +116,13 @@ export default function BoxConfirm (props) {
         window.location.reload()
     }   
 
+
     const DeletarProduto = async () => {
         let index = obj.lista && obj.dados && obj.lista.findIndex(prop=> prop.nome == obj.dados.nome)
         obj.lista && obj.lista.splice(index, 1)
 
         
-        await updateDoc(doc(db, `MeiComSite/${user && user.email}/produtos`, obj.categoriaa), {
+        await updateDoc(doc(db, `MeiComSite/${user && user.email}/produtos`, obj.id), {
             produtos: obj.lista && obj.lista
         });
         window.location.reload()

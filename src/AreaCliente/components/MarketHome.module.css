@@ -237,6 +237,10 @@
         display: flex;
         align-items: center;
     }
+    .Wpp .cont_user p {
+        margin: 0em 0em 0em 1em;
+        font-weight: 600;
+    }
     .Wpp .user {
         font-size: 2em;
     }

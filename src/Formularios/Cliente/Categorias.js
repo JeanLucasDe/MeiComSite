@@ -31,7 +31,7 @@ export default function Informations () {
     }
     const idCat = geraId()
     const addCategoria = async () => {
-        await setDoc(doc(db, `MeiComSite/${usuario && usuario[0].email}/produtos`, `${categoria}`), {
+        await setDoc(doc(db, `MeiComSite/${usuario && usuario[0].email}/produtos`, `${idCat}`), {
             categoria: categoria.trim(),
             mostrar:mostrar ? mostrar : false,
             destaque:destaque ? destaque : false,
@@ -44,9 +44,6 @@ export default function Informations () {
     const editCategoria = async () => {
         await updateDoc(doc(db, `MeiComSite/${usuario && usuario[0].email}/produtos`, `${produto && produto.id}`), {
             categoria: categoria ? categoria : produto.categoria
-        });
-        await updateDoc(doc(db, `MeiComSite/${usuario && usuario[0].email}/produtos`, `${produto && produto.id}`), {
-            img: imagem ? imagem : produto.img
         });
         await updateDoc(doc(db, `MeiComSite/${usuario && usuario[0].email}/produtos`, `${produto && produto.id}`), {
             destaque: destaque 

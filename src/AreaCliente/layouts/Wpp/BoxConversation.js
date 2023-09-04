@@ -33,7 +33,6 @@ export default function BoxConversation (props) {
     const [nome, setNome] = useState()
     const [editNome, setEditNome] = useState()
     const [cidade, setCidade] = useState()
-    const [taxa, setTaxa] = useState()
     const [rua, setRua] = useState()
     const [editRua, setEditRua] = useState()
     const [editCidade, setEditCidade] = useState()
@@ -162,6 +161,15 @@ export default function BoxConversation (props) {
         return produtosSalvos
     }
 
+    const PegaTaxa = () => {
+        var bairroS = bairro && bairro.toString().split('-')
+        const index =  usuario && bairroS && usuario.listBairros.filter(dados => dados.local == bairroS[0].trim())
+        const taxa = index && index[0].taxa
+        return parseFloat(taxa)
+    }
+
+    const taxa = PegaTaxa()
+
     function pegaPreco() {
         let listGeral = []
         if (localStorage.hasOwnProperty(`itenscarrinho.${site}`)) {
@@ -173,7 +181,7 @@ export default function BoxConversation (props) {
             let listPrecos = []
             listGeral.map(item => {return listPrecos.push({valor: item.valor})})
             var soma = listPrecos.reduce((soma, i) => {return soma + i.valor}, 0)
-            return taxa ? soma + taxa : soma
+            return  taxa ? soma += taxa: soma
         }
     }
     const Total = pegaPreco()
@@ -202,6 +210,7 @@ export default function BoxConversation (props) {
             telefone, 
             cidade, 
             bairro,
+            taxa,
             rua,
             moradia,
             numero, 
@@ -412,7 +421,7 @@ export default function BoxConversation (props) {
                                         <div className="accordion-item">
                                             <h2 className="accordion-header">
                                                 <button className="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#detalhes" aria-expanded="false" aria-controls="collapseOne">
-                                                Minhas Compras
+                                                Ver Minhas Compras
                                                 </button>
                                             </h2>
                                             <div id="detalhes" className="accordion-collapse collapse">
@@ -422,14 +431,16 @@ export default function BoxConversation (props) {
                                                             {ListaEscolha && ListaEscolha.length > 0 && ListaEscolha.map((item, index)=> {
                                                             return (
                                                                         <li className={styles.item_escolha} key={index}>
-                                                                            <FaTrashAlt
-                                                                            className={styles.btn_delete_item}
-                                                                            onClick={()=> {
-                                                                                DeletaEscolha(index)
-                                                                            }}
-                                                                            />
                                                                             <div>
-                                                                                <p>{item.categoria} <strong>R${item.valor}</strong></p>
+                                                                                <strong>
+                                                                                    <FaTrashAlt
+                                                                                    className={styles.btn_delete_item}
+                                                                                    onClick={()=> {
+                                                                                        DeletaEscolha(index)
+                                                                                    }}
+                                                                                    />
+                                                                                    {item.categoria} {FormataValor(item.valor)}
+                                                                                </strong>
                                                                                 <ul className={styles.list_escolha_sabores}>
                                                                                     {item.produtos.map(info => {
                                                                                         return (
@@ -456,15 +467,15 @@ export default function BoxConversation (props) {
                                         if (next > 4) return
                                         setNext(1)
                                     }}
-                                    >Continuar Pedindo</button>
+                                    >Pedir mais</button>
                                     <button
-                                    className={`${styles.btn_escolha}`}
+                                    className={`${styles.btn_escolha} ${styles.continue}`}
                                     onClick={()=> {
                                         if (next > 4) return
                                         setNext(5)
                                         DescePágina()
                                     }}
-                                    >Confirmar Dados</button>
+                                    >Confirmar Pedido</button>
                                     
                                 </div>
 
@@ -588,14 +599,13 @@ export default function BoxConversation (props) {
                                     {next == 7 ? <select
                                     onChange={(el) => {
                                         setBairro(el.target.value)
-                                        
                                     }}
                                     >
                                     <option>--</option>
                                     {usuario.listBairros.map(dados => {
                                         return (
                                             <option
-                                            >{dados.local} - ({FormataValor(dados.taxa)}) </option>
+                                            >{dados.local} - ({FormataValor(parseFloat(dados.taxa))}) </option>
                                             )
                                     })}
                                     </select>
@@ -892,7 +902,7 @@ export default function BoxConversation (props) {
                                     </div>  
                                     }
 
-                                    {referencia && next <= 12 &&
+                                    {telefone && next <= 12 &&
                                         <button
                                         className={styles.btn_continue}
                                         onClick={() => {

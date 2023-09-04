@@ -78,12 +78,11 @@ export default function Produtos () {
     const listProdutosTemp = []
 
     const cat = produtos.length > 0 && produtos.filter(dados => dados.categoria == categoriaa)
-    const img = cat && cat[0].img
-    const destaque = cat && cat[0].destaque
-    const mostrar = cat && cat[0].mostrar
-    const text = cat && cat[0].text
-    const id = cat && cat[0].id
-    listProdutosTemp.push(cat && cat[0].produtos)
+    const destaque = cat.length > 0 && cat[0].destaque
+    const mostrar = cat.length > 0 && cat[0].mostrar
+    const text = cat.length > 0 && cat[0].text
+    const id = cat.length > 0 && cat[0].id
+    listProdutosTemp.push(cat.length > 0 && cat[0].produtos)
 
     const FormataValor = (valor) => {
         var valorFormatado = valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
@@ -123,9 +122,6 @@ export default function Produtos () {
     } else {
         dadosTest && dadosTest.map(dados => listReturn.push(dados))
     }
-
-
-
 
 
     return (
@@ -206,7 +202,9 @@ export default function Produtos () {
                             categoria = {categoriaa}
                             modalidade= {usuario.length > 0 && usuario[0].mod}
                             tema = {usuario.length > 0 && usuario[0].theme} 
+                            dados={obj}
                             produtos = {listProdutosTemp && listProdutosTemp}
+                            listaProd={listReturn.length> 0 && listReturn[0].produtos}
                             destaque={destaque}
                             mostrar={mostrar}
                             modo={mod}

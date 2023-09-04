@@ -178,7 +178,7 @@ export default function TodasVendas (props) {
                             <tr>
                                 <td className={styles.td_header}>Id <span className={styles.view_desk}>Venda</span></td>
                                 <td className={`${styles.td_header} ${styles.view_desk }`}>Status</td>
-                                <td className={styles.td_header}>Data</td>
+                                <td className={`${styles.td_header} ${styles.view_desk }`}>Data</td>
                                 <td className={styles.td_header}>Comprador</td>
                                 <td className={styles.td_header}>Total</td>
                             </tr>
@@ -197,7 +197,7 @@ export default function TodasVendas (props) {
                                     >
                                         <td className={styles.td}>{dados.iden}</td>
                                         <td className={`${styles.td} ${styles.view_desk }`}>{dados.state}</td>
-                                        <td className={styles.td}>{dados.data}</td>
+                                        <td className={`${styles.td} ${styles.view_desk }`}>{dados.data}</td>
                                         <td className={styles.td}>{dados.nome}</td>
                                         <td className={styles.td}>{FormataValor(dados.Total)}</td>
                                     </tr>

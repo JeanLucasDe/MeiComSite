@@ -17,6 +17,10 @@ export default function FormularioCadastro () {
     const db = getFirestore(App)
     const [load, setLoading] = useState(false)
     const UserCollection = collection(db, "MeiComSite")
+    const formataHora = (hora) => {
+        var hora = moment(hora).format('HH:mm').toString()
+        return hora
+    }
     
     useEffect(()=>{
         auth.onAuthStateChanged(user => {
@@ -71,7 +75,7 @@ export default function FormularioCadastro () {
     const [deleteCidade, setDeleteCidade] = useState()
     const [fecha, setFecha] = useState()
     var [seed, setSeed] = useState(0)
-    const [site, setSite] = useState()
+    const [site, setSite] = useState('')
     const [nascimento,setNascimento] = useState()
     const [novaCidade, setNovaCidade] = useState()
     const [novoBairro, setNovoBairro] = useState()
@@ -203,26 +207,26 @@ export default function FormularioCadastro () {
                                                 <label>Abertura *</label>
                                                 <input type="time"
                                                 onChange={(el)=> {
-                                                    setAbertura(el.target.value)
+                                                    setAbertura(formataHora(el.target.value))
                                                 }}
                                                 required
                                                 />
                                                 <label>Fechamento *</label>
                                                 <input type="time"
                                                 onChange={(el)=> {
-                                                    setFecha(el.target.value)
+                                                    setFecha(formataHora(el.target.value))
                                                 }}
                                                 required
                                                 max={8}
                                                 />
                                                 <label>Site *</label>
-                                                <strong className={styles.block}>meicomsite.netlify.com/{site}</strong>
+                                                <strong className={styles.block}>meicomsite.netlify.com/{site.toLowerCase().replaceAll(' ', '')}</strong>
                                                 
                                                 <input type="text"
                                                 onChange={(el)=> {
-                                                    setSite(el.target.value)
+                                                    setSite(el.target.value.toLowerCase().replaceAll(' ', ''))
                                                 }}
-                                                maxLength={12}
+                                                maxLength={10}
                                                 required
                                                 placeholder="meusite"
                                                 />

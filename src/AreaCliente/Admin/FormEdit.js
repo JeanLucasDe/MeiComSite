@@ -38,7 +38,7 @@ export default function FormEdit (props) {
         if (ação == "Excluir") {
             let index = obj.dados.saborComida.findIndex(prop => prop.sabor == escolhaSabor)
             obj.dados.saborComida.splice(index,1)
-            await updateDoc(doc(db, `MeiComSite/${id && id}/produtos`, obj.categoriaa), {
+            await updateDoc(doc(db, `MeiComSite/${id && id}/produtos`, obj.id), {
                 produtos: obj.lista
             });
             window.location.reload()
@@ -72,7 +72,7 @@ export default function FormEdit (props) {
         objeto['preço'] = !preço ? objeto['preço'] : parseFloat(preço)
 
 
-        await updateDoc(doc(db, `MeiComSite/${id && id}/produtos`, obj.categoriaa), {
+        await updateDoc(doc(db, `MeiComSite/${id && id}/produtos`, obj.id), {
             produtos: obj.lista
         });
 
@@ -211,12 +211,11 @@ export default function FormEdit (props) {
                             </div>
                         </div>
                         <div className={styles.cont_buttons}>
-                            {nome || qtdPessoas || qtdSabores || preço 
-                            && 
+                            
                             <button
                             onClick={()=> Update()}
                             className={styles.btn_save}
-                            >Confirmar</button>}
+                            >Confirmar</button>
                             <button
                             type={props.type}
                             dismiss={props.dismiss}

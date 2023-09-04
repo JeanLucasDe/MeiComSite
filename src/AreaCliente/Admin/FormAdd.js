@@ -28,18 +28,6 @@ export default function FormAdd (props) {
     const [small_desc, setSmallDesc] = useState()
     const [espera, setEspera] = useState()
 
-    const [img1, setImg1] = useState()
-    const [driveimg1, setDriveImg1] = useState(false)
-
-    const [driveimg2, setDriveImg2] = useState(true)
-    const [driveimg3, setDriveImg3] = useState(true)
-    const [driveimg4, setDriveImg4] = useState(true)
-
-    const [img2, setImg2] = useState()
-    const [img3, setImg3] = useState()
-    const [img4, setImg4] = useState()
-
-    
     const [cor, setCor] = useState()
     const [p, setP] = useState()
     const [m, setM] = useState()
@@ -58,11 +46,9 @@ export default function FormAdd (props) {
         reiniciar()
     },[])
 
-
     async function addItem () {
-
         if (props.modalidade == "Alimentação") {
-            props.produtos[0].push(
+            props.listaProd.push(
                 {
                     nome:nome.trim(),
                     preço:parseFloat(preço),
@@ -72,8 +58,8 @@ export default function FormAdd (props) {
                     saborComida,
                 }
             )
-            await updateDoc(doc(db, `MeiComSite/${props.email}/produtos`, `${props.categoria.trim()}`), {
-                produtos: props.produtos[0]
+            await updateDoc(doc(db, `MeiComSite/${props.email}/produtos`, `${props.dados.id}`), {
+                produtos: props.listaProd
             });
             window.location.reload()
         }
@@ -169,10 +155,6 @@ export default function FormAdd (props) {
                 nome:nome.trim(),
                 preço:parseFloat(preço),
                 preçopromo: parseFloat(0),
-                img:  img1 ? driveimg1 ? `https://docs.google.com/uc?id=${img2}`: img1: "",
-                img2: img2 ? driveimg2 ? `https://docs.google.com/uc?id=${img2}`: img2 : "",
-                img3: img3 ? driveimg3 ? `https://docs.google.com/uc?id=${img3}`: img3 : "",
-                img4: img4 ? driveimg4 ? `https://docs.google.com/uc?id=${img4}`: img4 : "",
                 desc:desc.trim(),
                 small_desc: small_desc ? small_desc.trim() : "",
                 material: material.trim()
@@ -292,10 +274,6 @@ export default function FormAdd (props) {
                                     <Visualizar 
                                     tema={props.tema}
                                     nome={nome}
-                                    imagem={driveimg1 ? `https://docs.google.com/uc?id=${img2}`: img1}
-                                    imagem2={driveimg2 ? `https://docs.google.com/uc?id=${img2}`: img2}
-                                    imagem3={driveimg3 ? `https://docs.google.com/uc?id=${img3}`: img3}
-                                    imagem4={driveimg4 ? `https://docs.google.com/uc?id=${img4}`: img4}
                                     preço={preço}
                                     desc={desc}
                                     small_desc={small_desc}
@@ -311,72 +289,6 @@ export default function FormAdd (props) {
                                 <div className={styles.info}>
                                     <div className="row">
                                         <div className="col-sm-6">
-                                            <strong>Imagem:</strong>
-                                            <div className={styles.check_box}>
-                                                <input type="checkbox"
-                                                checked={driveimg1}
-                                                onChange={() => setDriveImg1(!driveimg1)} 
-                                                />
-                                                <label>Ondrive</label>
-                                            </div>
-                                            
-
-                                            <input type="text" onChange={(el)=> {
-                                                setImg1(el.target.value)
-                                            }}/>
-
-
-
-                                            <Link to="/suporte/fotos"
-                                            target="_blank"
-                                            >Não sei adicionar imagens</Link>
-
-                                            <div className="accordion" id="accordionExample">
-                                                <div className="accordion-item">
-                                                    <h2 className="accordion-header">
-                                                        <button className="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#imagens" aria-expanded="false" aria-controls="collapseOne">
-                                                        Imagens
-                                                        </button>
-                                                    </h2>
-                                                    <div id="imagens" className="accordion-collapse collapse">
-                                                        <div className="accordion-body">
-                                                            <strong>Imagem 2:</strong>
-                                                            <div className={styles.check_box}>
-                                                                <input type="checkbox"
-                                                                onChange={() => setDriveImg2(!driveimg2)} checked={driveimg2}
-                                                                />
-                                                                <label>drive</label>
-                                                            </div>
-                                                            <input type="text" onChange={(el)=> {setImg2(el.target.value)}}/>
-
-
-                                                            <strong>Imagem 3:</strong>
-                                                            <div className={styles.check_box}>
-                                                                <input type="checkbox"
-                                                                onClick={() => setDriveImg3(!driveimg3)} defaultChecked
-                                                                />
-                                                                <label>drive</label>
-                                                            </div>
-                                                            {driveimg3 ?
-                                                            <input type="text" onChange={(el)=> {setImg3(formataTextoGoogleDrive(el.target.value))}}/>: 
-
-                                                            <input type="text" onChange={(el)=> {setImg3(el.target.value)}}/>}
-
-                                                            <strong>Imagem 4:</strong>
-                                                            <div className={styles.check_box}>
-                                                                <input type="checkbox"
-                                                                onClick={() => setDriveImg4(!driveimg4)} defaultChecked
-                                                                />
-                                                                <label>drive</label>
-                                                            </div>
-                                                            {driveimg4 ?
-                                                            <input type="text" onChange={(el)=> {setImg4(formataTextoGoogleDrive(el.target.value))}}/>: 
-
-                                                            <input type="text" onChange={(el)=> {setImg4(el.target.value)}}/>}
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
                                             <strong>Nome:</strong>
                                             <input type="text" onChange={(el)=> setNome(el.target.value)}/>
                                             <strong>Descrição Curta:</strong>
@@ -426,7 +338,7 @@ export default function FormAdd (props) {
                                     aria-label={props.aria_label}
                                     >Cancelar</button>
 
-                                    {nome && img1 && desc && preço && material ?
+                                    {nome && desc && preço && material ?
                                     <button
 
                                     onClick={(el)=> {

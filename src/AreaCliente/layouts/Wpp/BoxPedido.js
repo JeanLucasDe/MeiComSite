@@ -1,4 +1,4 @@
-import { useOutletContext, useParams } from "react-router-dom"
+import { Form, useOutletContext, useParams } from "react-router-dom"
 import styles from "./BoxPedido.module.css"
 import { useState,useEffect } from "react"
 import App from "../../../Hooks/App"
@@ -134,6 +134,7 @@ export default function BoxPedido (props) {
                                     </div>
                                     <div className={styles.line}/>
                                     <div className={styles.cont_preço}>
+                                        <h5>Taxa: {FormataValor(comprador && comprador[0].taxa)}</h5>
                                         <h3>Total {FormataValor(comprador && comprador[0].Total)}</h3>
                                     </div>
     

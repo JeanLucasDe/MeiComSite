@@ -158,17 +158,23 @@ border-radius: 20px;       /* roundness of the scroll thumb */
     margin-bottom: 1em;
 }
 .list_escolha_sabores {
-    margin: 1em 0em;
     list-style-type: none;
 }
 .item_escolha {
     display: flex;
     align-items: center;
+    margin-bottom: 1em;
+}
+.continue {
+    background-color: #169200;
+    color: #fff;
+    font-weight: 600;
 }
 .btn_delete_item {
     height: 15px;
     width: 15px;
     cursor: pointer;
+    margin-right: 0.4em;
 }
 .input {
     border: none;

@@ -57,7 +57,6 @@ export default function Negocio () {
         return nome[0] + " " + nome[1]
     }
    
-    console.log(moment().format('HH:mm').toString())
 
     
     return (
