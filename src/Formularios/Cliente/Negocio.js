@@ -1,56 +1,13 @@
 import styles from "./Negocio.module.css"
-import BoxConfirm from "../../components/BoxConfirm"
-import Themes from "../../Documents/Themes.json"
-import {Swiper, SwiperSlide} from "swiper/react"
-import Loading from "../../components/Loading"
-import { useState,useEffect } from "react"
-import {auth} from "../../Service/firebase"
-import App from "../../Hooks/App"
 import '@firebase/firestore';
-import { getFirestore, collection, getDocs,updateDoc, doc} from "@firebase/firestore";
-import { Link } from "react-router-dom"
-import moment from "moment"
+import { Link, useOutletContext } from "react-router-dom"
 
 
 
 export default function Negocio () {
 
-    const [load, setLoading] = useState(false)
-    const [user, setUser] = useState();
-    const [Users, setUsers] = useState([])
-    const db = getFirestore(App)
-    const UserCollection = collection(db, "MeiComSite")
+    const [mod, produtos, usuario, vendas, user] = useOutletContext()
 
-    useEffect (()=>{
-        try{
-            auth.onAuthStateChanged(user => {
-                if (user) {
-                    const {uid, displayName, photoURL, email} = user
-                    if (!displayName || !photoURL) {
-                        throw new Error('Usuário sem Nome ou foto')
-                    }
-                    setUser({
-                        id: uid,
-                        avatar: photoURL,
-                        name: displayName,
-                        email
-                    })
-                }
-            })
-            const getUsers = async () => {
-                const data = await getDocs(UserCollection);
-                setUsers((data.docs.map((doc) => ({...doc.data(), id: doc.id}))))
-                setLoading(true)
-            };
-
-                
-                getUsers()
-        } catch (e) {
-            <button> tentar novamente </button>
-        }
-    },[])
-
-    const usuario = Users && user && Users.filter(dados => dados.iduser == user.id)
 
     const FormataNome = (nome) => {
         nome = nome.split(' ')
@@ -58,10 +15,9 @@ export default function Negocio () {
     }
    
 
-    
     return (
             <>
-                {Users && user && Users.map(dados => {
+                {user && usuario && usuario.map(dados => {
                     if (dados.iduser == user.id) {
                         return (
                                 <div className={styles.container} key={dados.iduser}>

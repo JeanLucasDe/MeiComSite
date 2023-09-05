@@ -8,7 +8,7 @@ import { useState } from "react";
 export default function TodasVendas (props) {
 
     
-    const [vendas] = useOutletContext();
+    const [mod, produtos, usuario, vendas] = useOutletContext()
     const [obj, setObj] = useState()
     const result = []
     const busca = props.busca 

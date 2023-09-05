@@ -18,7 +18,6 @@ export default function FormAdd (props) {
 
     const [nome, setNome]= useState()
     const [qtdSabores, setQtdSabores] = useState()
-    const [dados, setDados] = useState([])
     const [desc, setDesc] = useState()
     const [qtdpessoas, setQtdPessoas] = useState()
     const [sabor, setSabor] = useState()

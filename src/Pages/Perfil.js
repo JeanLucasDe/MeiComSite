@@ -8,10 +8,8 @@ import { useState,useEffect, useContext } from "react"
 import {auth} from "../Service/firebase"
 import App from "../Hooks/App"
 import '@firebase/firestore';
-import {FaCheck, FaCheckCircle, FaEdit, FaExclamationCircle, FaPlusCircle, FaRegSadTear, FaTimesCircle, FaTrashAlt} from "react-icons/fa"
-import { getFirestore, collection, getDocs, setDoc, doc, updateDoc} from "@firebase/firestore";
-import { Link, useOutletContext, Outlet } from "react-router-dom"
-import { toast, ToastContainer } from "react-toastify";
+import { getFirestore, collection, getDocs} from "@firebase/firestore";
+import {  Outlet } from "react-router-dom"
 
 
 export default function Perfil () {
@@ -33,13 +31,10 @@ export default function Perfil () {
             auth.onAuthStateChanged(user => {
                 if (user) {
                     const {uid, displayName, photoURL, email} = user
-                    if (!displayName || !photoURL) {
-                        throw new Error('Usuário sem Nome ou foto')
-                    }
                     setUser({
                         id: uid,
-                        avatar: photoURL,
-                        name: displayName,
+                        avatar: photoURL ? photoURL : '',
+                        name: displayName ? displayName : '',
                         email
                     })
                 }
@@ -48,6 +43,7 @@ export default function Perfil () {
             <button> tentar novamente </button>
         }
     },[])
+
     const getUsers = async () => {
         const dataUser = await getDocs(Collec)
         setUsuarios((dataUser.docs.map((doc) => ({...doc.data(), id: doc.id}))))
@@ -64,7 +60,6 @@ export default function Perfil () {
     }
 
     const usuario = usuarios && user && usuarios.filter(dados => dados.email == user.email)
-        
     
     
     const pegaDados = () => {
@@ -102,7 +97,7 @@ export default function Perfil () {
                     <NavBarUser/>
                 </div>
                 <div className="col-md-10">
-                    <Outlet context={[mod, produtos, usuario, vendas]}/>
+                    <Outlet context={[mod, produtos, usuario, vendas, user]}/>
                 </div>
             </div>
             <Footer/>

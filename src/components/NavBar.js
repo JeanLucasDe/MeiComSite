@@ -3,7 +3,6 @@ import styles from "./NavBar.module.css"
 import {FaBars, FaHome} from "react-icons/fa"
 import MenuMobile from "./MenuMobile"
 import ButtonLogin from "./ButtonLogin"
-import { useState } from "react"
 
 
 export default function NavBar () {

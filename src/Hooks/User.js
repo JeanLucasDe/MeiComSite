@@ -1,4 +1,4 @@
-import {auth} from "../Service/firebase"
+{/**import {auth} from "../Service/firebase"
 
 
 const User = []
@@ -21,5 +21,5 @@ auth.onAuthStateChanged(user => {
 
 
 
-export default User
+export default User*/}
 

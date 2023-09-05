@@ -1,0 +1,45 @@
+.container {
+    margin-top: 4.5em;
+    padding: 1em;
+    width: 100%;
+    height: auto;
+}
+.cont_login {
+    box-shadow: 1px 1px 4px #858585dd;
+    padding: 1em;
+    border-radius: 7px;
+}
+.cont_login input {
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid #dddd;
+}
+.cont_login button {
+    width: 100%;
+    display: block;
+    border: none;
+    margin: 0.5em auto;
+    padding: 0.5em;
+}
+.btn_google {
+    background-color: #fff;
+    box-shadow: 1px 1px 4px #6e6e6e;
+    border: 1px solid #ddd;
+    margin-bottom: 2em !important;
+}
+.space {
+    margin: 1em 0em;
+}
+.btn_login {
+    background-color: #FF9100;
+    color: #fff;
+    margin-top: 2.5em !important;
+}
+.or {
+    text-align: center;
+}
+
+.btn_register {
+    text-decoration: underline;
+    cursor: pointer;
+}

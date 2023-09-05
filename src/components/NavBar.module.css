@@ -52,6 +52,11 @@
         border: 1px solid #FFC801;
         margin: 0em 1em !important;
         height: 100%;
+        color: #000;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
     .login button:first-child {
     margin: 0em 0.2em 0em 0em;

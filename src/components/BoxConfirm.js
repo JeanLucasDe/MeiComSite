@@ -21,13 +21,10 @@ export default function BoxConfirm (props) {
             auth.onAuthStateChanged(user => {
                 if (user) {
                     const {uid, displayName, photoURL, email} = user
-                    if (!displayName || !photoURL) {
-                        throw new Error('Usuário sem Nome ou foto')
-                    }
                     setUser({
                         id: uid,
-                        avatar: photoURL,
-                        name: displayName,
+                        avatar: photoURL ? photoURL : '',
+                        name: displayName ? displayName : '',
                         email
                     })
                 }

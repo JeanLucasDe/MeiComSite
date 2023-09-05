@@ -16,68 +16,16 @@ import BoxConfirm from "../../components/BoxConfirm"
 export default function Produtos () {
 
     const {categoriaa} = useParams()
-    const [mod] = useOutletContext()
-    const [load, setLoading] = useState(false)
-    const [ListaProdutos, SetListaProdutos] = useState()
-    const [user, setUser] = useState();
-    const [state, setState] = useState(false)
-    const [produtos, setProdutos] = useState([])
-    const [usuarios, setUsuarios] = useState([])
+    const [mo, produtos, usuario, vendas, user] = useOutletContext()
     const [ação, setAção] = useState()
-    const db = getFirestore(App)
-    const Collec = collection(db, "MeiComSite")
-    const UserCollection = collection(db, `MeiComSite/${user && user.email}/produtos`)
 
-    useEffect (()=>{
-        try{
-            auth.onAuthStateChanged(user => {
-                if (user) {
-                    const {uid, displayName, photoURL, email} = user
-                    if (!displayName || !photoURL) {
-                        throw new Error('Usuário sem Nome ou foto')
-                    }
-                    setUser({
-                        id: uid,
-                        avatar: photoURL,
-                        name: displayName,
-                        email
-                    })
-                }
-            })
-        } catch (e) {
-            <button> tentar novamente </button>
-        }
-    },[])
-    const getUsers = async () => {
-        const dataUser = await getDocs(Collec)
-        setUsuarios((dataUser.docs.map((doc) => ({...doc.data(), id: doc.id}))))
-        const data = await getDocs(UserCollection);
-        setProdutos((data.docs.map((doc) => ({...doc.data(), id: doc.id}))))
-        setLoading(true)
-    };
-    if (user) {
-        if (!state) {
-            getUsers()
-            setState(true)
-        }
-    }
     
-    const usuario = []
-
-    user && usuarios.filter(dados => {
-        if (dados.iduser == user.id) {
-            usuario.push(dados)
-        }
-    })
-
-
-   
 
     const indexProd = produtos && produtos.filter(dados => dados.categoria == categoriaa)
     
     const listProdutosTemp = []
 
-    const cat = produtos.length > 0 && produtos.filter(dados => dados.categoria == categoriaa)
+    const cat = produtos&& produtos.filter(dados => dados.categoria == categoriaa)
     const destaque = cat.length > 0 && cat[0].destaque
     const mostrar = cat.length > 0 && cat[0].mostrar
     const text = cat.length > 0 && cat[0].text
@@ -99,29 +47,6 @@ export default function Produtos () {
         id
     }
 
-    const [index, setIndex] = useState()
-
-
-    function pegaDados() {
-        let produtosSalvos = new Array()
-        
-        if (localStorage.hasOwnProperty(`meicomsiteteste`)) {
-            produtosSalvos = JSON.parse(localStorage.getItem(`meicomsiteteste`))
-        }
-
-        return produtosSalvos
-    }
-    
-    const dadosTest = pegaDados()
-
-
-    var listReturn = []
-
-    if (mod) {
-        produtos && produtos.map(dados => listReturn.push(dados))
-    } else {
-        dadosTest && dadosTest.map(dados => listReturn.push(dados))
-    }
 
 
     return (
@@ -134,7 +59,7 @@ export default function Produtos () {
                     ><FaPlusCircle/> Novo produto</button>
                     <h3 className={styles.title}>{categoriaa}</h3>
                     <ul className={styles.list}>
-                        {produtos.length > 0 && listReturn.map(dados => {
+                        {produtos &&produtos.length > 0 && produtos.map(dados => {
                             if (dados.produtos) {
                                 if (dados.categoria == categoriaa) {
                                     if (dados.produtos.length > 0) {
@@ -160,13 +85,12 @@ export default function Produtos () {
                                                                 onClick={()=> {
                                                                     setDados(item)
                                                                     setAção("Deletar Produto")
-                                                                    setIndex(1)
                                                                 }}
                                                                 />
                                                             </div>
                                                             <div className={styles.info}>
                                                                 <div className={styles.info_item}>
-                                                                    <p><strong>Preço:</strong>{FormataValor(item.preço)}</p>
+                                                                    <p><strong>Preço:</strong>{FormataValor(parseFloat(item.preço))}</p>
                                                                 </div>
                                                                 <div className={styles.line}/>
                                                             </div>
@@ -200,14 +124,13 @@ export default function Produtos () {
                             aria_label="Close"
                             email = {user && user.email}
                             categoria = {categoriaa}
-                            modalidade= {usuario.length > 0 && usuario[0].mod}
-                            tema = {usuario.length > 0 && usuario[0].theme} 
+                            modalidade= {usuario && usuario.length > 0 && usuario[0].mod}
+                            tema = {usuario && usuario.length > 0 && usuario[0].theme} 
                             dados={obj}
                             produtos = {listProdutosTemp && listProdutosTemp}
-                            listaProd={listReturn.length> 0 && listReturn[0].produtos}
+                            listaProd={produtos && produtos.length > 0 && produtos[0].produtos}
                             destaque={destaque}
                             mostrar={mostrar}
-                            modo={mod}
                             text={text}
                             />
                     </div>
@@ -223,9 +146,9 @@ export default function Produtos () {
                             data_bs_toggle="modal"
                             data_bs_target={'#ModalEdit'}
                             dados={obj}
-                            tema = {usuario.length > 0 && usuario[0].theme} 
-                            produtos = {listProdutosTemp && listProdutosTemp}
-                            id ={usuario.length > 0 && usuario[0].email}
+                            tema = {usuario && usuario.length > 0 && usuario[0].theme} 
+                            produtos = {produtos && produtos.length > 0 && produtos[0].produtos}
+                            id ={usuario && usuario.length > 0 && usuario[0].email}
                             />
                     </div>
                 </div>
@@ -239,7 +162,6 @@ export default function Produtos () {
                             aria_label="Close"
                             data_bs_toggle="modal" 
                             data_bs_target={`#ModalTrash`}
-                            mod={mod}
                             obj={obj}
                             />
                     </div>

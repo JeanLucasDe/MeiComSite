@@ -13,12 +13,13 @@ import moment from 'moment/moment';
 import FormularioCadastro from "../Cadastro/FormularioCadastro"
 import { toast, ToastContainer } from "react-toastify"
 import 'react-toastify/dist/ReactToastify.css';
+import { useOutletContext } from "react-router-dom"
 
 
 
 export default function FormularioEdit () {
 
-    const [user, setUser] = useState();
+    const [mod, produtos, usuario, vendas, user] = useOutletContext()
     const [Users, setUsers] = useState([])
     const db = getFirestore(App)
     const [ação, setAção] = useState()
@@ -28,43 +29,9 @@ export default function FormularioEdit () {
     var [seed, setSeed] = useState(0)
     const [deletebairro, setDeleteBairro] = useState()
     const [taxa, setTaxa] = useState()
-    const UserCollection = collection(db, "MeiComSite")
 
 
-    
 
-    useEffect (()=>{
-        try{
-            auth.onAuthStateChanged(user => {
-                if (user) {
-                    const {uid, displayName, photoURL, email} = user
-                    if (!displayName || !photoURL) {
-                        throw new Error('Usuário sem Nome ou foto')
-                    }
-                    setUser({
-                        id: uid,
-                        avatar: photoURL,
-                        name: displayName,
-                        email
-                    })
-                }
-            })
-            const getUsers = async () => {
-                const data = await getDocs(UserCollection);
-                setUsers((data.docs.map((doc) => ({...doc.data(), id: doc.id}))))
-                setLoading(true)
-            };
-            
-
-                
-            getUsers()
-        } catch (e) {
-            <button> tentar novamente </button>
-        }
-    },[])
-    
-
-    const [load, setLoading] = useState(false)
     const [nome, setNome] = useState()
     const [razao, setRazao] = useState()
     const [phone, setPhone] = useState()
@@ -75,7 +42,6 @@ export default function FormularioEdit () {
     const [stateTheme,setStateTheme] = useState(false)
     const [stateMod,setStateMod] = useState(false)
     const [theme, setTheme] = useState()
-    const [mod, setMod] = useState()
     const [alterMod, setAlterMod] = useState(false)
     const [addCidade, setAddCidade] = useState()
     const [addBairro, setAddBairro] = useState()
@@ -146,15 +112,10 @@ export default function FormularioEdit () {
     
 
 
-    const usuario = Users && user && Users.filter(dados => dados.iduser == user.id)
-
 
     return (
         <>
-        {!load ? <Loading/> : 
-        
-        user &&
-        Users && Users.map(dados => {
+        {user && usuario && usuario.map(dados => {
             if (dados.iduser == user.id) {
                 return (
                     <>
@@ -418,7 +379,6 @@ export default function FormularioEdit () {
                                                 {alterMod && alterMod != "--" &&
                                                 <div>
                                                     <select
-                                                    onChange={(el)=> setMod(el.target.value)}
                                                     className={styles.input}
                                                     >
                                                         <option>--</option>
@@ -443,7 +403,6 @@ export default function FormularioEdit () {
                                                     <button
                                                     className={`${styles.btn_delete}`}
                                                     onClick={()=> {
-                                                        setMod('')
                                                         setAlterMod(false)
                                                     }}
                                                     >

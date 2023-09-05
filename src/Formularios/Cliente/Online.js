@@ -64,7 +64,12 @@ export default function Online () {
             state: 3
         });
     }
-
+    const finalizarPedido = async (dados) => {
+        dados.state = 4
+        await updateDoc(doc(db, `MeiComSite/${usuario.length > 0 && usuario[0].email}/vendas`, dados && dados.id), {
+            state: 4
+        });
+    }
 
 
 
@@ -209,10 +214,10 @@ export default function Online () {
                                     <div className={styles.cont_button}>
                                         <button className={styles.acc}
                                         onClick={() => {
-                                            DeletarPedido(dados)
+                                            finalizarPedido(dados)
                                             setCounte(count + 1)
                                         }}
-                                        >Pronto!</button>
+                                        >Finalizar</button>
                                         <button className={styles.del}
                                         onClick={() => {
                                             DeletarPedido(dados)
@@ -357,10 +362,10 @@ export default function Online () {
                                             <div className={styles.cont_button}>
                                                 <button className={styles.acc}
                                                 onClick={() => {
-                                                    AceitarPedidoEntrega(dados)
+                                                    finalizarPedido(dados)
                                                     setCounte(count + 1)
                                                 }}
-                                                >Aceitar Pedido</button>
+                                                >Finalizar</button>
                                                 <button className={styles.del}
                                                 onClick={() => {
                                                     DeletarPedido(dados)

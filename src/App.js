@@ -31,6 +31,7 @@ import FiltroVendas from "./Formularios/Cliente/FiltroVendas";
 import AreaTeste from "./AreaTesteCliente/AreaTeste";
 import Online from "./Formularios/Cliente/Online";
 import Login from "./Pages/Login"
+import Register from "./Pages/Register";
 
 
 
@@ -57,6 +58,8 @@ function App() {
               <Route path="/planos" element={<PlanosPreços/>}/>
               <Route path="/:site/testarea" element={<AreaTeste/>}/>
               <Route path="/login" element={<Login/>}/>
+              <Route path="/register" element={<Register/>}/>
+              
 
               <Route path="perfil" element={<Perfil/>}>
                 <Route path="/perfil/user/negocio" element={<Negocio/>}/>

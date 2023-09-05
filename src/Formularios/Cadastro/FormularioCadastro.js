@@ -1,6 +1,6 @@
 import styles from "./FormularioCadastro.module.css"
 import BoxConfirm from "../../components/BoxConfirm"
-import { Link } from "react-router-dom"
+import { Link, useOutletContext } from "react-router-dom"
 import { useState,useEffect } from "react"
 import {auth} from "../../Service/firebase"
 import App from "../../Hooks/App"
@@ -13,57 +13,24 @@ import { toast, ToastContainer } from "react-toastify"
 export default function FormularioCadastro () {
 
     const [user, setUser] = useState();
-    const [produtos, setProdutos] = useState([])
+    const [mod, produtos, usuario] = useOutletContext()
     const db = getFirestore(App)
     const [load, setLoading] = useState(false)
-    const UserCollection = collection(db, "MeiComSite")
     const formataHora = (hora) => {
         var hora = moment(hora).format('HH:mm').toString()
         return hora
     }
     
-    useEffect(()=>{
-        auth.onAuthStateChanged(user => {
-            if (user) {
-                const {uid, displayName, photoURL, email} = user
-                if (!displayName || !photoURL) {
-                    throw new Error('Usuário sem Nome ou foto')
-                }
-                setUser({
-                    id: uid,
-                    avatar: photoURL,
-                    name: displayName,
-                    email
-                })
-            }
-        })
-    }, [])
 
     const FormataValor = (valor) => {
         var valorFormatado = valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
         return valorFormatado
     }
     
-    useEffect (()=>{
-        try{
-            const getUsers = async () => {
-                const data = await getDocs(UserCollection);
-                setProdutos((data.docs.map((doc) => ({...doc.data(), id: doc.id}))))
-                setLoading(true)
-                    };
-                    getUsers()
-                } catch (e) {
-            <button> tentar novamente </button>
-        }
-    },[])
     
-    
-    
-
     
     const [ação, setAção] = useState()
     const [theme, setTheme] = useState()
-    const [mod, setMod] = useState()
     
 
     const [nome, setNome] = useState()
@@ -74,6 +41,7 @@ export default function FormularioCadastro () {
     const [deletebairro, setDeleteBairro] = useState()
     const [deleteCidade, setDeleteCidade] = useState()
     const [fecha, setFecha] = useState()
+    const [modalidade, setModalidade] = useState('')
     var [seed, setSeed] = useState(0)
     const [site, setSite] = useState('')
     const [nascimento,setNascimento] = useState()
@@ -87,7 +55,7 @@ export default function FormularioCadastro () {
     nome,
     razao,
     phone,
-    mod,
+    mod:modalidade.trim(),
     nascimento,
     abre: moment(abre).format('hh:mm:ss'),
     site,
@@ -405,8 +373,8 @@ export default function FormularioCadastro () {
                                     <div className={styles.cont_plan}>
                                         <label>Qual a modalidade?</label>
                                         <select 
-                                        onChange={(el)=> setMod(el.target.value)}
                                         className={styles.input}
+                                        onChange={(el)=> setModalidade(el.target.value)}
                                         >
                                             <option>-</option>
                                             <option value="Alimentação">Alimentação</option>
