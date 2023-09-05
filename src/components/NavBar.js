@@ -4,11 +4,31 @@ import {FaBars, FaHome} from "react-icons/fa"
 import MenuMobile from "./MenuMobile"
 import ButtonLogin from "./ButtonLogin"
 
+import { useEffect, useState } from "react"
+import firebase from 'firebase/compat/app';
+
 
 export default function NavBar () {
 
+    const [user, setUser] = useState();
 
-
+    useEffect (()=>{
+        try{
+            firebase.auth().onAuthStateChanged(user => {
+                if (user) {
+                    const {uid, displayName, photoURL, email} = user
+                    setUser({
+                        id: uid,
+                        avatar: photoURL ? photoURL : '',
+                        name: displayName ? displayName : '',
+                        email
+                    })
+                }
+            })
+        } catch (e) {
+            <button> tentar novamente </button>
+        }
+    },[])
 
 return (
     <div className={styles.container}>
@@ -30,8 +50,12 @@ return (
                 <Link to="/suporte">Ajuda</Link>
             </div>
             <div className={styles.login}>
+                {user &&
                 <Link to="/perfil/user/negocio" className={styles.icon_home}><FaHome/></Link>
+                }
+                
                 <div className={styles.border_left}></div>
+
                 <ButtonLogin/>
                 <div>
                     <FaBars className={`${styles.icon_mobile} navbar-toggler`} 

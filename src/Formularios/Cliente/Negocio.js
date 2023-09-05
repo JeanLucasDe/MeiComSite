@@ -48,8 +48,8 @@ export default function Negocio () {
                 })}
                 {usuario && usuario.length == 0 &&
                 <div className={styles.container_off}>
-                    <h4>Usuário não cadastrado</h4>
-                    <Link to="/perfil/cadastro">Cadastrar agora!</Link>
+                    <h4>Complete seu Cadastro</h4>
+                    <Link to="/perfil/cadastro">Completar agora!</Link>
                 </div>
                 }
 

@@ -1,18 +1,32 @@
 .container {
-    margin-top: 4.5em;
     padding: 1em;
     width: 100%;
     height: auto;
 }
 .cont_login {
     box-shadow: 1px 1px 4px #858585dd;
+    background-color: #fafafa;
     padding: 1em;
     border-radius: 7px;
+    margin-top: 3em;
 }
 .cont_login input {
     width: 100%;
     border: none;
     border-bottom: 1px solid #dddd;
+    background-color: transparent;
+    padding: 0.2em;
+    text-indent: 4px;
+    margin: 0.6em 0em;
+}
+.title {
+    margin-bottom: 2em;
+    text-align: center;
+}
+.esqueceu_link {
+    text-align: right !important;
+    display: block;
+    margin-top: 0.6em;
 }
 .cont_login button {
     width: 100%;
@@ -21,25 +35,61 @@
     margin: 0.5em auto;
     padding: 0.5em;
 }
+.rr {
+    text-align: center;
+}
 .btn_google {
-    background-color: #fff;
+    background-color: #ffffff;
     box-shadow: 1px 1px 4px #6e6e6e;
     border: 1px solid #ddd;
     margin-bottom: 2em !important;
+    border-radius: 7px;
 }
-.space {
-    margin: 1em 0em;
+.logo_google {
+    width: 20px;
+    height: 20px;
 }
 .btn_login {
     background-color: #FF9100;
     color: #fff;
     margin-top: 2.5em !important;
+    border-radius: 7px;
+}
+.space {
+    margin: 1em 0em;
 }
 .or {
+    border-top: 1px solid #ddd;
+    padding-top: 1em;
     text-align: center;
+    font-size: 0.9em;
+}
+.cont_check {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin-top: 1em;
+}
+.input_check {
+    margin: 0em !important;
+    width: auto !important;
+    box-sizing: border-box;
+}
+.cont_check p {
+    margin:  0em 0em 0em 1em !important;
 }
 
 .btn_register {
     text-decoration: underline;
     cursor: pointer;
+}
+@media screen and (min-width:320px) {
+    .logo {
+        display: none;
+    }
+}
+@media screen and (min-width:576px) {
+    .logo {
+        display: block;
+    }
 }

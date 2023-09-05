@@ -102,8 +102,8 @@ export default function Membros () {
                 })}
                 {usuario && usuario.length == 0 &&
                 <div className={styles.container_off}>
-                    <h4>Usuário não cadastrado</h4>
-                    <Link to="/perfil/cadastro">Cadastrar agora!</Link>
+                    <h4>Complete seu cadastro</h4>
+                    <Link to="/perfil/cadastro">Completar agora!</Link>
                 </div>
                 }
                 <ToastContainer/>
