@@ -15,13 +15,11 @@ return (
                     <h3>Se joga no novo!</h3>
                     <h4 className="title_light">Torne o seu negócio Virtual</h4>
                     <ul className={styles.list}>
-                        <li><FaRegCheckCircle className={styles.icon}/> Controlador de estoque</li>
-                        <li><FaRegCheckCircle/> Calcular Frete</li>
-                        <li><FaRegCheckCircle/> Integração do pix mercado pago</li>
+                        <li><FaRegCheckCircle/> Taxa de Transporte</li>
+                        {/**<li><FaRegCheckCircle/> Integração do pix mercado pago</li>*/}
                         <li><FaRegCheckCircle/> Integração com firebase</li>
-                        <li><FaRegCheckCircle/> Login de usuários para compra</li>
-                        <li><FaRegCheckCircle/> Fácil Manipulação de estoque</li>
-                        <li><FaRegCheckCircle/> Favoritar produtos</li>
+                        <li><FaRegCheckCircle/> Central de Pedidos</li>
+                        <li><FaRegCheckCircle/> Fácil Manipulação de produtos</li>
                         <li>Muito mais</li>
                     </ul>
                 </div>

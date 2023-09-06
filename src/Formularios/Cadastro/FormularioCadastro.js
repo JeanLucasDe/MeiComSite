@@ -1,21 +1,55 @@
 import styles from "./FormularioCadastro.module.css"
 import BoxConfirm from "../../components/BoxConfirm"
-import { Link, useOutletContext } from "react-router-dom"
-import { useState,useEffect } from "react"
-import {auth} from "../../Service/firebase"
-import App from "../../Hooks/App"
-import { collection,  getFirestore, getDocs} from "@firebase/firestore";
-import Loading from "../../components/Loading"
-import {FaPlusCircle, FaRegSave, FaTrashAlt} from "react-icons/fa"
+import { Link, useOutletContext} from "react-router-dom"
+import { useState, useEffect} from "react"
+import {FaPlusCircle} from "react-icons/fa"
 import moment from "moment"
 import { toast, ToastContainer } from "react-toastify"
+import App from "../../App"
+import { auth } from "../../Service/firebase"
+import { getFirestore, collection, getDocs} from "@firebase/firestore";
+import NavBar from "../../components/NavBar";
 
 export default function FormularioCadastro () {
 
     const [user, setUser] = useState();
-    const [mod, produtos, usuario] = useOutletContext()
+    const [state, setState] = useState(false)
+    const [usuarios, setUsuarios] = useState([])
     const db = getFirestore(App)
-    const [load, setLoading] = useState(false)
+    const Collec = collection(db, "MeiComSite")
+
+    useEffect (()=>{
+        try{
+            auth.onAuthStateChanged(user => {
+                if (user) {
+                    const {uid, displayName, photoURL, email} = user
+                    setUser({
+                        id: uid,
+                        avatar: photoURL ? photoURL : '',
+                        name: displayName ? displayName : '',
+                        email
+                    })
+                }
+            })
+        } catch (e) {
+            <button> tentar novamente </button>
+        }
+    },[])
+
+    const getUsers = async () => {
+        const dataUser = await getDocs(Collec)
+        setUsuarios((dataUser.docs.map((doc) => ({...doc.data(), id: doc.id}))))
+    };
+    if (user) {
+        if (!state) {
+            getUsers()
+            setState(true)
+        }
+    }
+
+    const usuario = usuarios && user && usuarios.filter(dados => dados.email == user.email)
+
+
     const formataHora = (hora) => {
         var hora = moment(hora).format('HH:mm').toString()
         return hora
@@ -44,6 +78,7 @@ export default function FormularioCadastro () {
     const [modalidade, setModalidade] = useState('')
     var [seed, setSeed] = useState(0)
     const [site, setSite] = useState('')
+    const [OnLogo, setOnLogo]= useState()
     const [nascimento,setNascimento] = useState()
     const [novaCidade, setNovaCidade] = useState()
     const [novoBairro, setNovoBairro] = useState()
@@ -62,14 +97,9 @@ export default function FormularioCadastro () {
     fecha: moment(fecha).format('hh:mm:ss'),
     listBairros,
     listCidades,
-    logo,
+    logo: OnLogo ? '' : logo,
     ação:ação,
     }
-    
-
-
-    let index = produtos && user && produtos.findIndex(prop => prop.iduser == user.id)
-
 
     
     var [listCidades, setListCidades] = useState([])
@@ -112,15 +142,11 @@ export default function FormularioCadastro () {
 
     return (
         <>
-        
-        {index >= 0 ? 
-        <div className={styles.center}>
-            <h1>Você já é nosso cliente!</h1>
-            <Link to="/perfil/user/negocio">Vá para sua Página</Link>
-        </div>:
-        <>
-        <div className={styles.container}>
-                        <h4>Cadastro</h4>
+        <NavBar/>
+        {usuario && usuario.length == 0 ?
+            <>
+            <div className={styles.container}>
+                        <h4>Cadastre seus Dados</h4>
                         <form className={`row ${styles.form}`}>
                             <div className={`row ${styles.dados}`}>
                                 <div className="col-sm-6">
@@ -131,6 +157,7 @@ export default function FormularioCadastro () {
                                     }}
                                     required
                                     placeholder="Digite Aqui"
+                                    className={styles.input}
                                     />
                                     <label>Data de nascimento *</label>
                                     <input type="date"
@@ -161,12 +188,20 @@ export default function FormularioCadastro () {
                                     {logo &&  <img src={logo} className={styles.logo}/>}
                                     </div>
                                     <Link to="/suporte/fotos" className={styles.link_help}>Como colocar minha logo?</Link>
+                                    <div className={styles.check_logo}>
+                                        <input type="checkbox" onChange={()=> setOnLogo(!OnLogo)}
+                                        className={styles.input_check}
+                                        />
+                                        <p>Não tenho logo</p>
+                                    </div>
+                                    {!OnLogo &&
                                     <input type="text"
                                     onChange={(el)=> {
                                         setLogo(el.target.value)
                                     }}
                                     placeholder="Digite Aqui"
                                     />
+                                    }
                                 </div>
                                 <div className="col-sm-6">
                                     <div className={styles.cont_dashed_no_padding}>
@@ -211,48 +246,55 @@ export default function FormularioCadastro () {
                             <div>
                                 <div className="row">
                                     <div className="col-md-6">
-                                        <label>Cidades</label>
-                                        {addCidade ? 
-                                        <div>
-                                            <input type="text" 
-                                            onChange={(el)=> setNovaCidade(el.target.value)}
-                                            value={novaCidade}
-                                            placeholder="Digite Aqui..."
-                                            className={styles.input}
-                                            />
-                                            <div className={styles.flex}>
+                                        <div className={styles.cont_add}>
+                                            {addCidade ?
+                                            <div>
+                                                <label>Cidade:</label>
+                                                <input type="text"
+                                                onChange={(el)=> setNovaCidade(el.target.value)}
+                                                value={novaCidade}
+                                                placeholder="Digite Aqui..."
+                                                className={styles.input}
+                                                />
+                                                <div className={styles.flex}>
+                                                    <button
+                                                    className={styles.btn_save}
+                                                    onClick={(e)=> {
+                                                        e.preventDefault()
+                                                        if (!novaCidade) return
+                                                        salvarCidade(novaCidade)
+                                                    }}
+                                                    >
+                                                        Salvar
+                                                    </button>
+                                                    <button
+                                                    className={styles.btn_cancel}
+                                                    onClick={(e)=> {
+                                                        e.preventDefault()
+                                                        setAddCidade(!addCidade)
+                                                    }}
+                                                    >{!addCidade ? <FaPlusCircle/>: "Cancelar"}</button>
+                                                </div>
+                                            </div>
+                                            :
+                                            <div>
+                                                <label>Cidade:</label>
                                                 <button
-                                                className={styles.btn_save}
-                                                onClick={(e)=> {
-                                                    e.preventDefault()
-                                                    if (!novaCidade) return 
-                                                    salvarCidade(novaCidade)
-                                                }}
-                                                >
-                                                    Salvar
-                                                </button>
-                                                <button
+                                                type="button"
                                                 className={styles.btn_add_cidade}
                                                 onClick={(e)=> {
                                                     e.preventDefault()
                                                     setAddCidade(!addCidade)
                                                 }}
-                                                >{!addCidade ? <FaPlusCircle/>: "Cancelar"}</button>
+                                                ><FaPlusCircle/> Adicionar</button>
                                             </div>
+                                            
+                                            }
                                         </div>
-                                        :
-                                        <FaPlusCircle
-                                        type="button"
-                                        className={styles.btn_add_cidade}
-                                        onClick={(e)=> {
-                                            e.preventDefault()
-                                            setAddCidade(!addCidade)
-                                        }}
-                                        />
-                                        }
                                     </div>
                                     <div className="col-md-6">
-                                        <div>
+                                        <div className={styles.cont_select}>
+                                            <strong>Cidades</strong>
                                             <select
                                             onChange={(el)=> setDeleteCidade(el.target.value)
                                             }
@@ -284,54 +326,60 @@ export default function FormularioCadastro () {
                                 <div className={styles.line}/>
                                 <div className="row">
                                     <div className="col-md-6" >
-                                        <label>Bairros</label>
-                                        {addBairro ? 
-                                        <div>
-                                            <input type="text" 
-                                            onChange={(el)=> setNovoBairro(el.target.value)}
-                                            value={novoBairro}
-                                            className={styles.input}
-                                            placeholder="Nome do Bairro"
-                                            />
-                                            <input type="number" 
-                                            onChange={(el)=> setTaxa(el.target.value)}
-                                            value={taxa}
-                                            placeholder="Taxa de transporte"
-                                            className={styles.input}
-                                            />
-                                            <div className={styles.flex}>
+                                        <div className={styles.cont_add}>
+                                            {addBairro ?
+                                            <div>
+                                                <label>Bairro:</label>
+                                                <input type="text"
+                                                onChange={(el)=> setNovoBairro(el.target.value)}
+                                                value={novoBairro}
+                                                className={styles.input}
+                                                placeholder="Nome do Bairro"
+                                                />
+                                                <input type="number"
+                                                onChange={(el)=> setTaxa(el.target.value)}
+                                                value={taxa}
+                                                placeholder="Taxa de transporte"
+                                                className={styles.input}
+                                                />
+                                                <div className={styles.flex}>
+                                                    <button
+                                                    className={styles.btn_save}
+                                                    type="button"
+                                                    onClick={(e)=> {
+                                                        e.preventDefault()
+                                                        if (!novoBairro && !taxa) return
+                                                        salvarBairro(novoBairro, taxa)
+                                                    }}
+                                                    >Salvar</button>
+                                                    <button
+                                                    className={styles.btn_cancel}
+                                                    onClick={(e)=> {
+                                                        e.preventDefault()
+                                                        setAddBairro(!addBairro)
+                                                    }}
+                                                    >{!addBairro ? <FaPlusCircle/> : "Cancelar"}</button>
+                                                </div>
+                                            </div>
+                                            :
+                                            <div>
+                                                <label>Bairro:</label>
                                                 <button
-                                                className={styles.btn_save}
                                                 type="button"
-                                                onClick={(e)=> {
-                                                    e.preventDefault()
-                                                    if (!novoBairro && !taxa) return 
-                                                    salvarBairro(novoBairro, taxa)
-                                                }}
-                                                >Salvar</button>
-                                                <button
                                                 className={styles.btn_add_cidade}
                                                 onClick={(e)=> {
                                                     e.preventDefault()
                                                     setAddBairro(!addBairro)
                                                 }}
-                                                >{!addBairro ? <FaPlusCircle/> : "Cancelar"}</button>
+                                                ><FaPlusCircle/> Adicionar</button>
                                             </div>
-
+                                            
+                                            }
                                         </div>
-                                        :
-                                        <FaPlusCircle
-                                        type="button"
-                                        className={styles.btn_add_cidade}
-                                        onClick={(e)=> {
-                                            e.preventDefault()
-                                            setAddBairro(!addBairro)
-                                        }}
-                                        />
-                                        }
                                     </div>
                                     <div className="col-md-6">
-                                        <div key={seed}>
+                                        <div key={seed} className={styles.cont_select}>
+                                            <strong>Bairros</strong>
                                             <select onChange={(el)=> setDeleteBairro(el.target.value)}
                                             className={styles.input}
                                             >
@@ -376,9 +424,8 @@ export default function FormularioCadastro () {
                                         className={styles.input}
                                         onChange={(el)=> setModalidade(el.target.value)}
                                         >
-                                            <option>-</option>
+                                            <option value="-">-</option>
                                             <option value="Alimentação">Alimentação</option>
-                                            <option value="Serviço">Prestador de Serviço</option>
                                         </select>
                                     </div>
                                 </div>
@@ -391,48 +438,57 @@ export default function FormularioCadastro () {
                         </div>
                     </div>
             </div>
-                <div className={styles.cont_save}>
-                    {nome && mod && phone 
-                    && razao && logo && listBairros && listCidades ?
-                        <button
-                        type="button" 
-                        data-bs-toggle="modal" 
-                        data-bs-target="#ModalAdd"
-                        onClick={(el)=> {
-                            el.preventDefault()
-                            setAção("Iniciar Cadastro")
-                        }}
-                        >
-                            Confirmar
-                        </button>
-                    :
+            <div className={styles.cont_save}>
+                {nome && modalidade && modalidade != '-' && phone 
+                && razao && logo || OnLogo && listBairros && listCidades ?
                     <button
-                    className={styles.disabled}
+                    type="button" 
+                    data-bs-toggle="modal" 
+                    data-bs-target="#ModalAdd"
                     onClick={(el)=> {
                         el.preventDefault()
+                        setAção("Iniciar Cadastro")
                     }}
-                    >Confirmar</button>
-                    }   
-                </div>
-
-        </>      
+                    >
+                        Confirmar
+                    </button>
+                :
+                <button
+                className={styles.disabled}
+                onClick={(el)=> {
+                    el.preventDefault()
+                }}
+                >Confirmar</button>
+                }   
+            </div>  
+            </>
+        
+        :
+        <div className={styles.cont_empty}>
+            <img src='https://img.freepik.com/free-vector/user-verification-unauthorized-access-prevention-private-account-authentication-cyber-security-people-entering-login-password-safety-measures_335657-8.jpg?size=626&ext=jpg&ga=GA1.2.995514839.1678974862&semt=ais' className={styles.logo_empty}/>
+            <h4>Você já está cadastrado</h4>
+            <Link to="/perfil/user/config"
+            className={styles.btn_continue}
+            >Continuar</Link>
+        </div>
         }
+        
+
 
         <div className="modal fade" id="ModalAdd" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div className={`modal-dialog modal-md`}>
-            <div className="modal-content">
-                <BoxConfirm
-                obj={obj}
-                type="button" 
-                data_bs_toggle="modal" 
-                data_bs_target="#ModalAdd"
-                listBairros={listBairros}
-                listCidades={listCidades}
-                />
+            <div className={`modal-dialog modal-md`}>
+                <div className="modal-content">
+                    <BoxConfirm
+                    obj={obj}
+                    type="button" 
+                    data_bs_toggle="modal" 
+                    data_bs_target="#ModalAdd"
+                    listBairros={listBairros}
+                    listCidades={listCidades}
+                    />
+                </div>
             </div>
         </div>
-    </div>
-            {!load && <Loading/>}
             <ToastContainer/>
         </>
         )

@@ -1,19 +1,17 @@
 import styles from "./FormularioEdit.module.css"
 import BoxConfirm from "../../components/BoxConfirm"
-import Themes from "../../Documents/Themes.json"
-import {Swiper, SwiperSlide} from "swiper/react"
-import Loading from "../../components/Loading"
-import { useState,useEffect } from "react"
-import {auth} from "../../Service/firebase"
+import { useState } from "react"
 import App from "../../Hooks/App"
 import '@firebase/firestore';
-import { getFirestore, collection, getDocs, updateDoc, doc, deleteDoc} from "@firebase/firestore";
+import { getFirestore, updateDoc, doc, deleteDoc} from "@firebase/firestore";
 import {FaEdit, FaPlusCircle} from "react-icons/fa"
 import moment from 'moment/moment';
-import FormularioCadastro from "../Cadastro/FormularioCadastro"
 import { toast, ToastContainer } from "react-toastify"
 import 'react-toastify/dist/ReactToastify.css';
-import { useOutletContext } from "react-router-dom"
+import { Link, useOutletContext } from "react-router-dom"
+import RecuperaPassWord from "../../components/RecuperaPassWord"
+import { FaCopy, FaExternalLinkSquareAlt } from "react-icons/fa";
+import copy from "copy-to-clipboard";
 
 
 
@@ -22,6 +20,7 @@ export default function FormularioEdit () {
     const [mod, produtos, usuario, vendas, user] = useOutletContext()
     const [Users, setUsers] = useState([])
     const db = getFirestore(App)
+    const [Onlogo, setOnlogo] = useState(false)
     const [ação, setAção] = useState()
     const [novaCidade, setNovaCidade] = useState()
     const [novoBairro, setNovoBairro] = useState()
@@ -39,8 +38,7 @@ export default function FormularioEdit () {
     const [site, setSite]= useState()
     const [logo, setLogo] = useState()
     const [plan, setPlan] = useState()
-    const [stateTheme,setStateTheme] = useState(false)
-    const [stateMod,setStateMod] = useState(false)
+    const [modalidade, setModalidade] = useState('')
     const [theme, setTheme] = useState()
     const [alterMod, setAlterMod] = useState(false)
     const [addCidade, setAddCidade] = useState()
@@ -54,7 +52,10 @@ export default function FormularioEdit () {
     window.location.reload()
     }
     
-
+    const copyToClipboard = (text) => {
+        copy(text);
+        toast.success('Link copiado com sucesso!');
+    }
 
     const listCidades = []
     const listBairros = []
@@ -69,6 +70,7 @@ export default function FormularioEdit () {
             })
         }
     })
+    
     
     const salvarLocal = async () => {
         listCidades.push({local: novaCidade})
@@ -97,7 +99,7 @@ export default function FormularioEdit () {
         phone, 
         token,
         plan,
-        mod,
+        mod: modalidade.trim(),
         theme,
         site,
         logo, 
@@ -159,11 +161,16 @@ export default function FormularioEdit () {
                                             <label>Logo </label>
                                             <img src={dados.logo} className={styles.logo}/>
                                         </div>
+                                        <div className={styles.check_logo}> 
+                                        </div>
                                         <input type="text"
                                         onChange={(el)=> {
                                             setLogo(el.target.value)
                                         }}
-                                        defaultValue={dados.logo}/>
+                                        defaultValue={dados.logo}
+                                        value={logo}
+                                        />
+
                                         <label>Telefone</label>
                                         <input type="phone"
                                         onChange={(el)=> {
@@ -195,6 +202,35 @@ export default function FormularioEdit () {
                                     </div>
                                 </div>
                             </form>    
+                        </div>
+                        <div className={styles.line}/>
+
+                        <div className={styles.container}>
+                            <div className={styles.cont_btn_del}>
+                                <h4>Meu Link</h4>
+                                <div className={`${styles.cont_link} `}>
+                                    <div className={`${styles.no_padding_no_margin}`}>
+                                        <div className={styles.link}>
+                                            <Link to={`/${usuario && usuario[0].site}`} target="_blank"
+                                            className={styles.copy_link}
+                                            >
+                                            <span>meicomsite.netlify.app{`/${usuario && usuario[0].site}`} </span>
+                                            </Link>
+                                        </div>
+                                    </div>
+                                    <div className={`${styles.no_padding_no_margin}`}>
+                                        <div className={styles.copy}>
+                                            <FaCopy
+                                            type="button"
+                                            onClick={() => 
+                                                copyToClipboard(`meicomsite.netlify.app/${usuario && usuario[0].site}`)
+                                            }
+                                            className={styles.icon}
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
 
@@ -380,10 +416,10 @@ export default function FormularioEdit () {
                                                 <div>
                                                     <select
                                                     className={styles.input}
+                                                    onChange={(el)=> setModalidade(el.target.value)}
                                                     >
                                                         <option>--</option>
                                                         <option>Alimentação</option>
-                                                        <option>Prest. Serviços</option>
                                                     </select>
                                                     {mod && mod != "--" &&
                                                         <button
@@ -420,13 +456,21 @@ export default function FormularioEdit () {
                     <div className={styles.line}/>
 
                     <div className={styles.container}>
-                        <h4>Área de Perigo</h4>
-                        <button
-                        type="button" 
-                        data-bs-toggle="modal" 
-                        data-bs-target="#ModalDeleteUser"
-                        className={styles.btn_delete_account}
-                        >Deletar esta conta</button>
+                        <div className={styles.cont_btn_del}>
+                            <h4>Área de Perigo</h4>
+                            <button
+                            type="button"
+                            data-bs-toggle="modal"
+                            data-bs-target="#ModalDeleteUser"
+                            className={styles.btn_delete_account}
+                            >Deletar esta conta</button>
+                            <button
+                            type="button"
+                            data-bs-toggle="modal"
+                            data-bs-target={`#ModalRecupera`}
+                            className={styles.btn_delete_account}
+                            >Alterar Senha</button>
+                        </div>
                     </div>
                 </>
                 )
@@ -435,10 +479,6 @@ export default function FormularioEdit () {
         
         }
          
-
-        {usuario && usuario.length == 0 &&
-        <FormularioCadastro/>
-        }
         <div className="modal fade" id="ModalDeleteUser" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div className={`modal-dialog modal-md`}>
                 <div className="modal-content">
@@ -466,6 +506,13 @@ export default function FormularioEdit () {
             </div>
         </div>
 
+        <div className="modal fade" id="ModalRecupera" tabindex="-1" aria-labelledby="exampleModalLabel">
+            <div className={`modal-dialog modal-md`}>
+                <div className="modal-content">
+                    <RecuperaPassWord email ={user && user.email}/>
+                </div>
+            </div>
+        </div>
 
         <div className="modal fade" id="ModalAdd" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div className={`modal-dialog modal-md`}>

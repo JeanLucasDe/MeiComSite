@@ -1,61 +1,9 @@
 import { Link } from "react-router-dom"
 import styles from "./negocios.module.css"
-import {firebase, auth} from "../../Service/firebase"
-import { useEffect, useState } from "react"
-import App from "../../Hooks/App"
-import { collection,  getFirestore, getDocs} from "@firebase/firestore";
 
-export default function Negocios() {
-
-    const [userLogin, setUserLogin] = useState();
-    const [user, setUser] = useState([]);
-    const [produtos, setProdutos] = useState([])
-    
-    const db = getFirestore(App)
-    const UserCollection = collection(db, "MeiComSite")
-
-    const HandleClickLoginGoogle = async() => {
-        const provider = new firebase.auth.GoogleAuthProvider()
-        const result = await auth.signInWithPopup(provider);
-
-        if (!result.user) {
-            const {uid, displayName, photoURL} = result.user
-            if (!displayName && !photoURL) {
-                throw new Error('Usuário sem Nome ou foto')
-            }
-            setUserLogin({
-                id: uid,
-                avatar: photoURL,
-                name: displayName
-            })
-        }
-    }
-    useEffect(()=>{
-        const getUsers = async () => {
-            const data = await getDocs(UserCollection);
-            setProdutos((data.docs.map((doc) => ({...doc.data(), id: doc.id}))))
-        };
-        getUsers()
-
-        auth.onAuthStateChanged(user => {
-            if (user) {
-                const {uid, displayName, photoURL, email} = user
-                if (!displayName || !photoURL) {
-                    throw new Error('Usuário sem Nome ou foto')
-                }
-                setUser({
-                    id: uid,
-                    avatar: photoURL,
-                    name: displayName,
-                    email
-                })
-            }
-        })
-    }, [])
-
-
-    let index = produtos && user && produtos.findIndex(prop => prop.iduser == user.id)
-
+export default function Negocios(props) {
+    const user = props.user && props.user
+    const usuario = props.usuario && props.usuario    
 
     return (
         <div className={styles.container}>
@@ -68,12 +16,12 @@ export default function Negocios() {
                     <h1 className={styles.big_text}>Gerencie seu negócio na palma da sua mão</h1>
                 </div>
                 <div className={styles.cont_buttons}>
-                    {user.length == 0  ?
-                            <button className={styles.btn_start}
-                            onClick={HandleClickLoginGoogle}
-                            >Começar Grátis</button>
+                    {!user ?
+                            <Link className={styles.btn_start}
+                            to="/login"
+                            >Começar Grátis</Link>
                     :
-                        <Link to={index < 0 ? "/perfil/cadastro": "/perfil/user/negocio"}>
+                        <Link to={usuario && usuario.length == 0 ? "/cadastro": "/perfil/user/categorias"}>
                             <button className={styles.btn_start}>Começar Grátis</button>
                         </Link>
                         

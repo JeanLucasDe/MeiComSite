@@ -4,12 +4,12 @@ import Footer from "../layouts/layoutsHome/Footer";
 import NavBarUser from "../layouts/layoutsPerfil/NavBarUser";
 import styles from "../layouts/layoutsPerfil/NavBarUser.module.css"
 
-import { useState,useEffect, useContext } from "react"
+import { useState,useEffect } from "react"
 import {auth} from "../Service/firebase"
 import App from "../Hooks/App"
 import '@firebase/firestore';
 import { getFirestore, collection, getDocs} from "@firebase/firestore";
-import {  Outlet } from "react-router-dom"
+import {  Link, Outlet } from "react-router-dom"
 
 
 export default function Perfil () {
@@ -19,6 +19,7 @@ export default function Perfil () {
     const [user, setUser] = useState();
     const [state, setState] = useState(false)
     const [produtos, setProdutos] = useState([])
+    const [redirect, setRecirect] = useState()
     const [usuarios, setUsuarios] = useState([])
     const [vendas, setVendas] = useState([])
     const db = getFirestore(App)
@@ -91,15 +92,35 @@ export default function Perfil () {
     return (
         <div>
             <NavBar/>
-            <div className="row"
-            >
-                <div className={`${styles.col} col-md-2`}>
-                    <NavBarUser/>
+                {user ?
+                <div>
+                    {usuario && usuario.length > 0 ?
+                    <div className="row">
+
+                        {usuario && usuario.length > 0 &&
+                        <div className={`${styles.col} col-md-2`}>
+                            <NavBarUser/>
+                        </div>
+                        }
+                        
+                        <div className="col-md-10">
+                            <Outlet context={[mod, produtos, usuario, vendas, user]}/>
+                        </div>
+                    </div>:
+                    <div className={styles.cont_empty}>
+                        <img src='https://img.freepik.com/free-vector/user-verification-unauthorized-access-prevention-private-account-authentication-cyber-security-people-entering-login-password-safety-measures_335657-8.jpg?size=626&ext=jpg&ga=GA1.2.995514839.1678974862&semt=ais' className={styles.logo}/>
+                        <h4>Complete seu cadastro para Continuar</h4>
+                        <Link to="/cadastro"
+                        className={styles.btn_continue}
+                        >Continuar</Link>
+                    </div>
+                    
+                }
                 </div>
-                <div className="col-md-10">
-                    <Outlet context={[mod, produtos, usuario, vendas, user]}/>
-                </div>
-            </div>
+                :
+                <div></div>
+                }
+                
             <Footer/>
         </div>
         )

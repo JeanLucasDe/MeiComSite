@@ -9,9 +9,10 @@
     list-style-type: none;
 }
 .table {
-    display: table;
+    display: block;
     width: 90%;
-    margin: 0em auto 5em auto;
+    padding: 9em;
+    margin: 0em auto 9em auto;
     border: 1px solid #e0e0e0;
     border-radius: 0px 0px 7px 7px !important;
     box-shadow: 1px 1px 4px inset #ddd;
@@ -51,7 +52,7 @@
 }
 .title_empty {
     width: 90%;
-    margin: 1em auto;
+    margin: 1em auto 6em auto;
 }
 
 
@@ -59,6 +60,8 @@
 @media screen and (min-width:320px) {
     .view_desk {
         display: none;
+        height: 100vh;
+        margin-bottom: 3em;
     }
 }
 @media screen and (min-width:576px) {

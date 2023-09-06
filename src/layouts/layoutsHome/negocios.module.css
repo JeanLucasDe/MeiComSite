@@ -27,9 +27,10 @@
         padding: 1em;
         border-radius: 10px;
         background-color: #ff9100 !important;
-        color: #fff;
+        color: #fff !important;
         border: none !important;
         margin-right: 1em;
+        font-weight: 600;
     }
     .btn_plan{
         border: 1px solid #000;

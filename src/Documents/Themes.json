@@ -1,14 +1,8 @@
 [
     {
         "id":1,
-        "name":"Dark",
-        "modalidade":"Loja Virtual",
-        "img":"https://cdn.dribbble.com/userupload/3109677/file/original-e1467f69d893476792827f1b16f0129c.png?compress=1&resize=1024x768"
-    },
-    {
-        "id":2,
-        "name":"Light",
-        "modalidade":"Restaurante",
-        "img":"https://cdn.dribbble.com/userupload/4788394/file/original-fcf99b9b2164f1ff7f3f447a17de9c42.png?compress=1&resize=1024x768"
+        "name":"Wpp",
+        "modalidade":"Alimentação",
+        "img":"https://cdn.dribbble.com/users/2925499/screenshots/14954848/media/a37f299da3927d25223003329124b732.png?resize=400x300&vertical=center"
     }
 ]

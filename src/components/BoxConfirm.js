@@ -38,7 +38,6 @@ export default function BoxConfirm (props) {
             <button> tentar novamente </button>
         }
     },[])
-
     
     const AdicionarUSer = async () => {
         await setDoc(doc(db, `MeiComSite`, `${user.email}`), {
@@ -82,7 +81,7 @@ export default function BoxConfirm (props) {
             razao: !obj.razao ? prod[0].razao : obj.razao
         });
         await updateDoc(doc(db, "MeiComSite", user.email), {
-            logo: !obj.logo ? prod[0].logo : obj.logo
+            logo: !obj.logo ? prod[0].logo : obj.logo 
         });
         await updateDoc(doc(db, "MeiComSite", user.email), {
             telefone: !obj.phone ? prod[0].telefone : obj.phone

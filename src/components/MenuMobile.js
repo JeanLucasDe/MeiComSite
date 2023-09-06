@@ -17,13 +17,37 @@ export default function MenuMobile (props) {
                 type={props.type}
                 data-bs-dismiss={props.data_bs_dismiss}
                 aria-label={props.aria_label}
+                className={styles.mod}
                 >Home</li></Link>
 
-                <Link to="/planos"><li
+                <Link to="/page/demo"><li
                 type={props.type}
                 data-bs-dismiss={props.data_bs_dismiss}
                 aria-label={props.aria_label}
-                >Planos</li></Link>
+                className={styles.mod}
+                >Demonstração</li></Link>
+
+                <Link to="/perfil/user/categorias"><li
+                type={props.type}
+                data-bs-dismiss={props.data_bs_dismiss}
+                aria-label={props.aria_label}
+                className={styles.mod}
+                >Loja</li></Link>
+
+                <Link to="/perfil/user/online"><li
+                type={props.type}
+                data-bs-dismiss={props.data_bs_dismiss}
+                aria-label={props.aria_label}
+                className={styles.mod}
+                >Pedidos</li></Link>
+
+                <Link to="/perfil/user/vendas"><li
+                type={props.type}
+                data-bs-dismiss={props.data_bs_dismiss}
+                aria-label={props.aria_label}
+                className={styles.mod}
+                >Relatório</li></Link>
+
                 
                 <div className={`${styles.mobile} accordion accordion-flush`} id="accordionFlushExample">
                     <div className={` accordion-item`}>
@@ -35,18 +59,36 @@ export default function MenuMobile (props) {
                         <div id="flush-collapseOne" className="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
                                 <div className="accordion-body">
                                     <ul className={styles.list}>
-                                    <li><Link to="/catalogo/shopping">Loja Virtual</Link></li>
-                                    <li><Link to="/catalogo/alimentação">Restaurante</Link></li>
+                                        <li
+                                        type={props.type}
+                                        data-bs-dismiss={props.data_bs_dismiss}
+                                        aria-label={props.aria_label}
+                                        className={styles.item_mod}
+                                        ><Link to="/catalogo/shopping">Loja Virtual</Link></li>
+                                        <li
+                                        type={props.type}
+                                        data-bs-dismiss={props.data_bs_dismiss}
+                                        aria-label={props.aria_label}
+                                        className={styles.item_mod}
+                                        ><Link to="/catalogo/alimentação">Restaurante</Link></li>
                                     </ul>
                                 </div>
                         </div>
                     </div>
                 </div>
+                
+                <Link to="/perfil/user/config"><li
+                type={props.type}
+                data-bs-dismiss={props.data_bs_dismiss}
+                aria-label={props.aria_label}
+                className={styles.mod}
+                >Configurações</li></Link>
 
                 <Link to="/suporte"><li
                 type={props.type}
                 data-bs-dismiss={props.data_bs_dismiss}
                 aria-label={props.aria_label}
+                className={styles.mod}
                 >Ajuda</li></Link>
             </ul>
         </div>

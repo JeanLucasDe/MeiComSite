@@ -1,0 +1,101 @@
+.container {
+    position: absolute;
+    top: 0em;
+    width: 100%;
+    background-color: rgb(167, 167, 167);
+}
+.content {
+    position: inherit !important;
+    width: 100%;
+}
+.no_padding_no_margin {
+    padding: 0em !important;
+    margin: 0em !important;
+}
+
+.flex {
+    display: flex;
+    width: 100%;
+}
+.Wpp .cont_user {
+    width: 100%;
+    padding: 1em;
+    background-color: #EEEDEF;
+    display: flex;
+    align-items: center;
+}
+.Wpp .cont_user p {
+    margin: 0em 0em 0em 1em;
+    font-weight: 600;
+}
+.Wpp .user {
+    font-size: 2em;
+}
+.Wpp .logo {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+}
+.Wpp .cont_persons {
+    width: 100%;
+    height:100%;
+    background-color: #fff;
+}
+.Wpp .person {
+    padding: 1em;
+    cursor: pointer;
+}
+.Wpp .cont_input {
+    padding: 1em 0em;
+    border-bottom: 1px solid #F0F2F5;
+}
+.Wpp .cont_input input {
+    background-color: #F0F2F5;
+    border: none;
+    border-radius: 7px;
+    width: 90%;
+    margin: auto;
+    display: block;
+    padding: 0.3em;
+    text-indent: 5px;
+}
+
+.Wpp .info_person {
+    margin-left: 1em;
+    border-bottom: 1px solid #F0F2F5;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+.Wpp .info_person p:first-child{
+    font-size: 1em;
+    font-weight: 600 ;
+    text-transform: capitalize ;
+    margin-bottom: 0.1em;
+    color: #000;
+}
+.Wpp .info_person p {
+    font-weight: 400;
+    font-size: 0.9em;
+    color: #b3b3b3;
+}
+.Wpp .icon_check {
+    color: #D7D6D7 !important;
+    font-size: 0.8em !important;
+}
+@media screen and (min-width:320px) {
+    .Wpp .cont_left {
+        display: none;
+        width: 100%;
+        height: 100%;
+        border-right: 1px solid #F0F2F5;
+    }
+}
+@media screen and (min-width:576px) {
+    .Wpp .cont_left {
+        display: block;
+        width: 100%;
+        height: 100%;
+        border-right: 1px solid #F0F2F5;
+    }
+}

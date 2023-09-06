@@ -21,6 +21,8 @@
         background-color: transparent;
         font-size: 1.6em;
         text-decoration: underline;
+        color: #000;
+        
     }
 }
 @media screen and (min-width:766px) {

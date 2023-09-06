@@ -66,7 +66,7 @@ export default function NavBarUser () {
                 },
                 768: {
                   width: 768,
-                  slidesPerView: 4,
+                  slidesPerView: 2,
                 },
               }}
             className={`${styles.navigation} nav`}
@@ -76,16 +76,6 @@ export default function NavBarUser () {
                 hide: true,
                 }}
             >
-                <SwiperSlide>
-                    <NavLink
-                    to="/perfil/user/negocio"
-                    className={({ isActive, isPending }) =>
-                        isPending ? styles.isPendingMob : isActive ? styles.isActiveMob : styles.isPendingMob
-                    }
-                    >Visão Geral
-                    </NavLink>  
-                </SwiperSlide>
-
                 <SwiperSlide>
                     <NavLink
                     to="/perfil/user/categorias"
@@ -117,15 +107,6 @@ export default function NavBarUser () {
 
                 <SwiperSlide>
                     <NavLink
-                    to="/perfil/user/membros"
-                    className={({ isActive, isPending }) =>
-                        isPending ? styles.isPendingMob : isActive ? styles.isActiveMob : styles.isPendingMob
-                    }
-                    >Links
-                    </NavLink>  
-                </SwiperSlide>
-                <SwiperSlide>
-                    <NavLink
                     to="/perfil/user/config"
                     className={({ isActive, isPending }) =>
                         isPending ? styles.isPendingMob : isActive ? styles.isActiveMob : styles.isPendingMob
@@ -137,29 +118,7 @@ export default function NavBarUser () {
             </Swiper>
 
                 <div className={`${styles.view_desk}`}>
-                    <div className={`${!mod && styles.isTest} ${styles.cont_mod}`}>
-                        <a
-                        href="/perfil/user/negocio"
-                        >
-                            <div className={styles.cont_range}
-                            onClick={()=> AlterarModo()}
-                            >
-                                <div className={`${styles.btn_range} ${ mod ? styles.isLeft : styles.isRight}`}/>
-                            </div>
-                        </a>
-                        <div>
-                            {mod ? <strong>Modo Real</strong>:
-                            <strong>Modo de Teste</strong>}
-                        </div>
-                    </div>
                     <div className={styles.cont_links}>
-                        <NavLink
-                        to="/perfil/user/negocio"
-                        className={({ isActive, isPending }) =>
-                            isPending ? styles.isPending : isActive ? styles.isActive : styles.isPending
-                        }
-                        ><FaLandmark className={styles.icon}/> Visão Geral
-                        </NavLink>
                         <NavLink
                         to="/perfil/user/categorias"
                         className={({ isActive, isPending }) =>
@@ -180,13 +139,6 @@ export default function NavBarUser () {
                             isPending ? styles.isPending : isActive ? styles.isActive : styles.isPending
                         }
                         ><FaChartPie className={styles.icon}/> Vendas
-                        </NavLink>
-                        <NavLink
-                        to="/perfil/user/membros"
-                        className={({ isActive, isPending }) =>
-                            isPending ? styles.isPending : isActive ? styles.isActive : styles.isPending
-                        }
-                        ><FaLink className={styles.icon}/> Links
                         </NavLink>
                         <NavLink
                         to="/perfil/user/config"

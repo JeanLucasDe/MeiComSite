@@ -19,23 +19,8 @@ export default function BoxModalidade () {
                                 </div>
                             </div>
                                 <div>
-                                    <p className={styles.description}>Receba pedidos, informe que está em preparo, pagamento por QR code ou no ato da entrega, deixe seu negócio mais dinâmico.</p>
+                                    <p className={styles.description}>Receba pedidos de forma automática, informe se está em preparo ou entrega, deixe seu negócio mais dinâmico.</p>
                                 </div>
-                        </div>
-                    </Link>
-                </div>
-                <div className="col-sm-4">
-                    <Link to="/catalogo/shopping" className={styles.link}>
-                        <div className={styles.box}>
-                            <div className={styles.container_icon}>
-                                <img src="https://img.freepik.com/fotos-gratis/amigos-do-sexo-feminino-fazendo-compras-juntos_53876-25041.jpg?w=740&t=st=1679160493~exp=1679161093~hmac=b5de9ad8887caee44d16799cfc6a8e73dcf9278779f230675463b2e23921063a"/>
-                                <div className={styles.container_title}>
-                                    <h4>Loja Virtual</h4>
-                                </div>
-                            </div>
-                            <div>
-                                <p className={styles.description} >Mostre seus produtos de forma prática, facilitando a interação do seu cliente e a divulgação da sua loja.</p>
-                            </div>
                         </div>
                     </Link>
                 </div>
@@ -44,11 +29,11 @@ export default function BoxModalidade () {
                             <div className={styles.container_icon}>
                                 <img src="https://img.freepik.com/fotos-gratis/maos-femininas-escrevendo-em-um-caderno-vazio_23-2148652066.jpg?w=740&t=st=1679160691~exp=1679161291~hmac=448fd27f8704642482112a9c9bff88126fa78fd4b83788fac7a49501848c1faf" className={styles.dashed}/>
                                 <div className={styles.container_title}>
-                                    <h4>Agendamentos - (Indisponível)</h4>
+                                    <h4>Prest. Serviços - (Indisponível)</h4>
                                 </div>
                             </div>
                         <div className={styles.description}>
-                            <p>Que tal uma mãozinha para organizar sua rotina de trabalho? Utitlize nossa ferramenta para que seus clientes vejam seus dias disponíveis.</p>
+                            <p>Ofereça seus serviços, tenha um melhor controle nos seus projetos e pedidos, agilize seu atendimento com nosso bot.</p>
                         </div>
                     </div>
                 </div>

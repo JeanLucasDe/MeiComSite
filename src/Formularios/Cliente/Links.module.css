@@ -3,6 +3,7 @@
     list-style-type: none;
     padding: 0.9em;
     font-size: 1em !important;
+    height: 100vh;
 }
 .list li {
     box-shadow: 1px 1px 4px #cfcfcf;

@@ -28,7 +28,6 @@ export default function Footer () {
                     <div className={styles.container_lists}>
                         <ul className={styles.list}>
                             <h4>Modalidades</h4>
-                            <li><Link to="/catalogo/shopping">Loja Virtual</Link></li>
                             <li><Link to="/catalogo/alimentação">Restaurante</Link></li>
                         </ul>
                         <ul className={styles.list}>
@@ -50,7 +49,7 @@ export default function Footer () {
                 <div className={`${styles.mobile} accordion accordion-flush`} id="accordionFlushExample">
   <div className={` accordion-item`}>
     <h2 className="accordion-header" id="flush-headingOne">
-      <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+      <button className={`${styles.btn_item} accordion-button collapsed`} type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
         Modalidades
       </button>
     </h2>
@@ -65,7 +64,7 @@ export default function Footer () {
   </div>
   <div className={`${styles.item} accordion-item`}>
     <h2 className="accordion-header" id="flush-headingTwo">
-      <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+      <button className={`${styles.btn_item} accordion-button collapsed`} type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
         Empresa
       </button>
     </h2>
@@ -82,7 +81,7 @@ export default function Footer () {
   </div>
   <div className="accordion-item">
     <h2 className="accordion-header" id="flush-headingThree">
-      <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+      <button className={`${styles.btn_item} accordion-button collapsed`} type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
         Ajuda
       </button>
     </h2>

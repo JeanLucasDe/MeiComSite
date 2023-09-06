@@ -47,11 +47,12 @@ return (
                 </ul>
             </div>
                 <Link to="/planos">Planos e Preços</Link>
+                <Link to="/page/demo" target="_blank">Demo</Link>
                 <Link to="/suporte">Ajuda</Link>
             </div>
             <div className={styles.login}>
                 {user &&
-                <Link to="/perfil/user/negocio" className={styles.icon_home}><FaHome/></Link>
+                <Link to="/perfil/user/config" className={styles.icon_home}><FaHome/></Link>
                 }
                 
                 <div className={styles.border_left}></div>

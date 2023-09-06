@@ -53,6 +53,10 @@
     .button {
         border: none !important;
     }
+    .btn_item {
+    background-color: #000;
+    color: #fff;
+    }
 }
 @media screen and (min-width:576px) {
     .container_lists {

@@ -1,24 +1,22 @@
 import { useEffect, useState } from "react"
-import styles from "./BoxConversation.module.css"
+import styles from "../../AreaCliente/layouts/Wpp/BoxConversation.module.css"
 import { toast, ToastContainer } from "react-toastify"
 import { FaEdit, FaMinusCircle, FaPlus, FaPlusCircle, FaRegLaughBeam, FaRegPaperPlane, FaSave, FaTrashAlt } from "react-icons/fa"
-import styles1 from "./Conversation.module.css"
+import styles1 from "../../AreaCliente/layouts/Wpp/Conversation.module.css"
 import { useOutletContext, useParams } from "react-router-dom"
-import App from "../../../Hooks/App"
+import App from "../../Hooks/App"
 import '@firebase/firestore';
 import { doc, getFirestore, setDoc} from "@firebase/firestore";
 import moment from "moment/moment"
-import BoxPedido from "./BoxPedido"
+import BoxPedido from "../../AreaCliente/layouts/Wpp/BoxPedido"
 
 export default function BoxConversation (props) {
     
     const lista = props.produtos && props.produtos
     const usuario = props.usuario && props.usuario
 
-    console.log(usuario)
-
     const db = getFirestore(App)
-    const [produtoss, usuarios, vendas] = useOutletContext()
+    const vendas = []
 
     var listIds = []
     vendas && vendas.map(dados => {
@@ -205,33 +203,12 @@ export default function BoxConversation (props) {
     
 
     const AdicionarUSer = async () => {
-        await setDoc(doc(db, `MeiComSite/${usuario && usuario.email}/vendas`, `${id}`), {
-            nome, 
-            data:moment().format('DD/MM/YYYY'),
-            hora:moment().format('hh:mm') ,
-            telefone, 
-            cidade, 
-            bairro,
-            taxa,
-            rua,
-            moradia,
-            numero, 
-            referencia,
-            telefone, 
-            pagamento, 
-            Total, 
-            lugar: 1,
-            state: 1, 
-            iden: id,
-            produtos: ListaEscolha,
-            });
-        localStorage.setItem(`itenscarrinho.${site}`,JSON.stringify([]))
         setTimeout(() => {
             window.location.reload()
         }, 3000);
     };
     
-    const VendaEfetuada = Compra.length > 0 && vendas && vendas.filter(dados => dados.iden == Compra[0].id)
+    const VendaEfetuada = []
 
     
 

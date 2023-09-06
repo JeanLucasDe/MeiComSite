@@ -41,6 +41,7 @@ export default function Login () {
             return toast.error('Campos não podem ficar Vazios')
         }
         firebase.auth().signInWithEmailAndPassword(email, pass).then(() => {
+            window.location.href = "/"
             return toast.success('Conectado com sucesso!')
         })
         .catch(() =>toast.error("Email ou senha incorretos"))
@@ -118,8 +119,7 @@ export default function Login () {
                             >Registre-se agora!</Link></p>
                         </div>
                         :
-                        <div className={styles.cont_login}>
-                            <h4>Você já está logado!</h4>
+                        <div >
                         </div>
                         }
                     </div>

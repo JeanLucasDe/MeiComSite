@@ -28,12 +28,12 @@ return (
                     </li>
                     <li className="col-sm-4 col-md-12">
                         <div>
-                            <FaRegCheckCircle className={styles.icon}/> Maior controle em estoque
+                            <FaRegCheckCircle className={styles.icon}/> Maior controle de Pagamento
                         </div>
                     </li>
                     <li className="col-sm-4 col-md-12">
                         <div>
-                            <FaRegCheckCircle className={styles.icon}/> Maior conforto ao seu cliente
+                            <FaRegCheckCircle className={styles.icon}/> Melhor conforto ao seu cliente
                         </div>
                     </li>
                 </ul>

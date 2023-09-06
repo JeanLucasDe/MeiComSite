@@ -9,8 +9,6 @@ import { BrowserRouter as Router, Routes, Route} from "react-router-dom";
 import FormularioEdit from "./Formularios/Cliente/FormularioEdit";
 import FormularioCadastro from "./Formularios/Cadastro/FormularioCadastro";
 import Produto from "./AreaCliente/components/Produto";
-import Negocio from "./Formularios/Cliente/Negocio";
-import Links from "./Formularios/Cliente/Links";
 import HomeCliente from "./AreaCliente/HomeCliente"
 import CategoriasProdutos from "./Formularios/Cliente/Categorias"
 import MarketHome from "./AreaCliente/components/MarketHome";
@@ -32,6 +30,7 @@ import AreaTeste from "./AreaTesteCliente/AreaTeste";
 import Online from "./Formularios/Cliente/Online";
 import Login from "./Pages/Login"
 import Register from "./Pages/Register";
+import PageDemonstração from "./Pages/PageDemonstrationWpp";
 
 
 
@@ -60,15 +59,14 @@ function App() {
               <Route path="/login" element={<Login/>}/>
               <Route path="/register" element={<Register/>}/>
               
+              <Route path="/cadastro" element={<FormularioCadastro/>}/>
+              <Route path="/page/demo" element={<PageDemonstração/>}/>
 
               <Route path="perfil" element={<Perfil/>}>
-                <Route path="/perfil/user/negocio" element={<Negocio/>}/>
                 <Route path="/perfil/user/categorias" element={<CategoriasProdutos/>}/>
                 <Route path="/perfil/user/online" element={<Online/>}/>
                 <Route path="/perfil/user/categorias/:categoriaa" element={<Produtos/>}/>
-                <Route path="/perfil/user/membros" element={<Links/>}/>
                 <Route path="/perfil/user/config" element={<FormularioEdit/>}/>
-                <Route path="/perfil/cadastro" element={<FormularioCadastro/>}/>
                 <Route path="/perfil/user/vendas" element={<Vendas/>}>
                     <Route index element={<FiltroVendas/>}/>
                     <Route path="/perfil/user/vendas/todas" element={<TodasVendas/>}/>

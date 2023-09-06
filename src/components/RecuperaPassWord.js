@@ -4,12 +4,12 @@ import firebase from 'firebase/compat/app';
 import { toast, ToastContainer } from "react-toastify";
 
 
-export default function RecuperaPassWord () {
+export default function RecuperaPassWord (props) {
     const [email, setEmail] = useState()
 
     const RecoveryPassWord = () => {
-        firebase.auth().sendPasswordResetEmail(email).then(()=> {
-            toast.success('Email Enviado com sucesso!')
+        firebase.auth().sendPasswordResetEmail(email || props.email).then(()=> {
+            toast.success('Email de recuperação enviado com sucesso!')
         }).catch (()=> {
             toast.error('Confira se o email está correto.')
         })
@@ -22,9 +22,11 @@ export default function RecuperaPassWord () {
             <input type="email" 
             className={styles.input}
             placeholder="Digite Aqui"
+            defaultValue={props.email && props.email}
             onChange={(el)=> setEmail(el.target.value)}/>
-            {email && <p>Confira sua caixa de spam</p>}
-            {email &&
+            {email || props.email && <strong>Confira sua caixa de spam</strong>}
+            
+            {email || props.email &&
             <button
             className={styles.btn_send}
             onClick={RecoveryPassWord}
