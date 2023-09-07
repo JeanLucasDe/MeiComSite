@@ -38,6 +38,7 @@ border-radius: 20px;       /* roundness of the scroll thumb */
     margin-top: 0.9em;
 }
 .box {
+    margin-left: 1em !important;
     width: 85%;
     margin: 1em 0em;
     background-color: #fff;
@@ -47,7 +48,7 @@ border-radius: 20px;       /* roundness of the scroll thumb */
     justify-content: space-between;
     position: relative;
 }
-.box:nth-child(4), .box:nth-child(15) {
+.rem {
     background-color: #D9FDD3;
     border-radius: 10px 0px 10px 10px;
     float: right;
