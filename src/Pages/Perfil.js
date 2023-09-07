@@ -93,7 +93,7 @@ export default function Perfil () {
         <div>
             <NavBar/>
                 {user ?
-                <div>
+                <div className={styles.container}>
                     {usuario && usuario.length > 0 ?
                     <div className="row">
 

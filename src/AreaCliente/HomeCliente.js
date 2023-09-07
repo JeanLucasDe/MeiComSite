@@ -6,6 +6,7 @@ import { Outlet, useParams } from "react-router-dom"
 import NavigationBar from "./components/NavegationBar";
 import LinkMeiComSite from "./components/LinkMeiComSite"
 import styles from "./HomeCliente.module.css"
+import Loading from "../components/Loading";
 
 
 export default function HomeCliente () {
@@ -39,16 +40,24 @@ export default function HomeCliente () {
 
     return (
         <>
-            {cliente && cliente.length > 0 && cliente[0].status == "pronto" ?
+            {!cliente.length && <Loading/>}
+            {cliente &&
             <div>
-                {/*<NavigationBar info={cliente && cliente[0]}/>*/}
-                <Outlet context={[prod && prod, cliente, vendas]}/>
-            </div>
-            :
-            <div className={styles.cont_empty}>
-                <img src="https://img.freepik.com/free-vector/computer-user-human-character-program-windows_1284-63445.jpg?size=626&ext=jpg&ga=GA1.1.995514839.1678974862&semt=ais"
-                />
+                {cliente && cliente[0].status == "pronto" ?
+                <div>
+                    <div>
+                        {/*<NavigationBar info={cliente && cliente[0]}/>*/}
+                        <Outlet context={[prod && prod, cliente, vendas]}/>
+                    </div>
+                </div>:
+                cliente && cliente.length > 0 &&
+                <div className={styles.cont_empty}>
+                    <img src="https://img.freepik.com/free-vector/computer-user-human-character-program-windows_1284-63445.jpg?size=626&ext=jpg&ga=GA1.1.995514839.1678974862&semt=ais"
+                    />
                 <h5>Ainda não há permissão para exibir esta página.</h5>
+            </div>
+                }
+                
             </div>
             }
             <LinkMeiComSite/>

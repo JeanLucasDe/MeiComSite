@@ -6,6 +6,10 @@
         justify-content: space-between;
         margin: 2em auto 1em auto;
         padding: 1.5em 0em;
+        height: 100%;
+    }
+    .container {
+        height: 100%;
     }
     .navigation a:not(:first-child) {
         text-decoration: none;

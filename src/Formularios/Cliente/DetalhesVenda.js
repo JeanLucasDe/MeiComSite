@@ -33,21 +33,34 @@ export default function DetalhesVenda (props) {
                     <div className="row">
                         <div className="col-sm-6">
                             <p className={styles.info}>Nome: <span>{obj && obj.nome}</span></p>
-                            <p className={styles.info}>Telefone: <span>{obj && obj.telefone}</span></p>
+                            {obj && obj.lugar == 1 && <p className={styles.info}>Telefone: <span>{obj && obj.telefone}</span></p>}
                             <p className={styles.info}>Pagamento: <span>{obj && obj.pagamento}</span></p>
+                            {obj && obj.mesa && <p className={styles.info}>Mesa: <span>{obj && obj.mesa}</span></p>}
                         </div>
                         <div className="col-sm-6">
-                            <p className={styles.info}>Cidade: <span>{obj && obj.cidade}</span></p>
-                            <p className={styles.info}>Bairro: <span>{obj && obj.bairro}</span></p>
-                            <p className={styles.info}>rua: <span>{obj && obj.rua}</span></p>
-                            <p className={styles.info}>Número: <span>{obj && obj.numero}</span></p>
+                            {obj && obj.lugar == 1 &&
+                            <div>
+                                <p className={styles.info}>Cidade: <span>{obj && obj.cidade}</span></p>
+                                <p className={styles.info}>Bairro: <span>{obj && obj.bairro}</span></p>
+                                <p className={styles.info}>rua: <span>{obj && obj.rua}</span></p>
+                                <p className={styles.info}>Número: <span>{obj && obj.numero}</span></p>
+                                <p className={styles.info}>P. Refencia: <span>{obj && obj.referencia}</span></p>
+                            </div>
+                            
+                            }
                         </div>
                     </div>
                 </div>
                 <div className={styles.line}/>
-                <div className={styles.cont_total}>
-                    <h5>Total da venda</h5>
-                    <h5>{obj && FormataValor(obj.Total)}</h5>
+                <div>
+                    {obj && obj.lugar == 1 && <div className={styles.cont_total}>
+                        <h5>Taxa</h5>
+                        <h5>{obj && FormataValor(obj.taxa)}</h5>
+                    </div>}
+                    <div className={styles.cont_total}>
+                        <h5>Total da venda</h5>
+                        <h5>{obj && FormataValor(obj.Total)}</h5>
+                    </div>
                 </div>
                 <div className={styles.line}/>
                 <div>
@@ -60,7 +73,7 @@ export default function DetalhesVenda (props) {
                                         {dados.produtos.map(item => {
                                             return (
                                                 <li>
-                                                    <p>{item.qtd}x <span>{item.sabor}</span></p>
+                                                    <p>-<span>{item.sabor}</span></p>
                                                     
                                                 </li>
                                                 )

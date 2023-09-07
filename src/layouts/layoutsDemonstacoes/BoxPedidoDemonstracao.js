@@ -8,7 +8,40 @@ import { FaCheck, FaGenderless } from "react-icons/fa";
 export default function BoxPedido (props) {
 
 
-    const vendas = []
+    const vendas = [
+        {
+        Total: 90,
+        nome:'Elis',
+        cidade:'Salvador',
+        bairro:'Pituba',
+        taxa: 7,
+        telefone:'(71) 999999999',
+        pagamento:'Pix',
+        data: '07/09/2023',
+        hora:'20:00',
+        moradia:'Casa',
+        numero:12,
+        rua:'Alameda das Espartódeas',
+        referencia:'Proximo ao posto de saúde',
+        produtos: [
+            {
+                categoria:'Pizza Grande',
+                valor:22,
+                produtos: [
+                    {
+                        qtd:1,
+                        sabor:'Frango'
+                    },
+                    {
+                        qtd:1,
+                        sabor:'Calabresa'
+                    }
+                ]
+            }
+
+        ]
+        }
+    ]
 
 
     const {site} = useParams()
@@ -105,6 +138,7 @@ export default function BoxPedido (props) {
                                     <div className="col-sm-6">
                                         <p>Cidade: <strong>{dados.cidade}</strong></p>
                                         <p>Bairro: <strong>{dados.bairro}</strong></p>
+                                        <p>Rua: <strong>{dados.rua}</strong></p>
                                         <p>Moradia: <strong>{dados.moradia}</strong></p>
                                         <p>Número: <strong>{dados.numero}</strong></p>
                                         <p>Referência: <strong>{dados.referencia}</strong></p>
@@ -131,8 +165,8 @@ export default function BoxPedido (props) {
                                     </div>
                                     <div className={styles.line}/>
                                     <div className={styles.cont_preço}>
-                                        <h5>Taxa: </h5>
-                                        <h3>Total </h3>
+                                        <h5>Taxa: {FormataValor(dados.taxa)}</h5>
+                                        <h3>Total {FormataValor(dados.Total)}</h3>
                                     </div>
     
                                 </div>

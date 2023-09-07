@@ -5,9 +5,8 @@ import DetalhesVenda from "./DetalhesVenda"
 import { useState } from "react"
 import App from "../../Hooks/App"
 import '@firebase/firestore';
-import { doc, updateDoc,  deleteDoc, getFirestore, collection, getDocs,setDoc} from "@firebase/firestore";
+import { doc, updateDoc,  deleteDoc, getFirestore} from "@firebase/firestore";
 import {Swiper,SwiperSlide} from "swiper/react";
-import { FreeMode, Scrollbar} from "swiper";
 import "swiper/css";
 import "swiper/css/free-mode";
 import "swiper/css/pagination";
@@ -15,13 +14,14 @@ import 'swiper/css/navigation';
 import moment from "moment"
 import NovoPedido from "./NovoPedido"
 import { ToastContainer, toast } from "react-toastify"
+import Contador from "./Contador"
 
 
 export default function Online () {
 
     const db = getFirestore(App)
     const [mod, produtos, usuario, vendas] = useOutletContext()
-    var [seg, SetSeg] = useState(120)
+
     const [count, setCounte] = useState(1)
     const [obj, setObj] = useState()
     var [countDelete, setCountDelete] = useState(0)
@@ -45,7 +45,6 @@ export default function Online () {
             const ref = doc(db, `MeiComSite/${usuario.length > 0 && usuario[0].email}/vendas`, dados && dados.id)
             await deleteDoc(ref)
             setObj(dados)
-            window.location.reload()
         }
         setTimeout(() => {
             setCountDelete(0)
@@ -72,21 +71,6 @@ export default function Online () {
     }
 
 
-
-    const contador = () => {
-        setTimeout(() => {
-            window.location.reload()
-        }, 180000);
-        setTimeout(() => {
-            SetSeg(seg -= 1)
-        }, 1000);
-    }
-
-    contador()
-    
-    
-
-
     const FormataValor = (valor) => {
         var valorFormatado = valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
         return valorFormatado
@@ -97,6 +81,8 @@ export default function Online () {
       }
       
     const vendasOrdenadas = vendas.sort(compare)
+
+
     
 
     return (
@@ -111,7 +97,7 @@ export default function Online () {
                         data-bs-target={`#ModalNovoPedido`}
                         >Novo Pedido</button>
                     </div>
-                    {seg < 30 && <p>A página atualizará em {seg} segundos...</p>}
+                    <Contador />
                 </div>
                 <div className={` ${styles.cont_box_pedidos}`} >
                     <div className={`${styles.aberto} ${styles.box_pedidos}`}>
@@ -236,7 +222,6 @@ export default function Online () {
             <div className={`${styles.mob_Version}`}>
                 <div>
                     <h4 className={styles.text_center}>Painel de Pedidos</h4>
-                    {seg < 30 && <p>A página atualizará em {seg} segundos...</p>}
                 </div>
                 <div>
                     <button
@@ -388,7 +373,7 @@ export default function Online () {
 
 
             <div className="modal fade" id="ModalDetalhesVenda" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div className={`modal-dialog modal-md`}>
+                <div className={`modal-dialog modal-lg`}>
                     <div className="modal-content">
                         <DetalhesVenda
                         obj={obj}

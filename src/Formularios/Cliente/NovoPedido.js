@@ -112,8 +112,14 @@ export default function NovoPedido () {
         listaEscolha[0].produtos.splice(index, 1)
     }
 
-    var taxa=0
+    const PegaTaxa = () => {
+        var bairroS = bairro && bairro.toString().split('-')
+        const index =  usuario && bairroS && usuario[0].listBairros.filter(dados => dados.local == bairroS[0].trim())
+        const taxa = index && index[0].taxa
+        return parseFloat(taxa)
+    }
 
+    
     function pegaPreco() {
         if (listaPedido.length === 0) {
             return 0
@@ -124,7 +130,9 @@ export default function NovoPedido () {
             return taxa ? soma + taxa : soma
         }
     }
+    const taxa = PegaTaxa()
     const Total = pegaPreco()
+
 
 
 
@@ -133,16 +141,18 @@ export default function NovoPedido () {
         await setDoc(doc(db, `MeiComSite/${usuario && usuario[0].email}/vendas`, `${id}`), {
             nome, 
             data:moment().format('DD/MM/YYYY'),
-            hora:moment().format('hh:mm') ,
+            hora:moment().format('HH:mm') ,
             telefone: telefone ? telefone : '', 
             cidade: cidade? cidade : '', 
             bairro: bairro ? bairro : '',
             rua: rua ? rua : '',
+            taxa: !taxa ? 0 : parseFloat(taxa),
             moradia: moradia ? moradia : '',
             numero: numero ? numero : '', 
             referencia: referencia ? referencia : '',
             pagamento: pagamento? pagamento : '', 
             state: 1, 
+            mesa: mesa ? parseFloat(mesa) : '',
             iden: id,
             lugar: entrega,
             Total,

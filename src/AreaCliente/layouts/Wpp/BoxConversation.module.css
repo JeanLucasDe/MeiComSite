@@ -27,6 +27,16 @@ border-radius: 20px;       /* roundness of the scroll thumb */
     padding: 0em;
     list-style-type: none;
 }
+.dis_table {
+    display: table !important;
+    width: 100%;
+}
+.grenn_light {
+    background-color: #b4fda7 !important;
+}
+.btn_user_compra {
+    margin-top: 0.9em;
+}
 .box {
     width: 85%;
     margin: 1em 0em;
@@ -37,7 +47,7 @@ border-radius: 20px;       /* roundness of the scroll thumb */
     justify-content: space-between;
     position: relative;
 }
-.box:nth-child(4), .box:nth-child(14) {
+.box:nth-child(4), .box:nth-child(15) {
     background-color: #D9FDD3;
     border-radius: 10px 0px 10px 10px;
     float: right;

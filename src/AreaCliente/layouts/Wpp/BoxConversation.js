@@ -15,8 +15,6 @@ export default function BoxConversation (props) {
     const lista = props.produtos && props.produtos
     const usuario = props.usuario && props.usuario
 
-    console.log(usuario)
-
     const db = getFirestore(App)
     const [produtoss, usuarios, vendas] = useOutletContext()
 
@@ -51,7 +49,7 @@ export default function BoxConversation (props) {
     const [pagamento, setPagamento] = useState()
     const [editPagamento, setEditPagamento] = useState()
     const [valor, setValor] = useState()
-    const [ação, setAção] = useState()
+    const [escolheSalvar, setEscolheSalvar] = useState()
     const [save, setSave] = useState()
     
 
@@ -119,6 +117,13 @@ export default function BoxConversation (props) {
             }
         })
     }
+    function pegaDadosUser() {
+        let produtosSalvos = new Array()
+        if (localStorage.hasOwnProperty(`DadosUserSave.${site}`)) {
+            produtosSalvos = JSON.parse(localStorage.getItem(`DadosUserSave.${site}`))
+        }
+        return produtosSalvos
+    }
     function pegaDadosCompra() {
         let produtosSalvos = new Array()
         if (localStorage.hasOwnProperty(`itenscarrinho.${site}.compra`)) {
@@ -127,6 +132,7 @@ export default function BoxConversation (props) {
         return produtosSalvos
     }
 
+    const UserSave = pegaDadosUser()
     const Compra = pegaDadosCompra()
 
     const SalvaEscolha = () => {
@@ -206,26 +212,43 @@ export default function BoxConversation (props) {
 
     const AdicionarUSer = async () => {
         await setDoc(doc(db, `MeiComSite/${usuario && usuario.email}/vendas`, `${id}`), {
-            nome, 
+            nome: escolheSalvar ? UserSave.nome : nome, 
             data:moment().format('DD/MM/YYYY'),
             hora:moment().format('hh:mm') ,
-            telefone, 
-            cidade, 
-            bairro,
-            taxa,
-            rua,
-            moradia,
-            numero, 
-            referencia,
-            telefone, 
-            pagamento, 
-            Total, 
+            telefone: escolheSalvar ? UserSave.telefone : telefone, 
+            cidade: escolheSalvar ? UserSave.cidade : cidade , 
+            bairro: escolheSalvar ? UserSave.bairro : bairro,
+            taxa: escolheSalvar ? parseFloat(UserSave.taxa) : parseFloat(taxa),
+            rua: escolheSalvar ? UserSave.rua : rua,
+            moradia: escolheSalvar ? UserSave.moradia : moradia,
+            numero : escolheSalvar ? UserSave.numero : numero, 
+            referencia: escolheSalvar ? UserSave.referencia : referencia,
+            pagamento: escolheSalvar ? UserSave.pagamento : pagamento, 
+            Total: parseFloat(Total), 
             lugar: 1,
             state: 1, 
             iden: id,
             produtos: ListaEscolha,
             });
         localStorage.setItem(`itenscarrinho.${site}`,JSON.stringify([]))
+
+        if (escolheSalvar) {
+            localStorage.setItem(`DadosUserSave.${site}`,JSON.stringify({
+                nome: escolheSalvar ? UserSave.nome : nome, 
+                data:moment().format('DD/MM/YYYY'),
+                hora:moment().format('hh:mm') ,
+                telefone: escolheSalvar ? UserSave.telefone : telefone, 
+                cidade: escolheSalvar ? UserSave.cidade : cidade , 
+                bairro: escolheSalvar ? UserSave.bairro : bairro,
+                taxa: escolheSalvar ? parseFloat(UserSave.taxa) : parseFloat(taxa),
+                rua: escolheSalvar ? UserSave.rua : rua,
+                moradia: escolheSalvar ? UserSave.moradia : moradia,
+                numero : escolheSalvar ? UserSave.numero : numero, 
+                referencia: escolheSalvar ? UserSave.referencia : referencia,
+                pagamento: escolheSalvar ? UserSave.pagamento : pagamento, 
+            }))
+        }
+
         setTimeout(() => {
             window.location.reload()
         }, 3000);
@@ -233,7 +256,6 @@ export default function BoxConversation (props) {
     
     const VendaEfetuada = Compra.length > 0 && vendas && vendas.filter(dados => dados.iden == Compra[0].id)
 
-    
 
     const cc = document.querySelector('#cont')
     const DescePágina = () => {
@@ -483,13 +505,66 @@ export default function BoxConversation (props) {
 
                             </li>
                             }
-                            {next >= 5 &&
+                            {UserSave && next >= 5 &&
+                            <li className={`${styles.box} ${styles.rem} ${styles.dis_table}`}>
+                                <p>Quer Utilizar seu cadastro Anterior, {UserSave && UserSave.nome}?</p>
+                                {escolheSalvar && <strong>Sim!</strong>}
+                                {next == 5 &&
+                                
+                                <div>
+                                    <button
+                                    className={`${styles.btn_escolha} ${styles.grenn_light}`}
+                                    onClick={()=> {
+                                        if (next > 5) return
+                                        setNext(6)
+                                    }}
+                                    >Não, obrigado. </button>
+                                    <div className={`${styles.btn_user_compra}  accordion`} id="accordionExample">
+                                        <div className="accordion-item">
+                                            <h2 className="accordion-header">
+                                                <button className={`accordion-button`} type="button" data-bs-toggle="collapse" data-bs-target="#detalhes1" aria-expanded="false" aria-controls="collapseOne">
+                                                Clique para ver!
+                                                </button>
+                                            </h2>
+                                            <div id="detalhes1" className="accordion-collapse collapse">
+                                                <div className="accordion-body">
+                                                    <div>
+                                                        <p>Nome: <strong>{UserSave && UserSave.nome}</strong></p>
+                                                        <p>Telefone: <strong>{UserSave && UserSave.telefone}</strong></p>
+                                                        <p>Cidade: <strong>{UserSave && UserSave.cidade}</strong></p>
+                                                        <p>Bairro: <strong>{UserSave && UserSave.bairro}</strong></p>
+                                                        <p>Rua: <strong>{UserSave && UserSave.rua}</strong></p>
+                                                        <p>Número: <strong>{UserSave && UserSave.numero}</strong></p>
+                                                        <p>P.Ref.: <strong>{UserSave && UserSave.referencia}</strong></p>
+                                                        <p>Pagamento: <strong>{UserSave && UserSave.pagamento}</strong></p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button
+                                        className={`${styles.btn_escolha} ${styles.continue}`}
+                                        onClick={()=> {
+                                            if (next > 5) return
+                                            setNext(5)
+                                            DescePágina()
+                                            setNext(16)
+                                            setEscolheSalvar(true)
+                                        }}
+                                        >Usar Cadastro Anterior</button>
+                                </div>
+                                }
+                            </li>
+                            }
+                            {!escolheSalvar &&
+                            <div>
+                            {next >= 6 &&
                             <li
                             className={`${styles.box} ${styles.rem}`}
                             >
                                 <div className={styles.li}>               
                                     <p>Qual seu nome?</p>
-                                    {next == 5 ? 
+                                    {next == 6 ? 
                                     <input type="text" onChange={(el)=> setNome(el.target.value)}
                                     className={styles.input}
                                     placeholder="Nome"
@@ -502,7 +577,7 @@ export default function BoxConversation (props) {
                                         placeholder="Nome"
                                         />
                                         }
-                                        {next > 5 && !editNome ? next < 14 && <FaEdit 
+                                        {next > 6 && !editNome ? next < 14 && <FaEdit 
                                         type="button"
                                         onClick={()=> setEditNome(true)}
                                         className={styles.icon_edit}
@@ -515,12 +590,12 @@ export default function BoxConversation (props) {
                                         } 
                                     </div>  
                                 }
-                                {nome && next <= 5 &&
+                                {nome && next <= 6 &&
                                         <button
                                         className={styles.btn_continue}
                                         onClick={() => {
-                                            if (next > 5) return 
-                                            setNext(6)
+                                            if (next > 6) return 
+                                            setNext(7)
                                             DescePágina()
                                         }}
                                         >Continuar</button>
@@ -528,13 +603,16 @@ export default function BoxConversation (props) {
                                 </div>
                             </li>
                             }
-                            {next >= 6 &&
+
+
+
+                            {next >= 7 &&
                             <li
                             className={`${styles.box} ${styles.rem}`}
                             >
                                 <div className={styles.li}>               
                                     <p>Qual sua cidade?</p>
-                                    {next == 6 ? 
+                                    {next == 7 ? 
                                     <select
                                     onChange={(el) => {
                                         setCidade(el.target.value)
@@ -564,7 +642,7 @@ export default function BoxConversation (props) {
                                           })}
                                         </select>
                                         }
-                                        {next > 6 && !editCidade ? next < 14 && <FaEdit 
+                                        {next > 7 && !editCidade ? next < 14 && <FaEdit 
                                         type="button"
                                         onClick={()=> setEditCidade(true)}
                                         className={styles.icon_edit}
@@ -579,12 +657,12 @@ export default function BoxConversation (props) {
 
                                     
                                     }
-                                    {cidade && cidade != '--' && next <= 6 &&
+                                    {cidade && cidade != '--' && next <= 7 &&
                                         <button
                                         className={styles.btn_continue}
                                         onClick={() => {
-                                            if (next > 6) return 
-                                            setNext(7)
+                                            if (next > 7) return 
+                                            setNext(8)
                                             DescePágina()
                                         }}
                                         >Continuar</button>
@@ -592,13 +670,13 @@ export default function BoxConversation (props) {
                                 </div>
                             </li>
                             }
-                            {next >= 7 &&
+                            {next >= 8 &&
                             <li
                             className={`${styles.box} ${styles.rem}`}
                             >
                                 <div className={styles.li}>               
                                     <p>Qual seu Bairro?</p>
-                                    {next == 7 ? <select
+                                    {next == 8 ? <select
                                     onChange={(el) => {
                                         setBairro(el.target.value)
                                     }}
@@ -628,7 +706,7 @@ export default function BoxConversation (props) {
                                       })}
                                     </select>
                                     }
-                                    {next > 7 && !editBairro ? next < 14 && <FaEdit 
+                                    {next > 8 && !editBairro ? next < 14 && <FaEdit 
                                     type="button"
                                     onClick={()=> setEditBairro(true)}
                                     className={styles.icon_edit}
@@ -641,12 +719,12 @@ export default function BoxConversation (props) {
                                     } 
                                 </div>  
                                     }
-                                    {bairro && bairro != '--' && next <= 7 &&
+                                    {bairro && bairro != '--' && next <= 8 &&
                                         <button
                                         className={styles.btn_continue}
                                         onClick={() => {
-                                            if (next > 7) return 
-                                            setNext(8)
+                                            if (next > 8) return 
+                                            setNext(9)
                                             DescePágina()
                                         }}
                                         >Continuar</button>
@@ -654,13 +732,13 @@ export default function BoxConversation (props) {
                                 </div>
                             </li>
                             }
-                            {next >= 8 &&
+                            {next >= 9 &&
                             <li
                             className={`${styles.box} ${styles.rem}`}
                             >
                                 <div className={styles.li}>               
                                     <p>Qual o nome da Rua?</p>
-                                    {next == 8 ? 
+                                    {next == 9 ? 
                                     <input type="text"
                                     onChange={(el)=> setRua(el.target.value)}
                                     className={styles.input}
@@ -674,7 +752,7 @@ export default function BoxConversation (props) {
                                     className={styles.input}
                                     />
                                     }
-                                    {next > 8 && !editRua ? next < 14 && <FaEdit 
+                                    {next > 9 && !editRua ? next < 14 && <FaEdit 
                                     type="button"
                                     onClick={()=> setEditRua(true)}
                                     className={styles.icon_edit}
@@ -687,12 +765,12 @@ export default function BoxConversation (props) {
                                     } 
                                 </div>  
                                     }
-                                    {rua && next <= 8 &&
+                                    {rua && next <= 9 &&
                                         <button
                                         className={styles.btn_continue}
                                         onClick={() => {
-                                            if (next > 8) return 
-                                            setNext(9)
+                                            if (next > 9) return 
+                                            setNext(10)
                                             DescePágina()
                                         }}
                                         >Continuar</button>
@@ -702,13 +780,13 @@ export default function BoxConversation (props) {
                             }
 
 
-                            {next >= 9 &&
+                            {next >= 10 &&
                             <li
                             className={`${styles.box} ${styles.rem}`}
                             >
                                 <div className={styles.li}>               
                                     <p>Casa ou Apartamento ?</p>
-                                    {next == 9 ?
+                                    {next == 10 ?
                                     <select
                                     onChange={(el) => {
                                         setMoradia(el.target.value)
@@ -732,7 +810,7 @@ export default function BoxConversation (props) {
                                      <option>Apartamento</option>
                                     </select>
                                     }
-                                    {next > 9 && !editMoradia ? next < 14 && <FaEdit 
+                                    {next > 10 && !editMoradia ? next < 14 && <FaEdit 
                                     type="button"
                                     onClick={()=> setEditMoradia(true)}
                                     className={styles.icon_edit}
@@ -746,12 +824,12 @@ export default function BoxConversation (props) {
                                 </div>  
                                     }
 
-                                    {moradia && moradia != '--' && next <= 9 &&
+                                    {moradia && moradia != '--' && next <= 10 &&
                                         <button
                                         className={styles.btn_continue}
                                         onClick={() => {
-                                            if (next > 9) return 
-                                            setNext(10)
+                                            if (next > 10) return 
+                                            setNext(11)
                                             DescePágina()
                                         }}
                                         >Continuar</button>
@@ -761,13 +839,13 @@ export default function BoxConversation (props) {
                             }
 
 
-                            {next >= 10 &&
+                            {next >= 11 &&
                             <li
                             className={`${styles.box} ${styles.rem}`}
                             >
                                 <div className={styles.li}> 
 
-                                    {next == 10 ?
+                                    {next == 11 ?
                                         <>
                                             {moradia == "Casa" &&
                                             <div>
@@ -793,7 +871,7 @@ export default function BoxConversation (props) {
                                         placeholder="Numero"
                                         />
                                         }
-                                        {next > 10 && !editNumero ? next < 14 && <FaEdit 
+                                        {next > 11 && !editNumero ? next < 14 && <FaEdit 
                                         type="button"
                                         onClick={()=> setEditNumero(true)}
                                         className={styles.icon_edit}
@@ -806,12 +884,12 @@ export default function BoxConversation (props) {
                                         } 
                                         </div>  
                                       }
-                                    {numero && next <= 10 &&
+                                    {numero && next <= 11 &&
                                         <button
                                         className={styles.btn_continue}
                                         onClick={() => {
-                                            if (next > 10) return 
-                                            setNext(11)
+                                            if (next > 11) return 
+                                            setNext(12)
                                             DescePágina()
                                         }}
                                         >Continuar</button>
@@ -821,13 +899,13 @@ export default function BoxConversation (props) {
                             </li>
                             }
 
-                            {next >= 11 &&
+                            {next >= 12 &&
                             <li
                             className={`${styles.box} ${styles.rem}`}
                             >
                                 <div className={styles.li}> 
                                     <p>Ponto de Referência</p>
-                                    {next == 11 ? 
+                                    {next == 12 ? 
                                     <textarea
                                     className={styles.text_area}
                                     onChange={(el)=> setReferencia(el.target.value)}
@@ -840,7 +918,7 @@ export default function BoxConversation (props) {
                                           onChange={(el)=> setReferencia(el.target.value)}
                                           />
                                         }
-                                        {next > 11 && !editReferencia ? next < 14 &&<FaEdit 
+                                        {next > 12 && !editReferencia ? next < 14 &&<FaEdit 
                                         type="button"
                                         onClick={()=> setEditReferencia(true)}
                                         className={styles.icon_edit}
@@ -854,57 +932,7 @@ export default function BoxConversation (props) {
                                     </div>  
                                     }
 
-                                    {referencia && next <= 11 &&
-                                        <button
-                                        className={styles.btn_continue}
-                                        onClick={() => {
-                                            if (next > 11) return 
-                                            setNext(12)
-                                            DescePágina()
-                                        }}
-                                        >Continuar</button>
-                                    }
-                                </div>
-                            </li>
-                            }
-
-
-                            {next >= 12 &&
-                            <li
-                            className={`${styles.box} ${styles.rem}`}
-                            >
-                                <div className={styles.li}> 
-                                    <p>Telefone</p>
-                                    {next == 12 ? 
-                                    <input
-                                    type="number"
-                                    className={styles.input}
-                                    onChange={(el)=> setTelefone(el.target.value)}
-                                    />:
-                                    <div>
-                                        {!editTelefone ?
-                                          <strong>{telefone}</strong> :
-                                          <input
-                                          type="number"
-                                          className={styles.input}
-                                          onChange={(el)=> setTelefone(el.target.value)}
-                                          />
-                                        }
-                                        {next > 12 && !editTelefone ? next < 14 &&<FaEdit 
-                                        type="button"
-                                        onClick={()=> setEditTelefone(true)}
-                                        className={styles.icon_edit}
-                                        /> :
-                                        <FaSave
-                                        onClick={()=> setEditTelefone(false)}
-                                        type="button"
-                                        className={styles.icon_edit}
-                                        />
-                                        } 
-                                    </div>  
-                                    }
-
-                                    {telefone && next <= 12 &&
+                                    {referencia && next <= 12 &&
                                         <button
                                         className={styles.btn_continue}
                                         onClick={() => {
@@ -919,21 +947,71 @@ export default function BoxConversation (props) {
                             }
 
 
-
-
                             {next >= 13 &&
+                            <li
+                            className={`${styles.box} ${styles.rem}`}
+                            >
+                                <div className={styles.li}> 
+                                    <p>Telefone</p>
+                                    {next == 13 ? 
+                                    <input
+                                    type="number"
+                                    className={styles.input}
+                                    onChange={(el)=> setTelefone(el.target.value)}
+                                    />:
+                                    <div>
+                                        {!editTelefone ?
+                                          <strong>{telefone}</strong> :
+                                          <input
+                                          type="number"
+                                          className={styles.input}
+                                          onChange={(el)=> setTelefone(el.target.value)}
+                                          />
+                                        }
+                                        {next > 13 && !editTelefone ? next < 16 &&<FaEdit 
+                                        type="button"
+                                        onClick={()=> setEditTelefone(true)}
+                                        className={styles.icon_edit}
+                                        /> :
+                                        <FaSave
+                                        onClick={()=> setEditTelefone(false)}
+                                        type="button"
+                                        className={styles.icon_edit}
+                                        />
+                                        } 
+                                    </div>  
+                                    }
+
+                                    {telefone && next <= 13 &&
+                                        <button
+                                        className={styles.btn_continue}
+                                        onClick={() => {
+                                            if (next > 13) return 
+                                            setNext(14)
+                                            DescePágina()
+                                        }}
+                                        >Continuar</button>
+                                    }
+                                </div>
+                            </li>
+                            }
+
+
+
+
+                            {next >= 14 &&
                             <li
                             className={`${styles.box} ${styles.rem}`}
                             >
                                 <div className={styles.li}> 
                                     <p>Que Legal que chegamos até aqui!</p>
                                     <p>Revise seus dados e podemos finalizar.</p>
-                                    {next <= 13 &&
+                                    {next <= 14 &&
                                         <button
                                         className={styles.btn_continue}
                                         onClick={() => {
-                                            if (next > 13) return 
-                                            setNext(14)
+                                            if (next > 14) return 
+                                            setNext(15)
                                             DescePágina()
                                         }}
                                         >Confirmar</button>
@@ -942,7 +1020,7 @@ export default function BoxConversation (props) {
                             </li>
                             }
 
-                            {next >= 14 &&
+                            {next >= 15 &&
                             <li
                             className={`${styles.box} ${styles.rem}`}
                             >
@@ -951,13 +1029,13 @@ export default function BoxConversation (props) {
                                 </div>
                             </li>
                             }
-                            {next >= 14 &&
+                            {next >= 15 &&
                             <li
                             className={`${styles.box} ${styles.rem}`}
                             >
                                 <div className={styles.li}>
                                     <p>Qual a forma de pagamento?</p>
-                                    {next == 14 ? 
+                                    {next == 15 ? 
                                     <select
                                     onChange={(el)=> setPagamento(el.target.value)}
                                     >
@@ -982,7 +1060,7 @@ export default function BoxConversation (props) {
                                          <option>Àvista</option>
                                         </select>
                                         }
-                                        {next > 14 && !editPagamento ? next < 14 && <FaEdit 
+                                        {next > 15 && !editPagamento ? next < 14 && <FaEdit 
                                         type="button"
                                         onClick={()=> setEditPagamento(true)}
                                         className={styles.icon_edit}
@@ -995,13 +1073,12 @@ export default function BoxConversation (props) {
                                         } 
                                     </div>  
                                     }
-                                    {pagamento && pagamento != "--" && next <= 14 &&
+                                    {pagamento && pagamento != "--" && next <= 16 &&
                                         <button
                                         className={styles.btn_continue}
                                         onClick={() => {
-                                            if (next > 14) return 
-                                            setNext(15)
-                                            AddPedidoStorage()
+                                            if (next > 15) return 
+                                            setNext(16)
                                             DescePágina()
                                         }}
                                         >Continuar</button>
@@ -1009,17 +1086,29 @@ export default function BoxConversation (props) {
                                 </div>
                             </li>
                             }
+                            </div>
+                            }
 
-                            {next >= 15 &&
+                            {next >= 16 &&
                             <li
                             className={`${styles.box} ${styles.rem}`}
                             >
                                 <div className={styles.li}>
                                     <p>Total do Pedido: <strong>{FormataValor(Total)}</strong></p>
+                                    <button
+                                    className={styles.btn_continue}
+                                    onClick={() => {
+                                        if (next > 16) return 
+                                        setNext(17)
+                                        AddPedidoStorage()
+                                        DescePágina()
+                                    }}
+                                    >Confirmar</button>
                                 </div>
                             </li>
                             }
-                            {next >= 15 &&
+
+                            {next >= 17 &&
                             <li
                             className={`${styles.box} ${styles.rem}`}
                             >
