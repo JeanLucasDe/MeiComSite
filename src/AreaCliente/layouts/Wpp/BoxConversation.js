@@ -496,7 +496,12 @@ export default function BoxConversation (props) {
                                     className={`${styles.btn_escolha} ${styles.continue}`}
                                     onClick={()=> {
                                         if (next > 4) return
-                                        setNext(5)
+                                        if (UserSave) {
+                                            setNext(5)
+                                        }
+                                        if (!UserSave) {
+                                            setNext(6)
+                                        }
                                         DescePágina()
                                     }}
                                     >Confirmar Pedido</button>
@@ -556,8 +561,11 @@ export default function BoxConversation (props) {
                                 }
                             </li>
                             }
+                            
                             {!escolheSalvar &&
                             <div>
+                            
+
                             {next >= 6 &&
                             <li
                             className={`${styles.box} ${styles.rem}`}
