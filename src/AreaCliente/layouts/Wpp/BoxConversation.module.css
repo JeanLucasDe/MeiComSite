@@ -115,7 +115,17 @@ border-radius: 20px;       /* roundness of the scroll thumb */
     background-color: rgb(203, 255, 198) !important;
 }
 .btn_continue {
-    background-color: #D9FDD3;
+    background-color: #138100;
+    width: 100%;
+    border: none;
+    border-radius: 10px;
+    padding: 1em;
+    font-weight: 600;
+    color: #fff;
+    margin-top: 1em;
+}
+.btn_cancel {
+    background-color: #e7e7e7;
     width: 100%;
     border: none;
     border-radius: 10px;

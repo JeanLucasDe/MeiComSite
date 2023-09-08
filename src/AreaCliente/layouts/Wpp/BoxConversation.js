@@ -176,7 +176,14 @@ export default function BoxConversation (props) {
         const taxa = index && index[0].taxa
         return parseFloat(taxa)
     }
+    function pegaBairro() {
+        var bairroS = bairro && bairro.toString().split('-')
+        const index =  usuario && bairroS && usuario.listBairros.filter(dados => dados.local == bairroS[0].trim())
+        let Bairro = index && index[0].local
+        return Bairro
+    }
 
+    const Bairro = pegaBairro()
     const taxa = PegaTaxa()
 
     function pegaPreco() {
@@ -217,7 +224,7 @@ export default function BoxConversation (props) {
             hora:moment().format('hh:mm') ,
             telefone: escolheSalvar ? UserSave[0].telefone : telefone, 
             cidade: escolheSalvar ? UserSave[0].cidade : cidade , 
-            bairro: escolheSalvar ? UserSave[0].bairro : bairro,
+            bairro: escolheSalvar ? UserSave[0].bairro : Bairro,
             taxa: escolheSalvar ? parseFloat(UserSave[0].taxa) : parseFloat(taxa),
             rua: escolheSalvar ? UserSave[0].rua : rua,
             moradia: escolheSalvar ? UserSave[0].moradia : moradia,
@@ -239,7 +246,7 @@ export default function BoxConversation (props) {
             hora:moment().format('hh:mm') ,
             telefone: escolheSalvar ? UserSave[0].telefone : telefone, 
             cidade: escolheSalvar ? UserSave[0].cidade : cidade , 
-            bairro: escolheSalvar ? UserSave[0].bairro : bairro,
+            bairro: escolheSalvar ? UserSave[0].bairro : Bairro,
             taxa: escolheSalvar ? parseFloat(UserSave[0].taxa) : parseFloat(taxa),
             rua: escolheSalvar ? UserSave[0].rua : rua,
             moradia: escolheSalvar ? UserSave[0].moradia : moradia,
@@ -1118,7 +1125,17 @@ export default function BoxConversation (props) {
                             >
                                 <div className={styles.li}>
                                     <p>Total do Pedido: <strong>{FormataValor(Total)}</strong></p>
-                                    {next == 16 && <button
+                                    {next == 16 && 
+                                    <button
+                                    className={styles.btn_cancel}
+                                    onClick={() => {
+                                        if (next > 16) return 
+                                        setNext(1)
+                                        ResetaEscolha()
+                                    }}
+                                    >Cancelar</button>}
+                                    {next == 16 && 
+                                    <button
                                     className={styles.btn_continue}
                                     onClick={() => {
                                         if (next > 16) return 

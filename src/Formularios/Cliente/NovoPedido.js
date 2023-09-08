@@ -34,6 +34,7 @@ export default function NovoPedido () {
     var [seed, setSeed] = useState(0)
     const [entrega, setEntrega] = useState(0)
     const [nome, setNome] = useState()
+    const [selectProd, setSelectProd] = useState(false)
     const [cidade, setCidade] = useState()
     const [rua, setRua] = useState()
     const [bairro, setBairro] = useState()
@@ -82,6 +83,7 @@ export default function NovoPedido () {
         let produto = listaProdutos.length > 0 && listaProdutos.filter(dados => dados.nome == escolhaProduto)
         setproduto(produto[0])
         setListaEscolha([{categoria:produto[0].nome, valor: produto[0].preço}])
+        setSelectProd(!selectProd)
     }
 
     const AddPedido = () => {
@@ -91,6 +93,14 @@ export default function NovoPedido () {
         SetEscolhaProduto('')
         LimpaQtds()
         toast.success('Pedido Adicionado com Sucesso!')
+    }
+    const ResetaPedido = () => {
+        setListaPedido([])
+        setproduto({})
+        setListaEscolha([])
+        SetEscolhaProduto('')
+        LimpaQtds()
+        toast.error('Pedido Cancelado!')
     }
     
 
@@ -130,6 +140,14 @@ export default function NovoPedido () {
             return taxa ? soma + taxa : soma
         }
     }
+    function pegaBairro() {
+        var bairroS = bairro && bairro.toString().split('-')
+        const index =  usuario && bairroS && usuario[0].listBairros.filter(dados => dados.local == bairroS[0].trim())
+        let Bairro = index && index[0].local
+        return Bairro
+    }
+
+    const Bairro = pegaBairro()
     const taxa = PegaTaxa()
     const Total = pegaPreco()
 
@@ -141,7 +159,7 @@ export default function NovoPedido () {
             hora:moment().format('HH:mm') ,
             telefone: telefone ? telefone : '', 
             cidade: cidade? cidade : '', 
-            bairro: bairro ? bairro : '',
+            bairro: Bairro ? Bairro : '',
             rua: rua ? rua : '',
             taxa: !taxa ? 0 : parseFloat(taxa),
             moradia: moradia ? moradia : '',
@@ -162,8 +180,8 @@ export default function NovoPedido () {
                 data:moment().format('DD/MM/YYYY'),
                 hora:moment().format('HH:mm') ,
                 telefone: telefone ? telefone : '', 
-                cidade: cidade? cidade : '', 
-                bairro: bairro ? bairro : '',
+                cidade: cidade ? cidade : '', 
+                bairro: Bairro ? Bairro : '',
                 rua: rua ? rua : '',
                 taxa: !taxa ? 0 : parseFloat(taxa),
                 moradia: moradia ? moradia : '',
@@ -177,6 +195,7 @@ export default function NovoPedido () {
                 Total,
                 produtos: listaPedido,
             })
+            window.location.reload()
     };
 
     const removeCompra = (categoria) => {
@@ -389,7 +408,7 @@ export default function NovoPedido () {
                                         )
                                         })}
                                 </datalist>
-                                {escolhaProduto && FiltroBuscaItem.length > 0 && <button
+                                {!selectProd && escolhaProduto && FiltroBuscaItem.length > 0 && <button
                                 className={`${styles.btn_add}`}
                                 onClick={AddProduto}
                                 >Adicionar</button>}
@@ -448,10 +467,17 @@ export default function NovoPedido () {
                                             )
                                     })}
                                 </ul>
-                                {listaEscolha[0].produtos && listaEscolha[0].produtos.length == produto.qtdSabores && <button
-                                className={`${styles.btn_add}`}
-                                onClick={AddPedido}
-                                >Confirmar</button>}
+                                {listaEscolha[0].produtos && listaEscolha[0].produtos.length == produto.qtdSabores && 
+                                <div>
+                                    <button
+                                    className={`${styles.btn_add}`}
+                                    onClick={AddPedido}
+                                    >Confirmar</button>
+                                    <button
+                                    className={`${styles.btn_cancel}`}
+                                    onClick={ResetaPedido}
+                                    >Cancelar</button>
+                                </div>}
 
                             </div>}
                         </div>
