@@ -60,19 +60,19 @@ export default function FormularioEdit () {
     const listCidades = []
     const listBairros = []
 
-    Users && Users.map(dados => {
-        if (dados.iduser == user.id) {
+    
+    
+    const salvarLocal = async () => {
+        await usuario.map(dados => {
             dados.listCidades.map(item => {
                 listCidades.push({local: item.local})
             })
             dados.listBairros.map(item => {
                 listBairros.push({local: item.local, taxa: item.taxa})
             })
-        }
-    })
-    
-    
-    const salvarLocal = async () => {
+            
+        })
+
         listCidades.push({local: novaCidade})
         listBairros.push({local: novoBairro, taxa:parseFloat(taxa)})
         setSeed(seed += 1)
@@ -157,20 +157,6 @@ export default function FormularioEdit () {
                                     </div>
 
                                     <div className="col-lg-6">
-                                        <div className={styles.flex}>
-                                            <label>Logo </label>
-                                            <img src={dados.logo} className={styles.logo}/>
-                                        </div>
-                                        <div className={styles.check_logo}> 
-                                        </div>
-                                        <input type="text"
-                                        onChange={(el)=> {
-                                            setLogo(el.target.value)
-                                        }}
-                                        defaultValue={dados.logo}
-                                        value={logo}
-                                        />
-
                                         <label>Telefone</label>
                                         <input type="phone"
                                         onChange={(el)=> {

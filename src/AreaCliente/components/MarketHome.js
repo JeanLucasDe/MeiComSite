@@ -33,7 +33,6 @@ export default function MarketHome () {
         return valorFormatado
     }
 
-
     return (
         <>
             <>
@@ -248,7 +247,7 @@ export default function MarketHome () {
                                 }}
                                 >
                                     <div className={styles.flex}>
-                                        <img src={usuario.length > 0 && usuario[0].logo} className={styles.logo}/>
+                                        <img src={usuario.length > 0 && usuario[0].mod == "Alimentação" && "https://static.vecteezy.com/system/resources/previews/011/097/612/non_2x/waiters-for-food-delivery-business-icon-png.png"} className={styles.logo}/>
                                         <div className={styles.info_person}>
                                             <div>
                                                 <p>{usuario.length > 0 && usuario[0].razao}</p>

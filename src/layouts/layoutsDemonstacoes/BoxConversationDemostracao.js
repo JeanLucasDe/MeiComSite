@@ -232,7 +232,7 @@ export default function BoxConversation (props) {
                     <div className={`conten ${styles.content}`} id="cont">
                         <ul className={styles.list}>
                             <li
-                            className={`${styles.box} ${styles.rem}`}
+                            className={`${styles.box}`}
                             >
                                 <div className={styles.li}>                                
                                     <p>Olá, Em que podemos ajuda?</p>
@@ -249,7 +249,7 @@ export default function BoxConversation (props) {
                             {
                             next >= 1 &&
                             <li
-                            className={`${styles.box} ${styles.rem}`}
+                            className={`${styles.box}`}
                             >
                                 <div className={styles.li}>  
                                     <h5>Cardápio</h5> 
@@ -296,7 +296,7 @@ export default function BoxConversation (props) {
                             }
                             {next >= 2 &&
                             <li
-                            className={`${styles.box} ${styles.rem}`}
+                            className={`${styles.box}`}
                             >
                                 <div className={styles.li}>               
                                     <h5>{categoria}</h5>
@@ -391,7 +391,7 @@ export default function BoxConversation (props) {
 
                             {next >= 3 &&
                             <li
-                            className={`${styles.box}`}
+                            className={`${styles.box} ${styles.rem}`}
                             >
                                 <div className={`${styles.rem} ${styles.li}`}>
                                     <strong className={styles.m_bottom}>Quer continuar pedindo?</strong>
@@ -462,7 +462,7 @@ export default function BoxConversation (props) {
                             }
                             {next >= 5 &&
                             <li
-                            className={`${styles.box} ${styles.rem}`}
+                            className={`${styles.box}`}
                             >
                                 <div className={styles.li}>               
                                     <p>Qual seu nome?</p>
@@ -507,7 +507,7 @@ export default function BoxConversation (props) {
                             }
                             {next >= 6 &&
                             <li
-                            className={`${styles.box} ${styles.rem}`}
+                            className={`${styles.box}`}
                             >
                                 <div className={styles.li}>               
                                     <p>Qual sua cidade?</p>
@@ -571,7 +571,7 @@ export default function BoxConversation (props) {
                             }
                             {next >= 7 &&
                             <li
-                            className={`${styles.box} ${styles.rem}`}
+                            className={`${styles.box}`}
                             >
                                 <div className={styles.li}>               
                                     <p>Qual seu Bairro?</p>
@@ -633,7 +633,7 @@ export default function BoxConversation (props) {
                             }
                             {next >= 8 &&
                             <li
-                            className={`${styles.box} ${styles.rem}`}
+                            className={`${styles.box}`}
                             >
                                 <div className={styles.li}>               
                                     <p>Qual o nome da Rua?</p>
@@ -681,7 +681,7 @@ export default function BoxConversation (props) {
 
                             {next >= 9 &&
                             <li
-                            className={`${styles.box} ${styles.rem}`}
+                            className={`${styles.box}`}
                             >
                                 <div className={styles.li}>               
                                     <p>Casa ou Apartamento ?</p>
@@ -740,7 +740,7 @@ export default function BoxConversation (props) {
 
                             {next >= 10 &&
                             <li
-                            className={`${styles.box} ${styles.rem}`}
+                            className={`${styles.box}`}
                             >
                                 <div className={styles.li}> 
 
@@ -800,7 +800,7 @@ export default function BoxConversation (props) {
 
                             {next >= 11 &&
                             <li
-                            className={`${styles.box} ${styles.rem}`}
+                            className={`${styles.box}`}
                             >
                                 <div className={styles.li}> 
                                     <p>Ponto de Referência</p>
@@ -848,7 +848,7 @@ export default function BoxConversation (props) {
 
                             {next >= 12 &&
                             <li
-                            className={`${styles.box} ${styles.rem}`}
+                            className={`${styles.box}`}
                             >
                                 <div className={styles.li}> 
                                     <p>Telefone</p>
@@ -900,7 +900,7 @@ export default function BoxConversation (props) {
 
                             {next >= 13 &&
                             <li
-                            className={`${styles.box} ${styles.rem}`}
+                            className={`${styles.box}`}
                             >
                                 <div className={styles.li}> 
                                     <p>Que Legal que chegamos até aqui!</p>
@@ -930,7 +930,7 @@ export default function BoxConversation (props) {
                             }
                             {next >= 14 &&
                             <li
-                            className={`${styles.box} ${styles.rem}`}
+                            className={`${styles.box}`}
                             >
                                 <div className={styles.li}>
                                     <p>Qual a forma de pagamento?</p>
@@ -989,7 +989,7 @@ export default function BoxConversation (props) {
 
                             {next >= 15 &&
                             <li
-                            className={`${styles.box} ${styles.rem}`}
+                            className={`${styles.box}`}
                             >
                                 <div className={styles.li}>
                                     <p>Total do Pedido: <strong>{FormataValor(Total)}</strong></p>
@@ -998,7 +998,7 @@ export default function BoxConversation (props) {
                             }
                             {next >= 15 &&
                             <li
-                            className={`${styles.box} ${styles.rem}`}
+                            className={`${styles.box}`}
                             >
                                 <div className={styles.li}>
                                     <p>Aguarde, seu Pedido será confirmado.</p>

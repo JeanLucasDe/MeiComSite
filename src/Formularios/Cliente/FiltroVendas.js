@@ -7,6 +7,8 @@ import { useState } from "react";
 
 export default function FiltroVendas () {
 
+
+    const [vendas, usuario] = useOutletContext()
     const [showFilter, setShowFilter] = useState(false)
     const [idvenda, setIdVenda] = useState()
     const [datain, setDataIn] = useState()
@@ -14,8 +16,10 @@ export default function FiltroVendas () {
     const [status, setStatus] = useState()
     const [pagamento, setPagamento] = useState()
     const [comprador, setComprador] = useState()
+    const [lugar, setLugar] = useState()
+    const [cidade, setCidade] = useState()
     const [telefone, setTelefone] = useState()
-    const [região, setRegião] = useState()
+    const [Bairro, setBairro] = useState()
     const [busca, setBusca] = useState()
 
 
@@ -23,12 +27,13 @@ export default function FiltroVendas () {
     const obj = {
         idvenda,
         datain,
-        datater,
-        status,
-        pagamento,
+        cidade:cidade != '--' ? cidade : false ,
+        status: status != '--' ? parseFloat(status) : false,
+        pagamento: pagamento != '--' ? pagamento : false,
         comprador,
         telefone,
-        região
+        lugar:lugar != '--' ? lugar : false,
+        bairro:Bairro != '--' ? Bairro : false,
     }
 
     const handleSend = () => {
@@ -63,8 +68,10 @@ export default function FiltroVendas () {
                                         onChange={(el)=> setStatus(el.target.value)}
                                         >
                                             <option value="--">--</option>
-                                            <option value="concluido">concluido</option>
-                                            <option value="pendente">pendente</option>
+                                            <option value={1}>Aberto</option>
+                                            <option value={2}>Preparo</option>
+                                            <option value={3}>Entrega</option>
+                                            <option value={4}>Finalizado</option>
                                         </select>
                                         <label>Pagamento:</label>
                                         <select
@@ -72,8 +79,19 @@ export default function FiltroVendas () {
                                         onChange={(el)=> setPagamento(el.target.value)}
                                         >
                                             <option value="--">--</option>
-                                            <option value="cartão">cartão</option>
-                                            <option value="avista">avista</option>
+                                            <option >Cartão</option>
+                                            <option >Pix</option>
+                                            <option >Avista</option>
+                                        </select>
+
+                                        <label>Lugar:</label>
+                                        <select
+                                        value={lugar}
+                                        onChange={(el)=> setLugar(el.target.value)}
+                                        >
+                                            <option value="--">--</option>
+                                            <option value={2}>Local</option>
+                                            <option value={1}>Entrega</option>
                                         </select>
                                     </div>
                                 </div>
@@ -90,14 +108,27 @@ export default function FiltroVendas () {
                                         onChange={(el)=> setTelefone(el.target.value)}
                                         />
                             
-                                        <label>Região:</label>
+                                        <label>Cidade:</label>
                                         <select
-                                        value={região}
-                                        onChange={(el)=> setRegião(el.target.value)}
+                                        onChange={(el)=> setCidade(el.target.value)}
                                         >
                                             <option value="--">--</option>
-                                            <option value="cabula">cabula</option>
-                                            <option value="arvoredo">arvoredo</option>
+                                            {usuario.length > 0 && usuario[0].listCidades.map(dados => {
+                                            return (
+                                                <option>{dados.local}</option>
+                                                )
+                                            })}
+                                        </select>
+                                        <label>Bairro:</label>
+                                        <select
+                                        onChange={(el)=> setBairro(el.target.value)}
+                                        >
+                                            <option value="--">--</option>
+                                            {usuario.length > 0 && usuario[0].listBairros.map(dados => {
+                                            return (
+                                                <option>{dados.local}</option>
+                                                )
+                                            })}
                                         </select>
                                     </div>
                                 </div>

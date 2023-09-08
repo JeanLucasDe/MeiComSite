@@ -97,7 +97,6 @@ export default function FormularioCadastro () {
     fecha: moment(fecha).format('hh:mm:ss'),
     listBairros,
     listCidades,
-    logo: OnLogo ? '' : logo,
     ação:ação,
     }
 
@@ -183,25 +182,6 @@ export default function FormularioCadastro () {
                                     required
                                     placeholder="Digite Aqui"
                                     />
-                                    <div className={styles.flex}>
-                                        <label>Logo </label>
-                                    {logo &&  <img src={logo} className={styles.logo}/>}
-                                    </div>
-                                    <Link to="/suporte/fotos" className={styles.link_help}>Como colocar minha logo?</Link>
-                                    <div className={styles.check_logo}>
-                                        <input type="checkbox" onChange={()=> setOnLogo(!OnLogo)}
-                                        className={styles.input_check}
-                                        />
-                                        <p>Não tenho logo</p>
-                                    </div>
-                                    {!OnLogo &&
-                                    <input type="text"
-                                    onChange={(el)=> {
-                                        setLogo(el.target.value)
-                                    }}
-                                    placeholder="Digite Aqui"
-                                    />
-                                    }
                                 </div>
                                 <div className="col-sm-6">
                                     <div className={styles.cont_dashed_no_padding}>

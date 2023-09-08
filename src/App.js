@@ -69,7 +69,6 @@ function App() {
                 <Route path="/perfil/user/config" element={<FormularioEdit/>}/>
                 <Route path="/perfil/user/vendas" element={<Vendas/>}>
                     <Route index element={<FiltroVendas/>}/>
-                    <Route path="/perfil/user/vendas/todas" element={<TodasVendas/>}/>
                 </Route>
 
               </Route>

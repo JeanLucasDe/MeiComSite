@@ -3,7 +3,7 @@ import NavBar from "../components/NavBar";
 import Footer from "../layouts/layoutsHome/Footer";
 import NavBarUser from "../layouts/layoutsPerfil/NavBarUser";
 import styles from "../layouts/layoutsPerfil/NavBarUser.module.css"
-
+import Loading from "../components/Loading"
 import { useState,useEffect } from "react"
 import {auth} from "../Service/firebase"
 import App from "../Hooks/App"
@@ -94,19 +94,7 @@ export default function Perfil () {
             <NavBar/>
                 {user ?
                 <div className={styles.container}>
-                    {usuario && usuario.length > 0 ?
-                    <div className="row">
-
-                        {usuario && usuario.length > 0 &&
-                        <div className={`${styles.col} col-md-2`}>
-                            <NavBarUser/>
-                        </div>
-                        }
-                        
-                        <div className="col-md-10">
-                            <Outlet context={[mod, produtos, usuario, vendas, user]}/>
-                        </div>
-                    </div>:
+                    {usuario && !usuario.length > 0 ?
                     <div className={styles.cont_empty}>
                         <img src='https://img.freepik.com/free-vector/user-verification-unauthorized-access-prevention-private-account-authentication-cyber-security-people-entering-login-password-safety-measures_335657-8.jpg?size=626&ext=jpg&ga=GA1.2.995514839.1678974862&semt=ais' className={styles.logo}/>
                         <h4>Complete seu cadastro para Continuar</h4>
@@ -114,11 +102,24 @@ export default function Perfil () {
                         className={styles.btn_continue}
                         >Continuar</Link>
                     </div>
-                    
-                }
+                    :
+                    <div className="row">
+
+                        <div className={`${styles.col} col-md-2`}>
+                            <NavBarUser/>
+                        </div>
+                        
+                        
+                        <div className="col-md-10">
+                            <Outlet context={[mod, produtos, usuario, vendas, user]}/>
+                        </div>
+                    </div>
+                    }
                 </div>
                 :
-                <div></div>
+                <div>
+                    <Loading/>
+                </div>
                 }
                 
             <Footer/>

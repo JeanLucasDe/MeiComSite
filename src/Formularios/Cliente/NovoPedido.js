@@ -134,9 +134,6 @@ export default function NovoPedido () {
     const Total = pegaPreco()
 
 
-
-
-
     const AdicionarVenda = async () => {
         await setDoc(doc(db, `MeiComSite/${usuario && usuario[0].email}/vendas`, `${id}`), {
             nome, 
@@ -159,7 +156,27 @@ export default function NovoPedido () {
             produtos: listaPedido,
             });
             toast.success('Venda Registrada com sucesso!')
-            window.location.reload()
+            
+            vendas.push({
+                nome, 
+                data:moment().format('DD/MM/YYYY'),
+                hora:moment().format('HH:mm') ,
+                telefone: telefone ? telefone : '', 
+                cidade: cidade? cidade : '', 
+                bairro: bairro ? bairro : '',
+                rua: rua ? rua : '',
+                taxa: !taxa ? 0 : parseFloat(taxa),
+                moradia: moradia ? moradia : '',
+                numero: numero ? numero : '', 
+                referencia: referencia ? referencia : '',
+                pagamento: pagamento? pagamento : '', 
+                state: 1, 
+                mesa: mesa ? parseFloat(mesa) : '',
+                iden: id,
+                lugar: entrega,
+                Total,
+                produtos: listaPedido,
+            })
     };
 
     const removeCompra = (categoria) => {

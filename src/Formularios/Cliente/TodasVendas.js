@@ -8,7 +8,7 @@ import { useState } from "react";
 export default function TodasVendas (props) {
 
     
-    const [mod, produtos, usuario, vendas] = useOutletContext()
+    const [vendas] = useOutletContext()
     const [obj, setObj] = useState()
     const result = []
     const busca = props.busca 
@@ -21,15 +21,300 @@ export default function TodasVendas (props) {
 
 
 
-    if (busca && !busca.idvenda && !busca.comprador && !busca.telefone && !busca.região || busca.região == "--" && !busca.datain) {
+    if (busca && !busca.comprador && !busca.telefone && !busca.idvenda) {
         vendas && vendas.filter(dados => {
-                result.push(dados)
+            //Se não tiver data
+            if (!busca.datain) {
+                // Se não tiver lugar
+                if (!busca.lugar) {
+                        //Se não tiver status
+                        if (!busca.status) {
+                            //Se não tiver pagamento
+                            if (!busca.pagamento) {
+                                //Se não tiver Cidade
+                                if (!busca.cidade) {
+                                    //Se não tiver Bairro
+                                    if (!busca.bairro) {
+                                        result.push(dados)
+                                    } else {
+                                        if (busca.bairro == dados.bairro) {
+                                            result.push(dados)
+                                        }
+                                    }
+                                } else {
+                                    if (busca.cidade == dados.cidade) {
+                                        if (!busca.bairro) {
+                                            result.push(dados)
+                                        } else {
+                                            if (busca.bairro == dados.bairro) {
+                                                result.push(dados)
+                                            }
+                                        }
+                                    }
+                                }
+                            } else {
+                                if (busca.pagamento == dados.pagamento) {
+                                    result.push(dados)
+                                }
+                            }
+                        } else {
+                            if (busca.status == dados.state) {
+                                //Se não tiver Pagamentos
+                                if (!busca.pagamento) {
+                                    //Se não tiver Cidade
+                                    if (!busca.cidade) {
+                                        //Se não tiver bairro
+                                        if (!busca.bairro) {
+                                            result.push(dados)
+                                        } else {
+                                            if (busca.bairro == dados.bairro) {
+                                                result.push(dados)
+                                            }
+                                        }
+                                    } else {
+                                        if (busca.cidade == dados.cidade) {
+                                            result.push(dados)
+                                        }
+                                    }
+                                } else {
+                                    if (busca.pagamento == dados.pagamento) {
+                                                result.push(dados)
+                                            } 
+                                        else {
+                                        if(busca.cidade == dados.cidade) {
+                                            result.push(dados)
+                                        }
+                                        
+                                    }
+                                }
+                            }
+                        }
+                } else {
+                    if (busca.lugar == dados.lugar) {
+                    //Se não tiver status
+                    if (!busca.status) {
+                        //Se não tiver pagamento
+                        if (!busca.pagamento) {
+                            //Se não tiver Cidade
+                            if (!busca.cidade) {
+                                //Se não tiver Bairro
+                                if (!busca.bairro) {
+                                    result.push(dados)
+                                } else {
+                                    if (busca.bairro == dados.bairro) {
+                                        result.push(dados)
+                                    }
+                                }
+                            } else {
+                                if (busca.cidade == dados.cidade) {
+                                    if (!busca.bairro) {
+                                        result.push(dados)
+                                    } else {
+                                        if (busca.bairro == dados.bairro) {
+                                            result.push(dados)
+                                        }
+                                    }
+                                }
+                            }
+                        } else {
+                            if (busca.pagamento == dados.pagamento) {
+                                result.push(dados)
+                            }
+                        }
+                    } else {
+                        if (busca.status == dados.state) {
+                            //Se não tiver Pagamentos
+                            if (!busca.pagamento) {
+                                //Se não tiver Cidade
+                                if (!busca.cidade) {
+                                    //Se não tiver bairro
+                                    if (!busca.bairro) {
+                                        result.push(dados)
+                                    } else {
+                                        if (busca.bairro == dados.bairro) {
+                                            result.push(dados)
+                                        }
+                                    }
+                                } else {
+                                    if (busca.cidade == dados.cidade) {
+                                        result.push(dados)
+                                    }
+                                }
+                            } else {
+                                if (busca.pagamento == dados.pagamento) {
+                                            result.push(dados)
+                                        } 
+                                    else {
+                                    if(busca.cidade == dados.cidade) {
+                                        result.push(dados)
+                                    }
+                                    
+                                }
+                            }
+                        }
+                    }
+                    }
+                }
+            } else {
+                //Se tiver data
+                if (!busca.lugar) {
+                    if (!busca.status) {
+                        //Se não tiver status
+                        if (!busca.pagamento) {
+                            //Se não tiver pagamento
+                            if (moment(busca.datain).format('DD/MM/YYYY')== dados.data) {
+                                if (!busca.cidade) {
+                                    if (!busca.bairro) {
+                                        result.push(dados)
+                                    } else {
+                                        if (busca.bairro == dados.bairro) {
+                                            result.push(dados)
+                                        }
+                                    }
+                                } else {
+                                    if (busca.cidade == dados.cidade) {
+                                        if (!busca.bairro) {
+                                            result.push(dados)
+                                        } else {
+                                            if (busca.bairro == dados.bairro) {
+                                                result.push(dados)
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        } else {
+                            if (moment(busca.datain).format('DD/MM/YYYY')== dados.data &&
+                            busca.pagamento == dados.pagamento
+                            ) {
+                            result.push(dados)
+                            }
+                        }
+                    } else {
+                        if (busca.status == dados.state &&
+                            moment(busca.datain).format('DD/MM/YYYY') == dados.data)
+                            {
+                            if (!busca.pagamento) {
+                                if (!busca.cidade) {
+                                    if (!busca.bairro) {
+                                        result.push(dados)
+                                    } else {
+                                        if (busca.bairro == dados.bairro) {
+                                            result.push(dados)
+                                        }
+                                    }
+                                } else {
+                                    if (busca.cidade == dados.cidade) {
+                                        if (!busca.bairro) {
+                                            result.push(dados)
+                                        } else {
+                                            if (busca.bairro == dados.bairro){
+                                                result.push(dados)
+                                            }
+                                        }
+                                    }
+                                }
+                            } else {
+                                if (busca.pagamento == dados.pagamento) {
+                                    if (!busca.cidade) {
+                                        if (!busca.bairro) {
+                                            result.push(dados)
+                                        }
+                                    } else {
+                                        if (busca.cidade == dados.cidade) {
+                                            if (busca.bairro == dados.bairro){
+                                                result.push(dados)
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            }
+    
+                    }
+                } else {
+                    if (busca.lugar == dados.lugar) {
+                        if (!busca.status) {
+                            //Se não tiver status
+                            if (!busca.pagamento) {
+                                //Se não tiver pagamento
+                                if (moment(busca.datain).format('DD/MM/YYYY')== dados.data) {
+                                    if (!busca.cidade) {
+                                        if (!busca.bairro) {
+                                            result.push(dados)
+                                        } else {
+                                            if (busca.bairro == dados.bairro) {
+                                                result.push(dados)
+                                            }
+                                        }
+                                    } else {
+                                        if (busca.cidade == dados.cidade) {
+                                            if (!busca.bairro) {
+                                                result.push(dados)
+                                            } else {
+                                                if (busca.bairro == dados.bairro) {
+                                                    result.push(dados)
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            } else {
+                                if (moment(busca.datain).format('DD/MM/YYYY')== dados.data &&
+                                busca.pagamento == dados.pagamento
+                                ) {
+                                result.push(dados)
+                                }
+                            }
+                        } else {
+                            if (busca.status == dados.state &&
+                                moment(busca.datain).format('DD/MM/YYYY') == dados.data)
+                                {
+                                if (!busca.pagamento) {
+                                    if (!busca.cidade) {
+                                        if (!busca.bairro) {
+                                            result.push(dados)
+                                        } else {
+                                            if (busca.bairro == dados.bairro) {
+                                                result.push(dados)
+                                            }
+                                        }
+                                    } else {
+                                        if (busca.cidade == dados.cidade) {
+                                            if (!busca.bairro) {
+                                                result.push(dados)
+                                            } else {
+                                                if (busca.bairro == dados.bairro){
+                                                    result.push(dados)
+                                                }
+                                            }
+                                        }
+                                    }
+                                } else {
+                                    if (busca.pagamento == dados.pagamento) {
+                                        if (!busca.cidade) {
+                                            if (!busca.bairro) {
+                                                result.push(dados)
+                                            }
+                                        } else {
+                                            if (busca.cidade == dados.cidade) {
+                                                if (busca.bairro == dados.bairro){
+                                                    result.push(dados)
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                                }
+        
+                        }
+                    }
+                }
+            }
         })
     }
 
-    //Se só tiver ID
-
-
+    //Se tiver ID
     if (busca && busca.idvenda) {
         vendas && vendas.filter(dados => {
             if (dados.iden == busca.idvenda) {
@@ -38,128 +323,168 @@ export default function TodasVendas (props) {
         })
     }
 
-   //Se tiver só a região 
-
-    if (busca && !busca.idvenda && !busca.comprador && !busca.telefone && busca.região) {
+    //Se tiver Comprador
+    if (busca && !busca.idvenda && busca.comprador && !busca.telefone) {
         vendas && vendas.filter(dados => {
-            if (dados.bairro.toLowerCase() == busca.região.toLowerCase() ) {
-                if (dados.data == moment(busca.datain).format('DD/MM/YYYY')) {
-                    if (dados.status == busca.status) {
-                        if (dados.pagamento == busca.pagamento) {
-                            result.push(dados)
-                        } else if (!busca.pagamento || busca.pagamento == "--") {
-                            result.push(dados)
+            if (!busca.datain) {
+                //Se não tiver data
+                if (busca.comprador == dados.nome) {
+                    //Se não tiver status
+                    if (!busca.status) {
+                        //Se não tiver pagamento
+                        if (!busca.pagamento) {
+                            //Se não tiver Cidade
+                            if (!busca.cidade) {
+                                //Se não tiver Bairro
+                                if (!busca.bairro) {
+                                    result.push(dados)
+                                } else {
+                                    if (busca.bairro == dados.bairro) {
+                                        result.push(dados)
+                                    }
+                                }
+                            } else {
+                                if (busca.cidade == dados.cidade) {
+                                    if (!busca.bairro) {
+                                        result.push(dados)
+                                    } else {
+                                        if (busca.bairro == dados.bairro) {
+                                            result.push(dados)
+                                        }
+                                    }
+                                }
+                            }
+                        } else {
+                            if (busca.pagamento == dados.pagamento) {
+                                result.push(dados)
+                            }
                         }
-                    } else if (busca.status == "--" || !busca.status){
-                        if (busca.pagamento == dados.pagamento) {
-                            result.push(dados)
-                        } else if (!busca.pagamento || busca.pagamento == "--") {
-                            result.push(dados)
+                    } else {
+                        if (busca.status == dados.state) {
+                            //Se não tiver Pagamentos
+                            if (!busca.pagamento) {
+                                //Se não tiver Cidade
+                                if (!busca.cidade) {
+                                    //Se não tiver bairro
+                                    if (!busca.bairro) {
+                                        result.push(dados)
+                                    } else {
+                                        if (busca.bairro == dados.bairro) {
+                                            result.push(dados)
+                                        }
+                                    }
+                                } else {
+                                    if (busca.cidade == dados.cidade) {
+                                        result.push(dados)
+                                    }
+                                }
+                            } else {
+                                if (busca.pagamento == dados.pagamento) {
+                                            result.push(dados)
+                                        } 
+                                    else {
+                                    if(busca.cidade == dados.cidade) {
+                                        result.push(dados)
+                                    }
+                                    
+                                }
+                            }
                         }
-                    } 
-                } else if (!busca.datain) {
-                    result.push(dados)
+                    }
+                }
+
+            } else {
+                //Se tiver data
+                if (!busca.status) {
+                    //Se não tiver status
+                    if (!busca.pagamento) {
+                        //Se não tiver pagamento
+                        if (moment(busca.datain).format('DD/MM/YYYY')== dados.data &&
+                        busca.comprador == dados.nome) {
+                            if (!busca.cidade) {
+                                if (!busca.bairro) {
+                                    result.push(dados)
+                                } else {
+                                    if (busca.bairro == dados.bairro) {
+                                        result.push(dados)
+                                    }
+                                }
+                            } else {
+                                if (busca.cidade == dados.cidade) {
+                                    if (!busca.bairro) {
+                                        result.push(dados)
+                                    } else {
+                                        if (busca.bairro == dados.bairro) {
+                                            result.push(dados)
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    } else {
+                        if (moment(busca.datain).format('DD/MM/YYYY')== dados.data &&
+                        busca.comprador == dados.nome &&
+                        busca.pagamento == dados.pagamento
+                        ) {
+                        result.push(dados)
+                        }
+                    }
+                } else {
+                    if (busca.status == dados.state &&
+                        moment(busca.datain).format('DD/MM/YYYY') == dados.data &&
+                        dados.nome == busca.comprador
+                        )
+                        {
+                        if (!busca.pagamento) {
+                            if (!busca.cidade) {
+                                if (!busca.bairro) {
+                                    result.push(dados)
+                                } else {
+                                    if (busca.bairro == dados.bairro) {
+                                        result.push(dados)
+                                    }
+                                }
+                            } else {
+                                if (busca.cidade == dados.cidade) {
+                                    if (!busca.bairro) {
+                                        result.push(dados)
+                                    } else {
+                                        if (busca.bairro == dados.bairro){
+                                            result.push(dados)
+                                        }
+                                    }
+                                }
+                            }
+                        } else {
+                            if (busca.pagamento == dados.pagamento) {
+                                if (!busca.cidade) {
+                                    if (!busca.bairro) {
+                                        result.push(dados)
+                                    }
+                                } else {
+                                    if (busca.cidade == dados.cidade) {
+                                        if (busca.bairro == dados.bairro){
+                                            result.push(dados)
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        }
+
                 }
             }
         })
     }
 
-    
-
-    //Se só tiver Comprador
-
-    if (busca && !busca.idvenda && busca.comprador) {
-        vendas && vendas.filter(dados => {
-            if (dados.nome.toLowerCase().includes(busca.comprador.toLowerCase())) {
-                if (dados.data == moment(busca.datain).format('DD/MM/YYYY')) {
-                    if (dados.status == busca.status) {
-                        if (dados.pagamento == busca.pagamento) {
-                            result.push(dados)
-                        } else if (!busca.pagamento || busca.pagamento == "--") {
-                            result.push(dados)
-                        }
-                    } else if (busca.status == "--" || !busca.status){
-                        if (busca.pagamento == dados.pagamento) {
-                            result.push(dados)
-                        } else if (!busca.pagamento || busca.pagamento == "--") {
-                            result.push(dados)
-                        }
-                    } 
-                } else if (!busca.datain) {
-                    result.push(dados)
-                } 
-            }
-        })
-    }
-
-
-    //Se só tiver o telefone
-    if (busca && !busca.idvenda && !busca.comprador && busca.telefone ) {
+    //Se tiver Telefone
+    if (busca && !busca.idvenda && !busca.comprador && busca.telefone) {
         vendas && vendas.filter(dados => {
             if (dados.telefone == busca.telefone) {
-                if (dados.data == moment(busca.datain).format('DD/MM/YYYY')) {
-                    if (dados.status == busca.status) {
-                        if (dados.pagamento == busca.pagamento) {
-                            result.push(dados)
-                        } else if (!busca.pagamento || busca.pagamento == "--") {
-                            result.push(dados)
-                        }
-                    } else if (busca.status == "--" || !busca.status){
-                        if (busca.pagamento == dados.pagamento) {
-                            result.push(dados)
-                        } else if (!busca.pagamento || busca.pagamento == "--") {
-                            result.push(dados)
-                        }
-                    } 
-                } else if (!busca.datain) {
-                    result.push(dados)
-                }
+                result.push(dados)
             }
         })
-    
-
-
-    //Se só tiver a data
-    if (busca && !busca.idvenda && !busca.comprador && !busca.telefone && !busca.região || busca.região == "--" && busca.datain) {
-        vendas && vendas.filter(dados => {
-            if (dados.data == moment(busca.datain).format('DD/MM/YYYY')) {
-                if (dados.status == busca.status) {
-                    if (dados.pagamento == busca.pagamento) {
-                        result.push(dados)
-                    } else if (!busca.pagamento || busca.pagamento == "--") {
-                        result.push(dados)
-                    }
-                } else if (busca.status == "--" || !busca.status){
-                    if (busca.pagamento == dados.pagamento) {
-                        result.push(dados)
-                    } else if (!busca.pagamento || busca.pagamento == "--") {
-                        result.push(dados)
-                    }
-                } 
-            } 
-        })
     }
-
-    //Se não tiver data
-    if (busca && !busca.idvenda && !busca.comprador && !busca.telefone && !busca.região || busca.região == "--" && !busca.datain) {
-        vendas.map(dados => {
-            if (dados.status == busca.status) {
-                if (dados.pagamento == busca.pagamento) {
-                    result.push(dados)
-                } else if (!busca.pagamento || busca.pagamento == "--") {
-                    result.push(dados)
-                }
-            } else if (busca.status == "--" || !busca.status){
-                if (busca.pagamento == dados.pagamento) {
-                    result.push(dados)
-                } else if (!busca.pagamento || busca.pagamento == "--") {
-                    result.push(dados)
-                }
-            } 
-        })
-    }
-    } 
-    
 
 
 
@@ -172,9 +497,10 @@ export default function TodasVendas (props) {
                     {result && result.length > 0 ? 
 
                     <>
+                    <div className={styles.container}>
                     <h5 className={styles.title_result}>Resultado de busca ({result.length})</h5>
                     <table className={styles.table}>
-                        <thead>
+                        <thead className={styles.header}>
                             <tr>
                                 <td className={styles.td_header}>Id <span className={styles.view_desk}>Venda</span></td>
                                 <td className={`${styles.td_header} ${styles.view_desk }`}>Status</td>
@@ -206,12 +532,13 @@ export default function TodasVendas (props) {
                             })}
                         </tbody>
                     </table>
-
+                    </div>
                     </>
                 
                 :
                 <>
                 <h5 className={styles.title_empty}>Sem resultados para esta busca</h5>
+                <img src="https://img.freepik.com/free-vector/curious-analyst-investigating-question-mark-with-magnifier_74855-20083.jpg?size=626&ext=jpg&ga=GA1.1.995514839.1678974862&semt=ais" className={styles.img_empty}/>
                 </>
                 
                 }

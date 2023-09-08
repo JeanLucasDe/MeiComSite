@@ -209,22 +209,21 @@ export default function BoxConversation (props) {
         AdicionarUSer()
     }
 
-    
 
     const AdicionarUSer = async () => {
         await setDoc(doc(db, `MeiComSite/${usuario && usuario.email}/vendas`, `${id}`), {
-            nome: escolheSalvar ? UserSave.nome : nome, 
+            nome: escolheSalvar ? UserSave[0].nome : nome, 
             data:moment().format('DD/MM/YYYY'),
             hora:moment().format('hh:mm') ,
-            telefone: escolheSalvar ? UserSave.telefone : telefone, 
-            cidade: escolheSalvar ? UserSave.cidade : cidade , 
-            bairro: escolheSalvar ? UserSave.bairro : bairro,
-            taxa: escolheSalvar ? parseFloat(UserSave.taxa) : parseFloat(taxa),
-            rua: escolheSalvar ? UserSave.rua : rua,
-            moradia: escolheSalvar ? UserSave.moradia : moradia,
-            numero : escolheSalvar ? UserSave.numero : numero, 
-            referencia: escolheSalvar ? UserSave.referencia : referencia,
-            pagamento: escolheSalvar ? UserSave.pagamento : pagamento, 
+            telefone: escolheSalvar ? UserSave[0].telefone : telefone, 
+            cidade: escolheSalvar ? UserSave[0].cidade : cidade , 
+            bairro: escolheSalvar ? UserSave[0].bairro : bairro,
+            taxa: escolheSalvar ? parseFloat(UserSave[0].taxa) : parseFloat(taxa),
+            rua: escolheSalvar ? UserSave[0].rua : rua,
+            moradia: escolheSalvar ? UserSave[0].moradia : moradia,
+            numero : escolheSalvar ? UserSave[0].numero : numero, 
+            referencia: escolheSalvar ? UserSave[0].referencia : referencia,
+            pagamento: escolheSalvar ? UserSave[0].pagamento : pagamento, 
             Total: parseFloat(Total), 
             lugar: 1,
             state: 1, 
@@ -235,18 +234,18 @@ export default function BoxConversation (props) {
 
         localStorage.setItem(`DadosUserSave.${site}`,JSON.stringify([
             {
-            nome: escolheSalvar ? UserSave.nome : nome, 
+            nome: escolheSalvar ? UserSave[0].nome : nome, 
             data:moment().format('DD/MM/YYYY'),
             hora:moment().format('hh:mm') ,
-            telefone: escolheSalvar ? UserSave.telefone : telefone, 
-            cidade: escolheSalvar ? UserSave.cidade : cidade , 
-            bairro: escolheSalvar ? UserSave.bairro : bairro,
-            taxa: escolheSalvar ? parseFloat(UserSave.taxa) : parseFloat(taxa),
-            rua: escolheSalvar ? UserSave.rua : rua,
-            moradia: escolheSalvar ? UserSave.moradia : moradia,
-            numero : escolheSalvar ? UserSave.numero : numero, 
-            referencia: escolheSalvar ? UserSave.referencia : referencia,
-            pagamento: escolheSalvar ? UserSave.pagamento : pagamento, 
+            telefone: escolheSalvar ? UserSave[0].telefone : telefone, 
+            cidade: escolheSalvar ? UserSave[0].cidade : cidade , 
+            bairro: escolheSalvar ? UserSave[0].bairro : bairro,
+            taxa: escolheSalvar ? parseFloat(UserSave[0].taxa) : parseFloat(taxa),
+            rua: escolheSalvar ? UserSave[0].rua : rua,
+            moradia: escolheSalvar ? UserSave[0].moradia : moradia,
+            numero : escolheSalvar ? UserSave[0].numero : numero, 
+            referencia: escolheSalvar ? UserSave[0].referencia : referencia,
+            pagamento: escolheSalvar ? UserSave[0].pagamento : pagamento, 
         }
         ]))
         
@@ -256,7 +255,17 @@ export default function BoxConversation (props) {
         }, 3000);
     };
     
-    const VendaEfetuada = Compra.length > 0 && vendas && vendas.filter(dados => dados.iden == Compra[0].id)
+    const VerificaState = () => {
+        var VendaEfetuada = Compra.length > 0 && vendas && vendas.filter(dados => dados.iden == Compra[0].id)
+        if (VendaEfetuada.length > 0) {
+            if (VendaEfetuada[0].state == 4) {
+                VendaEfetuada = []
+            }
+        } else VendaEfetuada = []
+        return VendaEfetuada
+    }
+
+    const VendaEfetuada = VerificaState()
 
 
     const cc = document.querySelector('#cont')
@@ -274,7 +283,7 @@ export default function BoxConversation (props) {
     
     return (
             <>
-                {!VendaEfetuada.length ? !pedido && 
+                {!VendaEfetuada.length > 0 ? !pedido && 
                 <div className={styles.container}>
                     <div className={`conten ${styles.content}`} id="cont">
                         <ul className={styles.list}>
@@ -1135,9 +1144,7 @@ export default function BoxConversation (props) {
 
                         </ul>
                     </div>
-                </div>: 
-                !pedido ? setPedido(!pedido)
-                : 
+                </div>:
                 <BoxPedido usuario={usuario && usuario}/>
                 }
 

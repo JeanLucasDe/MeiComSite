@@ -159,6 +159,7 @@
     flex-direction: column;
     text-align: center; 
     padding: 0em 1em;
+    height: 100vh;
 }
 .btn_continue {
     background-color: #FF9100;

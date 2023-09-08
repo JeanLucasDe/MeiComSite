@@ -18,7 +18,17 @@ export default function HomeWpp (props) {
         return produtosSalvos
     }
     const Compra = pegaDadosCompra()
-    const VendaEfetuada = vendas && Compra.length > 0 && vendas.filter(dados => dados.iden == Compra[0].id)
+    const VerificaState = () => {
+        var VendaEfetuada = Compra.length > 0 && vendas && vendas.filter(dados => dados.iden == Compra[0].id)
+        if (VendaEfetuada.length > 0) {
+            if (VendaEfetuada[0].state == 4) {
+                VendaEfetuada = []
+            }
+        } else VendaEfetuada = []
+        return VendaEfetuada
+    }
+
+    const VendaEfetuada = VerificaState()
 
 
     return (

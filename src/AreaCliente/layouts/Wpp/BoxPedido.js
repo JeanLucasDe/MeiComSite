@@ -48,7 +48,6 @@ export default function BoxPedido (props) {
 
 
 
-
     return (
         <>
         
@@ -122,8 +121,7 @@ export default function BoxPedido (props) {
                                                         {item.produtos.map(info => {
                                                             return (
                                                                 <tr className={styles.tr}>
-                                                                    <td className={styles.td}>{info.qtd}x</td>
-                                                                    <td className={styles.td}>{info.sabor}</td>
+                                                                    <td className={styles.td}>-{info.sabor}</td>
                                                                 </tr>
                                                                 )
                                                         })}

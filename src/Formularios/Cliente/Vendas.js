@@ -21,7 +21,7 @@ export default function Vendas () {
     
     return (
             <>
-                <Outlet  context={[vendas && vendas]} />
+                <Outlet  context={[vendas && vendas, usuario]} />
             </>
         )
 }

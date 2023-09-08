@@ -41,7 +41,7 @@ export default function FormEdit (props) {
             await updateDoc(doc(db, `MeiComSite/${id && id}/produtos`, obj.id), {
                 produtos: obj.lista
             });
-            window.location.reload()
+            toast.success('O sabor foi deletado.')
         
         }
         if (ação == "add") {
