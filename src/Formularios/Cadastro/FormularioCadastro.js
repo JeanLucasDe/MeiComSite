@@ -71,18 +71,25 @@ export default function FormularioCadastro () {
     const [razao, setRazao] = useState()
     const [phone, setPhone] = useState()
     const [abre,setAbertura] = useState()
+    const [fecha, setFecha] = useState()
     const [taxa, setTaxa] = useState()
     const [deletebairro, setDeleteBairro] = useState()
     const [deleteCidade, setDeleteCidade] = useState()
-    const [fecha, setFecha] = useState()
     const [modalidade, setModalidade] = useState('')
+
+    const [cidadeUser, setCidadeUser] = useState()
+    const [bairroUser, setBairroUser] = useState()
+    const [rua, setRua] = useState()
+    const [cep, setCep] = useState()
+    const [numeroUser, setNumeroUser] = useState()
+
+
     var [seed, setSeed] = useState(0)
     const [site, setSite] = useState('')
     const [OnLogo, setOnLogo]= useState()
     const [nascimento,setNascimento] = useState()
     const [novaCidade, setNovaCidade] = useState()
     const [novoBairro, setNovoBairro] = useState()
-    const [logo, setLogo] = useState()
     const [addCidade, setAddCidade] = useState(false)
     const [addBairro, setAddBairro] = useState(false)
     
@@ -92,14 +99,18 @@ export default function FormularioCadastro () {
     phone,
     mod:modalidade.trim(),
     nascimento,
-    abre: moment(abre).format('hh:mm:ss'),
+    abre,
     site,
-    fecha: moment(fecha).format('hh:mm:ss'),
+    cidade: cidadeUser,
+    bairro: bairroUser,
+    rua,
+    cep,
+    numero: numeroUser,
+    fecha: fecha,
     listBairros,
     listCidades,
     ação:ação,
     }
-
     
     var [listCidades, setListCidades] = useState([])
     var [listBairros, setListBairros] = useState([])
@@ -175,12 +186,54 @@ export default function FormularioCadastro () {
                                     placeholder="Digite Aqui"
                                     />
                                     <label>Telefone *</label>
-                                    <input type="phone"
+                                    <input type="text"
                                     onChange={(el)=> {
                                         setPhone(el.target.value)
                                     }}
                                     required
                                     placeholder="Digite Aqui"
+                                    />
+
+                                    <label>Cidade *</label>
+                                    <input type="text"
+                                    onChange={(el)=> {
+                                        setCidadeUser(el.target.value)
+                                    }}
+                                    required
+                                    placeholder="Digite Aqui"
+                                    />
+                                    <label>Bairro *</label>
+                                    <input type="text"
+                                    onChange={(el)=> {
+                                        setBairroUser(el.target.value)
+                                    }}
+                                    required
+                                    placeholder="Digite Aqui"
+                                    />
+                                    <label>Número *</label>
+                                    <input type="text"
+                                    onChange={(el)=> {
+                                        setNumeroUser(el.target.value)
+                                    }}
+                                    required
+                                    placeholder="Digite Aqui"
+                                    />
+                                    <label>Rua *</label>
+                                    <input type="text"
+                                    onChange={(el)=> {
+                                        setRua(el.target.value)
+                                    }}
+                                    required
+                                    placeholder="Digite Aqui"
+                                    />
+                                    <label>CEP *</label>
+                                    <input type="number"
+                                    onChange={(el)=> {
+                                        setCep(el.target.value)
+                                    }}
+                                    required
+                                    placeholder="Digite Aqui"
+                                    maxLength={8}
                                     />
                                 </div>
                                 <div className="col-sm-6">
@@ -190,17 +243,16 @@ export default function FormularioCadastro () {
                                                 <label>Abertura *</label>
                                                 <input type="time"
                                                 onChange={(el)=> {
-                                                    setAbertura(formataHora(el.target.value))
+                                                    setAbertura(el.target.value)
                                                 }}
                                                 required
                                                 />
                                                 <label>Fechamento *</label>
                                                 <input type="time"
                                                 onChange={(el)=> {
-                                                    setFecha(formataHora(el.target.value))
+                                                    setFecha(el.target.value)
                                                 }}
                                                 required
-                                                max={8}
                                                 />
                                                 <label>Site *</label>
                                                 <strong className={styles.block}>meicomsite.netlify.com/{site.toLowerCase().replaceAll(' ', '')}</strong>
@@ -420,7 +472,7 @@ export default function FormularioCadastro () {
             </div>
             <div className={styles.cont_save}>
                 {nome && modalidade && modalidade != '-' && phone 
-                && razao && logo || OnLogo && listBairros && listCidades ?
+                && razao && cidadeUser && bairroUser && numeroUser && cep && listBairros && listCidades ?
                     <button
                     type="button" 
                     data-bs-toggle="modal" 

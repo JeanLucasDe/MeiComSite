@@ -233,3 +233,32 @@ border-radius: 20px;       /* roundness of the scroll thumb */
     bottom: 50px;
     right: 50px;
   }
+  .header {
+    position: absolute;
+    top: 0em;
+    width: 100%;
+    background-color: #e9e9e9;
+    z-index: 20000;
+}
+.btn_tog {
+    width: 100%;
+    border-radius: 0px;
+    text-align: left;
+    background-color: #e9e9e9;
+    border: none;
+    color: #000;
+    box-shadow: 1px 1px 4px #ddd;
+}
+.btn_tog:hover {
+    background-color: #8fff7b;
+}
+.box_info {
+    width: 50%;
+}
+.info {
+    padding: 0.6em;
+}
+.logo {
+    width: 20px;
+    height: 20px;
+}

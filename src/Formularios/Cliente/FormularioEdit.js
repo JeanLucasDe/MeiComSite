@@ -30,14 +30,20 @@ export default function FormularioEdit () {
     const [taxa, setTaxa] = useState()
 
 
+    const [cidadeUser, setCidadeUser] = useState()
+    const [bairroUser, setBairroUser] = useState()
+    const [rua, setRua] = useState()
+    const [cep, setCep] = useState()
+    const [numeroUser, setNumeroUser] = useState()
+    const [abre,setAbertura] = useState()
+    const [fecha, setFecha] = useState()
+
 
     const [nome, setNome] = useState()
     const [razao, setRazao] = useState()
     const [phone, setPhone] = useState()
-    const [token,setToken] = useState()
     const [site, setSite]= useState()
     const [logo, setLogo] = useState()
-    const [plan, setPlan] = useState()
     const [modalidade, setModalidade] = useState('')
     const [theme, setTheme] = useState()
     const [alterMod, setAlterMod] = useState(false)
@@ -97,12 +103,16 @@ export default function FormularioEdit () {
         nome,
         razao,
         phone, 
-        token,
-        plan,
         mod: modalidade.trim(),
         theme,
         site,
-        logo, 
+        cidade: cidadeUser,
+        bairro: bairroUser,
+        rua,
+        cep,
+        abre, 
+        fecha,
+        numero: numeroUser,
         novoBairro,
         novaCidade,
         deletebairro,
@@ -121,7 +131,7 @@ export default function FormularioEdit () {
             if (dados.iduser == user.id) {
                 return (
                     <>
-                        {dados.status != "pronto" && 
+                        {!dados.admin && 
                         <div className={styles.status}>
                             <p>Status : <strong>{dados.status}</strong></p>
                         </div>}
@@ -154,7 +164,7 @@ export default function FormularioEdit () {
                                             setSite(el.target.value)
                                         }}
                                         defaultValue={dados.site}/>
-                                    </div>
+                                        </div>
 
                                     <div className="col-lg-6">
                                         <label>Telefone</label>
@@ -170,6 +180,7 @@ export default function FormularioEdit () {
                                             type="button" 
                                             data-bs-toggle="modal" 
                                             data-bs-target="#ModalAdd"
+                                            className={styles.btn_save_add}
                                             onClick={(el)=> {
                                                 el.preventDefault()
                                                 setAção("Editar")
@@ -179,7 +190,7 @@ export default function FormularioEdit () {
                                             </button>
                                         :
                                         <button
-                                        className={styles.disabled}
+                                        className={` ${styles.btn_save_add} ${styles.disabled}`}
                                         onClick={(el)=> {
                                             el.preventDefault()
                                         }}
@@ -383,61 +394,148 @@ export default function FormularioEdit () {
 
                         <div className={styles.container}>
                             <h4>Seu negócio</h4>
-                            <div className={`col-sm-12`}>
-                                <div>
-                                    <div className="row">
-                                        <div className="col-md-6">
-                                            <div className={styles.cont_theme}>
-                                                <label>Segmento:</label>
-                                                {!alterMod &&
-                                                <div>
-                                                    <strong>{dados.mod}</strong>
-                                                    <FaEdit
-                                                    onClick={() => setAlterMod(!alterMod)}
-                                                    type="button"
-                                                    />
-                                                </div>
-                                                }
-                                                {alterMod && alterMod != "--" &&
-                                                <div>
-                                                    <select
-                                                    className={styles.input}
-                                                    onChange={(el)=> setModalidade(el.target.value)}
-                                                    >
-                                                        <option>--</option>
-                                                        <option>Alimentação</option>
-                                                    </select>
-                                                    {mod && mod != "--" &&
-                                                        <button
-                                                        className={`${styles.save} ${styles.btn_delete}`}
-                                                        type="button" 
-                                                        data-bs-toggle="modal" 
-                                                        data-bs-target="#ModalAdd"
-                                                        onClick={(el)=> {
-                                                            el.preventDefault()
-                                                            setAção("Editar")
-                                                        }}
-                                                        >
-                                                            Salvar
-                                                        </button>
-                                                    }
-
-                                                    <button
-                                                    className={`${styles.btn_delete}`}
-                                                    onClick={()=> {
-                                                        setAlterMod(false)
-                                                    }}
-                                                    >
-                                                        Cancelar
-                                                    </button>
-                                                </div>
-                                                }
-                                                
-                                            </div>
-                                            </div>
-                                        </div>
+                            <div className="row">
+                                <div className="col-md-6">
+                                    <label>Cidade *</label>
+                                    <input type="text"
+                                    onChange={(el)=> {
+                                        setCidadeUser(el.target.value)
+                                    }}
+                                    required
+                                    defaultValue={dados.cidade}
+                                    placeholder="Digite Aqui"
+                                    />
+                                    <label>Bairro *</label>
+                                    <input type="text"
+                                    onChange={(el)=> {
+                                        setBairroUser(el.target.value)
+                                    }}
+                                    required
+                                    defaultValue={dados.bairro}
+                                    placeholder="Digite Aqui"
+                                    
+                                    />
+                                    <label>Rua *</label>
+                                    <input type="text"
+                                    defaultValue={dados.rua}
+                                    onChange={(el)=> {
+                                        setRua(el.target.value)
+                                    }}
+                                    required
+                                    placeholder="Digite Aqui"
+                                    />
                                 </div>
+                                <div className="col-md-6">
+                                    <label>Número *</label>
+                                    <input type="text"
+                                    onChange={(el)=> {
+                                        setNumeroUser(el.target.value)
+                                    }}
+                                    defaultValue={dados.numero}
+                                    required
+                                    placeholder="Digite Aqui"
+                                    />
+                                    <label>CEP *</label>
+                                    <input type="number"
+                                    defaultValue={dados.cep}
+                                    onChange={(el)=> {
+                                        setCep(el.target.value)
+                                    }}
+                                    required
+                                    placeholder="Digite Aqui"
+                                    maxLength={8}
+                                    />
+                                    <label>Abertura *</label>
+                                    <input type="time"
+                                    onChange={(el)=> {
+                                        setAbertura(el.target.value)
+                                    }}
+                                    defaultValue={dados.abre}
+                                    required
+                                    />
+                                    <label>Fechamento *</label>
+                                    <input type="time"
+                                    onChange={(el)=> {
+                                        setFecha(el.target.value)
+                                    }}
+                                    defaultValue={dados.fecha}
+                                    required
+                                    />
+
+
+
+
+                                    <div className={styles.cont_theme}>
+                                        <label>Segmento:</label>
+                                        {!alterMod &&
+                                        <div>
+                                            <strong>{dados.mod}</strong>
+                                            <FaEdit
+                                            onClick={() => setAlterMod(!alterMod)}
+                                            type="button"
+                                            />
+                                        </div>
+                                        }
+                                        {alterMod && alterMod != "--" &&
+                                        <div>
+                                            <select
+                                            className={styles.input}
+                                            onChange={(el)=> setModalidade(el.target.value)}
+                                            >
+                                                <option>--</option>
+                                                <option>Alimentação</option>
+                                            </select>
+                                            {mod && mod != "--" &&
+                                                <button
+                                                className={`${styles.save} ${styles.btn_delete}`}
+                                                type="button" 
+                                                data-bs-toggle="modal" 
+                                                data-bs-target="#ModalAdd"
+                                                onClick={(el)=> {
+                                                    el.preventDefault()
+                                                    setAção("Editar")
+                                                }}
+                                                >
+                                                    Salvar
+                                                </button>
+                                            }
+
+                                            <button
+                                            className={`${styles.btn_delete}`}
+                                            onClick={()=> {
+                                                setAlterMod(false)
+                                            }}
+                                            >
+                                                Cancelar
+                                            </button>
+                                        </div>
+                                        }
+                                    </div>
+                                </div>
+                            <div className={styles.cont_save}>
+                                {cidadeUser || bairroUser || numeroUser || rua || cep || modalidade || abre || fecha ?
+                                    <button
+                                    type="button"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#ModalAdd"
+                                    className={styles.btn_save_add}
+                                    onClick={(el)=> {
+                                        el.preventDefault()
+                                        setAção("Editar")
+                                    }}
+                                    >
+                                        Salvar
+                                    </button>
+                                :
+                                <button
+                                className={`${styles.btn_save_add} ${styles.disabled}`}
+                                onClick={(el)=> {
+                                    el.preventDefault()
+                                }}
+                                >Salvar</button>
+                                }
                             </div>
+                        </div>
                     </div>
                     <div className={styles.line}/>
 

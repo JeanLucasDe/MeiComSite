@@ -50,14 +50,18 @@ export default function BoxConfirm (props) {
             theme: 'Wpp',
             telefone: obj.phone,
             razao:obj.razao,
-            abre: moment(obj.abre).format('HH:mm').toString(),
-            fecha: moment(obj.fecha).format('HH:mm').toString(),
+            abre: obj.abre,
+            fecha: obj.fecha,
             site: obj.site,
             nascimento: obj.nascimento,
             listCidades: props.listCidades,
             listBairros: props.listBairros,
-            logo:obj.logo,
-            admin: true,
+            cidade: obj.cidade,
+            bairro: obj.bairro,
+            numero: obj.numero,
+            rua: obj.rua,
+            cep: obj.cep,
+            admin: false,
             });
 
         window.location.reload()
@@ -81,9 +85,6 @@ export default function BoxConfirm (props) {
             razao: !obj.razao ? prod[0].razao : obj.razao
         });
         await updateDoc(doc(db, "MeiComSite", user.email), {
-            logo: !obj.logo ? prod[0].logo : obj.logo 
-        });
-        await updateDoc(doc(db, "MeiComSite", user.email), {
             telefone: !obj.phone ? prod[0].telefone : obj.phone
         });
         await updateDoc(doc(db, "MeiComSite", user.email), {
@@ -91,6 +92,27 @@ export default function BoxConfirm (props) {
         });
         await updateDoc(doc(db, "MeiComSite", user.email), {
             mod: !obj.mod ? prod[0].mod : obj.mod
+        });
+        await updateDoc(doc(db, "MeiComSite", user.email), {
+            cidade: !obj.cidade ? prod[0].cidade : obj.cidade
+        });
+        await updateDoc(doc(db, "MeiComSite", user.email), {
+            bairro: !obj.bairro ? prod[0].bairro : obj.bairro
+        });
+        await updateDoc(doc(db, "MeiComSite", user.email), {
+            rua: !obj.rua ? prod[0].rua : obj.rua
+        });
+        await updateDoc(doc(db, "MeiComSite", user.email), {
+            cep: !obj.cep ? prod[0].cep : obj.cep
+        });
+        await updateDoc(doc(db, "MeiComSite", user.email), {
+            numero: !obj.numero ? prod[0].numero : obj.numero
+        });
+        await updateDoc(doc(db, "MeiComSite", user.email), {
+            abre: !obj.abre ? prod[0].abre : obj.abre
+        });
+        await updateDoc(doc(db, "MeiComSite", user.email), {
+            fecha: !obj.fecha ? prod[0].fecha : obj.fecha
         });
         window.location.reload()
     }

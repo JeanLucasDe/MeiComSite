@@ -22,6 +22,15 @@
     .form label {
     display: block;
     }
+    .container input {
+        border: none;
+        border-bottom: 1px solid #dddd;
+        border-radius: 5px;
+        padding: 0.3em;
+        text-indent: 5px;
+        width: 100%;
+        margin-bottom: 0.6em;
+    }
     .form input {
         border: none;
         border-bottom: 1px solid #dddd;
@@ -45,16 +54,15 @@
     .title_small {
         font-weight: 600;
     }
-    .cont_save {
-        display: flex;
-        justify-content: flex-end;
-    }
-    .cont_save button {
-        padding: 0.3em 1em;
+    .btn_save_add {
+        padding: 0.6em 1em;
         border: none;
-        margin: 1em 0em;
+        margin: 1em 0em 0em 0em !important;
         background-color: #ff9100;
         color: #fff;
+        width: auto;
+        border-radius: 7px;
+        float: right !important;
     }
     .disabled {
         background-color: #c7c7c7 !important;
@@ -74,7 +82,6 @@
     .cont_theme {
         display: flex;
         align-items: center;
-        height: 100%;
         padding: 1em 0em;
     }
     .cont_theme label, .cont_theme strong {
@@ -86,27 +93,7 @@
         margin: 0.6em auto;
         height: 230px;
     }
-    .btn_save, .cont_btn_save {
-        display: flex;
-        justify-content: flex-end;
-    }
-    .cont_btn_save {
-        margin-bottom: 1em;
-    }
-    .btn_save {
-        border: none;
-        padding: 0.5em;
-        margin: 0em 2.5em 0em 0em !important;
-        background-color: #dbdbdb;
-        color: #000;
-    }
-    .cont_btn_save button:last-child {
-        border: none;
-        padding: 0.5em 1em;
-        margin: 0em 2.5em 0em 0em;
-        background-color: #FF9D00;
-        color: #fff;
-    }
+    
     .btn_theme {
         border: none;
         background-color:transparent;

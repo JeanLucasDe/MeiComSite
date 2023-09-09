@@ -285,13 +285,33 @@ export default function BoxConversation (props) {
         }
     }
 
-
     
     
     return (
             <>
                 {!VendaEfetuada.length > 0 ? !pedido && 
                 <div className={styles.container}>
+                    <div>
+                    <div className={`${styles.header} dropdown`}>
+                        <button className={`${styles.btn_tog} btn btn-secondary dropdown-toggle`} type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <div className={styles.cont_button}>
+                                <h5 className={styles.razao}>{usuario && usuario.razao}</h5>
+                            </div>
+                            <span>Ver endereço da loja</span>
+                        </button>
+                        <ul className={`${styles.box_info} dropdown-menu`}>
+                            <li className={styles.info}>
+                                <p>Cidade: {usuario && usuario.cidade}</p>
+                                <p>Bairro: {usuario && usuario.bairro}</p>
+                                <p>Rua: {usuario && usuario.rua}</p>
+                                <p>Número: {usuario && usuario.numero}</p>
+                                <p>Telefone: {usuario && usuario.telefone}</p>
+                            </li>
+                        </ul>
+                        </div>
+                    </div>
+
+
                     <div className={`conten ${styles.content}`} id="cont">
                         <ul className={styles.list}>
                             <li
