@@ -94,7 +94,6 @@ export default function BoxConversation (props) {
             const indexSecond = indexFirst && indexFirst[0].produtos.filter(dados => dados.nome == nome)
             const indexThree = indexSecond && indexSecond[0].adicionais.filter (dados => dados.saborAdicional == sabor)
             const index = saboresEscolhidosAdicional.findIndex(dados => dados.sabor == sabor) 
-            console.log(indexThree[0].qtd)
 
             if (indexThree[0].qtd == 0 || !indexThree[0].qtd) return
 
