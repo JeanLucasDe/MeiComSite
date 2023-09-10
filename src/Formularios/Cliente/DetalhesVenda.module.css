@@ -47,6 +47,15 @@
     color: #fc7a01;
     cursor: pointer;
 }
+.p_sabor {
+    margin-bottom: 0em;
+}
+.list_main li {
+    margin-bottom: 1.5em;
+}
+.list li {
+    margin-bottom: 0em;
+}
 .list {
     list-style-type: none;
     padding: 0em 0em 0em 1em;

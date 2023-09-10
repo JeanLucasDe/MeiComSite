@@ -51,12 +51,13 @@ export default function BoxConversation (props) {
     const [valor, setValor] = useState()
     const [escolheSalvar, setEscolheSalvar] = useState()
     const [save, setSave] = useState()
+    const [obs, setObs] = useState()
     
 
     const [next, setNext] = useState(0)
     const [categoria, setCategoria] = useState()
     var [saboresEscolhidos, setSaboresEscolhidos] = useState([])
-    var [saboresEscolhidosAdicional, saboresEscolhidosAdicional] = useState([])
+    var [saboresEscolhidosAdicional, setsaboresEscolhidosAdicional] = useState([])
     var [seed, setSeed] = useState(0)
     var [render, setRender] = useState(1)
     
@@ -73,19 +74,44 @@ export default function BoxConversation (props) {
         return valorFormatado
     }
     
-    const removeListaEscolhidos = (id, nome, sabor) => {
-        const indexFirst = lista && lista.filter(dados => dados.id == id)
-        const indexSecond = indexFirst && indexFirst[0].produtos.filter(dados => dados.nome == nome)
-        const indexThree = indexSecond && indexSecond[0].saborComida.filter (dados => dados.sabor == sabor)
-        const index = saboresEscolhidos.findIndex(dados => dados.sabor == sabor) 
-        if (saboresEscolhidos.length > 0 &&  saboresEscolhidos[index].qtd == 1) {
-            saboresEscolhidos[index].qtd -= 1
-            saboresEscolhidos.splice(index, 1)
+    const removeListaEscolhidos = (id, nome, sabor,mod, preço) => {
+
+        if (mod == 'sabor') {
+            const indexFirst = lista && lista.filter(dados => dados.id == id)
+            const indexSecond = indexFirst && indexFirst[0].produtos.filter(dados => dados.nome == nome)
+            const indexThree = indexSecond && indexSecond[0].saborComida.filter (dados => dados.sabor == sabor)
+            const index = saboresEscolhidos.findIndex(dados => dados.sabor == sabor) 
+            if (saboresEscolhidos.length > 0 &&  saboresEscolhidos[index].qtd == 1) {
+                saboresEscolhidos[index].qtd -= 1
+                saboresEscolhidos.splice(index, 1)
+            }
+            indexThree[0].qtd -= 1
+            setSeed(seed += 1)  
+            
         }
-        indexThree[0].qtd -= 1
-        setSeed(seed += 1)
+        if (mod == 'saborAdicional') {
+            const indexFirst = lista && lista.filter(dados => dados.id == id)
+            const indexSecond = indexFirst && indexFirst[0].produtos.filter(dados => dados.nome == nome)
+            const indexThree = indexSecond && indexSecond[0].adicionais.filter (dados => dados.saborAdicional == sabor)
+            const index = saboresEscolhidosAdicional.findIndex(dados => dados.sabor == sabor) 
+            console.log(indexThree[0].qtd)
+
+            if (indexThree[0].qtd == 0 || !indexThree[0].qtd) return
+
+            if (saboresEscolhidosAdicional[index].qtd == 1) {
+                saboresEscolhidosAdicional.splice(index, 1)
+            } else {
+                saboresEscolhidosAdicional[index].qtd -= 1 
+            }
+            indexThree[0].qtd -= 1
+            setSeed(seed += 1)  
+        }
+
+
+
+
     }
-    const addListaEscolhidos = (id, nome, sabor, mod) => {
+    const addListaEscolhidos = (id, nome, sabor, mod, preço) => {
         if (mod == 'sabor') {
             const indexFirst = lista && lista.filter(dados => dados.id == id)
             const indexSecond = indexFirst && indexFirst[0].produtos.filter(dados => dados.nome == nome)
@@ -100,7 +126,6 @@ export default function BoxConversation (props) {
                     setSaboresEscolhidos([...saboresEscolhidos, {sabor, qtd:1}])
                     indexThree[0].qtd += 1
                 }
-    
             } else {
                 return toast.error('capacidade alcançada')
             }
@@ -109,28 +134,32 @@ export default function BoxConversation (props) {
             const indexFirst = lista && lista.filter(dados => dados.id == id)
             const indexSecond = indexFirst && indexFirst[0].produtos.filter(dados => dados.nome == nome)
             const indexThree = indexSecond && indexSecond[0].adicionais.filter(dados => dados.saborAdicional == sabor)
-            const index = saboresEscolhidosAdicional.findIndex(dados => dados.saborAdicional == sabor)
-    
-            if (indexSecond[0].qtdSabores > saboresEscolhidosAdicional.length) {
-                if (index < 0) {
-                    setSaboresEscolhidos([...saboresEscolhidosAdicional, {sabor, qtd:1}])
-                    indexThree[0].qtd = 1
-                } else {
-                    setSaboresEscolhidos([...saboresEscolhidosAdicional, {sabor, qtd:1}])
-                    indexThree[0].qtd += 1
-                }
-    
+            const index = saboresEscolhidosAdicional.findIndex(dados => dados.sabor == sabor)
+
+            if (index < 0) {
+                setsaboresEscolhidosAdicional([...saboresEscolhidosAdicional, {sabor, preço, qtd:1}])
+                indexThree[0].qtd = 1
             } else {
-                return toast.error('capacidade alcançada')
-            } 
+                saboresEscolhidosAdicional[index].qtd += 1
+                indexThree[0].qtd += 1
+            }
+            
         }
         setSeed(seed += 1)
     }
+
+
+
     const LimpaQtds = () => {
         lista && lista.map(dados => {
             if (dados.produtos) {
                 dados.produtos.map(item => {
                     item.saborComida.map(sabor => {
+                        if (sabor.qtd) {
+                            sabor.qtd = 0
+                        }
+                    })
+                    item.adicionais.map(sabor => {
                         if (sabor.qtd) {
                             sabor.qtd = 0
                         }
@@ -157,21 +186,6 @@ export default function BoxConversation (props) {
 
     const UserSave = pegaDadosUser()
     const Compra = pegaDadosCompra()
-
-    const SalvaEscolha = () => {
-        LimpaQtds()
-        let produtosSalvos = new Array()
-        
-        if (localStorage.hasOwnProperty(`itenscarrinho.${site}`)) {
-            produtosSalvos = JSON.parse(localStorage.getItem(`itenscarrinho.${site}`))
-        }
-        if (!saboresEscolhidos.length) return
-        produtosSalvos.push({valor, categoria, produtos: saboresEscolhidos, adicionais: saboresEscolhidosAdicional})
-        
-        localStorage.setItem(`itenscarrinho.${site}`,JSON.stringify(produtosSalvos))
-        toast.success('Produto adicionado ao carrinho')
-        setSaboresEscolhidos([])
-    }
 
     const DeletaEscolha = (id) => {
         let produtosSalvos = new Array()
@@ -208,20 +222,41 @@ export default function BoxConversation (props) {
     const Bairro = pegaBairro()
     const taxa = PegaTaxa()
 
+
+
     function pegaPreco() {
         let listGeral = []
         if (localStorage.hasOwnProperty(`itenscarrinho.${site}`)) {
             listGeral = JSON.parse(localStorage.getItem(`itenscarrinho.${site}`))
         }
-        if (listGeral.length === 0) {
-            return 0
-        } else {
-            let listPrecos = []
-            listGeral.map(item => {return listPrecos.push({valor: item.valor})})
-            var soma = listPrecos.reduce((soma, i) => {return soma + i.valor}, 0)
-            return  taxa ? soma += taxa: soma
-        }
+        if (!listGeral.length) return false
+        
+        let listPreços = []
+        let listPreçosAdicionais = []
+        listGeral.map(item => {
+            listPreços.push({preço: item.valor})
+            if (item.adicionais) {
+                item.adicionais.map(sabor => {
+                    listPreçosAdicionais.push({preço: sabor.preço, qtd: sabor.qtd})
+                })
+            }
+        })
+        var soma = listPreços.reduce((soma, i) => {return soma + i.preço}, 0)
+        return soma 
+        
     }
+
+
+    const PegaPreçoProduto = () => {
+        let listPreçosAdicionais = []
+        saboresEscolhidosAdicional.map(item => {
+            listPreçosAdicionais.push({preço: item.preço, qtd:item.qtd})
+        })
+        var somaAdicional = listPreçosAdicionais.reduce((soma, i) => {return soma + i.qtd * i.preço}, valor)
+        return somaAdicional 
+         
+    }
+    var sub_Total = PegaPreçoProduto()
     const Total = pegaPreco()
     const ListaEscolha = pegaDados()
 
@@ -258,6 +293,7 @@ export default function BoxConversation (props) {
             state: 1, 
             iden: id,
             produtos: ListaEscolha,
+            obs: obs ? obs : false
             });
         localStorage.setItem(`itenscarrinho.${site}`,JSON.stringify([]))
 
@@ -296,6 +332,27 @@ export default function BoxConversation (props) {
 
     const VendaEfetuada = VerificaState()
 
+    const SalvaEscolha = () => {
+        LimpaQtds()
+        let produtosSalvos = new Array()
+        
+        if (localStorage.hasOwnProperty(`itenscarrinho.${site}`)) {
+            produtosSalvos = JSON.parse(localStorage.getItem(`itenscarrinho.${site}`))
+        }
+        if (!saboresEscolhidos.length) return 
+
+        
+        produtosSalvos.push({valor: sub_Total, categoria, produtos: saboresEscolhidos, adicionais: saboresEscolhidosAdicional})
+        
+        
+        localStorage.setItem(`itenscarrinho.${site}`,JSON.stringify(produtosSalvos))
+        toast.success('Produto adicionado ao carrinho')
+        setSaboresEscolhidos([])
+        setsaboresEscolhidosAdicional([])
+    }
+
+
+
 
     const cc = document.querySelector('#cont')
     const DescePágina = () => {
@@ -320,7 +377,7 @@ export default function BoxConversation (props) {
                             </svg>
                             <div className={styles.cont_button}>
                                 <h5 className={styles.razao}>{usuario && usuario.razao}</h5>
-                                <span>Ver endereço da loja</span>
+                                <span className={styles.razao}>Ver endereço da loja</span>
                             </div>
                         </button>
                         <ul className={`${styles.box_info} dropdown-menu`}>
@@ -360,6 +417,7 @@ export default function BoxConversation (props) {
                             >
                                 <div className={styles.li}>  
                                     <h5>Cardápio</h5> 
+                                    <p>Clique para continuar</p>
                                     {lista && lista.map(dados => {
                                         
                                             return (
@@ -406,7 +464,7 @@ export default function BoxConversation (props) {
                             className={`${styles.box}`}
                             >
                                 <div className={styles.li}>               
-                                    <h5>{categoria}</h5>
+                                    <h5>{categoria} - {FormataValor(valor)}</h5>
                                     {lista && lista.map(dados => {
                                         if (dados.produtos) {
                                             return (
@@ -423,7 +481,7 @@ export default function BoxConversation (props) {
                                                                     className={`row ${sabor.qtd > 0 && styles.select} ${styles.item_sabor}`}
                                                                     >
                                                                         <div className="col-9">
-                                                                            <p>{sabor.sabor}</p>
+                                                                            <p className={styles.p_title}>{sabor.sabor}</p>
                                                                             <p className={styles.ingredientes}>{sabor.ingredientes}</p>
                                                                             <div className={styles.cont_buttons}>
                                                                                 <FaPlusCircle
@@ -437,7 +495,7 @@ export default function BoxConversation (props) {
                                                                                 <FaMinusCircle
                                                                                 onClick={()=> {
                                                                                     if (next > 2) return
-                                                                                    removeListaEscolhidos(dados.id, item.nome, sabor.sabor)
+                                                                                    removeListaEscolhidos(dados.id, item.nome, sabor.sabor,'sabor')
                                                                                 }}
                                                                                 className={styles.btn_control}
                                                                                 type="button"
@@ -451,34 +509,48 @@ export default function BoxConversation (props) {
                                                                     </div>
                                                                     )
                                                             })}
-                                                            <h5>Adicionais</h5>
-                                                            {item.adicionais && item.adicionais.map(dados => {
-                                                                return (
-                                                                    <>
-                                                                        <p>{dados.saborAdicional}</p>
-                                                                        <p>{dados.IngredientesAdicional}</p>
-                                                                        <p>{FormataValor(dados.PreçoAdicional)}</p>
-                                                                        <div className={styles.cont_buttons}>
-                                                                            <FaPlusCircle
-                                                                            onClick={()=> {
-                                                                                if (next > 2) return
-                                                                                addListaEscolhidos(dados.id, item.nome, dados.saborAdicional,'saborAdicional')
-                                                                            }}
-                                                                            className={styles.btn_control}
-                                                                            type="button"
-                                                                            />
-                                                                            <FaMinusCircle
-                                                                            onClick={()=> {
-                                                                                if (next > 2) return
-                                                                                removeListaEscolhidos(dados.id, item.nome, dados.saborAdicional)
-                                                                            }}
-                                                                            className={styles.btn_control}
-                                                                            type="button"
-                                                                            />
+                                                            {saboresEscolhidos.length > 0 &&
+                                                            <div>
+                                                                <h5 className={styles.title_adicionais}>Adicionais</h5>
+                                                                {item.adicionais && item.adicionais.map(sabor => {
+                                                                    return (
+                                                                        <>
+                                                                        <div className={`row ${sabor.qtd > 0 && styles.select} ${styles.item_sabor}`}>
+                                                                            <div className="col-9">
+                                                                                <p className={styles.p_title}>{sabor.saborAdicional}</p>
+                                                                                <p className={styles.ingredientes}>{sabor.IngredientesAdicional}</p>
+                                                                                <p className={styles.p_preço}>{FormataValor(sabor.PreçoAdicional)}</p>
+                                                                                <div className={styles.cont_buttons}>
+                                                                                    <FaPlusCircle
+                                                                                    onClick={()=> {
+                                                                                        if (next > 2) return
+                                                                                        addListaEscolhidos(dados.id, item.nome, sabor.saborAdicional,'saborAdicional', sabor.PreçoAdicional)
+                                                                                    }}
+                                                                                    className={styles.btn_control}
+                                                                                    type="button"
+                                                                                    />
+                                                                                    <FaMinusCircle
+                                                                                    onClick={()=> {
+                                                                                        if (next > 2) return
+                                                                                        removeListaEscolhidos(dados.id, item.nome, sabor.saborAdicional, 'saborAdicional', sabor.PreçoAdicional)
+                                                                                    }}
+                                                                                    className={styles.btn_control}
+                                                                                    type="button"
+                                                                                    />
+                                                                                </div>
+                                                                            </div>
+                                                                            <div key={render} className={` col-3`}>
+                                                                                <p className={styles.input_qtd_sabor}
+                                                                                >{!sabor.qtd ? 0 : parseFloat(sabor.qtd)}</p>
+                                                                            </div>
                                                                         </div>
-                                                                    </>
-                                                                    )
-                                                            })}
+                                                                        </>
+                                                                        )
+                                                                })}
+                                                            </div>
+                                                            }
+                                                           {<h5 className={styles.sub_Total}>Total: {FormataValor(sub_Total)}</h5>}
+
                                                             {item.qtdSabores == saboresEscolhidos.length && next == 2 &&
                                                             <button
                                                             className={styles.btn_continue}
@@ -535,46 +607,53 @@ export default function BoxConversation (props) {
                                         <div className="accordion-item">
                                             <h2 className="accordion-header">
                                                 <button className="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#detalhes" aria-expanded="false" aria-controls="collapseOne">
-                                                Ver Minhas Compras
+                                                Ver Meu Pedido
                                                 </button>
                                             </h2>
                                             <div id="detalhes" className="accordion-collapse collapse">
                                                 <div className="accordion-body">
-                                                    <div key={render}>
+                                                    <div key={render} className={styles.item}>
                                                         <ul className={styles.list_escolha}>
                                                             {ListaEscolha && ListaEscolha.length > 0 && ListaEscolha.map((item, index)=> {
                                                             return (
                                                                         <li className={styles.item_escolha} key={index}>
                                                                             <div>
-                                                                                <strong>
+                                                                                <div className={styles.header_item}>
                                                                                     <FaTrashAlt
                                                                                     className={styles.btn_delete_item}
                                                                                     onClick={()=> {
                                                                                         DeletaEscolha(index)
                                                                                     }}
                                                                                     />
-                                                                                    {item.categoria} {FormataValor(item.valor)}
-                                                                                </strong>
-                                                                                <ul className={styles.list_escolha_sabores}>
-                                                                                    {item.produtos.map(info => {
+                                                                                    {item.categoria} - {FormataValor(item.valor)}
+                                                                                </div>
+                                                                                <p className={styles.p_sabor}>
+                                                                                    <span>Sabor: </span>
+                                                                                    {item.produtos.map(sabor => {
                                                                                         return (
-                                                                                                <li key={item.sabor}>- {info.sabor}</li>
+                                                                                            <strong>{sabor.sabor},</strong>
                                                                                             )
                                                                                     })}
-                                                                                </ul>
+                                                                                </p>
+                                                                                {item.adicionais.length > 0 && <p className={styles.p_sabor}>
+                                                                                    <span>Adicionais: </span>
+                                                                                    {item.adicionais.map(sabor => {
+                                                                                        return (
+                                                                                            <strong>{sabor.sabor},</strong>
+                                                                                            )
+                                                                                    })}
+                                                                                </p>}
                                                                             </div>
                                                                         </li>
-                                                                        
-                                                                
                                                                 )
                                                             })}
                                                         </ul>
-                                                        <p>Total : <strong>{FormataValor(Total)}</strong></p>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+                                    <p className={styles.p_total}>Total : <strong>{FormataValor(!Total ? sub_Total : Total)}</strong></p>
                                     <button
                                     className={`${styles.btn_escolha}`}
                                     onClick={()=> {
@@ -1196,7 +1275,16 @@ export default function BoxConversation (props) {
                             className={`${styles.box}`}
                             >
                                 <div className={styles.li}>
-                                    <p>Total do Pedido: <strong>{FormataValor(Total)}</strong></p>
+                                    <p className={styles.total}>Total do Pedido: <strong>{FormataValor(Total)}</strong></p>
+                                    
+                                    
+                                    <strong className={styles.m_bottom}>Alguma Observação?</strong>
+                                    <textarea type="text"
+                                    onChange={(el)=> setObs(el.target.value)}
+                                    className={styles.input}
+                                    placeholder="Digite Aqui"
+                                    />
+
                                     {next == 16 && 
                                     <button
                                     className={styles.btn_cancel}

@@ -15,12 +15,18 @@ export default function FormEdit (props) {
 
    
     const [nome, setNome] = useState()
+    const [qtdSaboresAdicional, setqtdSaboresAdicional] = useState()
+    const [saborAdicional, setsaborAdicional] = useState()
+    const [PreçoAdicional, setPreçoAdicional] = useState()
+    const [IngredientesAdicional, setIngredientesAdicional] = useState()
+    const [deleteSaborAdicional, setdeleteSaborAdicional] = useState()
+    const [addsaborAdicional, setaddsaborAdicional] = useState()
+
+
     const [qtdSabores, setQtdSabores] = useState()
     const [preço, setPreço] = useState()
     const [deleteSabor, setDeleteSabor] = useState()
     const [qtdPessoas, setQtdPessoas] = useState()
-    const [promo, setPromo] = useState()
-    const [verifica, setVerifica] = useState()
 
 
 
@@ -33,16 +39,16 @@ export default function FormEdit (props) {
 
 
     var saborPizza = {sabor, ingredientes}
+    var adicional = {saborAdicional, IngredientesAdicional, PreçoAdicional}
 
     async function UpdateSabores (ação) {
         if (ação == "Excluir") {
-            let index = obj.dados.saborComida.findIndex(prop => prop.sabor == escolhaSabor)
+            let index = obj.dados.saborComida.findIndex(prop => prop.sabor == deleteSabor)
             obj.dados.saborComida.splice(index,1)
             await updateDoc(doc(db, `MeiComSite/${id && id}/produtos`, obj.id), {
                 produtos: obj.lista
             });
             toast.success('O sabor foi deletado.')
-        
         }
         if (ação == "add") {
             let index = obj.dados.saborComida.findIndex(prop => prop.sabor == sabor)
@@ -57,7 +63,28 @@ export default function FormEdit (props) {
             } else {
                 toast.error('Sabor já existe.')
             }
-            
+        }
+        if (ação == 'add adicional') {
+            let index = obj.dados.adicionais.findIndex(prop => prop.saborAdicional == saborAdicional)
+
+            if (index < 0) {
+                setaddsaborAdicional(false)
+                obj.dados.adicionais.push(adicional)
+                await updateDoc(doc(db, `MeiComSite/${id && id}/produtos`, obj.id), {
+                    produtos: obj.lista
+                });
+                toast.success('Sabor adicionado com sucesso!')
+            } else {
+                toast.error('Sabor já existe.')
+            }
+        }
+        if (ação == "Excluir Adicional") {
+            let index = obj.dados.adicionais.findIndex(prop => prop.saborAdicional == deleteSaborAdicional)
+            obj.dados.adicionais.splice(index,1)
+            await updateDoc(doc(db, `MeiComSite/${id && id}/produtos`, obj.id), {
+                produtos: obj.lista
+            });
+            toast.success('O sabor foi deletado.')
         }
     }
 
@@ -70,6 +97,9 @@ export default function FormEdit (props) {
 
         objeto['nome'] = !nome ? objeto['nome'] : nome
         objeto['preço'] = !preço ? objeto['preço'] : parseFloat(preço)
+        objeto['qtdPessoas'] = !qtdPessoas ? objeto['qtdPessoas'] : parseFloat(qtdPessoas)
+        objeto['qtdSabores'] = !qtdSabores ? objeto['qtdSabores'] : parseFloat(qtdSabores)
+        objeto['qtdSaboresAdicional'] = !qtdSaboresAdicional ? objeto['qtdSaboresAdicional'] : parseFloat(qtdSaboresAdicional)
 
 
         await updateDoc(doc(db, `MeiComSite/${id && id}/produtos`, obj.id), {
@@ -80,12 +110,6 @@ export default function FormEdit (props) {
 
     }
 
-    if (!verifica) {
-        if (obj && obj.dados && obj.dados.preçopromo > 0) {
-            setPromo(obj && obj.dados && obj.dados.preçopromo > 0)
-            setVerifica(true)
-        }
-    }
 
     return (
             <>
@@ -200,6 +224,91 @@ export default function FormEdit (props) {
                                                             }}
                                                             >
                                                                 <FaTimesCircle/> Cancelar
+                                                            </button>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            }
+                                    </div>
+                                }
+
+
+                                {obj.dados && obj.dados.adicionais &&
+                                    <div>
+                                        <p
+                                        className={styles.label}
+                                        >Adicionais:</p>
+                                            {!addsaborAdicional ?
+                                                <div>
+                                                    <div className={styles.listaSabores}>
+                                                        <select
+                                                        onChange={(el) => setdeleteSaborAdicional(el.target.value)}
+                                                        className={styles.input}
+                                                        >
+                                                            <option>--</option>
+                                                            {obj.dados.adicionais.map(dados => {
+                                                                return (
+                                                                    <option
+                                                                    value={dados.saborAdicional}
+                                                                    key={dados.saborAdicional}                             >{dados.saborAdicional}
+                                                                    </option>
+                                                                    )
+                                                            })}
+                                                        </select>
+                                                        {deleteSaborAdicional && deleteSaborAdicional != "--" &&
+                                                        <button
+                                                        type="button"
+                                                        onClick={()=> {
+                                                            UpdateSabores("Excluir Adicional")
+                                                        }}
+                                                        className={styles.btn_delete_sabor}
+                                                        >Apagar</button>
+            
+                                                        }
+                                                    </div>
+                                                    <button
+                                                    type="button"
+                                                    onClick={()=> {
+                                                    setaddsaborAdicional(!addsaborAdicional)
+                                                    }}
+                                                    className={styles.btn_add}
+                                                    >
+                                                        <FaPlusCircle/> Adicionar
+                                                    </button>
+                                                </div>
+                                                :
+                                                <div>
+                                                    <div className={styles.listaSabores}>
+                                                        <input type="text" className={styles.input}
+                                                        onChange={(el)=> setsaborAdicional(el.target.value)}
+                                                        placeholder="Sabor"
+                                                        />
+                                                        <input type="text" className={styles.input}
+                                                        onChange={(el)=> setIngredientesAdicional(el.target.value)}
+                                                        placeholder="Ingredientes"
+                                                        />
+                                                        <input type="number" className={styles.input}
+                                                        onChange={(el)=> setPreçoAdicional(el.target.value)}
+                                                        placeholder="Preço"
+                                                        />
+                                                        <div>
+                                                            <button
+                                                            type="button"
+                                                            onClick={()=> {
+                                                                UpdateSabores("add adicional")
+                                                            }}
+                                                            className={styles.btn_add}
+                                                            ><FaRegSave/>Salvar</button>
+
+                                                            <button
+                                                            type="button"
+                                                            className={styles.btn_cancel}
+                                                            onClick={()=> {
+                                                            setaddsaborAdicional(!addsaborAdicional)
+                                                            }}
+                                                            >
+                                                                <FaTimesCircle/>Cancelar
                                                             </button>
 
                                                         </div>

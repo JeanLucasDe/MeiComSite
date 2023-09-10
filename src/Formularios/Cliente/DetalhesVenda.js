@@ -1,3 +1,4 @@
+import { useState } from "react";
 import BoxConfirm from "../../components/BoxConfirm";
 import styles from "./DetalhesVenda.module.css"
 import {FaCheck, FaExclamation} from "react-icons/fa"
@@ -6,13 +7,25 @@ import {FaCheck, FaExclamation} from "react-icons/fa"
 export default function DetalhesVenda (props) {
 
     const obj = props.obj && props.obj
-    
+
 
     
     const FormataValor = (valor) => {
         var valorFormatado = valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
         return valorFormatado
     }
+
+    const ReturnState = () => {
+        if (obj) {
+            if (obj.state == 1) return 'Em aberto'
+            if (obj.state == 2) return 'Em Preparo'
+            if (obj.state == 3) return 'Em Entrega'
+            if (obj.state == 4) return 'Finalizado'
+        }
+    }
+
+    const status = ReturnState()
+
 
     return (
             <>
@@ -36,6 +49,7 @@ export default function DetalhesVenda (props) {
                             {obj && obj.lugar == 1 && <p className={styles.info}>Telefone: <span>{obj && obj.telefone}</span></p>}
                             <p className={styles.info}>Pagamento: <span>{obj && obj.pagamento}</span></p>
                             {obj && obj.mesa && <p className={styles.info}>Mesa: <span>{obj && obj.mesa}</span></p>}
+                            <p className={styles.info}>Status: {status}</p>
                         </div>
                         <div className="col-sm-6">
                             {obj && obj.lugar == 1 &&
@@ -64,21 +78,28 @@ export default function DetalhesVenda (props) {
                 </div>
                 <div className={styles.line}/>
                 <div>
-                    <ul className={styles.list}>
+                    <h5>Detalhes</h5>   
+                    <ul className={styles.list_main}>
                     {obj && obj.produtos && obj.produtos.map(dados => {
                         return (
                                 <li> 
                                     <strong>{dados.categoria} - {FormataValor(dados.valor)}</strong>
-                                    <ul className={styles.list}>
+                                    <p className={styles.p_sabor}>
+                                        <span>Sabor: </span>
                                         {dados.produtos.map(item => {
                                             return (
-                                                <li>
-                                                    <p>-<span>{item.sabor}</span></p>
-                                                    
-                                                </li>
+                                                <strong>{item.sabor},</strong>
                                                 )
                                         })}
-                                    </ul>
+                                    </p>
+                                    {dados.adicionais && <p className={styles.p_sabor}>
+                                        <span>Ingredientes: </span>
+                                        {dados.adicionais && dados.adicionais.map(item => {
+                                            return (
+                                                <strong>{item.sabor},</strong>
+                                                )
+                                        })}
+                                    </p>}
                                     
                                 </li>
                             )

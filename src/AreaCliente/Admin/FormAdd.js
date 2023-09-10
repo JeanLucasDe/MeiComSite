@@ -57,7 +57,6 @@ export default function FormAdd (props) {
                     nome:nome.trim(),
                     preço:parseFloat(preço),
                     qtdSabores: parseFloat(qtdSabores),
-                    qtdSaboresAdicional: parseFloat(qtdSaboresAdicional),
                     preço: parseFloat(preço),
                     qtdPessoas: parseFloat(qtdpessoas),
                     saborComida,
@@ -199,8 +198,6 @@ export default function FormAdd (props) {
                             <input type="text" onChange={(el)=> setNome(el.target.value)}/>
                             <strong>Escolhe quantos sabores?</strong>
                             <input type="number" onChange={(el)=> setQtdSabores(el.target.value)}/>
-                            <strong>Escolhe quantos Adicionais?</strong>
-                            <input type="number" onChange={(el)=> setqtdSaboresAdicional(el.target.value)}/>
                             <strong>Preço:</strong>
                             <input type="number" onChange={(el)=> setPreço(el.target.value)}/>
                             <strong>Servem quantas pessoas:</strong>

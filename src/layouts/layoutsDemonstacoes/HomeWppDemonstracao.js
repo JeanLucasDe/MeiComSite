@@ -39,6 +39,13 @@ export default function HomeWpp (props) {
                     sabor:'Frango',
                     ingredientes:'Frango, mussarela'
                 }
+                ],
+                adicionais:[
+                    {
+                        IngredientesAdicional:'Nutela',
+                        saborAdicional: 'Doce',
+                        PreçoAdicional: 6
+                    }
                 ]
             }
             ]
