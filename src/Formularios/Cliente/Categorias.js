@@ -124,32 +124,19 @@ export default function Informations () {
                 <>
                     {usuario &&
                     <>
-                        {usuario && usuario[0].status == "Em análise" ?
-                        mod ? 
+                        {usuario && usuario[0].admin ?
                         <div className={styles.cont_btn}>
                             <button className={styles.btn}
                             type="button" 
+                            data-bs-toggle="modal" 
+                            data-bs-target={`#ModalAdd`}
+                            ><FaPlusCircle/> Nova Categoria</button>
+                        </div>:
+                        <div className={styles.cont_btn}>
+                            <button className={styles.btn}
                             onClick={() => {
                                 toast.error('Você ainda não tem permissão no modo real')
                             }}
-                            ><FaPlusCircle/> Nova Categoria</button>
-                        </div>:
-
-                        <div className={styles.cont_btn}>
-                            <button className={styles.btn}
-                            type="button" 
-                            data-bs-toggle="modal" 
-                            data-bs-target={`#ModalAdd`}
-                            ><FaPlusCircle/> Nova Categoria</button>
-                        </div>
-
-
-                        :
-                        <div className={styles.cont_btn}>
-                            <button className={styles.btn}
-                            type="button" 
-                            data-bs-toggle="modal" 
-                            data-bs-target={`#ModalAdd`}
                             ><FaPlusCircle/> Nova Categoria</button>
                         </div>
                         

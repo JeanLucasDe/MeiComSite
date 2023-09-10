@@ -247,7 +247,14 @@ border-radius: 20px;       /* roundness of the scroll thumb */
     background-color: #e9e9e9;
     border: none;
     color: #000;
+    position: relative;
     box-shadow: 1px 1px 4px #ddd;
+    display: flex;
+    align-items: center;
+    padding-top: 0.6em;
+}
+.btn_tog p {
+    margin-bottom: 0em;
 }
 .btn_tog:hover {
     background-color: #8fff7b;
@@ -261,4 +268,10 @@ border-radius: 20px;       /* roundness of the scroll thumb */
 .logo {
     width: 20px;
     height: 20px;
+}
+.user_logo {
+    margin-right: 1em !important;
+    margin-left: 1em;
+    height: 30px;
+    width: 30px;
 }

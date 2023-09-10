@@ -32,6 +32,9 @@
     border-radius: 7px;
     margin-top: 1em;
 }
+.icon_trash {
+    margin: 0.3em 0.6em 0.3em 0.3em;
+}
 .img {
     width: 100%;
 }

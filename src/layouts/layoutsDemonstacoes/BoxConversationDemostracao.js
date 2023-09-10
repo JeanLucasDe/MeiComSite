@@ -3,11 +3,10 @@ import styles from "../../AreaCliente/layouts/Wpp/BoxConversation.module.css"
 import { toast, ToastContainer } from "react-toastify"
 import { FaEdit, FaMinusCircle, FaPlus, FaPlusCircle, FaRegLaughBeam, FaRegPaperPlane, FaSave, FaTrashAlt } from "react-icons/fa"
 import styles1 from "../../AreaCliente/layouts/Wpp/Conversation.module.css"
-import { useOutletContext, useParams } from "react-router-dom"
+import {useParams } from "react-router-dom"
 import App from "../../Hooks/App"
 import '@firebase/firestore';
-import { doc, getFirestore, setDoc} from "@firebase/firestore";
-import moment from "moment/moment"
+import { getFirestore} from "@firebase/firestore";
 import BoxPedido from "../../AreaCliente/layouts/Wpp/BoxPedido"
 
 export default function BoxConversation (props) {
@@ -117,15 +116,6 @@ export default function BoxConversation (props) {
             }
         })
     }
-    function pegaDadosCompra() {
-        let produtosSalvos = new Array()
-        if (localStorage.hasOwnProperty(`itenscarrinho.${site}.compra`)) {
-            produtosSalvos = JSON.parse(localStorage.getItem(`itenscarrinho.${site}.compra`))
-        }
-        return produtosSalvos
-    }
-
-    const Compra = pegaDadosCompra()
 
     const SalvaEscolha = () => {
         LimpaQtds()
@@ -230,6 +220,28 @@ export default function BoxConversation (props) {
                 {!VendaEfetuada.length ? !pedido && 
                 <div className={styles.container}>
                     <div className={`conten ${styles.content}`} id="cont">
+                        <div className={`${styles.header} dropdown`}>
+                            <button className={`${styles.btn_tog} btn btn-secondary dropdown-toggle`} type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 496 512" className={styles.user_logo}  xmlns="http://www.w3.org/2000/svg"><path d="M248 8C111 8 0 119 0 256s111 248 248 248 248-111 248-248S385 8 248 8zm0 96c48.6 0 88 39.4 88 88s-39.4 88-88 88-88-39.4-88-88 39.4-88 88-88zm0 344c-58.7 0-111.3-26.6-146.5-68.2 18.8-35.4 55.6-59.8 98.5-59.8 2.4 0 4.8.4 7.1 1.1 13 4.2 26.6 6.9 40.9 6.9 14.3 0 28-2.7 40.9-6.9 2.3-.7 4.7-1.1 7.1-1.1 42.9 0 79.7 24.4 98.5 59.8C359.3 421.4 306.7 448 248 448z"></path>
+                                </svg>
+                                <div className={styles.cont_button}>
+                                    <h5 className={styles.razao}>{usuario && usuario.razao}</h5>
+                                    <p>Ver endereço da loja</p>
+                                </div>
+                            </button>
+                            <ul className={`${styles.box_info} dropdown-menu`}>
+                                <li className={styles.info}>
+                                    <p>Cidade: {usuario && usuario.cidade}</p>
+                                    <p>Bairro: {usuario && usuario.bairro}</p>
+                                    <p>Rua: {usuario && usuario.rua}</p>
+                                    <p>Número: {usuario && usuario.numero}</p>
+                                    <p>Telefone: {usuario && usuario.telefone}</p>
+                                </li>
+                            </ul>
+                        </div>
+
+
+
                         <ul className={styles.list}>
                             <li
                             className={`${styles.box}`}

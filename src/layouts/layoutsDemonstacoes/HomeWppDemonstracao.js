@@ -23,6 +23,7 @@ export default function HomeWpp (props) {
         {
             categoria: 'Pizza',
             id:123,
+
             produtos: [
             {
                 nome:'Pizza Grande',
@@ -44,6 +45,12 @@ export default function HomeWpp (props) {
         }
     ]
     const usuario = {
+        razao:'Lanches SA',
+        cidade:'Salvador',
+        bairro:'Sussuarana',
+        rua:'Novo horizonte',
+        numero:'223',
+        telefone:'71982771121',
         listBairros: [
             {
                 taxa:5,

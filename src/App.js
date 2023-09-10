@@ -24,7 +24,6 @@ import Pagamentos from "./Duvidas/Pagamentos";
 import ComoComeçar from "./Duvidas/ComoComeçar";
 import Politica from "./Duvidas/PoliticadePrivacidade";
 import Gravação from "./Gravação";
-import TodasVendas from "./Formularios/Cliente/TodasVendas";
 import FiltroVendas from "./Formularios/Cliente/FiltroVendas";
 import AreaTeste from "./AreaTesteCliente/AreaTeste";
 import Online from "./Formularios/Cliente/Online";

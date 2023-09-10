@@ -56,6 +56,7 @@ export default function BoxConversation (props) {
     const [next, setNext] = useState(0)
     const [categoria, setCategoria] = useState()
     var [saboresEscolhidos, setSaboresEscolhidos] = useState([])
+    var [saboresEscolhidosAdicional, saboresEscolhidosAdicional] = useState([])
     var [seed, setSeed] = useState(0)
     var [render, setRender] = useState(1)
     
@@ -84,23 +85,44 @@ export default function BoxConversation (props) {
         indexThree[0].qtd -= 1
         setSeed(seed += 1)
     }
-    const addListaEscolhidos = (id, nome, sabor) => {
-        const indexFirst = lista && lista.filter(dados => dados.id == id)
-        const indexSecond = indexFirst && indexFirst[0].produtos.filter(dados => dados.nome == nome)
-        const indexThree = indexSecond && indexSecond[0].saborComida.filter(dados => dados.sabor == sabor)
-        const index = saboresEscolhidos.findIndex(dados => dados.sabor == sabor)
-
-        if (indexSecond[0].qtdSabores > saboresEscolhidos.length) {
-            if (index < 0) {
-                setSaboresEscolhidos([...saboresEscolhidos, {sabor, qtd:1}])
-                indexThree[0].qtd = 1
+    const addListaEscolhidos = (id, nome, sabor, mod) => {
+        if (mod == 'sabor') {
+            const indexFirst = lista && lista.filter(dados => dados.id == id)
+            const indexSecond = indexFirst && indexFirst[0].produtos.filter(dados => dados.nome == nome)
+            const indexThree = indexSecond && indexSecond[0].saborComida.filter(dados => dados.sabor == sabor)
+            const index = saboresEscolhidos.findIndex(dados => dados.sabor == sabor)
+    
+            if (indexSecond[0].qtdSabores > saboresEscolhidos.length) {
+                if (index < 0) {
+                    setSaboresEscolhidos([...saboresEscolhidos, {sabor, qtd:1}])
+                    indexThree[0].qtd = 1
+                } else {
+                    setSaboresEscolhidos([...saboresEscolhidos, {sabor, qtd:1}])
+                    indexThree[0].qtd += 1
+                }
+    
             } else {
-                setSaboresEscolhidos([...saboresEscolhidos, {sabor, qtd:1}])
-                indexThree[0].qtd += 1
+                return toast.error('capacidade alcançada')
             }
-
-        } else {
-            return toast.error('capacidade alcançada')
+        }
+        if (mod == 'saborAdicional') {
+            const indexFirst = lista && lista.filter(dados => dados.id == id)
+            const indexSecond = indexFirst && indexFirst[0].produtos.filter(dados => dados.nome == nome)
+            const indexThree = indexSecond && indexSecond[0].adicionais.filter(dados => dados.saborAdicional == sabor)
+            const index = saboresEscolhidosAdicional.findIndex(dados => dados.saborAdicional == sabor)
+    
+            if (indexSecond[0].qtdSabores > saboresEscolhidosAdicional.length) {
+                if (index < 0) {
+                    setSaboresEscolhidos([...saboresEscolhidosAdicional, {sabor, qtd:1}])
+                    indexThree[0].qtd = 1
+                } else {
+                    setSaboresEscolhidos([...saboresEscolhidosAdicional, {sabor, qtd:1}])
+                    indexThree[0].qtd += 1
+                }
+    
+            } else {
+                return toast.error('capacidade alcançada')
+            } 
         }
         setSeed(seed += 1)
     }
@@ -144,7 +166,7 @@ export default function BoxConversation (props) {
             produtosSalvos = JSON.parse(localStorage.getItem(`itenscarrinho.${site}`))
         }
         if (!saboresEscolhidos.length) return
-        produtosSalvos.push({valor, categoria, produtos: saboresEscolhidos})
+        produtosSalvos.push({valor, categoria, produtos: saboresEscolhidos, adicionais: saboresEscolhidosAdicional})
         
         localStorage.setItem(`itenscarrinho.${site}`,JSON.stringify(produtosSalvos))
         toast.success('Produto adicionado ao carrinho')
@@ -294,10 +316,12 @@ export default function BoxConversation (props) {
                     <div>
                     <div className={`${styles.header} dropdown`}>
                         <button className={`${styles.btn_tog} btn btn-secondary dropdown-toggle`} type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 496 512" className={styles.user_logo}  xmlns="http://www.w3.org/2000/svg"><path d="M248 8C111 8 0 119 0 256s111 248 248 248 248-111 248-248S385 8 248 8zm0 96c48.6 0 88 39.4 88 88s-39.4 88-88 88-88-39.4-88-88 39.4-88 88-88zm0 344c-58.7 0-111.3-26.6-146.5-68.2 18.8-35.4 55.6-59.8 98.5-59.8 2.4 0 4.8.4 7.1 1.1 13 4.2 26.6 6.9 40.9 6.9 14.3 0 28-2.7 40.9-6.9 2.3-.7 4.7-1.1 7.1-1.1 42.9 0 79.7 24.4 98.5 59.8C359.3 421.4 306.7 448 248 448z"></path>
+                            </svg>
                             <div className={styles.cont_button}>
                                 <h5 className={styles.razao}>{usuario && usuario.razao}</h5>
+                                <span>Ver endereço da loja</span>
                             </div>
-                            <span>Ver endereço da loja</span>
                         </button>
                         <ul className={`${styles.box_info} dropdown-menu`}>
                             <li className={styles.info}>
@@ -405,7 +429,7 @@ export default function BoxConversation (props) {
                                                                                 <FaPlusCircle
                                                                                 onClick={()=> {
                                                                                     if (next > 2) return
-                                                                                    addListaEscolhidos(dados.id, item.nome, sabor.sabor)
+                                                                                    addListaEscolhidos(dados.id, item.nome, sabor.sabor,'sabor')
                                                                                 }}
                                                                                 className={styles.btn_control}
                                                                                 type="button"
@@ -425,6 +449,34 @@ export default function BoxConversation (props) {
                                                                             >{!sabor.qtd ? 0 : parseFloat(sabor.qtd)}</p>
                                                                         </div>
                                                                     </div>
+                                                                    )
+                                                            })}
+                                                            <h5>Adicionais</h5>
+                                                            {item.adicionais && item.adicionais.map(dados => {
+                                                                return (
+                                                                    <>
+                                                                        <p>{dados.saborAdicional}</p>
+                                                                        <p>{dados.IngredientesAdicional}</p>
+                                                                        <p>{FormataValor(dados.PreçoAdicional)}</p>
+                                                                        <div className={styles.cont_buttons}>
+                                                                            <FaPlusCircle
+                                                                            onClick={()=> {
+                                                                                if (next > 2) return
+                                                                                addListaEscolhidos(dados.id, item.nome, dados.saborAdicional,'saborAdicional')
+                                                                            }}
+                                                                            className={styles.btn_control}
+                                                                            type="button"
+                                                                            />
+                                                                            <FaMinusCircle
+                                                                            onClick={()=> {
+                                                                                if (next > 2) return
+                                                                                removeListaEscolhidos(dados.id, item.nome, dados.saborAdicional)
+                                                                            }}
+                                                                            className={styles.btn_control}
+                                                                            type="button"
+                                                                            />
+                                                                        </div>
+                                                                    </>
                                                                     )
                                                             })}
                                                             {item.qtdSabores == saboresEscolhidos.length && next == 2 &&

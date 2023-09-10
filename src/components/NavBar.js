@@ -36,19 +36,10 @@ return (
         <div className={styles.content}>
             <Link to="/" className={styles.logo}>MeiComSite</Link>
             <div className={styles.menu}>
-            <div className={`dropdown`}>
-                <a className={`btn btn-secondary dropdown-toggle ${styles.link_drop}`} href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"
-                >
-                    Explorar
-                </a>
-                <ul className={`${styles.list} dropdown-menu`}>
-                    <li><Link to="/catalogo/alimentação" className={`${styles.item} dropdown-item`}>Restaurantes</Link></li>
-                    <li><Link to="/catalogo/shopping" className={`${styles.item} dropdown-item`}>Lojas</Link></li>
-                </ul>
-            </div>
-                <Link to="/planos">Planos e Preços</Link>
-                <Link to="/page/demo" target="_blank">Demo</Link>
-                <Link to="/suporte">Ajuda</Link>
+            <Link to="/catalogo/alimentação">Explorar</Link>
+            <Link to="/planos">Planos e Preços</Link>
+            <Link to="/page/demo" target="_blank">Demo</Link>
+            <Link to="/suporte">Ajuda</Link>
             </div>
             <div className={styles.login}>
                 {user &&

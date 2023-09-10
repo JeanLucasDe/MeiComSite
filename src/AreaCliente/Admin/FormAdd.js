@@ -8,7 +8,6 @@ import { FaPlusCircle, FaTrash } from "react-icons/fa";
 import { toast, ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import { Link, useOutletContext, useParams } from "react-router-dom";
-import moment from "moment/moment";
 
 
 export default function FormAdd (props) {
@@ -21,18 +20,24 @@ export default function FormAdd (props) {
     const [desc, setDesc] = useState()
     const [qtdpessoas, setQtdPessoas] = useState()
     const [sabor, setSabor] = useState()
+    const [qtdSaboresAdicional, setqtdSaboresAdicional] = useState()
     const [ingredientes, setIngredientes] = useState()
     const [preço, setPreço] = useState()
-    const [estoque, setEstoque] = useState()
     const [small_desc, setSmallDesc] = useState()
-    const [espera, setEspera] = useState()
-
     const [cor, setCor] = useState()
     const [p, setP] = useState()
     const [m, setM] = useState()
     const [g, setG] = useState()
     const [material, setMaterial] = useState()
     const [saborComida,setSaborComida] = useState([])
+    
+
+
+    const [saborComidaAdicional,setSaborComidaAdicional] = useState([])
+    const [saborAdicional, setSaborAdicional] = useState()
+    const [PreçoAdicional, setPreçoAdicional] = useState()
+    const [IngredientesAdicional, setIngredientesAdicional] = useState()
+
 
 
     const db = getFirestore(App)
@@ -52,9 +57,11 @@ export default function FormAdd (props) {
                     nome:nome.trim(),
                     preço:parseFloat(preço),
                     qtdSabores: parseFloat(qtdSabores),
+                    qtdSaboresAdicional: parseFloat(qtdSaboresAdicional),
                     preço: parseFloat(preço),
                     qtdPessoas: parseFloat(qtdpessoas),
                     saborComida,
+                    adicionais: saborComidaAdicional,
                 }
             )
             await updateDoc(doc(db, `MeiComSite/${props.email}/produtos`, `${props.dados.id}`), {
@@ -114,30 +121,42 @@ export default function FormAdd (props) {
     }
 
 
-    const addSabor = (sabor) => {
+    const addSabor = (sabor, mod) => {
 
-        let index = saborComida.findIndex(prop => prop.sabor == sabor)
-        
-        if (index < 0) {
-            setSaborComida([...saborComida, {sabor, ingredientes}])
-            setSabor('')
-            setIngredientes('')
-            toast.success('Sabor adicionado com sucesso!')
-        } else {
-            toast.error('Sabor já existe!')
+        if (mod == 'sabor') {
+            let index = saborComida.findIndex(prop => prop.sabor == sabor)
+            
+            if (index < 0) {
+                setSaborComida([...saborComida, {sabor, ingredientes}])
+                setSabor('')
+                setIngredientes('')
+                toast.success('Sabor adicionado com sucesso!')
+            } else {
+                toast.error('Sabor já existe!')
+            }
+        }
+        if (mod == 'saborAdicional') {
+            let index = saborComidaAdicional.findIndex(prop => prop.saborAdicional == sabor)
+            if (index < 0) {
+                setSaborComidaAdicional([...saborComidaAdicional, {saborAdicional, IngredientesAdicional, PreçoAdicional:parseFloat(PreçoAdicional)}])
+                setSaborAdicional('')
+                setIngredientesAdicional('')
+                setPreçoAdicional()
+                toast.success('Sabor adicionado com sucesso!')
+            } else {
+                toast.error('Sabor já existe!')
+            }
+
         }
     }
+
+
     const retirarSabor = (sabor) => {
         let index = saborComida.findIndex(prop => prop.sabor == sabor)
         saborComida.splice(index, 1)
         setSaborComida(saborComida)
         toast.success('Sabor retirado com sucesso!')
     }
-    function formataTextoGoogleDrive (texto) {
-        texto = texto.split('/')
-        return texto[5]
-    }
-    
 
     const addProdutoStore = () => {
         let produtosSalvos = new Array()
@@ -176,60 +195,96 @@ export default function FormAdd (props) {
                     <div className={styles.line}></div>
                     <div>
                         <div className={styles.info}>
-                                    
                             <strong>Nome:</strong>
                             <input type="text" onChange={(el)=> setNome(el.target.value)}/>
-                            <div>
-                                <strong>Escolhe quantos sabores?</strong>
-                                <input type="number" onChange={(el)=> setQtdSabores(el.target.value)}/>
-                            </div>
+                            <strong>Escolhe quantos sabores?</strong>
+                            <input type="number" onChange={(el)=> setQtdSabores(el.target.value)}/>
+                            <strong>Escolhe quantos Adicionais?</strong>
+                            <input type="number" onChange={(el)=> setqtdSaboresAdicional(el.target.value)}/>
                             <strong>Preço:</strong>
                             <input type="number" onChange={(el)=> setPreço(el.target.value)}/>
                             <strong>Servem quantas pessoas:</strong>
                             <input type="number" onChange={(el)=> setQtdPessoas(el.target.value)}/>
-                            <div className={`accordion ${styles.box_sabores}`} id="accordionExample" >
-                                <div className="accordion-item">
-                                    <h2 className="accordion-header">
-                                        <button className="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#sabores" aria-expanded="false" aria-controls="collapseOne">
-                                        Sabores
-                                        </button>
-                                    </h2>
-                                    <div id="sabores" className="accordion-collapse collapse">
-                                        <div className="accordion-body" >
+                            <div className={styles.line}/>
 
-                                            <ul className={`${styles.saborescomida} saborescomida`}>
-                                                {saborComida.length > 0 && saborComida.map(item => {
-                                                    return (
-                                                            <li key={item.sabor}>
-                                                                <strong>{item.sabor}</strong>
-                                                                <FaTrash
-                                                                type="button"
-                                                                onClick={()=> retirarSabor(item.sabor)}
-                                                                />
-                                                            </li>
-                                                        )
-                                                })}
-                                            </ul>
-                                            <div>
-                                                <strong>Sabor</strong>
-                                                <input placeholder="Sabor" onChange={(el)=> setSabor(el.target.value)}
-                                                value={sabor}
-                                                />
-                                                <strong>Ingredientes</strong>
-                                                <input placeholder="Ingedientes" onChange={(el)=> setIngredientes(el.target.value)}
-                                                value={ingredientes}
-                                                />
-                                                {sabor && ingredientes && <button
-                                                onClick={()=> {
-                                                    if (!sabor && !ingredientes) return
-                                                    addSabor(sabor)}}
-                                                className={styles.btn_save}
-                                                >Salvar</button>}
-                                            </div>
-                                        </div>
-                                    </div>
+                            {saborComida.length > 0 &&
+                                <ul className={`${styles.saborescomida} saborescomida`}>
+                                    {saborComida.map(item => {
+                                        return (
+                                                <li key={item.sabor}>
+                                                    <FaTrash
+                                                    type="button"
+                                                    className={styles.icon_trash}
+                                                    onClick={()=> retirarSabor(item.sabor)}
+                                                    />
+                                                    <strong>{item.sabor}</strong>
+                                                </li>
+                                            )
+                                    })}
+                                </ul>
+                            }
+                            <div>
+                                <strong>Sabor</strong>
+                                <input placeholder="Sabor" onChange={(el)=> setSabor(el.target.value)}
+                                value={sabor}
+                                />
+                                <strong>Ingredientes</strong>
+                                <input placeholder="Ingedientes" onChange={(el)=> setIngredientes(el.target.value)}
+                                value={ingredientes}
+                                />
+                                {sabor && ingredientes && <button
+                                onClick={()=> {
+                                    if (!sabor && !ingredientes) return
+                                    addSabor(sabor,'sabor')}}
+                                className={styles.btn_save}
+                                >Salvar</button>}
+                            </div>
 
-                                </div>
+
+
+                            <div className={styles.line}/>
+                            {saborComidaAdicional.length > 0 &&
+                                <ul className={`${styles.saborescomida} saborescomida`}>
+                                    {saborComidaAdicional.map(item => {
+                                        return (
+                                                <li key={item.sabor}>
+                                                    <FaTrash
+                                                    type="button"
+                                                    onClick={()=> retirarSabor(item.sabor)}
+                                                    className={styles.icon_trash}
+                                                    />
+                                                    <strong>{item.saborAdicional}</strong>
+                                                </li>
+                                            )
+                                    })}
+                                </ul>
+                            }
+                            <div>
+                                <strong>Adicional:</strong>
+                                <input placeholder="ex.: Molho Barbecue" onChange={(el)=> setSaborAdicional(el.target.value)}
+                                value={saborAdicional}
+                                />
+                                <strong>Ingredientes:</strong>
+                                <input placeholder="Ingedientes" onChange={(el)=> setIngredientesAdicional(el.target.value)}
+                                value={IngredientesAdicional}
+                                />
+                                <strong>Preço:</strong>
+                                <input 
+                                type="text"
+                                placeholder="Preço"
+                                onChange={(el)=> setPreçoAdicional(el.target.value)}
+                                value={PreçoAdicional}
+                                />
+                                {saborAdicional && IngredientesAdicional && PreçoAdicional && 
+                                
+                                <button
+                                onClick={(el)=> {
+                                    el.preventDefault()
+                                    if (!saborAdicional && !IngredientesAdicional && !PreçoAdicional) return
+                                    addSabor(saborAdicional,'saborAdicional')}}
+                                    className={styles.btn_save}
+                                >Salvar</button>
+                                }
                             </div>
                         </div>
                         <div className={styles.cont_buttons}>
@@ -249,7 +304,8 @@ export default function FormAdd (props) {
                                 addItem()
                             }}
                             className={styles.btn_confirm}
-                            >Confirmar</button>:
+                            >Confirmar</button>
+                            :
                             <button
                             disabled
                             className={`${styles.btn_disabled} ${styles.btn_confirm}`}

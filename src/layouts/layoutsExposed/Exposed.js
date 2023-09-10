@@ -6,7 +6,7 @@ import styles from "./Exposed.module.css"
 import { Link } from "react-router-dom";
 import Loading from "../../components/Loading"
 import moment from "moment";
-import {FaRegHeart} from "react-icons/fa"
+import { ToastContainer, toast } from "react-toastify";
 
 export default function Exposed (props) {
    
@@ -24,77 +24,65 @@ export default function Exposed (props) {
         getLojas()
     },[])
 
+    const {abre, fecha} =  lojas && lojas
+    const FormataHora = (hora) => {
+        let date = hora.split(':')
+
+        return parseFloat(date[0]) 
+    }
+
+    var horarioAtual = moment().format('HH')
+    horarioAtual = parseFloat(horarioAtual)
+
+
+
+
     return (
             <>
-                <div className="row">
-                    <ul className={`col-md-6 ${styles.list}`}>
+                <div >
+                    <ul className={`${styles.list}`}>
                         {lojas && lojas.map(dados => {
-                            if (dados.status == "pronto") {
-                                if (props.modalidade == "alimentação") {
-                                    if (dados.mod == "Restaurante") {
-                                        return (
-                                                <Link to={`/${dados.site}`}
-                                                className={styles.cont_link}
-                                                >
-                                                    <li key={dados.id}>
-                                                        <div className="row">
-                                                            <div className="col-2">
-                                                                <img src={dados.logo} className={styles.img}/>
-                                                            </div>
-                                                            <div className="col-9">
-                                                                <div>
-                                                                    <h5>{dados.razao}</h5>
-                                                                    {moment(dados.abre).format('DD/MM/YYY') <
-                                                                     moment().format('DD/MM/YYY') < moment(dados.fecha).format('DD/MM/YYYT') &&
-                                                                    <p>Aberto</p>
-                                                                     }
-                                                                </div>
-                                                            </div>
-                                                            <div className="col-1">
-                                                                <FaRegHeart className={styles.icon}/>
-                                                            </div>
-                                                        </div>
-                                                    </li>
-                                                </Link>
-                                            )
-                                    }
-                                }
-                                if (props.modalidade == "shopping") {
-                                    if (dados.mod == "Loja Virtual") {
-                                        return (
+                            if (dados.admin) {
+                                if (FormataHora(dados.abre) <= horarioAtual && horarioAtual <= FormataHora(dados.fecha)) {
+                                    return (
                                             <Link to={`/${dados.site}`}
                                             className={styles.cont_link}
                                             >
                                                 <li key={dados.id}>
-                                                    <div className="row">
-                                                        <div className="col-2">
-                                                            <img src={dados.logo} className={styles.img}/>
-                                                        </div>
-                                                        <div className="col-9">
-                                                            <div className={styles.flex_center}>
-                                                                <h5>{dados.razao}</h5>
-                                                                {moment(dados.abre).format('DD/MM/YYY') <
-                                                                    moment().format('DD/MM/YYY') < moment(dados.fecha).format('DD/MM/YYYT') &&
-                                                                <p>Aberto</p>
-                                                                    }
-                                                            </div>
-                                                        </div>
-                                                        <div className="col-1">
-                                                            <div className={styles.flex_center}>
-                                                                <FaRegHeart className={styles.icon}/>
-                                                            </div>
+                                                    <div>
+                                                        <div>
+                                                            <h5>{dados.razao}</h5>
+                                                            <p>Aberto até {FormataHora(dados.fecha)}h</p>
                                                         </div>
                                                     </div>
                                                 </li>
                                             </Link>
                                         )
-                                    }
+                                } else {
+                                    return (
+                                        <Link
+                                        className={`${styles.closed} ${styles.cont_link}`}
+                                        onClick={() => {
+                                            toast.error('Esta loja está fechada no momento')
+                                        }}
+                                        >
+                                            <li key={dados.id}>
+                                                <div>
+                                                    <div>
+                                                        <h5>{dados.razao}</h5>
+                                                        <p>Fechado abre {FormataHora(dados.abre)}h</p>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </Link>
+                                    )
                                 }
                             }
                         })}
                         {!load && <Loading/>}
                     </ul>
                 </div>
+                <ToastContainer/>
             </>
         )
 }
