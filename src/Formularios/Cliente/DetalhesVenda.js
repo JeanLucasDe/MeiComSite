@@ -44,14 +44,14 @@ export default function DetalhesVenda (props) {
                 </div>
                 <div className={styles.info_comprador}>
                     <div className="row">
-                        <div className="col-sm-6">
+                        <div className="col-md-6">
                             <p className={styles.info}>Nome: <span>{obj && obj.nome}</span></p>
                             {obj && obj.lugar == 1 && <p className={styles.info}>Telefone: <span>{obj && obj.telefone}</span></p>}
                             <p className={styles.info}>Pagamento: <span>{obj && obj.pagamento}</span></p>
                             {obj && obj.mesa && <p className={styles.info}>Mesa: <span>{obj && obj.mesa}</span></p>}
                             <p className={styles.info}>Status: {status}</p>
                         </div>
-                        <div className="col-sm-6">
+                        <div className="col-md-6">
                             {obj && obj.lugar == 1 &&
                             <div>
                                 <p className={styles.info}>Cidade: <span>{obj && obj.cidade}</span></p>

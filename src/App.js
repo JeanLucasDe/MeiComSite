@@ -30,7 +30,10 @@ import Online from "./Formularios/Cliente/Online";
 import Login from "./Pages/Login"
 import Register from "./Pages/Register";
 import PageDemonstração from "./Pages/PageDemonstrationWpp";
-
+import View_pedido from "./Pages/View_pedido";
+import Box_Pedido from "./Pages/Box_Pedido";
+import Box_idLoja from "./Pages/Box_idLoja";
+import EntregaPedido from "./Pages/EntregaPedido";
 
 
 
@@ -52,7 +55,13 @@ function App() {
                 <Route path="/suporte/politica" element={<Politica/>}/>
               </Route>
               
-              
+              <Route path="/pedidos" element={<View_pedido/>}>
+                <Route index element={<Box_idLoja/>}/>
+                <Route path='/pedidos/:loja' element={<Box_Pedido/>}/>
+                <Route path='/pedidos/:loja/:pedido' element={<EntregaPedido/>}/>
+              </Route>
+
+
               <Route path="/planos" element={<PlanosPreços/>}/>
               <Route path="/:site/testarea" element={<AreaTeste/>}/>
               <Route path="/login" element={<Login/>}/>

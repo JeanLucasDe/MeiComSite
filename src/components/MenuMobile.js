@@ -54,6 +54,13 @@ export default function MenuMobile (props) {
                 aria-label={props.aria_label}
                 className={styles.mod}
                 >Relatório</li></Link>
+                
+                <Link to="/pedidos"><li
+                type={props.type}
+                data-bs-dismiss={props.data_bs_dismiss}
+                aria-label={props.aria_label}
+                className={styles.mod}
+                >Loja</li></Link>
 
                 
                 <Link to="/perfil/user/config"><li
@@ -62,6 +69,7 @@ export default function MenuMobile (props) {
                 aria-label={props.aria_label}
                 className={styles.mod}
                 >Configurações</li></Link>
+
 
                 <Link to="/suporte"><li
                 type={props.type}

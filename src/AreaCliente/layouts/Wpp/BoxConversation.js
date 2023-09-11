@@ -362,8 +362,6 @@ export default function BoxConversation (props) {
             });
         }
     }
-
-    
     
     return (
             <>
@@ -748,6 +746,7 @@ export default function BoxConversation (props) {
                                     <input type="text" onChange={(el)=> setNome(el.target.value)}
                                     className={styles.input}
                                     placeholder="Nome"
+                                    id="1"
                                     />:
                                     <div>
                                         {!editNome ?
@@ -922,6 +921,7 @@ export default function BoxConversation (props) {
                                     <input type="text"
                                     onChange={(el)=> setRua(el.target.value)}
                                     className={styles.input}
+                                    id="2"
                                     />
                                     :
                                     <div>
@@ -1030,13 +1030,16 @@ export default function BoxConversation (props) {
                                             {moradia == "Casa" &&
                                             <div>
                                                 <p>Qual o numero da Casa?</p>
-                                                <input type="text" onChange={(el)=> setNumero(el.target.value)}/>
+                                                <input type="text" onChange={(el)=> setNumero(el.target.value)}
+                                                id="3"
+                                                />
                                             </div>
                                             }
                                             {moradia == "Apartamento" &&
                                             <div>
                                                 <p>Qual o bloco? Qual o Andar? (separe por '/') </p>
                                                 <input type="text" onChange={(el)=> setNumero(el.target.value)}
+                                                id="3"
                                                 placeholder="ex: A / 8"
                                                 />
                                             </div>
@@ -1049,6 +1052,7 @@ export default function BoxConversation (props) {
                                         <input type="text" onChange={(el)=> setNumero(el.target.value)}
                                         className={styles.input}
                                         placeholder="Numero"
+                                        id="3"
                                         />
                                         }
                                         {next > 11 && !editNumero ? next < 14 && <FaEdit 
@@ -1089,6 +1093,7 @@ export default function BoxConversation (props) {
                                     <textarea
                                     className={styles.text_area}
                                     onChange={(el)=> setReferencia(el.target.value)}
+                                    id="4"
                                     />:
                                     <div>
                                         {!editReferencia ?
@@ -1096,6 +1101,7 @@ export default function BoxConversation (props) {
                                           <textarea
                                           className={styles.text_area}
                                           onChange={(el)=> setReferencia(el.target.value)}
+                                          id="4"
                                           />
                                         }
                                         {next > 12 && !editReferencia ? next < 14 &&<FaEdit 
@@ -1138,6 +1144,7 @@ export default function BoxConversation (props) {
                                     type="number"
                                     className={styles.input}
                                     onChange={(el)=> setTelefone(el.target.value)}
+                                    id="5"
                                     />:
                                     <div>
                                         {!editTelefone ?

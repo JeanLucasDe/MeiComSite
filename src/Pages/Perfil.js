@@ -22,6 +22,7 @@ export default function Perfil () {
     const [redirect, setRecirect] = useState()
     const [usuarios, setUsuarios] = useState([])
     const [vendas, setVendas] = useState([])
+    const [loading, setLoading] = useState(true)
     const db = getFirestore(App)
     const Collec = collection(db, "MeiComSite")
     const UserCollection = collection(db, `MeiComSite/${user && user.email}/produtos`)
@@ -40,28 +41,24 @@ export default function Perfil () {
                     })
                 }
             })
+            const getUsers = async () => {
+                const dataUser = await getDocs(Collec)
+                setUsuarios((dataUser.docs.map((doc) => ({...doc.data(), id: doc.id}))))
+                const data = await getDocs(UserCollection);
+                setProdutos((data.docs.map((doc) => ({...doc.data(), id: doc.id}))))
+                const dataVendas = await getDocs(UserCollectionVendas);
+                setVendas((dataVendas.docs.map((doc) => ({...doc.data(), id: doc.id}))))
+            };
+            getUsers()
         } catch (e) {
             <button> tentar novamente </button>
         }
     },[])
 
-    const getUsers = async () => {
-        const dataUser = await getDocs(Collec)
-        setUsuarios((dataUser.docs.map((doc) => ({...doc.data(), id: doc.id}))))
-        const data = await getDocs(UserCollection);
-        setProdutos((data.docs.map((doc) => ({...doc.data(), id: doc.id}))))
-        const dataVendas = await getDocs(UserCollectionVendas);
-        setVendas((dataVendas.docs.map((doc) => ({...doc.data(), id: doc.id}))))
-    };
-    if (user) {
-        if (!state) {
-            getUsers()
-            setState(true)
-        }
-    }
-
-    const usuario = usuarios && user && usuarios.filter(dados => dados.email == user.email)
     
+    const usuario = usuarios && user && usuarios.filter(dados => dados.email == user.email)
+
+    console.log(user)
     
     const pegaDados = () => {
         let produtosSalvos = new Array()
@@ -87,6 +84,7 @@ export default function Perfil () {
             setVerfica(true)
         } 
     }
+    
 
 
     return (
@@ -117,9 +115,13 @@ export default function Perfil () {
                     }
                 </div>
                 :
-                <div>
-                    <Loading/>
-                </div>
+                <div className={styles.cont_empty}>
+                        <img src='https://img.freepik.com/free-vector/user-verification-unauthorized-access-prevention-private-account-authentication-cyber-security-people-entering-login-password-safety-measures_335657-8.jpg?size=626&ext=jpg&ga=GA1.2.995514839.1678974862&semt=ais' className={styles.logo}/>
+                        <h4>Faça Login Para continuar</h4>
+                        <Link to="/login"
+                        className={styles.btn_continue}
+                        >Continuar</Link>
+                    </div>
                 }
                 
             <Footer/>

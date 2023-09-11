@@ -60,7 +60,7 @@ export default function FormularioEdit () {
     
     const copyToClipboard = (text) => {
         copy(text);
-        toast.success('Link copiado com sucesso!');
+        toast.success('Copiado com sucesso!');
     }
 
     const listCidades = []
@@ -229,6 +229,36 @@ export default function FormularioEdit () {
                                 </div>
                             </div>
                         </div>
+                        <div className={styles.container}>
+                            <div className={styles.cont_btn_del}>
+                                <h4>Meu ID</h4>
+                                <div className={`${styles.cont_link} `}>
+                                    <div className={`${styles.no_padding_no_margin}`}>
+                                        <div className={styles.link}>
+                                            <Link
+                                            className={styles.copy_link}
+                                            onClick={() => 
+                                                copyToClipboard(`meicomsite.netlify.app/${usuario && usuario[0].idloja}`)
+                                            }
+                                            >
+                                            <span>{usuario && usuario[0].idloja}</span>
+                                            </Link>
+                                        </div>
+                                    </div>
+                                    <div className={`${styles.no_padding_no_margin}`}>
+                                        <div className={styles.copy}>
+                                            <FaCopy
+                                            type="button"
+                                            onClick={() => 
+                                                copyToClipboard(`meicomsite.netlify.app/${usuario && usuario[0].idloja}`)
+                                            }
+                                            className={styles.icon}
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
 
 
@@ -258,7 +288,7 @@ export default function FormularioEdit () {
                                                 <button
                                                 onClick={(e)=> {
                                                     e.preventDefault()
-                                                    setAddCidade(!addCidade)
+                                                    setAddCidade(false)
                                                 }}
                                                 className={styles.btn_cancel}
                                                 >Cancelar</button>
@@ -270,7 +300,7 @@ export default function FormularioEdit () {
                                             className={styles.btn_add_cidade}
                                             onClick={(e)=> {
                                                 e.preventDefault()
-                                                setAddCidade(!addCidade)
+                                                setAddCidade(true)
                                             }}
                                             ><FaPlusCircle/> Adicionar
                                             </button>
@@ -281,6 +311,7 @@ export default function FormularioEdit () {
 
                                     <div className="col-md-6">
                                         <div>
+                                            <h5>Cidades</h5>
                                             <select
                                             onChange={(el)=> setDeleteCidade(el.target.value)}
                                             className={styles.input}
@@ -314,7 +345,7 @@ export default function FormularioEdit () {
                                 <div className="row">
                                     <div className="col-md-6">
                                         <p className={styles.p}>Bairros</p>
-                                        {!addCidade && addBairro && 
+                                        {addBairro && 
                                         <div className={styles.cont_input}>
                                             <input type="text" 
                                             placeholder="Nome do bairro"
@@ -338,7 +369,7 @@ export default function FormularioEdit () {
                                                 <button
                                                 onClick={(e)=> {
                                                     e.preventDefault()
-                                                    setAddBairro(!addBairro)
+                                                    setAddBairro(false)
                                                 }}
                                                 className={styles.btn_cancel}
                                                 >Cancelar</button>
@@ -350,13 +381,14 @@ export default function FormularioEdit () {
                                         className={styles.btn_add_cidade}
                                         onClick={(e)=> {
                                             e.preventDefault()
-                                            setAddBairro(!addBairro)
+                                            setAddBairro(true)
                                         }}
                                         ><FaPlusCircle/> Adicionar</button>
                                         }
                                     </div>
                                     <div className="col-md-6">
                                         <div >
+                                            <h5>Bairros</h5>
                                             <select onChange={(el)=> setDeleteBairro(el.target.value)}
                                             className={styles.input}
                                             key={seed}

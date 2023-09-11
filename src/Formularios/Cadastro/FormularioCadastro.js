@@ -48,12 +48,6 @@ export default function FormularioCadastro () {
     }
 
     const usuario = usuarios && user && usuarios.filter(dados => dados.email == user.email)
-
-
-    const formataHora = (hora) => {
-        var hora = moment(hora).format('HH:mm').toString()
-        return hora
-    }
     
 
     const FormataValor = (valor) => {
@@ -92,6 +86,12 @@ export default function FormularioCadastro () {
     const [novoBairro, setNovoBairro] = useState()
     const [addCidade, setAddCidade] = useState(false)
     const [addBairro, setAddBairro] = useState(false)
+
+    const geraId = () => {
+        const numeroAleatorio = Math.floor(Math.random() * 10000000);
+        return numeroAleatorio
+    }
+    const idCat = geraId()
     
     const obj = {
     nome,
@@ -105,6 +105,7 @@ export default function FormularioCadastro () {
     bairro: bairroUser,
     rua,
     cep,
+    idLoja: parseFloat(idCat),
     numero: numeroUser,
     fecha: fecha,
     listBairros,

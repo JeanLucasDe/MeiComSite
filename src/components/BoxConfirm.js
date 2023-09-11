@@ -45,6 +45,7 @@ export default function BoxConfirm (props) {
             email: user && user.email,
             mod:obj.mod,
             iduser:user && user.id,
+            idloja: obj && obj.idLoja,
             status:"Em análise",
             nome:obj.nome,
             theme: 'Wpp',

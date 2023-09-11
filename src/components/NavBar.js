@@ -37,7 +37,6 @@ return (
             <Link to="/" className={styles.logo}>MeiComSite</Link>
             <div className={styles.menu}>
             <Link to="/catalogo/alimentação">Explorar</Link>
-            <Link to="/planos">Planos e Preços</Link>
             <Link to="/page/demo" target="_blank">Demo</Link>
             <Link to="/suporte">Ajuda</Link>
             </div>
