@@ -365,7 +365,7 @@ export default function BoxConversation (props) {
     
     return (
             <>
-                {!VendaEfetuada.length > 0 ? !pedido && 
+                {usuario && usuario.admin && !VendaEfetuada.length > 0 ? !pedido && 
                 <div className={styles.container}>
                     <div>
                     <div className={`${styles.header} dropdown`}>

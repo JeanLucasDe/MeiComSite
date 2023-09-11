@@ -120,7 +120,7 @@ export default function Informations () {
             <>
             {usuario && 
             <div>
-                {usuario.length > 0 && usuario[0].mod == "Alimentação"?  
+                {usuario.length > 0 && usuario[0].admin && usuario[0].mod == "Alimentação"?  
                 <>
                     {usuario &&
                     <>
@@ -403,9 +403,10 @@ export default function Informations () {
                 
                 </>
                 :
-                <div className={styles.container_off}>
-                    <h4>Complete seu cadastro</h4>
-                    <Link to="/perfil/cadastro">Completar agora!</Link>
+                <div className={styles.cont_empty}>
+                    <img src="https://img.freepik.com/free-vector/hand-drawn-facepalm-illustration_23-2150199871.jpg?size=626&ext=jpg&ga=GA1.1.995514839.1678974862&semt=ais"/>
+                    <h4>Desculpe, você ainda não tem permissão para prosseguir</h4>
+
                 </div>
                 }
 

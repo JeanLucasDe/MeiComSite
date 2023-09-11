@@ -7,7 +7,7 @@ import "swiper/css/free-mode";
 import "swiper/css/pagination";
 import 'swiper/css/navigation';
 import { useState } from "react";
-import {FaLandmark,FaLayerGroup,FaChartPie,FaLink,FaWrench, FaPowerOff} from "react-icons/fa"
+import {FaLandmark,FaLayerGroup,FaChartPie,FaLink,FaWrench, FaPowerOff, FaCog, FaDatabase, FaClipboardList, FaStore} from "react-icons/fa"
 
 export default function NavBarUser () {
 
@@ -124,28 +124,28 @@ export default function NavBarUser () {
                         className={({ isActive, isPending }) =>
                             isPending ? styles.isPending : isActive ? styles.isActive : styles.isPending
                         }
-                        ><FaLayerGroup className={styles.icon}/> Loja
+                        ><FaStore className={styles.icon}/> Loja
                         </NavLink>
                         <NavLink
                         to="/perfil/user/online"
                         className={({ isActive, isPending }) =>
                             isPending ? styles.isPending : isActive ? styles.isActive : styles.isPending
                         }
-                        ><FaPowerOff className={styles.icon}/> Pedidos
+                        ><FaClipboardList className={styles.icon}/> Pedidos
                         </NavLink>
                         <NavLink
                         to={"/perfil/user/vendas" }
                         className={({ isActive, isPending }) =>
                             isPending ? styles.isPending : isActive ? styles.isActive : styles.isPending
                         }
-                        ><FaChartPie className={styles.icon}/> Vendas
+                        ><FaDatabase className={styles.icon}/> Vendas
                         </NavLink>
                         <NavLink
                         to="/perfil/user/config"
                         className={({ isActive, isPending }) =>
                             isPending ? styles.isPending : isActive ? styles.isActive : styles.isPending
                         }
-                        ><FaWrench className={styles.icon}/> Configurações
+                        ><FaCog className={styles.icon}/> Configurações
                         </NavLink>
                     </div>
                 

@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import Loading from "../../components/Loading"
 import moment from "moment";
 import { ToastContainer, toast } from "react-toastify";
+import { FaStore } from "react-icons/fa";
 
 export default function Exposed (props) {
    
@@ -45,18 +46,28 @@ export default function Exposed (props) {
                             if (dados.admin) {
                                 if (FormataHora(dados.abre) <= horarioAtual && horarioAtual <= FormataHora(dados.fecha)) {
                                     return (
-                                            <Link to={`/${dados.site}`}
-                                            className={styles.cont_link}
-                                            >
-                                                <li key={dados.id}>
-                                                    <div>
-                                                        <div>
-                                                            <h5>{dados.razao}</h5>
-                                                            <p>Aberto até {FormataHora(dados.fecha)}h</p>
+                                            <div className={styles.cont_link}>
+                                                <div className="row">
+                                                    <div className="col-1">
+                                                        <div className={styles.cont_icon}>
+                                                            
                                                         </div>
                                                     </div>
-                                                </li>
-                                            </Link>
+                                                    <div className="col-11">
+                                                        <Link to={`/${dados.site}`}
+                                                        >
+                                                            <li key={dados.id}>
+                                                                <div>
+                                                                    <div>
+                                                                        <h5>{dados.razao}</h5>
+                                                                        <p>Aberto até {FormataHora(dados.fecha)}h</p>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                        </Link>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         )
                                 } else {
                                     return (

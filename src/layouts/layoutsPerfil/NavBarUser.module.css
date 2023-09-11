@@ -151,6 +151,9 @@
     margin: 0em !important;
     padding: 0em !important;
 }
+.small {
+    width: 3% !important;
+}
 .cont_empty {
     height: 100vh;
     display: flex;

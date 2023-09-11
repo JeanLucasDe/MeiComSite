@@ -24,6 +24,15 @@
     width: 230px;
     height: 200px;
 }
+.cont_empty {
+    display: table;
+    margin: 3em auto;
+    text-align: center;
+}
+.cont_empty img {
+    height: 200px;
+    margin: 0em auto;
+}
 @media screen and (min-width:320px) {
     .view_desk {
         display: none ;

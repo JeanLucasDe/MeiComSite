@@ -109,7 +109,9 @@ export default function Perfil () {
                         
                         
                         <div className="col-md-10">
-                            <Outlet context={[mod, produtos, usuario, vendas, user]}/>
+                            <div className={styles.content_geral}>
+                                <Outlet context={[mod, produtos, usuario, vendas, user]}/>
+                            </div>
                         </div>
                     </div>
                     }

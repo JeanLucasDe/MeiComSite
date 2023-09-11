@@ -51,6 +51,7 @@ export default function Produtos () {
 
     return (
             <>
+                {usuario.length > 0 && usuario[0].admin &&
                 <div className={styles.container}>
                     <button
                     type="button" 
@@ -114,6 +115,7 @@ export default function Produtos () {
 
                     </ul>
                     </div>
+                }
 
                 <div className="modal fade" id="ModalAdd" tabindex="-1" aria-labelledby="exampleModalLabel">
                 <div className={`modal-dialog modal-md`}>

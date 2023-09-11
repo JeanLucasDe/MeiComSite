@@ -143,3 +143,12 @@
     display: table;
     width: auto;
 }
+.cont_empty {
+    display: table;
+    margin: 3em auto;
+    text-align: center;
+}
+.cont_empty img {
+    height: 200px;
+    margin: 0em auto;
+}

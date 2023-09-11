@@ -36,10 +36,14 @@ export default function HomeCliente () {
         setVendas((dataVendas.docs.map((doc) => ({...doc.data(), id: doc.id}))))
 
         if (cliente && cliente.length > 0) {
-            if (horarioAtual <= fechaHora && horarioAtual >= abreHora) {
-                setFuncionamento(2)
+            if (cliente[0].admin) {
+                if (horarioAtual <= fechaHora && horarioAtual >= abreHora) {
+                    setFuncionamento(2)
+                } else {
+                    setFuncionamento(3)
+                }
             } else {
-                setFuncionamento(3)
+                setFuncionamento(0)
             }
         }
 
