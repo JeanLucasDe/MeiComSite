@@ -22,7 +22,7 @@ export default function Perfil () {
     const [redirect, setRecirect] = useState()
     const [usuarios, setUsuarios] = useState([])
     const [vendas, setVendas] = useState([])
-    const [loading, setLoading] = useState(true)
+    const [loading, setLoading] = useState(false)
     const db = getFirestore(App)
     const Collec = collection(db, "MeiComSite")
     const UserCollection = collection(db, `MeiComSite/${user && user.email}/produtos`)
@@ -44,10 +44,6 @@ export default function Perfil () {
             const getUsers = async () => {
                 const dataUser = await getDocs(Collec)
                 setUsuarios((dataUser.docs.map((doc) => ({...doc.data(), id: doc.id}))))
-                const data = await getDocs(UserCollection);
-                setProdutos((data.docs.map((doc) => ({...doc.data(), id: doc.id}))))
-                const dataVendas = await getDocs(UserCollectionVendas);
-                setVendas((dataVendas.docs.map((doc) => ({...doc.data(), id: doc.id}))))
             };
             getUsers()
         } catch (e) {
@@ -58,7 +54,21 @@ export default function Perfil () {
     
     const usuario = usuarios && user && usuarios.filter(dados => dados.email == user.email)
 
-    console.log(user)
+    const getUsuarioVendas = async() => {
+        const data = await getDocs(UserCollection);
+        setProdutos((data.docs.map((doc) => ({...doc.data(), id: doc.id}))))
+        const dataVendas = await getDocs(UserCollectionVendas);
+        setVendas((dataVendas.docs.map((doc) => ({...doc.data(), id: doc.id}))))
+        setLoading(true)
+    }
+
+    if (usuario && usuario.length > 0) {
+        if (!loading) {
+            getUsuarioVendas()
+        }
+    }
+
+
     
     const pegaDados = () => {
         let produtosSalvos = new Array()
@@ -109,9 +119,7 @@ export default function Perfil () {
                         
                         
                         <div className="col-md-10">
-                            <div className={styles.content_geral}>
-                                <Outlet context={[mod, produtos, usuario, vendas, user]}/>
-                            </div>
+                            <Outlet context={[mod, produtos && produtos, usuario, vendas, user]}/>
                         </div>
                     </div>
                     }
