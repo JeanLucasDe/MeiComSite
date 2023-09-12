@@ -74,11 +74,11 @@ export default function NovoPedido () {
 
     const LimpaQtds = () => {
         produtos && produtos.map(dados => {
-            if (dados.produtos) {
+            if (dados.produtos) {''
                 dados.produtos.map(item => {
                     item.adicionais.map(sabor => {
-                        if (sabor.qtdAdicional) {
-                            sabor.qtdAdicional = 0
+                        if (sabor.qtdAdicionalValue) {
+                            sabor.qtdAdicionalValue = 0
                         }
                     })
                     item.saborComida.map(sabor => {
