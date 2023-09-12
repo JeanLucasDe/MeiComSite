@@ -4,7 +4,7 @@ import { useState } from "react"
 import App from "../../Hooks/App"
 import '@firebase/firestore';
 import { getFirestore, updateDoc, doc, deleteDoc} from "@firebase/firestore";
-import {FaEdit, FaPlusCircle} from "react-icons/fa"
+import {FaEdit, FaPauseCircle, FaPlayCircle, FaPlusCircle} from "react-icons/fa"
 import moment from 'moment/moment';
 import { toast, ToastContainer } from "react-toastify"
 import 'react-toastify/dist/ReactToastify.css';
@@ -28,6 +28,7 @@ export default function FormularioEdit () {
     var [seed, setSeed] = useState(0)
     const [deletebairro, setDeleteBairro] = useState()
     const [taxa, setTaxa] = useState()
+    const [pause, setPause] = useState()
 
 
     const [cidadeUser, setCidadeUser] = useState()
@@ -120,6 +121,20 @@ export default function FormularioEdit () {
         listBairros,
         listCidades,
         ação:ação
+    }
+
+    const PauseActives = async(state) => {
+        
+        if (state) {
+            await updateDoc(doc(db, `MeiComSite`, user && user.email), {
+                pause: false
+            });
+        } else {
+            await updateDoc(doc(db, `MeiComSite`, user && user.email), {
+                pause: true
+            });
+        }
+        window.location.reload()
     }
     
 
@@ -456,6 +471,8 @@ export default function FormularioEdit () {
                                     required
                                     placeholder="Digite Aqui"
                                     />
+
+
                                 </div>
                                 <div className="col-md-6">
                                     <label>Número *</label>
@@ -542,10 +559,19 @@ export default function FormularioEdit () {
                                             </button>
                                         </div>
                                         }
+                                        
+                                    </div>
+                                    <div className={styles.cont_check}>
+                                        <button
+                                        className={`${styles.btn_pause} ${dados.pause ? styles.btn_pause : styles.off}`}
+                                        onClick={() => {
+                                            PauseActives(dados.pause)
+                                        }}
+                                        >{dados.pause ?<span><FaPauseCircle className={styles.icon}/> Pausar Atividades</span>: <span><FaPlayCircle className={styles.icon}/> Retomar Atividades</span>}</button>
                                     </div>
                                 </div>
                             <div className={styles.cont_save}>
-                                {cidadeUser || bairroUser || numeroUser || rua || cep || modalidade || abre || fecha ?
+                                {cidadeUser || bairroUser || numeroUser || rua || cep || modalidade || abre || fecha || pause || !pause ?
                                     <button
                                     type="button"
                                     data-bs-toggle="modal"

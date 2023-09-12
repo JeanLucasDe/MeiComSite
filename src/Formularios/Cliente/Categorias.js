@@ -36,6 +36,7 @@ export default function Informations () {
             destaque:destaque ? destaque : false,
             text:text ? text : '',
             produtos: [],
+            adicionais: [],
             id:idCat
         });
         window.location.reload()
@@ -148,6 +149,7 @@ export default function Informations () {
                     <div>
                         <h4 className={styles.title}>Categorias</h4>
                     </div>
+                    <div className="line"/>
                     <ul className={styles.list_produtos}>
                         {produtos.length > 0 ? produtos.map(dados => {
                             //Modo Real

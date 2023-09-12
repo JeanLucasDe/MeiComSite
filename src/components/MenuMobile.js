@@ -60,7 +60,7 @@ export default function MenuMobile (props) {
                 data-bs-dismiss={props.data_bs_dismiss}
                 aria-label={props.aria_label}
                 className={styles.mod}
-                >Loja</li></Link>
+                >Pedidos</li></Link>
 
                 
                 <Link to="/perfil/user/config"><li

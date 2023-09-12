@@ -45,6 +45,8 @@ export default function NovoPedido () {
     const [pagamento, setPagamento] = useState()
     const [mesa, setMesa] = useState()
     const [escolhaProduto, SetEscolhaProduto] = useState()
+
+    const [saborAdicional, setsaborAdicional] = useState('')
     
     if (!id) {
         setId(idGerado)
@@ -63,7 +65,11 @@ export default function NovoPedido () {
     const FiltroBuscaItem = listaProdutos.length > 0 && listaProdutos.filter(dados => dados.nome == escolhaProduto)
 
     const FiltroBuscaSabor = produto.saborComida && produto.saborComida.filter(dados => dados.sabor.toLowerCase().includes(sabor.toLowerCase()))
+
+    const FiltroBuscaSaborAdicional = produto.adicionais && produto.adicionais.filter(dados => dados.saborAdicional.toLowerCase().includes(saborAdicional.toLowerCase()))
     
+
+    console.log(FiltroBuscaSaborAdicional)
     const LimpaQtds = () => {
         produtos && produtos.map(dados => {
             if (dados.produtos) {
@@ -212,6 +218,11 @@ export default function NovoPedido () {
         <div className={styles.container}>
             <div className={styles.header}>
                 <h4>Novo Pedido #{id}</h4>
+                <button
+                className={styles.close}
+                data-bs-toggle="modal"
+                data-bs-target={`#ModalNovoPedido`}
+                >Fechar</button>
             </div>
             <div className={styles.content}>
                 <div className="row">
@@ -480,6 +491,81 @@ export default function NovoPedido () {
                                 </div>}
 
                             </div>}
+                            {produto && produto.saborComida &&
+                            <div className={styles.box_produto}>
+                                <strong>Adicionais</strong>
+                                <input type="text" onChange={(el)=> setSabor(el.target.value)}
+                                className={styles.input}
+                                placeholder="Pesquise aqui..."
+                                />
+                                <ul className={styles.list} key={seed}>
+                                    {FiltroBuscaSaborAdicional && FiltroBuscaSaborAdicional.map(dados => {
+                                        return (
+                                            <li
+                                            key={dados.saborAdicional}
+                                            className={dados.qtd && dados.qtd > 0 && styles.select_item}
+                                            >
+                                                <div>
+                                                    <span>{dados.saborAdicional}</span>
+                                                    <div>
+                                                        <FaPlusCircle className={styles.icon}
+                                                            onClick={() => {
+                                                                if (!dados.qtd) {
+                                                                    dados.qtd = 0
+                                                                }
+                                                                setSeed(seed+=1)
+                                                                if (listaEscolha.length > 0 && listaEscolha[0].produtos && listaEscolha[0].produtos.length == produto.qtdSabores) {
+                                                                    return toast.error('Capacidade Alcançada')
+                                                                } 
+                                                                dados.qtd  += 1
+                                                                AddSabor(dados.sabor, dados.qtd)
+                                                            }}
+                                                            type="button"
+                                                        />
+                                                        <FaMinusCircle className={styles.icon}
+                                                            onClick={() => {
+                                                                if (dados.qtd == 0) return
+                                                                dados.qtd -= 1
+                                                                setSeed(seed+=1)
+                                                                DeleteSabor(dados.sabor, dados.qtd)
+                                                            }}
+                                                            type="button"
+                                                        />
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    {!dados.qtd ? 0 : dados.qtd}
+                                                </div>
+                                            </li>
+                                            )
+                                    })}
+                                </ul>
+                                {listaEscolha[0].produtos && listaEscolha[0].produtos.length == produto.qtdSabores && 
+                                <div>
+                                    <button
+                                    className={`${styles.btn_add}`}
+                                    onClick={AddPedido}
+                                    >Confirmar</button>
+                                    <button
+                                    className={`${styles.btn_cancel}`}
+                                    onClick={ResetaPedido}
+                                    >Cancelar</button>
+                                </div>}
+
+                            </div>}
+
+
+
+
+
+
+
+
+
+
+
+
+
                         </div>
                     </div>
                 </div>

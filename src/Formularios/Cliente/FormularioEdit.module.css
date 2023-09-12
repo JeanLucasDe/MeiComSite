@@ -178,6 +178,29 @@
         padding: 0.5em;
         margin-right: 1em;
     }
+    .cont_check {
+        margin: 2em 0em;
+        display: flex;
+    }
+    .input_check {
+        width: 20px;
+        height: 20px;
+        margin: 0.5em;
+    }
+    .btn_pause {
+        padding: 0.6em;
+        border: none;
+        background-color: #FF9100;
+        color: #fff;
+        border-radius: 7px;
+    }
+    .off {
+        background-color: #000;
+        color: #fff;
+    }
+    .icon {
+        margin-right: 0.6em;
+    }
     .save {
         background-color: #ff9100 !important;
         color: #fff !important;

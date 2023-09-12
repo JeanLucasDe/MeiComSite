@@ -23,7 +23,7 @@ export default function BoxConversation (props) {
         listIds.push(dados.iden)
     })
     const geraId = () => {
-        const numeroAleatorio = Math.floor(Math.random() * 1000000000);
+        const numeroAleatorio = Math.floor(Math.random() * 100000);
         return numeroAleatorio
     }
     const id = geraId()

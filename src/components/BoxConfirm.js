@@ -140,12 +140,10 @@ export default function BoxConfirm (props) {
         let index = obj.lista && obj.dados && obj.lista.findIndex(prop=> prop.nome == obj.dados.nome)
         obj.lista && obj.lista.splice(index, 1)
 
-        
         await updateDoc(doc(db, `MeiComSite/${user && user.email}/produtos`, obj.id), {
             produtos: obj.lista && obj.lista
         });
         window.location.reload()
-    
     
     }
     const DeletarCategoria = async() => {
@@ -431,11 +429,7 @@ export default function BoxConfirm (props) {
                 data-bs-toggle={props.data_bs_toggle} 
                 data-bs-target={props.data_bs_target}
                 onClick={()=> {
-                    if (props.mod) {
-                        DeletarProduto()
-                    } else {
-                        apagaStorageProduto()
-                    }
+                    DeletarProduto()
                 }}
                 >Confirmar</button>
 

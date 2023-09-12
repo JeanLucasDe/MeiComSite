@@ -37,7 +37,7 @@ export default function HomeCliente () {
 
         if (cliente && cliente.length > 0) {
             if (cliente[0].admin) {
-                if (horarioAtual <= fechaHora && horarioAtual >= abreHora) {
+                if (horarioAtual <= fechaHora && horarioAtual >= abreHora && !pause) {
                     setFuncionamento(2)
                 } else {
                     setFuncionamento(3)
@@ -55,7 +55,7 @@ export default function HomeCliente () {
     }
 
 
-    const {abre, fecha} =  cliente.length > 0 && cliente[0]
+    const {abre, fecha, pause} =  cliente.length > 0 && cliente[0]
     const FormataHora = (hora) => {
         let date = hora.split(':')
 
@@ -69,7 +69,6 @@ export default function HomeCliente () {
 
 
 
-    
 
     return (
         <>

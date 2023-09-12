@@ -12,7 +12,15 @@
     border-bottom: 1px solid #000;
 }
 .header h4{
-    margin-bottom: 2em;
+    margin-bottom: 1em;
+}
+.close {
+    margin-bottom: 1em;
+    background-color: #b40000;
+    color: #fff;
+    padding: 0.5em;
+    border-radius: 5px;
+    border: none;
 }
 .btn_entrega {
     background-color: #fd9d30;

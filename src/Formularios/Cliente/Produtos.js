@@ -49,6 +49,7 @@ export default function Produtos () {
 
 
 
+
     return (
             <>
                 {usuario.length > 0 && usuario[0].admin &&
@@ -59,6 +60,7 @@ export default function Produtos () {
                     data-bs-target={`#ModalAdd`}
                     ><FaPlusCircle/> Novo produto</button>
                     <h3 className={styles.title}>{categoriaa}</h3>
+                    <div className="line"/>
                     <ul className={styles.list}>
                         {produtos &&produtos.length > 0 && produtos.map(dados => {
                             if (dados.produtos) {
