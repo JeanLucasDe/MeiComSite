@@ -93,7 +93,7 @@ export default function DetalhesVenda (props) {
                                         })}
                                     </p>
                                     {dados.adicionais && <p className={styles.p_sabor}>
-                                        <span>Ingredientes: </span>
+                                        <span>Adicionais: </span>
                                         {dados.adicionais && dados.adicionais.map(item => {
                                             return (
                                                 <strong>{item.sabor},</strong>

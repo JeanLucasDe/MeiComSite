@@ -506,7 +506,7 @@ export default function BoxConversation (props) {
                                                                     </div>
                                                                     )
                                                             })}
-                                                            {saboresEscolhidos.length > 0 &&
+                                                            {item.qtdSabores == saboresEscolhidos.length && saboresEscolhidos.length > 0 &&
                                                             <div>
                                                                 <h5 className={styles.title_adicionais}>Adicionais</h5>
                                                                 {item.adicionais && item.adicionais.map(sabor => {

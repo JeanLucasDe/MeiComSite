@@ -27,6 +27,8 @@ export default function HomeCliente () {
 
 
     
+    const {abre, fecha, pause} =  cliente.length > 0 && cliente[0]
+
     const getUsers = async () => {
         const data = await getDocs(UserCollection);
         setClientes((data.docs.map((doc) => ({...doc.data(), id: doc.id}))))
@@ -37,9 +39,9 @@ export default function HomeCliente () {
 
         if (cliente && cliente.length > 0) {
             if (cliente[0].admin) {
-                if (horarioAtual <= fechaHora && horarioAtual >= abreHora && !pause) {
+                if (horarioAtual <= fechaHora && horarioAtual >= abreHora && pause) {
                     setFuncionamento(2)
-                } else {
+                } else if (!pause){
                     setFuncionamento(3)
                 }
             } else {
@@ -54,8 +56,6 @@ export default function HomeCliente () {
         getUsers()
     }
 
-
-    const {abre, fecha, pause} =  cliente.length > 0 && cliente[0]
     const FormataHora = (hora) => {
         let date = hora.split(':')
 

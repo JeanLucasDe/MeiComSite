@@ -47,7 +47,10 @@ export default function NovoPedido () {
     const [escolhaProduto, SetEscolhaProduto] = useState()
 
     const [saborAdicional, setsaborAdicional] = useState('')
-    
+
+
+
+
     if (!id) {
         setId(idGerado)
     }
@@ -69,11 +72,15 @@ export default function NovoPedido () {
     const FiltroBuscaSaborAdicional = produto.adicionais && produto.adicionais.filter(dados => dados.saborAdicional.toLowerCase().includes(saborAdicional.toLowerCase()))
     
 
-    console.log(FiltroBuscaSaborAdicional)
     const LimpaQtds = () => {
         produtos && produtos.map(dados => {
             if (dados.produtos) {
                 dados.produtos.map(item => {
+                    item.adicionais.map(sabor => {
+                        if (sabor.qtdAdicional) {
+                            sabor.qtdAdicional = 0
+                        }
+                    })
                     item.saborComida.map(sabor => {
                         if (sabor.qtd) {
                             sabor.qtd = 0
@@ -84,6 +91,19 @@ export default function NovoPedido () {
         })
     }
 
+    const PegaPreçoProduto = () => {
+        let preço = produto.nome && listaEscolha.length > 0 && listaEscolha[0].valor
+        let listPreçosAdicionais = []
+        if (listaEscolha.length > 0 && listaEscolha[0].adicionais) {
+            listaEscolha[0].adicionais.map(item => {
+                listPreçosAdicionais.push({preço: item.PreçoAdicional, qtd:item.qtdAdicional})
+            })
+        }
+        var somaAdicional = listPreçosAdicionais.reduce((soma, i) => {return soma + i.preço * i.qtd}, preço)
+        return somaAdicional
+    }
+
+    var sub_Total = PegaPreçoProduto()
 
     const AddProduto = () => {
         let produto = listaProdutos.length > 0 && listaProdutos.filter(dados => dados.nome == escolhaProduto)
@@ -93,6 +113,7 @@ export default function NovoPedido () {
     }
 
     const AddPedido = () => {
+        listaEscolha[0].valor = sub_Total
         setListaPedido([...listaPedido, listaEscolha[0]])
         setproduto({})
         setListaEscolha([])
@@ -111,23 +132,43 @@ export default function NovoPedido () {
     
 
 
-    const AddSabor = (sabor, qtd) => {
+    
+    const AddSabor = (sabor, preço, qtd, mod) => {
         let index = listaEscolha && listaEscolha.findIndex(dados => dados.categoria == produto.nome)
         
-        if (!listaEscolha[index].produtos) {
-            return listaEscolha[index].produtos = [{sabor, qtd}]
-        }
-        if (listaEscolha[index].produtos.length < produto.qtdSabores) {
-            listaEscolha[index].produtos = [...listaEscolha[index].produtos, {sabor, qtd}]
-        } else {
-            toast.error('Capacidade Alcançada')
-        }
-    }
-    const DeleteSabor = (sabor, qtd) => {
-        const index = listaEscolha && listaEscolha[0].produtos.findIndex(dados => dados.sabor == sabor)
-        listaEscolha[0].produtos.splice(index, 1)
-    }
 
+
+        if (mod == 'adicional') {
+            if (!listaEscolha[index].adicionais) {
+                return listaEscolha[index].adicionais = [{saborAdicional:sabor, qtdAdicional:qtd, PreçoAdicional: preço}]
+            }
+            else {
+                return listaEscolha[index].adicionais = [...listaEscolha[index].adicionais, {saborAdicional:sabor, qtdAdicional:qtd, PreçoAdicional: preço}]
+            }
+
+        } else if (!mod){
+            
+            if (!listaEscolha[index].produtos) {
+                return listaEscolha[index].produtos = [{sabor, qtd}]
+            }
+            if (listaEscolha[index].produtos.length < produto.qtdSabores) {
+                listaEscolha[index].produtos = [...listaEscolha[index].produtos, {sabor, qtd}]
+            } else {
+                toast.error('Capacidade Alcançada')
+            }
+        }
+        
+    }
+    
+    const DeleteSabor = (sabor, qtd, preço, mod) => {
+        if (mod == 'adicional') {
+            let index = listaEscolha && listaEscolha[0].adicionais.findIndex(dados => dados.sabor == sabor)
+            listaEscolha[0].adicionais.splice(index, 1)
+        }else if (!mod) {
+            let indexprod = listaEscolha && listaEscolha[0].produtos.findIndex(dados => dados.sabor == sabor)
+            listaEscolha[0].produtos.splice(indexprod, 1)
+        }
+    }
     const PegaTaxa = () => {
         var bairroS = bairro && bairro.toString().split('-')
         const index =  usuario && bairroS && usuario[0].listBairros.filter(dados => dados.local == bairroS[0].trim())
@@ -368,19 +409,25 @@ export default function NovoPedido () {
                                             {listaPedido && listaPedido.map(dados => {
                                             return (
                                                 <li>
-                                                    
                                                     <strong><FaTrash
                                                     type="button"
                                                     onClick={()=> removeCompra(dados.categoria)}
                                                     /> {dados.categoria} - {FormataValor(dados.valor)}</strong>
                                                     <div>
-                                                        <ul className={styles.list_pedido}>
-                                                            {dados.produtos.map(item => {
+                                                        <span className={styles.strong}>Sabor:</span>
+                                                        {dados.produtos.map(item => {
+                                                            return (
+                                                                <span> {item.sabor}, </span>
+                                                                )
+                                                        })}
+                                                        <div>
+                                                            <span className={styles.strong}>Adicionais:</span>
+                                                            {dados.adicionais.map(item => {
                                                                 return (
-                                                                    <li> - {item.sabor}</li>
+                                                                    <span> {item.saborAdicional}, </span>
                                                                     )
                                                             })}
-                                                        </ul>
+                                                        </div>
                                                     </div>
                                                 </li>
                                                 )  
@@ -396,10 +443,8 @@ export default function NovoPedido () {
                         </div>
                         }
                         <div>
-                            
                             {produto.length > 0 && sabor && <button className={styles.show_compras}>Ver Compras</button>}
-                            
-                            <div className={styles.box_produto}>
+                            <div className={styles.box_produto}>    
                                 <strong>Produto</strong>
                                 <input type="text" list="produtos" onChange={(el)=> SetEscolhaProduto(el.target.value)}
                                 className={styles.input}
@@ -419,11 +464,14 @@ export default function NovoPedido () {
                                         )
                                         })}
                                 </datalist>
-                                {!selectProd && escolhaProduto && FiltroBuscaItem.length > 0 && <button
+                                {escolhaProduto && FiltroBuscaItem.length > 0 && <button
                                 className={`${styles.btn_add}`}
                                 onClick={AddProduto}
                                 >Adicionar</button>}
                             </div>
+
+
+
 
 
 
@@ -441,10 +489,11 @@ export default function NovoPedido () {
                                         return (
                                             <li
                                             key={dados.sabor}
-                                            className={dados.qtd && dados.qtd > 0 && styles.select_item}
+                                            className={dados.qtd && dados.qtd > 0 ? styles.select_item: styles.item}
                                             >
-                                                <div>
-                                                    <span>{dados.sabor}</span>
+                                                <div className={styles.padding}>
+                                                    <p className={styles.sabor}>{dados.sabor}</p>
+                                                    <p>{FormataValor(produto && produto.preço)}</p>
                                                     <div>
                                                         <FaPlusCircle className={styles.icon}
                                                             onClick={() => {
@@ -472,103 +521,85 @@ export default function NovoPedido () {
                                                     </div>
                                                 </div>
                                                 <div>
-                                                    {!dados.qtd ? 0 : dados.qtd}
+                                                    <p className={styles.qtd}>{!dados.qtd ? 0 : dados.qtd}</p>
                                                 </div>
                                             </li>
                                             )
                                     })}
                                 </ul>
-                                {listaEscolha[0].produtos && listaEscolha[0].produtos.length == produto.qtdSabores && 
-                                <div>
-                                    <button
-                                    className={`${styles.btn_add}`}
-                                    onClick={AddPedido}
-                                    >Confirmar</button>
-                                    <button
-                                    className={`${styles.btn_cancel}`}
-                                    onClick={ResetaPedido}
-                                    >Cancelar</button>
-                                </div>}
 
                             </div>}
-                            {produto && produto.saborComida &&
+
+
+                            {produto && produto.adicionais &&
                             <div className={styles.box_produto}>
                                 <strong>Adicionais</strong>
-                                <input type="text" onChange={(el)=> setSabor(el.target.value)}
+                                <input type="text" onChange={(el)=> setsaborAdicional(el.target.value)}
                                 className={styles.input}
                                 placeholder="Pesquise aqui..."
                                 />
-                                <ul className={styles.list} key={seed}>
+                                <ul className={` ${styles.list}`} key={seed}>
                                     {FiltroBuscaSaborAdicional && FiltroBuscaSaborAdicional.map(dados => {
                                         return (
                                             <li
                                             key={dados.saborAdicional}
-                                            className={dados.qtd && dados.qtd > 0 && styles.select_item}
+                                            className={dados.qtdAdicional && dados.qtdAdicional > 0 ? styles.select_item : styles.item}
                                             >
-                                                <div>
-                                                    <span>{dados.saborAdicional}</span>
+                                                <div className={styles.padding}>
+                                                    <p className={styles.sabor}>{dados.saborAdicional}</p>
+                                                    <p>{FormataValor(dados.PreçoAdicional)}</p>
                                                     <div>
                                                         <FaPlusCircle className={styles.icon}
                                                             onClick={() => {
-                                                                if (!dados.qtd) {
-                                                                    dados.qtd = 0
+                                                                if (!dados.qtdAdicionalValue) {
+                                                                    dados.qtdAdicionalValue = 0
                                                                 }
+                                                                dados.qtdAdicionalValue += 1
+                                                                dados.qtdAdicional=1
                                                                 setSeed(seed+=1)
-                                                                if (listaEscolha.length > 0 && listaEscolha[0].produtos && listaEscolha[0].produtos.length == produto.qtdSabores) {
-                                                                    return toast.error('Capacidade Alcançada')
-                                                                } 
-                                                                dados.qtd  += 1
-                                                                AddSabor(dados.sabor, dados.qtd)
+                                                                AddSabor(dados.saborAdicional, dados.PreçoAdicional,dados.qtdAdicional, 'adicional')
                                                             }}
                                                             type="button"
                                                         />
                                                         <FaMinusCircle className={styles.icon}
                                                             onClick={() => {
-                                                                if (dados.qtd == 0) return
-                                                                dados.qtd -= 1
+                                                                if (dados.qtdAdicionalValue == 0) return
+                                                                dados.qtdAdicionalValue -= 1
                                                                 setSeed(seed+=1)
-                                                                DeleteSabor(dados.sabor, dados.qtd)
+                                                                DeleteSabor(dados.saborAdicional, dados.PreçoAdicional,dados.qtdAdicional, 'adicional')
                                                             }}
                                                             type="button"
                                                         />
                                                     </div>
                                                 </div>
                                                 <div>
-                                                    {!dados.qtd ? 0 : dados.qtd}
+                                                    <p className={styles.qtd}>{!dados.qtdAdicionalValue ? 0 : dados.qtdAdicionalValue}</p>
                                                 </div>
                                             </li>
                                             )
                                     })}
                                 </ul>
-                                {listaEscolha[0].produtos && listaEscolha[0].produtos.length == produto.qtdSabores && 
-                                <div>
-                                    <button
-                                    className={`${styles.btn_add}`}
-                                    onClick={AddPedido}
-                                    >Confirmar</button>
-                                    <button
-                                    className={`${styles.btn_cancel}`}
-                                    onClick={ResetaPedido}
-                                    >Cancelar</button>
-                                </div>}
 
                             </div>}
-
-
-
-
-
-
-
-
-
-
-
-
-
+                            <h5 className={styles.sub_total}>Sub_Total: {!sub_Total ? FormataValor(0): FormataValor(sub_Total)} </h5>
+                            <div>
+                                {produto && listaEscolha.length > 0 && listaEscolha[0].produtos && listaEscolha[0].produtos.length == produto.qtdSabores &&
+                                <div className={styles.cont_confirm}>
+                                    <button
+                                    className={`${styles.btn_cancel} ${styles.btn}`}
+                                    onClick={ResetaPedido}
+                                    >Cancelar</button>
+                                    <button
+                                    className={`${styles.btn_add} ${styles.btn}`}
+                                    onClick={AddPedido}
+                                    >Confirmar</button>
+                                </div>
+                                }
+                            </div>
                         </div>
                     </div>
                 </div>
+
                 {entrega == 2 && nome && mesa &&
                 listaPedido.length > 0 &&
 

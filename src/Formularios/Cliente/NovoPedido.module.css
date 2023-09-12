@@ -61,7 +61,18 @@
 }
 .box_produto {
     margin: 1em 0em;
-    padding: 0.7em 0.4em;
+    border-radius: 10px;
+    padding: 0.7em;
+}
+.box_produto:first-child {
+    margin-bottom: 3em;
+}
+.box_produto:not(:first-child) {
+    box-shadow: 1px 1px 4px #919191;
+    background-color: #fff;
+}
+.sub_total {
+    margin-top: 3em;
 }
 .datalist {
     width: 100%;
@@ -99,6 +110,11 @@
     list-style-type: none;
     padding: 0em;
 }
+.list_pedido li {
+    margin-bottom: 1em;
+    border-bottom: 1px solid #000;
+    padding-bottom: 0.5em;
+}
 .icon {
     margin-right: 1.5em;
 }
@@ -117,7 +133,37 @@
     background-color: #ff9c2a;
     border: none;
     color: #fff;
+    border-radius: 10px;
 }
 .total {
     text-align: right;
+}
+.sub_total {
+    display: block;
+}
+.sabor {
+    text-transform: capitalize;
+    margin-bottom: 0em;
+    font-weight: 600;
+}
+.item {
+    background-color: #e4e4e4;
+    padding: 0.5em;
+    border-radius: 10px;
+}
+.padding {
+    padding: 0.5em;
+}
+.qtd {
+    margin-right: 1em;
+}
+.cont_confirm {
+    margin: 2em 0em;
+}
+.btn {
+    border-radius: 7px;
+    margin-left: 1em;
+}
+.strong {
+    font-weight: 600;
 }
