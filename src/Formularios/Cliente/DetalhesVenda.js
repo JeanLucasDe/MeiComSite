@@ -36,7 +36,7 @@ export default function DetalhesVenda (props) {
             data-bs-target={props.data_bs_target}
             />
                 <div className={styles.header}>
-                    <h4>Venda: #  {obj &&  obj.iden}</h4>
+                    <h4>Pedido: #  {obj &&  obj.iden}</h4>
                     <div className={styles.cont_date}>
                         <span className={styles.date}>Data: {obj &&  obj.data}</span>
                         <span className={styles.date}>Hora: {obj &&  obj.hora}</span>

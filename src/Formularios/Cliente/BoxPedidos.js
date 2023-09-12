@@ -388,7 +388,7 @@ export default function BoxPedidos (props) {
                                                 AceitarPedidoEntrega(dados)
                                                 setCounte(count + 1)
                                             }}
-                                            >Aceitar Pedido</button>
+                                            >Pronto</button>
                                             <button className={styles.del}
                                             onClick={() => {
                                                 DeletarPedido(dados)

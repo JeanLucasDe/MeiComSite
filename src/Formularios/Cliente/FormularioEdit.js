@@ -253,7 +253,7 @@ export default function FormularioEdit () {
                                             <Link
                                             className={styles.copy_link}
                                             onClick={() => 
-                                                copyToClipboard(`meicomsite.netlify.app/${usuario && usuario[0].idloja}`)
+                                                copyToClipboard(`${usuario && usuario[0].idloja}`)
                                             }
                                             >
                                             <span>{usuario && usuario[0].idloja}</span>
@@ -265,7 +265,7 @@ export default function FormularioEdit () {
                                             <FaCopy
                                             type="button"
                                             onClick={() => 
-                                                copyToClipboard(`meicomsite.netlify.app/${usuario && usuario[0].idloja}`)
+                                                copyToClipboard(`${usuario && usuario[0].idloja}`)
                                             }
                                             className={styles.icon}
                                             />
