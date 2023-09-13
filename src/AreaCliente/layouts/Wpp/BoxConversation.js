@@ -142,7 +142,7 @@ export default function BoxConversation (props) {
             const index = saboresEscolhidosAdicional.findIndex(dados => dados.sabor == sabor)
 
             if (index < 0) {
-                setsaboresEscolhidosAdicional([...saboresEscolhidosAdicional, {sabor, preço, qtd:1}])
+                setsaboresEscolhidosAdicional([...saboresEscolhidosAdicional, {saborAdicional:sabor, PreçoAdicional:preço, qtd:1}])
                 indexThree[0].qtd = 1
             } else {
                 saboresEscolhidosAdicional[index].qtd += 1
@@ -255,9 +255,9 @@ export default function BoxConversation (props) {
     const PegaPreçoProduto = () => {
         let listPreçosAdicionais = []
         saboresEscolhidosAdicional.map(item => {
-            listPreçosAdicionais.push({preço: item.preço, qtd:item.qtd})
+            listPreçosAdicionais.push({PreçoAdicional: item.PreçoAdicional, qtd:item.qtd})
         })
-        var somaAdicional = listPreçosAdicionais.reduce((soma, i) => {return soma + i.qtd * i.preço}, valor)
+        var somaAdicional = listPreçosAdicionais.reduce((soma, i) => {return soma + i.qtd * i.PreçoAdicional}, valor)
         return somaAdicional 
          
     }
@@ -326,6 +326,10 @@ export default function BoxConversation (props) {
         }, 3000);
     };
     
+
+    console.log(ListaEscolha)
+
+
     const VerificaState = () => {
         var VendaEfetuada = Compra.length > 0 && vendas && vendas.filter(dados => dados.iden == Compra[0].id)
         if (VendaEfetuada.length > 0) {
@@ -643,7 +647,7 @@ export default function BoxConversation (props) {
                                                                                     <span>Adicionais: </span>
                                                                                     {item.adicionais.map(sabor => {
                                                                                         return (
-                                                                                            <strong>{sabor.sabor},</strong>
+                                                                                            <strong>{sabor.saborAdicional},</strong>
                                                                                             )
                                                                                     })}
                                                                                 </p>}
@@ -1305,6 +1309,7 @@ export default function BoxConversation (props) {
                                         if (next > 16) return 
                                         setNext(1)
                                         ResetaEscolha()
+                                        setEscolheSalvar(false)
                                     }}
                                     >Cancelar</button>}
                                     {next == 16 && 
