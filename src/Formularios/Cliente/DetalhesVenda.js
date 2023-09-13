@@ -36,7 +36,10 @@ export default function DetalhesVenda (props) {
             data-bs-target={props.data_bs_target}
             />
                 <div className={styles.header}>
-                    <h4>Pedido: #  {obj &&  obj.iden}</h4>
+                    <div>
+                        <h4>Pedido: #  {obj &&  obj.iden}</h4>
+                        {obj && obj.identrega && obj.state == 4 && <h5>ID Entrega: {obj &&  obj.identrega}</h5>}
+                    </div>
                     <div className={styles.cont_date}>
                         <span className={styles.date}>Data: {obj &&  obj.data}</span>
                         <span className={styles.date}>Hora: {obj &&  obj.hora}</span>
@@ -77,7 +80,7 @@ export default function DetalhesVenda (props) {
                     </div>
                 </div>
                 <div className={styles.line}/>
-                <div>
+                <div className={styles.cont_detalhes}>
                     <h5>Detalhes</h5>   
                     <ul className={styles.list_main}>
                     {obj && obj.produtos && obj.produtos.map(dados => {

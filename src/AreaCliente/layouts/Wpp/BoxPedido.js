@@ -95,7 +95,8 @@ export default function BoxPedido (props) {
                 {comprador && comprador.map(dados => {
                         return (
                                 <div className="row">
-                                    <h2 className={styles.m_bottom}>Pedido # {dados.iden}</h2>
+                                    <h3 className={styles.m_bottom}>Pedido # {dados.iden}</h3>
+                                    {dados.identrega && <h5 className={styles.m_bottom}>ID Entrega: {dados.identrega}</h5>}
                                     <div className={styles.line}/>
                                     <div className="col-sm-6">
                                         <p>Nome: <strong>{dados.nome}</strong></p>

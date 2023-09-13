@@ -14,8 +14,9 @@
 }
 .input {
     border: none;
-    margin-bottom: 1em;
+    margin: 1em 0em;
     border-bottom: 1px solid #000;
+    width: 100%;
 }
 .btn_busca {
     background-color: #FF9100;
@@ -42,6 +43,11 @@
 .t_center {
     width: 90%;
     margin: 1.4em auto;
+    text-align: center;
+}
+.box_confirm {
+    padding: 1em;
+    border-radius: 7px;
     text-align: center;
 }
 @media screen and (min-width:320px) {

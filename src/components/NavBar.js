@@ -3,6 +3,7 @@ import styles from "./NavBar.module.css"
 import {FaBars, FaHome} from "react-icons/fa"
 import MenuMobile from "./MenuMobile"
 import ButtonLogin from "./ButtonLogin"
+import logo from "../imagens/logo.png"
 
 import { useEffect, useState } from "react"
 import firebase from 'firebase/compat/app';
@@ -34,7 +35,7 @@ return (
     <div className={styles.container}>
         
         <div className={styles.content}>
-            <Link to="/" className={styles.logo}>MeiComSite</Link>
+            <Link to="/" className={styles.logo_content}><img src={logo} className={styles.logo}/> <span className={styles.f_serif}>eiComSite</span></Link>
             <div className={styles.menu}>
             <Link to="/catalogo/alimentação">Explorar</Link>
             <Link to="/page/demo" target="_blank">Demo</Link>

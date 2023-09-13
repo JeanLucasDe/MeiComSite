@@ -15,6 +15,7 @@ export default function EntregaPedido() {
     const [usuarios, setUsuarios] = useState([])
     const [vendas, setVendas] = useState([])
     const [lista, setLista] = useState(false)
+    const [identrega, setIDentrega] = useState()
 
     const db = getFirestore(App)
     const UserCollection = collection(db, `MeiComSite`)
@@ -63,10 +64,33 @@ export default function EntregaPedido() {
 
             <button
             className={`${styles.t_center} ${styles.btn_busca}`}
-            onClick={() => FinalizarEntrega()}
+            type="button" 
+            data-bs-toggle="modal" 
+            data-bs-target="#ModalConfirmPedido"
             >
                 Finalizar Entrega
             </button>
+
+            <div className="modal fade" id="ModalConfirmPedido" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div className={`modal-dialog modal-md`}>
+                <div className="modal-content">
+                    <div className={styles.box_confirm}>
+                        <h5>Informe o número da Entrega</h5>
+                        <input type="number" onChange={(el)=> setIDentrega(el.target.value)}
+                        className={styles.input}
+                        placeholder="Digite aqui..."
+                        />
+                        {vendasEntrega.length > 0 &&
+                        vendasEntrega[0].identrega == identrega &&
+                        <button
+                        onClick={() => FinalizarEntrega()}
+                        className={`${styles.t_center} ${styles.btn_busca}`}
+                        >Finalizar Entrega</button>}
+                    </div>
+
+                </div>
+            </div>
+        </div>
         </>
         )
 }

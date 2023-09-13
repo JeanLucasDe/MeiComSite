@@ -16,11 +16,14 @@
         width: 100%;
         height: 100%;
     }
-    .logo {
+    .logo_content {
         text-decoration: none;
         font-size: 1.3em;
         color: #000;
         font-weight: 500;
+        display: flex;
+        align-items: flex-end;
+        flex-wrap: nowrap;
     }
     .menu {
     display: none;
@@ -120,6 +123,15 @@
     .email {
         font-size: 1em;
         margin-bottom: 1em !important;
+    }
+    .logo {
+        height: 35px;
+        display: block;
+        margin-right: 0.2em;
+    }
+    .f_serif {
+        font-family: 'PT Serif', serif;
+        margin-bottom: -0.2em;
     }
 }
 @media screen and (min-width:790px) {

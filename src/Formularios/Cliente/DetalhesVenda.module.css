@@ -66,3 +66,6 @@
 .list:first-child {
     padding: 1em 0em 0em 1em;
 }
+.cont_detalhes {
+    margin-top: 1em;
+}

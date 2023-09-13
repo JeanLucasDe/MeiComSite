@@ -28,6 +28,12 @@ export default function BoxConversation (props) {
     }
     const id = geraId()
 
+    const geraIdEntrega = () => {
+        const numeroAleatorio = Math.floor(Math.random() * 10000);
+        return numeroAleatorio
+    }
+    const identrega = geraIdEntrega()
+
     const [pedido, setPedido] = useState()
     const {site} = useParams()
     const [nome, setNome] = useState()
@@ -291,6 +297,7 @@ export default function BoxConversation (props) {
             lugar: 1,
             state: 1, 
             iden: id,
+            identrega,
             produtos: ListaEscolha,
             obs: obs ? obs : false
             });

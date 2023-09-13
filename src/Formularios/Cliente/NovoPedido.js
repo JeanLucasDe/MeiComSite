@@ -198,6 +198,12 @@ export default function NovoPedido () {
     const taxa = PegaTaxa()
     const Total = pegaPreco()
 
+    const geraIdEntrega = () => {
+        const numeroAleatorio = Math.floor(Math.random() * 10000);
+        return numeroAleatorio
+    }
+    const identrega = geraIdEntrega()
+
 
     const AdicionarVenda = async () => {
         await setDoc(doc(db, `MeiComSite/${usuario && usuario[0].email}/vendas`, `${id}`), {
@@ -216,6 +222,7 @@ export default function NovoPedido () {
             state: 1, 
             mesa: mesa ? parseFloat(mesa) : '',
             iden: id,
+            identrega: entrega == 1 ? identrega : false,
             lugar: entrega,
             Total,
             produtos: listaPedido,
