@@ -27,8 +27,10 @@ export default function Negocios(props) {
                         
                     }
 
-                    <Link to="/planos">
-                        <button className={styles.btn_plan}>Conheça os Planos</button>
+                    <Link to="/page/demo"
+                    target="_blank"
+                    >
+                        <button className={styles.btn_plan}>Demonstração</button>
                     </Link>
                 </div>
             </div>

@@ -15,8 +15,13 @@ margin-top: 0.7em;
 .name_template {
 text-align: right;
 font-size: 1.2em;  
-font-weight: 600; 
+font-weight: 600;
+color: #000;
+text-decoration: none !important; 
 }
 .cont_slides {
 margin-left: 1em !important;
+}
+.link {
+    text-decoration: none;
 }

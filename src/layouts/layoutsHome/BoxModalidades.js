@@ -29,7 +29,7 @@ export default function BoxModalidade () {
                             <div className={styles.container_icon}>
                                 <img src="https://img.freepik.com/fotos-gratis/maos-femininas-escrevendo-em-um-caderno-vazio_23-2148652066.jpg?w=740&t=st=1679160691~exp=1679161291~hmac=448fd27f8704642482112a9c9bff88126fa78fd4b83788fac7a49501848c1faf" className={styles.dashed}/>
                                 <div className={styles.container_title}>
-                                    <h4>Prest. Serviços - (Indisponível)</h4>
+                                    <h4>Prest. Serviços - (desenvolvimento)</h4>
                                 </div>
                             </div>
                         <div className={styles.description}>

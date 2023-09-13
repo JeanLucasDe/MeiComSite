@@ -74,7 +74,7 @@ export default function NovoPedido () {
 
     const LimpaQtds = () => {
         produtos && produtos.map(dados => {
-            if (dados.produtos) {''
+            if (dados.produtos) {
                 dados.produtos.map(item => {
                     item.adicionais.map(sabor => {
                         if (sabor.qtdAdicionalValue) {

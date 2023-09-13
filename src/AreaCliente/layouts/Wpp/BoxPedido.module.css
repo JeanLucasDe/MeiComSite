@@ -59,3 +59,6 @@ border-radius: 20px;       /* roundness of the scroll thumb */
     text-align: center;
     margin: 0em 1em;
 }
+.strong {
+    font-weight: 600;
+}

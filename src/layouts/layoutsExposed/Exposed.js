@@ -71,21 +71,28 @@ export default function Exposed (props) {
                                         )
                                 } else {
                                     return (
-                                        <Link
-                                        className={`${styles.closed} ${styles.cont_link}`}
-                                        onClick={() => {
-                                            toast.error('Esta loja está fechada no momento')
-                                        }}
-                                        >
-                                            <li key={dados.id}>
-                                                <div>
-                                                    <div>
-                                                        <h5>{dados.razao}</h5>
-                                                        <p>Fechado abre {FormataHora(dados.abre)}h</p>
+                                        <div className={`${styles.closed} ${styles.cont_link}`}>
+                                            <div className="row">
+                                                <div className="col-1">
+                                                    <div className={styles.cont_icon}>
+                                                        
                                                     </div>
                                                 </div>
-                                            </li>
-                                        </Link>
+                                                <div className="col-11">
+                                                    <Link to={`/${dados.site}`}
+                                                    >
+                                                        <li key={dados.id}>
+                                                            <div>
+                                                                <div>
+                                                                    <h5>{dados.razao}</h5>
+                                                                    <p>Aberto até {FormataHora(dados.fecha)}h</p>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                    </Link>
+                                                </div>
+                                            </div>
+                                        </div>
                                     )
                                 }
                             }

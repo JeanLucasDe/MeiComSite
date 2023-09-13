@@ -1,0 +1,27 @@
+.img {
+    height: 400px;
+    display: block;
+    margin: 0em auto;
+
+}
+.container {
+    padding: 2em 0em;
+}
+.btn {
+    border: none;
+    border-radius: 15px;
+    padding: 0.8em;
+    background-color: #FF9100;
+    color: #fff;
+    font-weight: 600;
+    text-decoration: none;  
+    margin: 0.6em;
+}
+.p_text {
+    font-size: 1.2em;
+    text-align: left;
+    font-weight: 400;
+}
+.cont_text {
+    margin: 3em 0em;
+}

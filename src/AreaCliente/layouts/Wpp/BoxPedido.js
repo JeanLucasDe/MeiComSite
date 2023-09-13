@@ -114,6 +114,11 @@ export default function BoxPedido (props) {
                                     <div className={styles.line}/>
                                     <div>
                                         <div>
+                                            {dados.produtos.map(item => {
+                                                return ( 
+                                                <p className={styles.strong}>- {item.categoria} -  {FormataValor(item.valor)}</p>
+                                                )
+                                            })}
                                             <strong className={styles.strong}>Sabor:</strong>
                                             {dados.produtos && dados.produtos[0].produtos.map(item => {
                                                 return (
@@ -130,7 +135,6 @@ export default function BoxPedido (props) {
                                                 })}
                                             </div>}
                                         </div>
-
                                     </div>
                                     <div className={styles.line}/>
                                     <div className={styles.cont_preço}>

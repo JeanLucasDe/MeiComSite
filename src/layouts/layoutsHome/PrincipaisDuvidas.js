@@ -61,7 +61,7 @@ return (
                         </div>
                         <h2>Estou com problemas.</h2>
                         <div className="line"></div>
-                        <p className={styles.resposta}>Encontre ajuda <Link to="suporte">aqui</Link>. Se mesmo assim seu problema não for solucionado, entre em contato conosco através do <a href="https://api.whatsapp.com/send?phone=71981298548&text=Olá, Quero tirar uma dúvida sobre a MeiComSite." target="_blank">whatsapp</a> ou <a href="mailto:Lucas__jean@outlook.com?subject=MeiComSite">e-mail</a>.</p>
+                        <p className={styles.resposta}>Entre em contato com nosso <Link to="/suporte">suporte</Link> que está pronto a te ajudar.</p>
                     </div>
                 </li>
                 <li className={`col-sm-6`}>

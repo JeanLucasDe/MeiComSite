@@ -145,22 +145,28 @@ export default function BoxPedido (props) {
                                     </div>
                                     <div className={styles.line}/>
                                     <div>
-                                    {dados.produtos.map(item => {
-                                        return (
-                                                <div>    
-                                                    <strong>-{item.categoria} -  {FormataValor(item.valor)}</strong>
-                                                    <table>
-                                                        {item.produtos.map(info => {
-                                                            return (
-                                                                <tr className={styles.tr}>
-                                                                    <td className={styles.td}>- {info.sabor}</td>
-                                                                </tr>
-                                                                )
-                                                        })}
-                                                    </table>
-                                                </div>
-                                            )
-                                    })}
+                                        <div>
+                                            {dados.produtos.map(item => {
+                                                return ( 
+                                                <p className={styles.strong}>- {item.categoria} -  {FormataValor(item.valor)}</p>
+                                                )
+                                            })}
+                                            <strong className={styles.strong}>Sabor:</strong>
+                                            {dados.produtos && dados.produtos[0].produtos.map(item => {
+                                                return (
+                                                    <span> {item.sabor}, </span>
+                                                    )
+                                            })}
+                                            {dados.adicionais &&
+                                            <div>
+                                                <strong className={styles.strong}>Adicionais:</strong>
+                                                {dados.adicionais && dados.produtos[0].adicionais.map(item => {
+                                                    return (
+                                                        <span> {item.saborAdicional}, </span>
+                                                        )
+                                                })}
+                                            </div>}
+                                        </div>
                                     </div>
                                     <div className={styles.line}/>
                                     <div className={styles.cont_preço}>
