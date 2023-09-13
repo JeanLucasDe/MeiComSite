@@ -55,12 +55,12 @@ export default function MenuMobile (props) {
                 className={styles.mod}
                 >Relatório</li></Link>
                 
-                <Link to="/pedidos"><li
+                <Link to="/entregas"><li
                 type={props.type}
                 data-bs-dismiss={props.data_bs_dismiss}
                 aria-label={props.aria_label}
                 className={styles.mod}
-                >Pedidos</li></Link>
+                >Entregas</li></Link>
 
                 
                 <Link to="/perfil/user/config"><li

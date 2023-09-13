@@ -63,7 +63,7 @@ export default function Box_Pedido() {
                     {vendasEntrega.length > 0 ? vendasEntrega.map(dados => {
                         return (
                             <Link
-                            to={`/pedidos/${usuario[0].idloja}/${dados.id}`}
+                            to={`/entregas/${usuario[0].idloja}/${dados.id}`}
                             className={styles.btn_busca}
                             >
                                 <p>{dados.nome}</p>

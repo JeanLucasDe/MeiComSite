@@ -72,7 +72,7 @@ export default function View_pedido () {
                         />
                         {usuario.length > 0 && 
                         <Link
-                        to={`/pedidos/${usuario[0].idloja}`}
+                        to={`/entregas/${usuario[0].idloja}`}
                         className={styles.btn_busca}
                         onClick={()=> setShowPedido(false)}
                         >Ver Pedidos</Link>}

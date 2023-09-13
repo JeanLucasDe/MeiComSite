@@ -21,7 +21,7 @@ export default function NovoPedido () {
         listIds.push(dados.iden)
     })
     const geraId = () => {
-        const numeroAleatorio = Math.floor(Math.random() * 1000000000);
+        const numeroAleatorio = Math.floor(Math.random() * 1000000);
         if (!listIds.includes(numeroAleatorio)) return numeroAleatorio
     }
     const idGerado = geraId()
@@ -149,10 +149,10 @@ export default function NovoPedido () {
         } else if (!mod){
             
             if (!listaEscolha[index].produtos) {
-                return listaEscolha[index].produtos = [{sabor, qtd}]
+                return listaEscolha[index].produtos = [{sabor, qtd: 1}]
             }
             if (listaEscolha[index].produtos.length < produto.qtdSabores) {
-                listaEscolha[index].produtos = [...listaEscolha[index].produtos, {sabor, qtd}]
+                listaEscolha[index].produtos = [...listaEscolha[index].produtos, {sabor, qtd: 1}]
             } else {
                 toast.error('Capacidade Alcançada')
             }
@@ -206,10 +206,12 @@ export default function NovoPedido () {
 
 
     const AdicionarVenda = async () => {
+
         await setDoc(doc(db, `MeiComSite/${usuario && usuario[0].email}/vendas`, `${id}`), {
-            nome, 
+            nome,
             data:moment().format('DD/MM/YYYY'),
             hora:moment().format('HH:mm') ,
+            produtos: listaPedido,
             telefone: telefone ? telefone : '', 
             cidade: cidade? cidade : '', 
             bairro: Bairro ? Bairro : '',
@@ -225,8 +227,8 @@ export default function NovoPedido () {
             identrega: entrega == 1 ? identrega : false,
             lugar: entrega,
             Total,
-            produtos: listaPedido,
             });
+
             toast.success('Venda Registrada com sucesso!')
             
             vendas.push({
@@ -429,7 +431,7 @@ export default function NovoPedido () {
                                                         })}
                                                         <div>
                                                             <span className={styles.strong}>Adicionais:</span>
-                                                            {dados.adicionais.map(item => {
+                                                            {dados.adicionais && dados.adicionais.map(item => {
                                                                 return (
                                                                     <span> {item.saborAdicional}, </span>
                                                                     )
@@ -550,7 +552,7 @@ export default function NovoPedido () {
                                         return (
                                             <li
                                             key={dados.saborAdicional}
-                                            className={dados.qtdAdicional && dados.qtdAdicional > 0 ? styles.select_item : styles.item}
+                                            className={dados.qtdAdicionalValue && dados.qtdAdicionalValue > 0 ? styles.select_item : styles.item}
                                             >
                                                 <div className={styles.padding}>
                                                     <p className={styles.sabor}>{dados.saborAdicional}</p>

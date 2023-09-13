@@ -99,7 +99,7 @@ export default function DetalhesVenda (props) {
                                         <span>Adicionais: </span>
                                         {dados.adicionais && dados.adicionais.map(item => {
                                             return (
-                                                <strong>{item.sabor},</strong>
+                                                <strong>{item.saborAdicional},</strong>
                                                 )
                                         })}
                                     </p>}

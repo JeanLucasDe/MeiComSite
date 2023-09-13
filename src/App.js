@@ -55,10 +55,10 @@ function App() {
                 <Route path="/suporte/politica" element={<Politica/>}/>
               </Route>
               
-              <Route path="/pedidos" element={<View_pedido/>}>
+              <Route path="/entregas" element={<View_pedido/>}>
                 <Route index element={<Box_idLoja/>}/>
-                <Route path='/pedidos/:loja' element={<Box_Pedido/>}/>
-                <Route path='/pedidos/:loja/:pedido' element={<EntregaPedido/>}/>
+                <Route path='/entregas/:loja' element={<Box_Pedido/>}/>
+                <Route path='/entregas/:loja/:pedido' element={<EntregaPedido/>}/>
               </Route>
 
 
