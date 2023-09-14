@@ -34,6 +34,7 @@ import View_pedido from "./Pages/View_pedido";
 import Box_Pedido from "./Pages/Box_Pedido";
 import Box_idLoja from "./Pages/Box_idLoja";
 import EntregaPedido from "./Pages/EntregaPedido";
+import Agenda from "./Formularios/Cliente/P.Serviço/Agenda";
 
 
 
@@ -72,6 +73,7 @@ function App() {
 
               <Route path="perfil" element={<Perfil/>}>
                 <Route path="/perfil/user/categorias" element={<CategoriasProdutos/>}/>
+                <Route path="/perfil/user/agenda" element={<Agenda/>}/>
                 <Route path="/perfil/user/online" element={<Online/>}/>
                 <Route path="/perfil/user/categorias/:categoriaa" element={<Produtos/>}/>
                 <Route path="/perfil/user/config" element={<FormularioEdit/>}/>

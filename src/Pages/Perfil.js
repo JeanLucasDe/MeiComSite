@@ -115,7 +115,7 @@ export default function Perfil () {
                     <div className="row">
 
                         <div className={`${styles.col} col-md-2`}>
-                            <NavBarUser/>
+                            <NavBarUser usuario={usuario && usuario[0]}/>
                         </div>
                         
                         

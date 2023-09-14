@@ -6,55 +6,12 @@ import "swiper/css";
 import "swiper/css/free-mode";
 import "swiper/css/pagination";
 import 'swiper/css/navigation';
-import { useState } from "react";
-import {FaLandmark,FaLayerGroup,FaChartPie,FaLink,FaWrench, FaPowerOff, FaCog, FaDatabase, FaClipboardList, FaStore} from "react-icons/fa"
+import {FaCog, FaDatabase, FaClipboardList, FaStore} from "react-icons/fa"
 
-export default function NavBarUser () {
+export default function NavBarUser (props) {
 
-    const [verifica, setVerfica] = useState(false)
-    const [modo, setModo] = useState()
-    
-    
-    
-    const pegaDados = () => {
-        let produtosSalvos = new Array()
-        
-        if (localStorage.hasOwnProperty(`meicomsitemodo`)) {
-            produtosSalvos = JSON.parse(localStorage.getItem(`meicomsitemodo`))
-        }
-
-        if (!produtosSalvos) {
-            produtosSalvos.push({modo:true})
-            localStorage.setItem(`meicomsitemodo`,JSON.stringify(produtosSalvos))
-        }
-
-        return produtosSalvos
-    }
-    const AlterarModo = () => {
-        let produtosSalvos = new Array()
-        
-        if (localStorage.hasOwnProperty(`meicomsitemodo`)) {
-            produtosSalvos = JSON.parse(localStorage.getItem(`meicomsitemodo`))
-        }
-        if (produtosSalvos.length == 0) {
-            produtosSalvos.push({modo:false})
-            localStorage.setItem(`meicomsitemodo`,JSON.stringify(produtosSalvos))
-        } else {
-            produtosSalvos[0].modo = modo == true ?  false : true
-            localStorage.setItem(`meicomsitemodo`,JSON.stringify(produtosSalvos))
-        }
-    }
-
-    const dados = pegaDados() 
-    const mod = dados.length > 0 ? dados[0].modo : true
-
-    if (!verifica) {
-        if (mod) {
-            setModo(mod)
-            setVerfica(true)
-        } 
-    }
-
+    const usuario = props.usuario && props.usuario
+  
 
     return (
     <>
@@ -119,6 +76,7 @@ export default function NavBarUser () {
 
                 <div className={`${styles.view_desk}`}>
                     <div className={styles.cont_links}>
+                        {usuario && usuario.mod == "Alimentação" ? 
                         <NavLink
                         to="/perfil/user/categorias"
                         className={({ isActive, isPending }) =>
@@ -126,6 +84,17 @@ export default function NavBarUser () {
                         }
                         ><FaStore className={styles.icon}/> Loja
                         </NavLink>
+                        :
+                        usuario.mod == "Agendamento" &&
+                        <NavLink
+                        to="/perfil/user/agenda"
+                        className={({ isActive, isPending }) =>
+                            isPending ? styles.isPending : isActive ? styles.isActive : styles.isPending
+                        }
+                        ><FaStore className={styles.icon}/> Agenda
+                        </NavLink>
+
+                        }
                         <NavLink
                         to="/perfil/user/online"
                         className={({ isActive, isPending }) =>

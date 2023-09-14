@@ -122,7 +122,7 @@ export default function Informations () {
             <>
             {usuario && 
             <div>
-                {usuario.length > 0 && usuario[0].admin && usuario[0].mod == "Alimentação"?  
+                {usuario.length > 0 && usuario[0].admin ?  
                 <>
                     {usuario &&
                     <>
