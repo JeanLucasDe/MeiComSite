@@ -10,6 +10,7 @@ export default function Agenda () {
     const [diasUteis, setdiasUteis] = useState()
     const [TodosDias, setTodosDias] = useState()
     const [semanas, setSemanas] = useState()
+    const [semanaObj, setSemanaObj] = useState()
     const [ok, setOk] = useState(false)
 
     
@@ -56,15 +57,30 @@ export default function Agenda () {
 
     },[])
 
+
     const SpliWeek = () => {
         if (!ok && TodosDias) {
 
             let listGeral = []
             var corte = 7
+            let obj = []
+            let objSplit = []
     
             for (var i = 0; i < TodosDias.length; i = i + corte) {
                 listGeral.push(TodosDias.slice(i, i + corte));
+
             }
+            listGeral && listGeral.map(dados => {
+                dados.map(item => {
+                    obj.push({data:item})
+                })
+            })
+            for (var i = 0; i < obj.length; i = i + corte) {
+                objSplit.push(obj.slice(i, i + corte));
+
+            }
+
+            setSemanaObj(objSplit)
             setSemanas(listGeral)
             setOk(true)
         }
@@ -74,10 +90,7 @@ export default function Agenda () {
 
 
     const dataAtual = parseFloat(moment().format('DD'))
-    
-
-    
-
+   
 
 
 
@@ -92,18 +105,40 @@ export default function Agenda () {
                     <p>Esta agenda atualizará todo sábado</p>
                     <h5>Dias Disponíveis</h5>
                     <p>Esta Semana</p>
-                    <ul>
-                        {semanas && semanas[0].map(dados => {
+                    <ul 
+                    className={styles.list_date}
+                    >
+                        {semanaObj && semanaObj.length > 0 && semanaObj[dataAtual >= 15 ? 2 : 0].map(dados => {
                             return (
-                                <li>{dados}</li>
+                                <li
+                                className={styles.date}
+                                key={dados.data}
+                                >{dados.data}</li>
                                 )
                         })}
                     </ul>
                     <p>Semana que vem</p>
-                    <ul>
-                        {semanas && semanas[1].map(dados => {
+                    <ul
+                    className={styles.list_date}
+                    >
+                        {semanaObj && semanaObj.length > 0 && semanaObj[dataAtual >= 15 ? 3 : 1].map(dados => {
                             return (
-                                <li>{dados}</li>
+                                <li
+                                className={styles.date}
+                                key={dados.data}
+                                >{dados.data}</li>
+                                )
+                        })}
+                    </ul>
+                    <ul
+                    className={styles.list_date}
+                    >
+                        {dataAtual >= 15 && semanas && semanas[4].map(dados => {
+                            return (
+                                <li
+                                className={styles.date}
+                                key={dados.data}
+                                >{dados}</li>
                                 )
                         })}
                     </ul>
