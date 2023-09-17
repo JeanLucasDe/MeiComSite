@@ -85,7 +85,10 @@ export default function Register () {
 
     const HandleSignIn = async() => {
         setShowPass(false)
-        await firebase.auth().createUserWithEmailAndPassword(email, pass).catch(()=> {
+        await firebase.auth().createUserWithEmailAndPassword(email, pass).then(()=>{
+            window.location.href = '/cadastro'
+        })
+        .catch(()=> {
             toast.error('Este email já existe!')
         })
     }
