@@ -173,8 +173,8 @@ export default function Register () {
                         <div className={styles.cont_register}>
                             <h4>Você já está cadastrado!</h4>
                             <Link
-                            to="/perfil/user/negocio"
-                            >Vá para sua página.</Link>
+                            to="/cadastro"
+                            >Complete seu cadastro.</Link>
                         </div>
                             }
                             
