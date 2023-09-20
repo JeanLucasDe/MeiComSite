@@ -12,3 +12,24 @@
     padding: 0.6em;
     border-radius: 5px;
 }
+.date p {
+    margin: 0em;
+}
+.off {
+    background-color: rgb(238, 238, 238) !important;
+}
+.on {
+    background-color: rgb(154, 255, 3);
+}
+.list_hour {
+    padding: 0.6em;
+    list-style-type: none;
+    background-color:  #fff;
+}
+.select {
+    width: 100%;
+    margin-top: 1em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

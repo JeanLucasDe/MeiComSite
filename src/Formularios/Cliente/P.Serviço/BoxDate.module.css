@@ -1,0 +1,20 @@
+.on {
+    background-color:  green;
+    color: #fff;
+}
+.off {
+    background-color: #ff5e00;
+    color: #fff;
+}
+.hour {
+    margin-bottom: 1em;
+    padding: 0.6em;
+}
+.list {
+    padding: 0em 1em;
+    list-style-type: none;
+}
+.body {
+    border: 1px solid #000;
+    margin-bottom: 1em;
+}

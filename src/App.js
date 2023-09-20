@@ -35,6 +35,7 @@ import Box_Pedido from "./Pages/Box_Pedido";
 import Box_idLoja from "./Pages/Box_idLoja";
 import EntregaPedido from "./Pages/EntregaPedido";
 import Agenda from "./Formularios/Cliente/P.Serviço/Agenda";
+import BoxDates from "./AreaCliente/layouts/Agenda/BoxDates";
 
 
 
@@ -90,6 +91,7 @@ function App() {
               <Route path="/:site" element={<HomeCliente/>}>
                 <Route index element={<MarketHome/>}/>
                 <Route path="/:site/:categoria" element={<Categorias/>}/>
+                <Route path="/:site/agenda" element={<BoxDates/>}/>
                 <Route path="/:site/compras" element={<Carrinho/>}>
                   <Route index element={<ItensSacola/>}/>
                   <Route path="/:site/compras/detalhes" element={<FormularioDetalhesComprador/>}/>

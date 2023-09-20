@@ -2,6 +2,7 @@ import { useOutletContext } from "react-router-dom"
 import styles from "./Agenda.module.css"
 import moment from "moment/moment";
 import { useEffect, useState } from "react";
+import BoxDate from "./BoxDate";
 
 export default function Agenda () {
     const [mod, produtos, usuario, vendas, user] = useOutletContext()
@@ -11,6 +12,8 @@ export default function Agenda () {
     const [TodosDias, setTodosDias] = useState()
     const [semanas, setSemanas] = useState()
     const [semanaObj, setSemanaObj] = useState()
+    const [selectDate, setSelectDate] = useState()
+    const [objDate, setObjDate] = useState()
     const [ok, setOk] = useState(false)
 
     
@@ -91,9 +94,15 @@ export default function Agenda () {
 
     const dataAtual = parseFloat(moment().format('DD'))
    
+    const list_dates = []
+
+    usuario.length > 0 && usuario[0].agenda.map(dados => {
+        list_dates.push(dados.data)
+    })
 
 
-
+    
+    const DateList = usuario.length > 0 && usuario[0].agenda.filter(dados =>  dados.data == selectDate)
 
 
     return (
@@ -110,12 +119,22 @@ export default function Agenda () {
                     >
                         {semanaObj && semanaObj.length > 0 && semanaObj[dataAtual >= 15 ? 2 : 0].map(dados => {
                             return (
-                                <li
-                                className={styles.date}
-                                key={dados.data}
-                                >{dados.data}</li>
-                                )
-                        })}
+                                    <li
+                                    type="button"
+                                    data-bs-toggle="modal" 
+                                    data-bs-target="#ModalDate"
+                                    className={`${list_dates.includes(dados.data) ? styles.on : styles.off} ${styles.date}`}
+                                    key={dados.data}
+                                    onClick={() => {
+                                        setSelectDate(dados.data)
+                                        setObjDate(dados)
+                                    }}
+                                    >
+                                        <p>{dados.data}</p>
+                                    </li>
+                                    )
+                                })
+                        }
                     </ul>
                     <p>Semana que vem</p>
                     <ul
@@ -124,9 +143,18 @@ export default function Agenda () {
                         {semanaObj && semanaObj.length > 0 && semanaObj[dataAtual >= 15 ? 3 : 1].map(dados => {
                             return (
                                 <li
-                                className={styles.date}
+                                type="button"
+                                data-bs-toggle="modal" 
+                                data-bs-target="#ModalDate"
+                                className={`${list_dates.includes(dados.data) ? styles.on : styles.off} ${styles.date}`}
                                 key={dados.data}
-                                >{dados.data}</li>
+                                onClick={() => {
+                                    setSelectDate(dados.data)
+                                    setObjDate(dados)
+                                }}
+                                >
+                                    <p>{dados.data}</p>
+                                </li>
                                 )
                         })}
                     </ul>
@@ -136,9 +164,27 @@ export default function Agenda () {
                         {dataAtual >= 15 && semanas && semanas[4].map(dados => {
                             return (
                                 <li
-                                className={styles.date}
+                                className={`${list_dates.includes(dados.data) ? styles.off : styles.on} ${styles.date}`}
                                 key={dados.data}
-                                >{dados}</li>
+                                >
+                                    <p>{dados}</p>
+                                    <div>
+                                    <p>{dados.data}</p>
+                                    {usuario.length > 0 &&usuario[0].agenda.map(data => {
+                                        if (dados.data == data.data) 
+                                        return (
+                                            <ul className={styles.list_hour}>
+                                                {data.horarios.map(item => {
+                                                    return (
+                                                        <li>{item.hora}</li>
+                                                        )
+                                                })}
+                                            </ul>
+                                            )
+                                        })
+                                        }
+                                </div>
+                                </li>
                                 )
                         })}
                     </ul>
@@ -146,6 +192,16 @@ export default function Agenda () {
             </div>
 
         }
+
+        <div className="modal fade" id="ModalDate" tabindex="-1" aria-labelledby="exampleModalLabel">
+            <div className={`modal-dialog modal-md`}>
+                <div className="modal-content">
+                    <BoxDate obj={DateList.length > 0 ?  DateList[0]: objDate}/>
+                </div>
+            </div>
+        </div>
+
+
         </>
         )
 }

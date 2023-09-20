@@ -1,0 +1,56 @@
+.container {
+    text-align: center;
+}
+.list {
+    list-style-type: none;
+    padding: 0em;
+    width: 60%;
+    background-color: #696969;
+    margin: 1em auto;
+    text-align: left;
+}
+.list_hour {
+    list-style-type: none;
+    padding: 0em;
+    text-align: left !important;
+    width: 100%;
+    display: flex;
+}
+.date {
+    background-color: #ddd;
+    width: 100%;
+}
+.on {
+    background-color: greenyellow;
+}
+.off {
+    background-color: rgb(161, 161, 161);
+}
+.body {
+    border: 1px solid #000;
+}
+.hora {
+    border: 1px solid #000;
+    padding: 0.3em;
+    border-radius: 4px;
+    margin-bottom: 1em;
+    margin-right: 1em;
+}
+.btn_confirm p, .btn_confirm h5 {
+    margin-bottom: 0em;
+}
+.box_name {
+    text-align: left;
+    width: 60%;
+    margin: 1em auto;
+}
+.btn_confirm {
+    text-align: left;
+    width: 60%;
+    border: none;
+    color: #fff;
+    padding: 1em;
+    border-radius: 20px;
+    background-color: #0e7500;
+    margin: 1em auto;
+}

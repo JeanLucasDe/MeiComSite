@@ -16,6 +16,7 @@ import 'swiper/css/pagination';
 import 'swiper/css';
 import HomeWpp from "../layouts/Wpp/HomeWpp";
 import Conversation from "../layouts/Wpp/Conversation";
+import HomeAgenda from "../layouts/Agenda/HomeAgenda";
 
 
 
@@ -271,7 +272,14 @@ export default function MarketHome () {
                     </div>
                 </div>
                 </>
-                
+            } 
+            {usuario.length > 0 && usuario[0].theme == "Agenda" &&
+                <>
+                    <HomeAgenda
+                    produtos={produtos && produtos}
+                    usuario={usuario[0] && usuario[0]}
+                    />
+                </>
             } 
 
                 

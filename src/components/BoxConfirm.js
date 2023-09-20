@@ -44,6 +44,7 @@ export default function BoxConfirm (props) {
             data: moment().format('DD/MM/YYYY'),
             email: user && user.email,
             mod:obj.mod,
+            agenda:[],
             iduser:user && user.id,
             idloja: obj && obj.idLoja,
             status:"Em análise",
