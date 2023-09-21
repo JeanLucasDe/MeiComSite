@@ -3,6 +3,7 @@ import styles from "./BoxDate.module.css"
 import { useOutletContext } from "react-router-dom"
 import App from "../../../Hooks/App"
 import { getFirestore, setDoc, doc, updateDoc} from "@firebase/firestore";
+import moment from "moment";
 
 
 export default function BoxDate (props) {
@@ -47,9 +48,9 @@ export default function BoxDate (props) {
             obj.horarios && obj.horarios.push({cliente:false, hora: hour, on: true})
             
         } else {
-            console.log(obj.data)
             usuario.length > 0 && usuario[0].agenda.push({
-                data: obj.data,
+                data: obj.data.toString() + "/" + moment().format('MM'),
+                dia: obj.data,
                 horarios: [],
                 on:true
             })

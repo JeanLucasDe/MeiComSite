@@ -97,12 +97,12 @@ export default function Agenda () {
     const list_dates = []
 
     usuario.length > 0 && usuario[0].agenda.map(dados => {
-        list_dates.push(dados.data)
+        list_dates.push(dados.dia)
     })
 
 
     
-    const DateList = usuario.length > 0 && usuario[0].agenda.filter(dados =>  dados.data == selectDate)
+    const DateList = usuario.length > 0 && usuario[0].agenda.filter(dados =>  dados.dia == selectDate)
 
 
     return (
@@ -113,7 +113,7 @@ export default function Agenda () {
                 <div>
                     <p>Esta agenda atualizará todo sábado</p>
                     <h5>Dias Disponíveis</h5>
-                    <p>Esta Semana</p>
+                    <p>Segunda Quinzena</p>
                     <ul 
                     className={styles.list_date}
                     >
@@ -123,7 +123,7 @@ export default function Agenda () {
                                     type="button"
                                     data-bs-toggle="modal" 
                                     data-bs-target="#ModalDate"
-                                    className={`${list_dates.includes(dados.data) ? styles.on : styles.off} ${styles.date}`}
+                                    className={`${list_dates.includes(dados.data) ? styles.off : styles.off} ${styles.date}`}
                                     key={dados.data}
                                     onClick={() => {
                                         setSelectDate(dados.data)
@@ -136,7 +136,6 @@ export default function Agenda () {
                                 })
                         }
                     </ul>
-                    <p>Semana que vem</p>
                     <ul
                     className={styles.list_date}
                     >
@@ -164,7 +163,7 @@ export default function Agenda () {
                         {dataAtual >= 15 && semanas && semanas[4].map(dados => {
                             return (
                                 <li
-                                className={`${list_dates.includes(dados.data) ? styles.off : styles.on} ${styles.date}`}
+                                className={`${list_dates.includes(dados.dia) ? styles.on : styles.off} ${styles.date}`}
                                 key={dados.data}
                                 >
                                     <p>{dados}</p>

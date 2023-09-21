@@ -19,7 +19,7 @@
     background-color: rgb(238, 238, 238) !important;
 }
 .on {
-    background-color: rgb(154, 255, 3);
+    background-color: rgb(154, 255, 3) !important;
 }
 .list_hour {
     padding: 0.6em;

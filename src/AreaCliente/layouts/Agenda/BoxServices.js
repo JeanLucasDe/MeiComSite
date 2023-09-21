@@ -1,3 +1,4 @@
+import { useState } from "react"
 import styles from "./BoxService.module.css"
 import { Link, useParams } from "react-router-dom"
 
@@ -8,6 +9,7 @@ export default function BoxService (props) {
 
     const {site} = useParams()
     const usuario = props.usuario && props.usuario
+    const [service, setService] = useState('')
 
     const {agenda, serviços} = usuario && usuario
 
@@ -24,10 +26,11 @@ export default function BoxService (props) {
                     return (
                         <Link
                         className={styles.link}
-                        to={`/${site}/agenda`}
+                        to={`/${site}/${index}/agenda`}
                         >
                             <li
                             className={styles.service}
+                            onClick={(el) => {setService(el.target.value)}}
                             key={index}
                             >
                                 <p>{dados.servico}</p>
