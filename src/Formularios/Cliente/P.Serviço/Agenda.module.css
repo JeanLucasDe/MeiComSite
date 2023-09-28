@@ -1,22 +1,20 @@
 .container {
-    padding-top: 3em;
+    padding: 3em 0em;
+    margin-bottom: 5em;
+    display: none !important;
 }
 .list_date {
     display: flex;
+    flex-wrap: wrap;
     list-style-type: none;
     padding: 0em;
 }
 .date {
-    margin: 0em 1em;
-    background-color: rgb(204, 204, 204);
-    padding: 0.6em;
-    border-radius: 5px;
+    padding: 1em;
+    margin: 0.5em;
 }
 .date p {
     margin: 0em;
-}
-.off {
-    background-color: rgb(238, 238, 238) !important;
 }
 .on {
     background-color: rgb(154, 255, 3) !important;
@@ -32,4 +30,9 @@
     display: flex;
     align-items: center;
     justify-content: center;
+}
+.cont_list{
+    width: 60%;
+    margin: 1em auto;
+    text-align: center;
 }

@@ -186,7 +186,7 @@ export default function Informations () {
                                                     </div>
                                                     <div className={styles.line}/>
                                                     <Link
-                                                    to={`/perfil/user/categorias/${dados.categoria}`}
+                                                    to={`/perfil/user/categorias/${dados.id}`}
                                                     >Ver Produtos</Link>
                                                 </div>
                                             </div>

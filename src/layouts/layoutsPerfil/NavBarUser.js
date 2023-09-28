@@ -6,7 +6,7 @@ import "swiper/css";
 import "swiper/css/free-mode";
 import "swiper/css/pagination";
 import 'swiper/css/navigation';
-import {FaCog, FaDatabase, FaClipboardList, FaStore} from "react-icons/fa"
+import {FaCog, FaDatabase, FaClipboardList, FaStore, FaCalendarAlt} from "react-icons/fa"
 
 export default function NavBarUser (props) {
 
@@ -76,7 +76,7 @@ export default function NavBarUser (props) {
 
                 <div className={`${styles.view_desk}`}>
                     <div className={styles.cont_links}>
-                        {usuario && usuario.mod == "Alimentação" ? 
+                        
                         <NavLink
                         to="/perfil/user/categorias"
                         className={({ isActive, isPending }) =>
@@ -84,17 +84,14 @@ export default function NavBarUser (props) {
                         }
                         ><FaStore className={styles.icon}/> Loja
                         </NavLink>
-                        :
-                        usuario.mod == "Agendamento" &&
                         <NavLink
                         to="/perfil/user/agenda"
                         className={({ isActive, isPending }) =>
                             isPending ? styles.isPending : isActive ? styles.isActive : styles.isPending
                         }
-                        ><FaStore className={styles.icon}/> Agenda
+                        ><FaCalendarAlt className={styles.icon}/> Agenda
                         </NavLink>
 
-                        }
                         <NavLink
                         to="/perfil/user/online"
                         className={({ isActive, isPending }) =>

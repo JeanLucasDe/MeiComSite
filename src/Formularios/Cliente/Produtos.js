@@ -44,9 +44,8 @@ export default function Produtos () {
         ação,
         lista: indexProd.length > 0 && indexProd[0].produtos,
         categoriaa,
-        id
+        id : categoriaa
     }
-
 
 
 
@@ -59,59 +58,20 @@ export default function Produtos () {
                     data-bs-toggle="modal" 
                     data-bs-target={`#ModalAdd`}
                     ><FaPlusCircle/> Novo produto</button>
-                    <h3 className={styles.title}>{categoriaa}</h3>
-                    <div className="line"/>
                     <ul className={styles.list}>
                         {produtos &&produtos.length > 0 && produtos.map(dados => {
-                            if (dados.produtos) {
-                                if (dados.categoria == categoriaa) {
-                                    if (dados.produtos.length > 0) {
-                                        return (
-                                            dados.produtos.map(item => {
+                            if (dados.id == categoriaa) {
+                                return (
+                                    <>
+                                        <h4>{dados.categoria}</h4>
+                                        {dados.produtos && dados.produtos.map(item => {
                                             return (
-                                                    <li key={dados.nome} className={`row ${styles.cont_item}`}>
-                                                        <div className="col-12">
-                                                            <h4>&#9679; {item.nome}</h4>
-                                                            <div className={styles.cont_buttons}>
-                                                                <FaEdit
-                                                                type="button"
-                                                                data-bs-toggle="modal"
-                                                                data-bs-target={`#ModalEdit`}
-                                                                onClick={()=> setDados(item)}
-                                                                className={styles.icon}
-                                                                />
-                                                                <FaTrashAlt
-                                                                type="button"
-                                                                data-bs-toggle="modal"
-                                                                data-bs-target={`#ModalTrash`}
-                                                                className={styles.icon}
-                                                                onClick={()=> {
-                                                                    setDados(item)
-                                                                    setAção("Deletar Produto")
-                                                                }}
-                                                                />
-                                                            </div>
-                                                            <div className={styles.info}>
-                                                                <div className={styles.info_item}>
-                                                                    <p><strong>Preço:</strong>{FormataValor(parseFloat(item.preço))}</p>
-                                                                </div>
-                                                                <div className={styles.line}/>
-                                                            </div>
-                                                        </div>
-                                                    </li>
+                                                <li>{item.nome}</li>
                                                 )
-                                        })
-                                        )
-                                    } else {
-                                        return (
-                                            <div className={styles.cont_empty}>
-                                                <h3>Ainda não há nada aqui.</h3>
-                                                <p>Comece a adicionar</p>
-                                            </div>
-                                            )
-                                    }
-                                }
-                            } 
+                                        })}
+                                    </>    
+                                )
+                            }
                         })
                     }
 

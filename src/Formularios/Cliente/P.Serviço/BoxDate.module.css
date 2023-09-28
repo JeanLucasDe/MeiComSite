@@ -18,3 +18,9 @@
     border: 1px solid #000;
     margin-bottom: 1em;
 }
+.container {
+    padding: 1em;
+}
+.input_time {
+    border: none;
+}

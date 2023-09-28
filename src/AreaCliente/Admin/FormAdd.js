@@ -63,6 +63,7 @@ export default function FormAdd (props) {
                     adicionais: saborComidaAdicional,
                 }
             )
+            console.log(props.dados.id)
             await updateDoc(doc(db, `MeiComSite/${props.email}/produtos`, `${props.dados.id}`), {
                 produtos: props.listaProd
             });

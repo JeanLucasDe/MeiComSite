@@ -3,7 +3,6 @@ import App from "../Hooks/App"
 import '@firebase/firestore';
 import { getFirestore, collection, getDocs} from "@firebase/firestore";
 import { Outlet, useParams } from "react-router-dom"
-import NavigationBar from "./components/NavegationBar";
 import LinkMeiComSite from "./components/LinkMeiComSite"
 import styles from "./HomeCliente.module.css"
 import Loading from "../components/Loading";

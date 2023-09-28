@@ -17,6 +17,7 @@ import 'swiper/css';
 import HomeWpp from "../layouts/Wpp/HomeWpp";
 import Conversation from "../layouts/Wpp/Conversation";
 import HomeAgenda from "../layouts/Agenda/HomeAgenda";
+import HomeCardapio from "../layouts/Cardapio/HomeCardapio";
 
 
 
@@ -281,7 +282,14 @@ export default function MarketHome () {
                     />
                 </>
             } 
-
+            {usuario.length > 0 && usuario[0].theme == "Cardapio" &&
+                <>
+                    <HomeCardapio
+                    produtos={produtos && produtos}
+                    usuario={usuario[0] && usuario[0]}
+                    />
+                </>
+            } 
                 
                 
             </>
