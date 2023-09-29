@@ -89,6 +89,17 @@
     .img {
         height: 70px;  
     }
+    .cont_bottom {
+        position: fixed;
+        bottom: 0em;
+        left: 0em;
+        width: 100%;
+        background-color: #fff;
+        display: flex;
+        justify-content: space-between;
+        padding: 1em 0.5em !important;
+        font-size: 1.2em;
+    }
 }
 .link {
     cursor: pointer !important;

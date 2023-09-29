@@ -65,7 +65,7 @@ console.log(adicionais)
                                                     <div className={styles.cont_add_btn}>
                                                         <button className={`${styles.icon_adicional} ${styles.icon}`}
                                                         onClick={()=> {
-                                                            if (dados.qtd == 1) return
+                                                            if (dados.qtd == 0) return
                                                             dados.qtd -= 1
                                                         }}
                                                         >
@@ -75,7 +75,9 @@ console.log(adicionais)
                                                         <button className={`${styles.icon_adicional} ${styles.icon}`}
                                                         onClick={()=> {
                                                             if (!dados.qtd) {
-                                                                return dados.qtd == 1
+                                                                dados.qtd = 1
+                                                            } else {
+                                                                dados.qtd += 1
                                                             }
                                                         }}
                                                         >

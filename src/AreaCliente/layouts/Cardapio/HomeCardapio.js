@@ -1,10 +1,11 @@
 import { Link, NavLink, useOutletContext } from "react-router-dom"
 import styles from "./HomeCardapio.module.css"
-import {FaCircle} from "react-icons/fa"
+import {FaBars, FaCircle, FaHome, FaShoppingBag} from "react-icons/fa"
 import App from "../../../Hooks/App"
 import '@firebase/firestore';
 import { getFirestore, collection, getDocs} from "@firebase/firestore";
 import { useState } from "react";
+import BoxSubTotal from "./BoxSubTotal"
 import {Swiper,SwiperSlide} from "swiper/react";
 import { FreeMode, Scrollbar} from "swiper";
 import "swiper/css";
@@ -19,6 +20,7 @@ export default function HomeCardapio () {
     const [produtoss, usuario, vendas, funcionamento] = useOutletContext()
     var {serviços, razao, email, clientes, logo, site} = usuario.length > 0 && usuario[0]
     const [prod, setProd] = useState([])
+    const [show, setShow] = useState(false)
     const [ok, setOk] = useState(false)
 
     const db = getFirestore(App)
@@ -36,6 +38,8 @@ export default function HomeCardapio () {
         var valorFormatado = valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
         return valorFormatado
     }
+
+    
 
 
     return (
@@ -121,6 +125,18 @@ export default function HomeCardapio () {
                     }
                     })}
                 </ul>
+            </div>
+            <BoxSubTotal show ={show} />
+            <div className={styles.cont_bottom}>
+                <FaBars/>
+                <Link
+                to={`/${site}`}
+                ><FaHome/></Link>
+                <FaShoppingBag id ="bag"
+                onClick={() => {
+                    setShow(!show)
+                }}
+                />
             </div>
         </div>
         

@@ -1,0 +1,40 @@
+.container {
+    position: fixed;
+    width: 90%;
+    left: 0em;
+    right: 0em;
+    margin: 0em auto;
+    box-shadow: 1px 1px 4px #ddd;
+    background-color: #fff;
+    padding: 1em;
+}
+
+@keyframes slidein {
+    from {
+        bottom: 0em;
+    }
+  
+    to {
+        bottom: 8em;
+        display: block;
+    }
+}
+@keyframes slideout {
+    from {
+        bottom: 8em;
+    }
+  
+    to {
+        bottom: 0em;
+        display: none;
+    }
+}
+
+.show {
+    animation-duration: 1s;
+    animation-name: slidein;
+}
+.none {
+    animation-duration: 1s;
+    animation-name: slideout;
+}
