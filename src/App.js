@@ -90,7 +90,7 @@ function App() {
 
               <Route path="/:site" element={<HomeCliente/>}>
                 <Route index element={<MarketHome/>}/>
-                <Route path="/:site/:categoria" element={<Categorias/>}/>
+                <Route path="/:site/:id/:idproduto" element={<Categorias/>}/>
                 <Route path="/:site/:index/agenda" element={<BoxDates/>}/>
                 <Route path="/:site/compras" element={<Carrinho/>}>
                   <Route index element={<ItensSacola/>}/>

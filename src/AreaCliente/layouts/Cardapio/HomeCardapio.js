@@ -1,4 +1,4 @@
-import { NavLink, useOutletContext } from "react-router-dom"
+import { Link, NavLink, useOutletContext } from "react-router-dom"
 import styles from "./HomeCardapio.module.css"
 import {FaCircle} from "react-icons/fa"
 import App from "../../../Hooks/App"
@@ -93,18 +93,24 @@ export default function HomeCardapio () {
                                 
                                     <h5 className={styles.name_categorie}>{dados.categoria}</h5>
                                     <ul className={styles.list_itens}>
-                                        {dados.produtos.map(item => {
+                                        {dados.produtos.map((item, index )=> {
                                             return (
                                                 <li key={item.id}
                                                 className={styles.item}
                                                 >
-                                                    <div>
-                                                        <div>
-                                                            <p className={styles.name_item}>{item.nome}</p>
-                                                            <p>Confira os sabores</p>
-                                                            <p className={styles.preço_item}>{FormataValor(item.preço)}</p>
+                                                    <Link
+                                                    to={`/${site}/${dados.id}/${index}`}
+                                                    >
+                                                        <div className="row">
+                                                            <div className="col-6">
+                                                                <p className={styles.name_item}>{item.nome}</p>
+                                                                <p className={styles.preço_item}>{FormataValor(item.preço)}</p>
+                                                            </div>
+                                                            <div className="col-6">
+                                                                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTIIrBbM185W0hlTKs928AOWCJkvmZT6gLGnA&usqp=CAU" className={styles.img}/>
+                                                            </div>
                                                         </div>
-                                                    </div>
+                                                    </Link>
                                                 </li>
                                                 )
                                         })}

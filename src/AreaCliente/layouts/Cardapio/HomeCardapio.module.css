@@ -51,6 +51,7 @@
     }
     .list_categories {
         list-style-type: none;
+        padding: 0em;
     }
     .categorie {
         margin: 1em 0em;
@@ -66,6 +67,11 @@
         border: 1px solid #ddd;
         border-radius: 10px;
         margin: 1em auto;
+        border-left: 3px solid #FDA707;
+    }
+    .item a {
+        color: #000;
+        text-decoration: none;
     }
     .name_categorie {
         color: #6d6d6d;
@@ -80,6 +86,9 @@
         font-family: 'Hammersmith One', sans-serif;
         font-weight: 600;
     }
+    .img {
+        height: 70px;  
+    }
 }
 .link {
     cursor: pointer !important;
@@ -87,6 +96,7 @@
     text-decoration: none;
     margin-left: 2em;
     display: block;
+    font-size: 0.9em;
 }
 .isPending {
     color: #e43b3b !important;
