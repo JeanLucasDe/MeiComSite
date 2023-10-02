@@ -1,6 +1,6 @@
 import { Link, NavLink, useOutletContext } from "react-router-dom"
 import styles from "./HomeCardapio.module.css"
-import {FaBars, FaCircle, FaHome, FaShoppingBag} from "react-icons/fa"
+import {FaBars, FaCircle, FaHome, FaShoppingBag, FaShoppingCart} from "react-icons/fa"
 import App from "../../../Hooks/App"
 import '@firebase/firestore';
 import { getFirestore, collection, getDocs} from "@firebase/firestore";
@@ -127,12 +127,13 @@ export default function HomeCardapio () {
                 </ul>
             </div>
             <BoxSubTotal show ={show} />
+            
             <div className={styles.cont_bottom}>
                 <FaBars/>
                 <Link
                 to={`/${site}`}
                 ><FaHome/></Link>
-                <FaShoppingBag id ="bag"
+                <FaShoppingCart id ="bag"
                 onClick={() => {
                     setShow(!show)
                 }}

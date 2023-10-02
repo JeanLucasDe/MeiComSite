@@ -99,6 +99,7 @@
         justify-content: space-between;
         padding: 1em 0.5em !important;
         font-size: 1.2em;
+        border-top: 1px solid #ddd;
     }
 }
 .link {

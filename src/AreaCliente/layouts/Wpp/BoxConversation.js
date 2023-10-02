@@ -327,7 +327,6 @@ export default function BoxConversation (props) {
     };
     
 
-    console.log(ListaEscolha)
 
 
     const VerificaState = () => {
