@@ -46,6 +46,10 @@ export default function HomeCardapio () {
         <>
         <div className={styles.container}>
             <div className={styles.top_header}/>
+            <p>
+                Site Criado pela 
+                <Link to="/">MeiComSite</Link>
+            </p>
             <input className={styles.input_main} type="text"
             placeholder="O que deseja pedir hoje?"
             />
@@ -134,6 +138,7 @@ export default function HomeCardapio () {
                 to={`/${site}`}
                 ><FaHome/></Link>
                 <FaShoppingCart id ="bag"
+                className={styles.kart}
                 onClick={() => {
                     setShow(!show)
                 }}

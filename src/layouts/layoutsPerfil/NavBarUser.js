@@ -84,13 +84,6 @@ export default function NavBarUser (props) {
                         }
                         ><FaStore className={styles.icon}/> Loja
                         </NavLink>
-                        <NavLink
-                        to="/perfil/user/agenda"
-                        className={({ isActive, isPending }) =>
-                            isPending ? styles.isPending : isActive ? styles.isActive : styles.isPending
-                        }
-                        ><FaCalendarAlt className={styles.icon}/> Agenda
-                        </NavLink>
 
                         <NavLink
                         to="/perfil/user/online"

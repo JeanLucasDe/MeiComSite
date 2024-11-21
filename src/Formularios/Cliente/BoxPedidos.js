@@ -19,13 +19,13 @@ export default function BoxPedidos (props) {
 
     const vendas = props.vendas
     const usuario = props.usuario
+    var seed = props.seed
     const [obj, setObj] = useState()
+    var [contador, setContador] = useState(0)
     const db = getFirestore(App)
     const [count, setCounte] = useState(1)
     var [countDelete, setCountDelete] = useState(0)
     const [pedidoDelete, setPedidoDelete] = useState('')
-    
-
 
     const DeletarPedido = async(dados) => {
         
@@ -76,16 +76,13 @@ export default function BoxPedidos (props) {
     }
     
     const [select, setSelect] = useState(false)
-    
-
-
 
 
 
     return(
         <>
 
-        <div className={` ${styles.cont_box_pedidos}`} >
+        <div className={` ${styles.cont_box_pedidos}`} seed={contador}>
             {!select ?
             <div className="row">
                 <div className={`${styles.no_margin} col-md-4`} id="aberto">

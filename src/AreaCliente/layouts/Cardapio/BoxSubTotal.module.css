@@ -1,6 +1,7 @@
 .show {
     position: fixed;
-    width: 90%;
+    width: 60%;
+    max-height: 70vh ;
     left: 0em;
     right: 0em;
     bottom: 6em;
@@ -14,6 +15,7 @@
     border: 1px solid #ddd;
     text-align: right;
     z-index: 100;
+    overflow: auto;
 }
 .none {
     display: none;
@@ -34,6 +36,7 @@
     width: 100%;
     border-radius: 7px;
     padding: .5em;
+    margin-bottom: .7em;
 }
 .cont_itens {
     text-align: left;
@@ -48,4 +51,25 @@
 .item {
     display: flex;
     align-items: center;
+}
+.formulario {
+    margin: 0em 0em 2em 0em;
+    text-align: left;
+}
+.back {
+    border: 1px solid #000 ;
+    background-color: #ffff;
+    color: #000;
+}
+.contInpCheck{
+    display: flex;
+    align-items: center;
+    margin: 1em 0em;
+    border-top: 1px solid #cccc;
+}
+.contInpCheck p {
+    margin: 0em 0em 0em .5em;
+}
+.inputCheck {
+    display: block;
 }

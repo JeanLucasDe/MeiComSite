@@ -17,7 +17,7 @@ export default function Perfil () {
     const [verifica, setVerfica] = useState(false)
     const [modo, setModo] = useState()
     const [user, setUser] = useState();
-    const [funcionamento, setFuncionamento] = useState(1)
+    const [stage, setStage] = useState(1)
     const [produtos, setProdutos] = useState([])
     const [redirect, setRecirect] = useState()
     const [usuarios, setUsuarios] = useState([])
@@ -61,6 +61,7 @@ export default function Perfil () {
         setVendas((dataVendas.docs.map((doc) => ({...doc.data(), id: doc.id}))))
 
         setLoading(true)
+        setStage(2)
     }
 
     if (usuario && usuario.length > 0) {
@@ -101,9 +102,22 @@ export default function Perfil () {
     return (
         <div>
             <NavBar/>
-                {user ?
+                {!user ? loading : user ?
                 <div className={styles.container}>
-                    {!usuario.length > 0  && !loading ?
+                    {stage == 1 ? <Loading/>:
+                        <div className="row">
+
+                            <div className={`${styles.col} col-md-2`}>
+                                <NavBarUser usuario={usuario && usuario[0]}/>
+                            </div>
+
+
+                            <div className="col-md-10">
+                                <Outlet context={[mod, produtos && produtos, usuario, vendas, user]}/>
+                            </div>
+                        </div>
+                    }
+                    {stage == 2 && !usuario.length > 0 &&
                     <div className={styles.cont_empty}>
                         <img src='https://img.freepik.com/free-vector/user-verification-unauthorized-access-prevention-private-account-authentication-cyber-security-people-entering-login-password-safety-measures_335657-8.jpg?size=626&ext=jpg&ga=GA1.2.995514839.1678974862&semt=ais' className={styles.logo}/>
                         <h4>Complete seu cadastro para Continuar</h4>
@@ -111,18 +125,8 @@ export default function Perfil () {
                         className={styles.btn_continue}
                         >Continuar</Link>
                     </div>
-                    :
-                    <div className="row">
-
-                        <div className={`${styles.col} col-md-2`}>
-                            <NavBarUser usuario={usuario && usuario[0]}/>
-                        </div>
-                        
-                        
-                        <div className="col-md-10">
-                            <Outlet context={[mod, produtos && produtos, usuario, vendas, user]}/>
-                        </div>
-                    </div>}
+                    }
+                    
                 </div>
                 :
                 <div className={styles.cont_empty}>

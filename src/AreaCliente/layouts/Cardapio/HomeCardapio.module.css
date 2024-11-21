@@ -116,3 +116,6 @@
 .isActive {
     color: aqua;
 }
+.kart {
+    cursor: pointer;
+}

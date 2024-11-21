@@ -23,7 +23,6 @@ export default function Online () {
             <>
                 <div className={styles.container}>
                     <div className={styles.title}>
-                        <Contador/>
                         <h4 className={styles.text_center}>Painel de Pedidos</h4>
                         <div>
                             <button
