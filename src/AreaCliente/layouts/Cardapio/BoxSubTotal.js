@@ -88,6 +88,17 @@ export default function BoxSubTotal (props) {
     }
     const UserSave = pegaDadosUser()
 
+    function pegaCompraSave() {
+        let produtosSalvos = new Array()
+        if (localStorage.hasOwnProperty(`pedido.${site}`)) {
+            produtosSalvos = JSON.parse(localStorage.getItem(`pedido.${site}`))
+        }
+        return produtosSalvos
+    }
+    const CompraSave = pegaCompraSave()
+
+
+
     const AdicionarUSer = async () => {
         await setDoc(doc(db, `MeiComSite/${usuario && usuario[0].email}/vendas`, `${id}`), {
             nome: escolheSalvar ? UserSave[0].nome : nome, 
@@ -109,7 +120,11 @@ export default function BoxSubTotal (props) {
             produtos: Dados,
             obs: obs ? obs : false
             });
+
         localStorage.setItem(`itenscarrinho.${site}`,JSON.stringify([]))
+        localStorage.setItem(`pedido.${site}`,JSON.stringify(
+            {identrega}
+        ))
 
         if (escolheSalvar) {
             localStorage.setItem(`DadosUserSave.${site}`,JSON.stringify([

@@ -119,3 +119,36 @@
 .kart {
     cursor: pointer;
 }
+.contDetail {
+    border-radius: 10px;
+    
+    width: 90%;
+    box-shadow: -1px -3px 20px 0px #000;
+    margin: 2em auto;
+}
+.cont_stage {
+    width: 100%;
+    padding: 0.9em;
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: bold;
+    color: #fff;
+}
+.cont_stage p {
+    margin-bottom: 0em;
+}
+.state_1 {
+    background-color: #e2e2e2;
+    color: #000;
+}
+.state_2 {
+    background-color: #ffd986;
+    color: #000;
+}
+.state_3 {
+    background-color: #ff8801;
+}
+.idEntrega {
+    font-size: 1.1em;
+    text-decoration: underline;
+}
