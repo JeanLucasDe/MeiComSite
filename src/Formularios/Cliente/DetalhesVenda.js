@@ -72,7 +72,7 @@ export default function DetalhesVenda (props) {
                 <div>
                     {obj && obj.lugar == 1 && <div className={styles.cont_total}>
                         <h5>Taxa</h5>
-                        <h5>{obj && FormataValor(obj.taxa)}</h5>
+                        <h5>{obj && obj.taxa ? FormataValor(obj.taxa): 'Retirada no local'}</h5>
                     </div>}
                     <div className={styles.cont_total}>
                         <h5>Total da venda</h5>

@@ -63,10 +63,23 @@ export default function Produtos () {
                             if (dados.id == categoriaa) {
                                 return (
                                     <>
-                                        <h4>{dados.categoria}</h4>
+                                        <h4 className={styles.title}>{dados.categoria}</h4>
                                         {dados.produtos && dados.produtos.map(item => {
                                             return (
-                                                <li>{item.nome}</li>
+                                                <li key={item.id}
+                                                className={styles.item}
+                                                >
+                                                    <p>{item.nome}</p>
+                                                    <div>
+                                                        <FaEdit
+                                                        type="button" 
+                                                        data-bs-toggle="modal" 
+                                                        data-bs-target={`#ModalEdit`}
+                                                        />
+                                                        <FaTrashAlt/>
+                                                    </div>
+                                                    <p>{FormataValor(item.preço)}</p>
+                                                </li>
                                                 )
                                         })}
                                     </>    

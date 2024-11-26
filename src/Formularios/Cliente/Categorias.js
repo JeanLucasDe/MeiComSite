@@ -30,16 +30,18 @@ export default function Informations () {
     }
     const idCat = geraId()
     const addCategoria = async () => {
-        await setDoc(doc(db, `MeiComSite/${usuario && usuario[0].email}/produtos`, `${idCat}`), {
-            categoria: categoria.trim(),
-            mostrar:mostrar ? mostrar : false,
-            destaque:destaque ? destaque : false,
-            text:text ? text : '',
-            produtos: [],
-            adicionais: [],
-            id:idCat
-        });
-        window.location.reload()
+        if (categoria) {
+            await setDoc(doc(db, `MeiComSite/${usuario && usuario[0].email}/produtos`, `${idCat}`), {
+                categoria: categoria.trim(),
+                produtos: [],
+                adicionais: [],
+                id:idCat
+            });
+            window.location.reload()
+        } else {
+            toast.error('Esse campo não pode ficar vazio.')
+        }
+        
     }
     const editCategoria = async () => {
         await updateDoc(doc(db, `MeiComSite/${usuario && usuario[0].email}/produtos`, `${produto && produto.id}`), {
@@ -59,42 +61,6 @@ export default function Informations () {
     const obj ={
         ação
     }
-    function pegaDados() {
-        let produtosSalvos = new Array()
-        
-        if (localStorage.hasOwnProperty(`meicomsiteteste`)) {
-            produtosSalvos = JSON.parse(localStorage.getItem(`meicomsiteteste`))
-        }
-
-        return produtosSalvos
-    }
-
-    const dadosTest = pegaDados()
-
-
-    const addStorage = () => {
-        let produtosSalvos = new Array()
-        
-        if (localStorage.hasOwnProperty(`meicomsiteteste`)) {
-            produtosSalvos = JSON.parse(localStorage.getItem(`meicomsiteteste`))
-        }
-        
-        
-        let index = produtosSalvos.findIndex(prop => prop.categoria == categoria)
-
-        if (index < 0) {
-            produtosSalvos.push({
-                categoria: categoria.trim(),
-                img: imagem,
-                mostrar: mostrar ? mostrar : false,
-                destaque: destaque ? destaque : false,
-                text: text ? text : ""
-            })
-            localStorage.setItem(`meicomsiteteste`,JSON.stringify(produtosSalvos))
-            window.location.reload()
-        } 
-    }
-
     const editCategoriateste = () => {
         let produtosSalvos = new Array()
         
@@ -216,48 +182,11 @@ export default function Informations () {
                                         onChange={(el)=> setCategoria(el.target.value)}
                                         />
                                     </div>
-                                    
-                                    <div className={styles.cont_check_box}>
-                                            <div className={styles.cont_input_checkbox}>
-                                                <input type="checkbox"
-                                                checked={mostrar}
-                                                onChange={() => setMostrar(!mostrar)}/>
-                                            
-                                                <strong>Mostrar no início</strong>
 
-                                            </div>
-                                        </div>
-
-
-                                        <div className={styles.cont_check_box}>
-                                            <div className={styles.cont_input_checkbox}>
-                                                <input type="checkbox"
-                                                checked={destaque}
-                                                onChange={() => setDestaque(!destaque)}/>
-                                                <strong>Destacar</strong>
-                                            </div>
-                                        </div>
-
-                                        {destaque &&
-                                        <div>
-                                            <strong>Texto de destaque</strong>
-                                            <textarea
-                                            className={styles.input}
-                                            onChange={(el)=> setText(el.target.value)}
-                                            maxLength={35}
-                                            />
-                                            <span className={styles.contador}>[{!text ? 0 : text.length} / 35]</span>
-                                        </div>}
-                                        
-
-                                    {mod ?
                                     <button
                                     onClick={()=> addCategoria()}
-                                    >Adicionar</button>:
-                                    <button
-                                    onClick={()=> addStorage()}
                                     >Adicionar</button>
-                                    }
+                                    
                                 </div>
                             </div>
                         </div>

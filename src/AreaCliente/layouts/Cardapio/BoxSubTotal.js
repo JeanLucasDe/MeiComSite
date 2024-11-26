@@ -16,18 +16,14 @@ export default function BoxSubTotal (props) {
 
     const [nome, setNome] = useState()
     const [drive, setDrive] = useState(true)
-    const [editNome, setEditNome] = useState()
     const [cidade, setCidade] = useState()
     const [rua, setRua] = useState()
     const [bairro, setBairro] = useState()
-    const [moradia, setMoradia] = useState()
     const [telefone, setTelefone] = useState()
     const [numero, setNumero] = useState()
     const [referencia, setReferencia] = useState()
     const [pagamento, setPagamento] = useState()
-    const [valor, setValor] = useState()
     const [escolheSalvar, setEscolheSalvar] = useState()
-    const [save, setSave] = useState()
     const [obs, setObs] = useState()
 
     const PegaDados = () => {
@@ -103,22 +99,22 @@ export default function BoxSubTotal (props) {
         await setDoc(doc(db, `MeiComSite/${usuario && usuario[0].email}/vendas`, `${id}`), {
             nome: escolheSalvar ? UserSave[0].nome : nome, 
             data:moment().format('DD/MM/YYYY'),
-            hora:moment().format('hh:mm') ,
+            hora:moment().format('HH:mm') ,
             telefone: escolheSalvar ? UserSave[0].telefone : telefone, 
-            cidade: escolheSalvar ? UserSave[0].cidade : cidade, 
-            bairro: escolheSalvar ? UserSave[0].bairro : Bairro,
+            cidade: cidade ? cidade : '', 
+            bairro: Bairro ? Bairro : '',
             taxa: escolheSalvar ? parseFloat(UserSave[0].taxa) : parseFloat(taxa),
-            rua: escolheSalvar ? UserSave[0].rua : rua,
-            numero : escolheSalvar ? UserSave[0].numero : numero, 
-            referencia: escolheSalvar ? UserSave[0].referencia : referencia,
-            pagamento: escolheSalvar ? UserSave[0].pagamento : pagamento, 
+            rua: rua ? rua : '',
+            numero : numero ? numero : '', 
+            referencia: referencia ? referencia : '',
+            pagamento: pagamento ? pagamento : '', 
             Total: parseFloat(Total), 
             lugar: 1,
             state: 1, 
             iden: id,
             identrega,
             produtos: Dados,
-            obs: obs ? obs : false
+            obs: obs ? obs : ''
             });
 
         localStorage.setItem(`itenscarrinho.${site}`,JSON.stringify([]))

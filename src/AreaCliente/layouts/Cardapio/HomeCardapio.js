@@ -71,7 +71,7 @@ export default function HomeCardapio () {
                     >
                         <p>Pedido Recebido</p>
                         <div>
-                            ID Pedido: <span className={styles.idEntrega}>{Compra[0].identrega}</span>
+                            ID Entrega: <span className={styles.idEntrega}>{Compra[0].identrega}</span>
                         </div>
                     </div>}
                     {Compra.length > 0 && Compra[0].state == 2 &&
@@ -80,7 +80,7 @@ export default function HomeCardapio () {
                     >
                         <p>Em Preparo</p>
                         <div>
-                            ID Pedido: <span className={styles.idEntrega}>{Compra[0].identrega}</span>
+                            ID Entrega: <span className={styles.idEntrega}>{Compra[0].identrega}</span>
                         </div>
                     </div>}
                     {Compra.length > 0 && Compra[0].state == 3 &&
@@ -89,7 +89,7 @@ export default function HomeCardapio () {
                     >
                         <p>Saiu para Entrega</p>
                         <div>
-                            ID Pedido: <span className={styles.idEntrega}>{Compra[0].identrega}</span>
+                            ID Entrega: <span className={styles.idEntrega}>{Compra[0].identrega}</span>
                         </div>
                     </div>}
                 </div>

@@ -12,15 +12,16 @@ import { Link, useOutletContext, useParams } from "react-router-dom";
 
 export default function FormAdd (props) {
 
-    const [modo] = useOutletContext()
+    const [modo, produtos, usuario, vendas, user] = useOutletContext()
     const {categoriaa} = useParams()
 
+
+    const [Listproduto, setListProduto] = useState()
     const [nome, setNome]= useState()
     const [qtdSabores, setQtdSabores] = useState()
     const [desc, setDesc] = useState()
     const [qtdpessoas, setQtdPessoas] = useState()
     const [sabor, setSabor] = useState()
-    const [qtdSaboresAdicional, setqtdSaboresAdicional] = useState()
     const [ingredientes, setIngredientes] = useState()
     const [preço, setPreço] = useState()
     const [small_desc, setSmallDesc] = useState()
@@ -47,13 +48,16 @@ export default function FormAdd (props) {
     }
 
     useEffect(()=> {
+        let ListProd = produtos && produtos.filter(dados => dados.id == categoriaa)
+        setListProduto(ListProd)
         reiniciar()
     },[])
 
+
     async function addItem () {
         if (props.modalidade == "Alimentação") {
-            props.listaProd.push(
-                {
+            await updateDoc(doc(db, `MeiComSite/${props.email}/produtos`, `${props.dados.id}`), {
+                produtos: [...Listproduto && Listproduto[0].produtos, {
                     nome:nome.trim(),
                     preço:parseFloat(preço),
                     qtdSabores: parseFloat(qtdSabores),
@@ -61,64 +65,13 @@ export default function FormAdd (props) {
                     qtdPessoas: parseFloat(qtdpessoas),
                     saborComida,
                     adicionais: saborComidaAdicional,
-                }
-            )
-            console.log(props.dados.id)
-            await updateDoc(doc(db, `MeiComSite/${props.email}/produtos`, `${props.dados.id}`), {
-                produtos: props.listaProd
+                }]
             });
             window.location.reload()
         }
-
-        {/**if (props.modalidade == "Loja Virtual") {
-            if (props.listaProdutos) {
-                const indexProd = props.listaProdutos.filter(dados => dados.nome == nome)
-                if (indexProd.length > 0) return toast.error('Já existe um produto com esse nome!')
-
-                await updateDoc(doc(db, `MeiComSite/${props.email}/produtos`, `${props.categoria}`), {
-                    produtos: [...props.listaProdutos,
-                    {
-                        nome:nome.trim(),
-                        preço: parseFloat(preço),
-                        preçopromo: parseFloat(0),
-                        img: img1 ? driveimg1 ? `https://docs.google.com/uc?id=${img2}`: img1: "",
-                        img2: img2 ? driveimg2 ? `https://docs.google.com/uc?id=${img2}`: img2 : "",
-                        img3: img3 ? driveimg3 ? `https://docs.google.com/uc?id=${img3}`: img3 : "",
-                        img4: img4 ? driveimg4 ? `https://docs.google.com/uc?id=${img4}`: img4 : "", 
-                        desc:desc.trim(),
-                        small_desc: small_desc ? small_desc.trim() : "",
-                        material: material.trim()
-                    }
-                    ]
-                    });
-                    window.location.reload()
-            } else {
-                await setDoc(doc(db, `MeiComSite/${props.email}/produtos`, `${props.categoria}`), {
-                    categoria: props.categoria,
-                    img:props.img,
-                    destaque:props.destaque,
-                    mostrar:props.mostrar,
-                    text: props.text,
-                    produtos: [
-    
-                    {
-                        nome:nome.trim(),
-                        preço:parseFloat(preço),
-                        preçopromo: parseFloat(0),
-                        img:  img1 ? driveimg1 ? `https://docs.google.com/uc?id=${img2}`: img1: "",
-                        img2: img2 ? driveimg2 ? `https://docs.google.com/uc?id=${img2}`: img2 : "",
-                        img3: img3 ? driveimg3 ? `https://docs.google.com/uc?id=${img3}`: img3 : "",
-                        img4: img4 ? driveimg4 ? `https://docs.google.com/uc?id=${img4}`: img4 : "",
-                        desc:desc.trim(),
-                        small_desc: small_desc ? small_desc.trim() : "",
-                        material: material.trim()
-                    }
-                    ]
-                    });
-                    window.location.reload()
-            }
-        } */}
     }
+
+
 
 
     const addSabor = (sabor, mod) => {

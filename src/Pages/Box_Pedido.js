@@ -39,7 +39,7 @@ export default function Box_Pedido() {
     }
 
     const FiltraVendasEntrega = () => {
-        let filter = vendas.length > 0 && vendas.filter(dados => dados.state ==  3 )
+        let filter = vendas.length > 0 && vendas.filter(dados => dados.state ==  3 && dados.taxa )
         return filter
     }
     const vendasEntrega = FiltraVendasEntrega()

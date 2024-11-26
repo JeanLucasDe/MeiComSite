@@ -183,7 +183,7 @@ export default function BoxPedidos (props) {
                 <div className={`${styles.no_margin} col-md-4`} id="entrega">
                     <div className={`${styles.entrega} ${styles.box_pedidos}`}>
                     <div className={styles.title_dinam}>
-                        <h5>Em Preparo</h5>
+                        <h5>Em Entrega</h5>
                         <FaAngleDoubleRight
                             onClick={() => {
                                 setSelect(3)
