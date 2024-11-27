@@ -1,38 +1,9 @@
 .container {
-    padding: 3em 0em;
-    margin-bottom: 5em;
-    display: none !important;
+    margin-top: 3em !important;
 }
-.list_date {
+.cont_hours {
     display: flex;
-    flex-wrap: wrap;
-    list-style-type: none;
-    padding: 0em;
 }
-.date {
-    padding: 1em;
-    margin: 0.5em;
-}
-.date p {
-    margin: 0em;
-}
-.on {
-    background-color: rgb(154, 255, 3) !important;
-}
-.list_hour {
-    padding: 0.6em;
-    list-style-type: none;
-    background-color:  #fff;
-}
-.select {
-    width: 100%;
-    margin-top: 1em;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-.cont_list{
-    width: 60%;
-    margin: 1em auto;
-    text-align: center;
+.cont_hours p {
+    margin-right: 1em;
 }

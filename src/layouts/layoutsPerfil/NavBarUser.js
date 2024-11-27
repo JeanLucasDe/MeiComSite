@@ -9,106 +9,197 @@ import 'swiper/css/navigation';
 import {FaCog, FaDatabase, FaClipboardList, FaStore, FaCalendarAlt} from "react-icons/fa"
 
 export default function NavBarUser (props) {
-
-    const usuario = props.usuario && props.usuario
+    const modo = props.mod && props.mod
   
-
     return (
-    <>
-            <Swiper 
-            breakpoints={{
-                320: {
-                  width: 320,
-                  slidesPerView: 2,
-                },
-                768: {
-                  width: 768,
-                  slidesPerView: 2,
-                },
-              }}
-            className={`${styles.navigation} nav`}
-            freeMode={true}
-            modules={[FreeMode, Scrollbar]}
-            scrollbar={{
-                hide: true,
+    <>      
+            {modo == "Alimentação" &&
+                <div>
+                    <Swiper
+                    breakpoints={{
+                        320: {
+                        width: 320,
+                        slidesPerView: 2,
+                        },
+                        768: {
+                        width: 768,
+                        slidesPerView: 2,
+                        },
+                    }}
+                    className={`${styles.navigation} nav`}
+                    freeMode={true}
+                    modules={[FreeMode, Scrollbar]}
+                    scrollbar={{
+                        hide: true,
+                        }}
+                    >
+                        <SwiperSlide>
+                            <NavLink
+                            to="/perfil/user/categorias"
+                            className={({ isActive, isPending }) =>
+                                isPending ? styles.isPendingMob : isActive ? styles.isActiveMob : styles.isPendingMob
+                            }
+                            >Loja
+                            </NavLink>
+                        </SwiperSlide>
+                        <SwiperSlide>
+                            <NavLink
+                            to="/perfil/user/online"
+                            className={({ isActive, isPending }) =>
+                                isPending ? styles.isPendingMob : isActive ? styles.isActiveMob : styles.isPendingMob
+                            }
+                            >Pedidos
+                            </NavLink>
+                        </SwiperSlide>
+                        <SwiperSlide>
+                            <NavLink
+                            to="/perfil/user/vendas"
+                            className={({ isActive, isPending }) =>
+                                isPending ? styles.isPendingMob : isActive ? styles.isActiveMob : styles.isPendingMob
+                            }
+                            >Relatório
+                            </NavLink>
+                        </SwiperSlide>
+                        <SwiperSlide>
+                            <NavLink
+                            to="/perfil/user/config"
+                            className={({ isActive, isPending }) =>
+                                isPending ? styles.isPendingMob : isActive ? styles.isActiveMob : styles.isPendingMob
+                            }
+                            >Configurações
+                            </NavLink>
+                        </SwiperSlide>
+                    </Swiper>
+                        <div className={`${styles.view_desk}`}>
+                            <div className={styles.cont_links}>
+                    
+                                <NavLink
+                                to="/perfil/user/categorias"
+                                className={({ isActive, isPending }) =>
+                                    isPending ? styles.isPending : isActive ? styles.isActive : styles.isPending
+                                }
+                                ><FaStore className={styles.icon}/> Loja
+                                </NavLink>
+                                <NavLink
+                                to="/perfil/user/online"
+                                className={({ isActive, isPending }) =>
+                                    isPending ? styles.isPending : isActive ? styles.isActive : styles.isPending
+                                }
+                                ><FaClipboardList className={styles.icon}/> Pedidos
+                                </NavLink>
+                                <NavLink
+                                to={"/perfil/user/vendas" }
+                                className={({ isActive, isPending }) =>
+                                    isPending ? styles.isPending : isActive ? styles.isActive : styles.isPending
+                                }
+                                ><FaDatabase className={styles.icon}/> Vendas
+                                </NavLink>
+                                <NavLink
+                                to="/perfil/user/config"
+                                className={({ isActive, isPending }) =>
+                                    isPending ? styles.isPending : isActive ? styles.isActive : styles.isPending
+                                }
+                                ><FaCog className={styles.icon}/> Configurações
+                                </NavLink>
+                            </div>
+                    
+                        </div>
+                </div>
+            }
+            {modo == "Agenda" &&
+                <div>
+                <Swiper
+                breakpoints={{
+                    320: {
+                    width: 320,
+                    slidesPerView: 2,
+                    },
+                    768: {
+                    width: 768,
+                    slidesPerView: 2,
+                    },
                 }}
-            >
-                <SwiperSlide>
-                    <NavLink
-                    to="/perfil/user/categorias"
-                    className={({ isActive, isPending }) =>
-                        isPending ? styles.isPendingMob : isActive ? styles.isActiveMob : styles.isPendingMob
-                    }
-                    >Loja
-                    </NavLink>  
-                </SwiperSlide>
-                <SwiperSlide>
-                    <NavLink
-                    to="/perfil/user/online"
-                    className={({ isActive, isPending }) =>
-                        isPending ? styles.isPendingMob : isActive ? styles.isActiveMob : styles.isPendingMob
-                    }
-                    >Pedidos
-                    </NavLink>  
-                </SwiperSlide>
-
-                <SwiperSlide>
-                    <NavLink
-                    to="/perfil/user/vendas"
-                    className={({ isActive, isPending }) =>
-                        isPending ? styles.isPendingMob : isActive ? styles.isActiveMob : styles.isPendingMob
-                    }
-                    >Relatório
-                    </NavLink>  
-                </SwiperSlide>
-
-                <SwiperSlide>
-                    <NavLink
-                    to="/perfil/user/config"
-                    className={({ isActive, isPending }) =>
-                        isPending ? styles.isPendingMob : isActive ? styles.isActiveMob : styles.isPendingMob
-                    }
-                    >Configurações
-                    </NavLink>  
-                </SwiperSlide>
-
-            </Swiper>
-
-                <div className={`${styles.view_desk}`}>
-                    <div className={styles.cont_links}>
-                        
+                className={`${styles.navigation} nav`}
+                freeMode={true}
+                modules={[FreeMode, Scrollbar]}
+                scrollbar={{
+                    hide: true,
+                    }}
+                >
+                    <SwiperSlide>
                         <NavLink
                         to="/perfil/user/categorias"
                         className={({ isActive, isPending }) =>
-                            isPending ? styles.isPending : isActive ? styles.isActive : styles.isPending
+                            isPending ? styles.isPendingMob : isActive ? styles.isActiveMob : styles.isPendingMob
                         }
-                        ><FaStore className={styles.icon}/> Loja
+                        >Loja
                         </NavLink>
-
+                    </SwiperSlide>
+                    <SwiperSlide>
                         <NavLink
                         to="/perfil/user/online"
                         className={({ isActive, isPending }) =>
-                            isPending ? styles.isPending : isActive ? styles.isActive : styles.isPending
+                            isPending ? styles.isPendingMob : isActive ? styles.isActiveMob : styles.isPendingMob
                         }
-                        ><FaClipboardList className={styles.icon}/> Pedidos
+                        >Pedidos
                         </NavLink>
+                    </SwiperSlide>
+                    <SwiperSlide>
                         <NavLink
-                        to={"/perfil/user/vendas" }
+                        to="/perfil/user/vendas"
                         className={({ isActive, isPending }) =>
-                            isPending ? styles.isPending : isActive ? styles.isActive : styles.isPending
+                            isPending ? styles.isPendingMob : isActive ? styles.isActiveMob : styles.isPendingMob
                         }
-                        ><FaDatabase className={styles.icon}/> Vendas
+                        >Relatório
                         </NavLink>
+                    </SwiperSlide>
+                    <SwiperSlide>
                         <NavLink
                         to="/perfil/user/config"
                         className={({ isActive, isPending }) =>
-                            isPending ? styles.isPending : isActive ? styles.isActive : styles.isPending
+                            isPending ? styles.isPendingMob : isActive ? styles.isActiveMob : styles.isPendingMob
                         }
-                        ><FaCog className={styles.icon}/> Configurações
+                        >Configurações
                         </NavLink>
-                    </div>
+                    </SwiperSlide>
+                </Swiper>
+                    <div className={`${styles.view_desk}`}>
+                        <div className={styles.cont_links}>
                 
-                </div>
+                            <NavLink
+                            to="/perfil/user/servicos"
+                            className={({ isActive, isPending }) =>
+                                isPending ? styles.isPending : isActive ? styles.isActive : styles.isPending
+                            }
+                            ><FaStore className={styles.icon}/> Loja
+                            </NavLink>
+                            <NavLink
+                            to="/perfil/user/agenda"
+                            className={({ isActive, isPending }) =>
+                                isPending ? styles.isPending : isActive ? styles.isActive : styles.isPending
+                            }
+                            ><FaClipboardList className={styles.icon}/> Agenda
+                            </NavLink>
+                            <NavLink
+                            to={"/perfil/user/vendas" }
+                            className={({ isActive, isPending }) =>
+                                isPending ? styles.isPending : isActive ? styles.isActive : styles.isPending
+                            }
+                            ><FaDatabase className={styles.icon}/> Relatório
+                            </NavLink>
+                            <NavLink
+                            to="/perfil/user/config"
+                            className={({ isActive, isPending }) =>
+                                isPending ? styles.isPending : isActive ? styles.isActive : styles.isPending
+                            }
+                            ><FaCog className={styles.icon}/> Configurações
+                            </NavLink>
+                        </div>
+                
+                    </div>
+            </div>
+            }
+    
     </>
         )
 

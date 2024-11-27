@@ -19,7 +19,8 @@ export default function Perfil () {
     const [user, setUser] = useState();
     const [stage, setStage] = useState(1)
     const [produtos, setProdutos] = useState([])
-    const [redirect, setRecirect] = useState()
+    const [servicos, setServicos] = useState([])
+    const [agenda, setAgenda] = useState([])
     const [usuarios, setUsuarios] = useState([])
     const [vendas, setVendas] = useState([])
     const [loading, setLoading] = useState(false)
@@ -27,6 +28,8 @@ export default function Perfil () {
     const Collec = collection(db, "MeiComSite")
     const UserCollection = collection(db, `MeiComSite/${user && user.email}/produtos`)
     const UserCollectionVendas = collection(db, `MeiComSite/${user && user.email}/vendas`)
+    const UserCollectionServicos = collection(db, `MeiComSite/${user && user.email}/servicos`)
+    const UserCollectionAgenda = collection(db, `MeiComSite/${user && user.email}/agenda`)
 
     useEffect (()=>{
         try{
@@ -59,6 +62,10 @@ export default function Perfil () {
         setProdutos((data.docs.map((doc) => ({...doc.data(), id: doc.id}))))
         const dataVendas = await getDocs(UserCollectionVendas);
         setVendas((dataVendas.docs.map((doc) => ({...doc.data(), id: doc.id}))))
+        const dataServicos = await getDocs(UserCollectionServicos);
+        setServicos((dataServicos.docs.map((doc) => ({...doc.data(), id: doc.id}))))
+        const dataAgenda = await getDocs(UserCollectionAgenda);
+        setAgenda((dataAgenda.docs.map((doc) => ({...doc.data(), id: doc.id}))))
 
         setLoading(true)
         setStage(2)
@@ -105,15 +112,25 @@ export default function Perfil () {
                 {!user ? loading : user ?
                 <div className={styles.container}>
                     {stage == 1 ? <Loading/>:
+                        usuario && usuario[0].mod == "Alimentação"?
                         <div className="row">
 
                             <div className={`${styles.col} col-md-2`}>
-                                <NavBarUser usuario={usuario && usuario[0]}/>
+                                <NavBarUser mod={usuario && usuario[0].mod}/>
                             </div>
 
 
                             <div className="col-md-10">
                                 <Outlet context={[mod, produtos && produtos, usuario, vendas, user]}/>
+                            </div>
+                        </div>
+                        :usuario && usuario[0].mod == "Agenda" && 
+                        <div className="row">
+                            <div className={`${styles.col} col-md-2`}>
+                                <NavBarUser mod={usuario && usuario[0].mod}/>
+                            </div>
+                            <div className="col-md-10">
+                                <Outlet context={[mod, produtos && produtos, usuario, vendas, user, servicos && servicos, agenda && agenda]}/>
                             </div>
                         </div>
                     }

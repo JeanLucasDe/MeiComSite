@@ -152,6 +152,17 @@ export default function BoxConfirm (props) {
         const ref = doc(db, `MeiComSite/${user && user.email}/produtos`, props.dados.id)
         await deleteDoc(ref)
         window.location.reload()
+    }
+
+
+    const AddServico = async() => {
+        await setDoc(doc(db, `MeiComSite/${user && user.email}/servicos`, `${props.id}`), {
+            nome:obj.nome,
+            valor:obj.valor,
+            hora:obj.hora,
+            agenda: []
+        })
+        window.location.reload()
         
     }
     const deletacompra = (nome) => {
@@ -432,6 +443,32 @@ export default function BoxConfirm (props) {
                 data-bs-target={props.data_bs_target}
                 onClick={()=> {
                     DeletarProduto()
+                }}
+                >Confirmar</button>
+
+
+                <button className={styles.cancel}
+                type={props.type} 
+                data-bs-toggle={props.data_bs_toggle} 
+                data-bs-target={props.data_bs_target}
+                >Cancelar</button>
+            </div>
+        </div>
+        }
+
+        {obj.ação == "AddServico" &&
+        <div className={styles.container}>
+            <h4>Adicionar Novo Serviço?</h4>
+            <div className='line'></div>
+            <div className={styles.cont_btn}>
+
+                
+                <button className={styles.confirm}
+                type={props.type} 
+                data-bs-toggle={props.data_bs_toggle} 
+                data-bs-target={props.data_bs_target}
+                onClick={()=> {
+                    AddServico()
                 }}
                 >Confirmar</button>
 
