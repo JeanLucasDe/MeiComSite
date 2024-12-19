@@ -5,7 +5,7 @@ import { useState } from "react"
 import moment from "moment"
 import AddAgenda from "./AddAgenda"
 import { doc, getFirestore, setDoc } from "firebase/firestore"
-import App from "../../../Hooks/App"
+import App from "../../../../Hooks/App"
 
 
 
@@ -20,9 +20,33 @@ export default function Agenda () {
     const fecha = usuario && usuario[0].fecha
 
     const AddData = async() => {
+        const DiferencaHoras = () => {
+            let abre = usuario && usuario[0].abre 
+            let fecha = usuario && usuario[0].fecha
+    
+            const Diff = parseInt(fecha.split(':')[0]) -  parseInt(abre.split(':')[0])
+            return Diff
+    
+        }
+    
+        var abre = usuario && usuario[0].abre 
+        const Diferenca = DiferencaHoras()
+        const ListHours = []
+    
+    
+        for (let i = 0; i < Diferenca; i++) {
+            let d = parseInt(abre.split(':')[0])
+            let r = d+=i
+            ListHours.push({
+                hora: r.toString(),
+                disp: true,
+            })
+        }
+
+
         await setDoc(doc(db, `MeiComSite/${usuario && usuario[0].email}/agenda`, `${date}`), {
             date,
-            agenda: []
+            agenda: ListHours
         })
         window.location.reload()
     }

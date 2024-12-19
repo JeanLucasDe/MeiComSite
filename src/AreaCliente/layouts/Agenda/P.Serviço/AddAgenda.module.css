@@ -1,0 +1,16 @@
+.container {
+    background-color: #fff;
+    padding: 1em;
+}
+.btn_confirm {
+    display: block;
+}
+.true {
+    background-color: aqua;
+}
+.false {
+    background-color: red;
+}
+.hour {
+    margin-bottom: 0.4em;
+}

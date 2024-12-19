@@ -77,12 +77,13 @@
         display: none;
     }
     .view_desk {
-        display: block;
+        display: table;
         padding: 8em 0em ;
-        height:  100% !important;
-        background-color: #FF9100;
-        position: relative;
         width: 100%;
+    }
+    .cont_links {
+        width: 100%;
+        position: absolute;
     }
     .view_desk a {
         margin: 0.5em 0em !important;
@@ -150,6 +151,9 @@
 .col {
     margin: 0em !important;
     padding: 0em !important;
+    background-color: #FF9100;
+    position: relative;
+    min-height: 100vh;
 }
 .small {
     width: 3% !important;

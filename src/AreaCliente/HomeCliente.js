@@ -15,6 +15,8 @@ export default function HomeCliente () {
     const {site} = useParams()
     const [clientes, setClientes] = useState([])
     const [vendas, setVendas] = useState([])
+    const [servicos, setServicos] = useState([])
+    const [agenda, setAgenda] = useState([])
     const [ok, setOk] = useState()
     const [funcionamento, setFuncionamento] = useState(1)
     const [prod, setProd] = useState([])
@@ -23,6 +25,8 @@ export default function HomeCliente () {
     const cliente = clientes.length > 0 && clientes.filter(dado => dado.site == site)
     const ProdCollection = collection(db, `MeiComSite/${cliente.length > 0 && cliente[0].email}/produtos`)
     const VendasCollection = collection(db, `MeiComSite/${cliente.length > 0 && cliente[0].email}/vendas`)
+    const UserCollectionServicos = collection(db, `MeiComSite/${cliente.length > 0 && cliente[0].email}/servicos`)
+    const UserCollectionAgenda = collection(db, `MeiComSite/${cliente.length > 0 && cliente[0].email}/agenda`)
 
 
     
@@ -35,6 +39,11 @@ export default function HomeCliente () {
         setProd((dataProd.docs.map((doc) => ({...doc.data(), id: doc.id}))))
         const dataVendas = await getDocs(VendasCollection)
         setVendas((dataVendas.docs.map((doc) => ({...doc.data(), id: doc.id}))))
+
+        const dataServicos = await getDocs(UserCollectionServicos);
+        setServicos((dataServicos.docs.map((doc) => ({...doc.data(), id: doc.id}))))
+        const dataAgenda = await getDocs(UserCollectionAgenda);
+        setAgenda((dataAgenda.docs.map((doc) => ({...doc.data(), id: doc.id}))))
 
         if (cliente && cliente.length > 0) {
             if (cliente[0].admin) {
@@ -76,8 +85,7 @@ export default function HomeCliente () {
                 <div>
                     {funcionamento == 2 ?
                     <div>
-                        {/*<NavigationBar info={cliente && cliente[0]}/>*/}
-                        <Outlet context={[prod && prod, cliente, vendas]}/>
+                        <Outlet context={[prod && prod, cliente, vendas, agenda, servicos]}/>
                     </div>:
                     funcionamento == 3 &&
                     <div>

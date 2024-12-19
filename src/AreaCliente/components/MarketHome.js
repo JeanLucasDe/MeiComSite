@@ -15,7 +15,6 @@ import 'swiper/css/scrollbar';
 import 'swiper/css/pagination';
 import 'swiper/css';
 import HomeWpp from "../layouts/Wpp/HomeWpp";
-import Conversation from "../layouts/Wpp/Conversation";
 import HomeAgenda from "../layouts/Agenda/HomeAgenda";
 import HomeCardapio from "../layouts/Cardapio/HomeCardapio";
 

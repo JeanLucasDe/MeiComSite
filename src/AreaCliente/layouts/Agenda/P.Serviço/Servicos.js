@@ -1,8 +1,7 @@
 import { useState } from "react"
 import styles from "./Servicos.module.css"
-import BoxConfirm from "../../../components/BoxConfirm"
+import BoxConfirm from "../../../../components/BoxConfirm"
 import { useOutletContext } from "react-router-dom"
-import moment from "moment"
 
 export default function Servicos () {
 
