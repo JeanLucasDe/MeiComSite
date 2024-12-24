@@ -301,3 +301,9 @@
     width: 300px;
     height: 300px;
 }
+.ok {
+    color: #00df00;
+}
+.off {
+    color: rgb(216, 0, 0);
+}

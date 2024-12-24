@@ -11,7 +11,7 @@ export default function Catalogo () {
     return (
             <>
                 <NavBar/>
-                <h1 className={styles.title}>Restaurantes</h1>
+                <h1 className={styles.title}>Nossos parceiros</h1>
                 <Exposed modalidade={modalidade}/>
                 <Footer/>
             </>

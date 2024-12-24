@@ -42,7 +42,7 @@ export default function Perfil () {
                         name: displayName ? displayName : '',
                         email
                     })
-                }
+                } else window.location.href='/login'
             })
             const getUsers = async () => {
                 const dataUser = await getDocs(Collec)
@@ -109,6 +109,7 @@ export default function Perfil () {
     return (
         <div>
             <NavBar/>
+                
                 {!user ? loading : user ?
                 <div className={styles.container}>
                     {stage == 1 ? <Loading/>:
@@ -120,8 +121,8 @@ export default function Perfil () {
                             </div>
 
 
-                            <div className="col-md-10">
-                                <Outlet context={[mod, produtos && produtos, usuario, vendas, user]}/>
+                            <div className={`${styles.main} col-md-10`}>
+                                <Outlet context={[mod, produtos && produtos, usuario, vendas, user]} className={styles.main}/>
                             </div>
                         </div>
                         :usuario && usuario[0].mod == "Agenda" && 
@@ -129,8 +130,9 @@ export default function Perfil () {
                             <div className={`${styles.col} col-md-2`}>
                                 <NavBarUser mod={usuario && usuario[0].mod}/>
                             </div>
-                            <div className="col-md-10">
-                                <Outlet context={[mod, produtos && produtos, usuario, vendas, user, servicos && servicos, agenda && agenda]}/>
+                            <div className={`${styles.main} col-md-10`}>
+                                <Outlet context={[mod, produtos && produtos, usuario, vendas, user, servicos && servicos, agenda && agenda]}
+                                />
                             </div>
                         </div>
                     }

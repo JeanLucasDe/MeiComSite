@@ -1,4 +1,7 @@
 
+.main {
+    min-height: 100vh !important;
+}
 @media screen and (min-width:320px) {
     .navigation {
         width: 90%;
@@ -103,6 +106,9 @@
         bottom: 0em;
         margin: auto 0em;
     }
+    .col {
+        min-height: 100vh;
+    }
 }
 
 .isActive {
@@ -153,7 +159,6 @@
     padding: 0em !important;
     background-color: #FF9100;
     position: relative;
-    min-height: 100vh;
 }
 .small {
     width: 3% !important;

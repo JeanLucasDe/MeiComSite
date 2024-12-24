@@ -43,7 +43,7 @@ export default function AddAgenda () {
 
 
 
-    const horarios = agenda.length > 0 && agenda[0].agenda
+    const horarios = agenda.length > 0 && agenda[0].agenda || []
     
 
 
@@ -57,12 +57,11 @@ export default function AddAgenda () {
 
     const PegaDiff = (hora) => {
         var d = hora + parseInt(Ser)
-        console.log(hour, d)
         return d
     }
     var duracao = PegaDiff()
     
-    const ListTempHoras = [...horarios && horarios]
+    const ListTempHoras = [...horarios]
 
 
 
@@ -73,7 +72,7 @@ export default function AddAgenda () {
             className={styles.container}
             key={seed}
             >
-                <h5>Nova agenda</h5>
+                <h5>Novo</h5>
                 <form>
                     <p>Nome Cliente:</p>
                     <input type='text' onChange={(el) =>setNome(el.target.value)}/>

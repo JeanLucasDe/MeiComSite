@@ -6,12 +6,16 @@ import { useState,useEffect } from "react"
 import {auth} from "../Service/firebase"
 import moment from 'moment/moment';
 import { useParams } from 'react-router-dom';
+import { toast, ToastContainer } from 'react-toastify';
 
 export default function BoxConfirm (props) {
 
     const obj = props.obj && props.obj
     const db = getFirestore(App)
     const [user, setUser] = useState();
+    const [nome, setNome] = useState();
+    const [hora, setHora] = useState('');
+    const [valor, setValor] = useState();
     const [produtos, setProdutos] = useState([])
     const UserCollection = collection(db, "MeiComSite")
     const {site} = useParams()
@@ -50,7 +54,7 @@ export default function BoxConfirm (props) {
             idloja: obj && obj.idLoja,
             status:"Em análise",
             nome:obj.nome,
-            theme: 'Wpp',
+            theme: obj.theme,
             telefone: obj.phone,
             razao:obj.razao,
             abre: obj.abre,
@@ -214,30 +218,62 @@ export default function BoxConfirm (props) {
 
     }
 
-    const apagaStorageProduto = () => {
-        let produtosSalvos = new Array()
-        
-        if (localStorage.hasOwnProperty(`meicomsiteteste`)) {
-            produtosSalvos = JSON.parse(localStorage.getItem(`meicomsiteteste`))
-        }
-        
-        
-        let index = produtosSalvos.findIndex(prop => prop.categoria == obj.categoriaa)
 
-        let listProdutos = produtosSalvos[index]
-
-        let indexProd = listProdutos.produtos.findIndex(dados => dados.nome == props.obj.dados.nome)
-
-        listProdutos.produtos.splice(indexProd, 1)
-
-        localStorage.setItem(`meicomsiteteste`,JSON.stringify(produtosSalvos))
-        window.location.reload()
-
-
+    const FormataValor = (valor) => {
+        var valorFormatado = valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+        return valorFormatado
     }
 
 
+    function horaMaiorQueUmaHora() {
+        const p = hora && hora.split(':')
+        if (parseInt(p[0])>0) {
+            return parseInt(p[0])
+        }
+      }
+      
+      const horaV = horaMaiorQueUmaHora()
 
+    const EditServico = async() => {
+        try {
+            if (!hora) {
+                await updateDoc(doc(db, `MeiComSite/${user && user.email}/servicos`, obj.uid), {
+                    hora: !hora ? obj.hora: hora
+                });
+                await updateDoc(doc(db, `MeiComSite/${user && user.email}/servicos`, obj.uid), {
+                    nome: !nome ? obj.nome : nome
+                });
+                await updateDoc(doc(db, `MeiComSite/${user && user.email}/servicos`, obj.uid), {
+                    valor: !valor ? obj.valor : valor
+                });
+                window.location.reload()
+            } else {
+                if (horaV) {
+                    await updateDoc(doc(db, `MeiComSite/${user && user.email}/servicos`, obj.uid), {
+                        hora: !hora ? obj.hora: hora
+                    });
+                    await updateDoc(doc(db, `MeiComSite/${user && user.email}/servicos`, obj.uid), {
+                        nome: !nome ? obj.nome : nome
+                    });
+                    await updateDoc(doc(db, `MeiComSite/${user && user.email}/servicos`, obj.uid), {
+                        valor: !valor ? obj.valor : valor
+                    });
+                    window.location.reload()
+                } else {
+                    toast.error('No mínimo 1 hora.')
+                }
+            }
+        } catch(e) {
+            console.log(e)
+        }
+
+    }
+    const DeleteServico = async() => {
+        const ref = doc(db, `MeiComSite/${user && user.email}/servicos`, obj.uid)
+        await deleteDoc(ref)
+        toast.success('Deletado com sucesso!')
+        window.location.reload()
+    }
 
     return (
         <>
@@ -481,8 +517,56 @@ export default function BoxConfirm (props) {
             </div>
         </div>
         }
+        {obj.ação == "EditarServico" &&
+        <div className={styles.container}>
+            <h4>Editar Serviço?</h4>
+            <button
+            className={styles.btn_delete}
+            onClick={()=> DeleteServico()}
+            >Deletar</button>
+            <div className='line'></div>
+            <div>
+                <input type='text'
+                placeholder={obj.nome}
+                className={styles.input}
+                onChange={(el)=> setNome(el.target.value)}
+                />
+                <input type='text'
+                placeholder={FormataValor(parseInt(obj.valor))}
+                className={styles.input}
+                onChange={(el)=> setValor(el.target.value)}
+                />
+                <input type='time'
+                placeholder={obj.hora}
+                className={styles.input}
+                onChange={(el)=> setHora(el.target.value)}
+                />
+            </div>
+
+
+
+            <div className={styles.cont_btn}>
+
+                
+                <button className={styles.confirm}
+                onClick={()=> {
+                    if(hora || valor || nome) {
+                        EditServico()
+                    }
+                }}
+                >Salvar</button>
+
+
+                <button className={styles.cancel}
+                type={props.type} 
+                data-bs-toggle={props.data_bs_toggle} 
+                data-bs-target={props.data_bs_target}
+                >Cancelar</button>
+            </div>
+        </div>
+        }
         
-        
+        <ToastContainer/>
         </>
         )
 }

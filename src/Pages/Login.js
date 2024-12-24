@@ -120,6 +120,7 @@ export default function Login () {
                         </div>
                         :
                         <div >
+                            {window.location.href = '/perfil/user/config'}
                         </div>
                         }
                     </div>

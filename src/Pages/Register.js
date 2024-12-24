@@ -37,22 +37,19 @@ export default function Register () {
 
     const VerificaTamanho = () => {
         if(pass.length < 8)
-        {
-            return false;
+            {
+                return false;
+            }
+            return true;
         }
-        return true;
-    }
+
 
     const VerificaMaiusculo = () => {
-        var regex = /^(?=(?:.*?[A-Z]){1})[0-9a-zA-Z!@#$%;*(){}_+^&]*$/; 
-        if(!regex.exec(pass))
-        {
-            return false;
-        }
-        return true;
+        const regex = /[A-Z]/;
+        return regex.test(pass);
     }
     const VerificaNumero = () => {
-        var regex = /^(?=(?:.*?[0-9]){3})[0-9a-zA-Z!@#$%;*(){}_+^&]*$/; 
+        var regex = /[0-9]{3}/; 
         if(!regex.exec(pass))
         {
             return false;
@@ -93,6 +90,7 @@ export default function Register () {
         })
     }
 
+
     return (
             <>
                 <NavBar/>
@@ -128,20 +126,20 @@ export default function Register () {
                             </div>
 
                              
-                            <p className={styles.item_verifica}>{!tam ?<FaTimes/>:<FaCheck/>}A senha deve conter no minímo 8 digitos!</p>
+                            <p className={styles.item_verifica}>{!tam ?<FaTimes className={styles.off}/>:<FaCheck className={styles.ok}/>}A senha deve conter no minímo 8 digitos!</p>
 
 
                             
-                            <p className={styles.item_verifica}>{!maiúsculo ?<FaTimes/>:<FaCheck/>}A senha deve conter no mínimo 1 caractere em maiúsculo</p>
+                            <p className={styles.item_verifica}>{!maiúsculo ?<FaTimes className={styles.off}/>:<FaCheck className={styles.ok}/>}A senha deve conter no mínimo 1 caractere em maiúsculo</p>
 
 
                             
-                            <p className={styles.item_verifica}>{!num ?<FaTimes/>:<FaCheck/>}A senha deve conter no mínimo 3 números</p>
+                            <p className={styles.item_verifica}>{!num ?<FaTimes className={styles.off}/>:<FaCheck className={styles.ok}/>}A senha deve conter no mínimo 3 números</p>
 
 
                             
                             <p className={styles.item_verifica}>
-                            {confirmPass && confirmPass == pass ? <FaCheck/>: <FaTimes/>}
+                            {confirmPass && confirmPass == pass ? <FaCheck className={styles.ok}/>: <FaTimes className={styles.off}/>}
                             As senhas devem ser iguais</p>
 
                             {tam && num && maiúsculo && pass == confirmPass?

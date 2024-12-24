@@ -13,3 +13,19 @@ padding: 1em;
     background-color: #c7c7c7;
 
 }
+.input {
+    border: none;
+    border-bottom: 1px solid #dddd;
+    border-radius: 5px;
+    padding: 0.3em;
+    text-indent: 5px;
+    width: 100%;
+    margin-bottom: 0.6em
+}
+.btn_delete {
+    padding: 0.2em;
+    border-color: red;
+    color: red;
+    background-color: #fff;
+    border-radius: 7px;
+}

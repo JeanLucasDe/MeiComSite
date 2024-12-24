@@ -7,3 +7,74 @@
 .container {
     margin-top: 4em;
 }
+.button_new {
+    border: none;
+    background-color: #ff9900;
+    color: #fff;
+    padding: 0.6em;
+    border-radius: 10px;
+    font-size: 1em;
+    display: flex;
+    align-items: center;
+    font-weight: 500;
+    padding: 0.7em;
+}
+.button_back {
+    border: none;
+    background-color: #b3b3b3;
+    color: #fff;
+    width: auto;
+    border-radius: 7px;
+    padding: 0.7em;
+}
+.list {
+    list-style-type: none;
+    padding: 0em 1em;
+    margin-top: 2em;
+}
+.item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1em;
+    border-bottom: 1px dashed #000;
+    position: relative;
+    width: 100%;
+}
+.info_item {
+    width: 90%;
+    display: flex;
+    justify-content: space-between;
+}
+.edit {
+    position: absolute;
+    right: .7em;
+}
+.item p {
+    margin-bottom: 0em;
+}
+.nome {
+    font-size: 1.2em;
+    font-weight: 600;
+}
+.input {
+    border: none;
+    border-bottom: 1px solid #dddd;
+    border-radius: 5px;
+    padding: 0.3em;
+    text-indent: 5px;
+    width: 100%;
+    margin-bottom: 0.6em
+}
+.label {
+    margin-bottom: 0em;
+}
+.cont_btn {
+    margin-top: 2em;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+.margin_Bottom {
+    margin-bottom: 2em;
+}

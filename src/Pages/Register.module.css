@@ -7,6 +7,12 @@
     margin-bottom: 2em;
     
 }
+.ok {
+    color: #25bb00;
+}
+.off {
+    color: rgb(240, 0, 0);
+}
 .cont_register {
     padding: 1em;
     box-shadow: 1px 1px 4px #858585dd;

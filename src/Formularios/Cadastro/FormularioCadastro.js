@@ -2,7 +2,7 @@ import styles from "./FormularioCadastro.module.css"
 import BoxConfirm from "../../components/BoxConfirm"
 import { Link, useOutletContext} from "react-router-dom"
 import { useState, useEffect} from "react"
-import {FaPlusCircle} from "react-icons/fa"
+import {FaCheck, FaPlusCircle, FaTimes} from "react-icons/fa"
 import moment from "moment"
 import { toast, ToastContainer } from "react-toastify"
 import App from "../../App"
@@ -110,6 +110,7 @@ export default function FormularioCadastro () {
     fecha: fecha,
     listBairros,
     listCidades,
+    theme:modalidade,
     ação:ação,
     }
     
@@ -151,6 +152,18 @@ export default function FormularioCadastro () {
     }
     
 
+    function temSomenteLetras() {
+        const regex = /^[A-Za-z]+$/; // Expressão regular para verificar se contém somente letras (maiúsculas ou minúsculas)
+        return regex.test(site);
+      }
+    function semAcento() {
+    const regex = /^[^áéíóúàèìòùãõâêîôûäëïöüç]*$/i; // Expressão regular que aceita apenas caracteres sem acento
+    return regex.test(site);
+    }
+
+    const acento = semAcento()
+    const alpha = temSomenteLetras()
+
     return (
         <>
         <NavBar/>
@@ -187,7 +200,7 @@ export default function FormularioCadastro () {
                                     placeholder="Digite Aqui"
                                     />
                                     <label>Telefone *</label>
-                                    <input type="text"
+                                    <input type="number"
                                     onChange={(el)=> {
                                         setPhone(el.target.value)
                                     }}
@@ -212,7 +225,7 @@ export default function FormularioCadastro () {
                                     placeholder="Digite Aqui"
                                     />
                                     <label>Número *</label>
-                                    <input type="text"
+                                    <input type="number"
                                     onChange={(el)=> {
                                         setNumeroUser(el.target.value)
                                     }}
@@ -266,6 +279,8 @@ export default function FormularioCadastro () {
                                                 required
                                                 placeholder="meusite"
                                                 />
+                                                <p>{acento ? <FaCheck className={acento ? styles.ok : styles.off}/>: <FaTimes className={acento ? styles.ok : styles.off}/>} Sem Acento</p>
+                                                <p>{alpha ? <FaCheck className={alpha ? styles.ok : styles.off}/>: <FaTimes className={alpha ? styles.ok : styles.off}/>} Somente Letras</p>
                                             </div>
                                         </div>
                                     </div>
@@ -457,8 +472,9 @@ export default function FormularioCadastro () {
                                         className={styles.input}
                                         onChange={(el)=> setModalidade(el.target.value)}
                                         >
-                                            <option value="-">-</option>
+                                            <option value="-" selected disabled defaultChecked>-</option>
                                             <option value="Alimentação">Alimentação</option>
+                                            <option value="Agenda">Agendamento</option>
                                         </select>
                                     </div>
                                 </div>
@@ -473,7 +489,7 @@ export default function FormularioCadastro () {
             </div>
             <div className={styles.cont_save}>
                 {nome && modalidade && modalidade != '-' && phone 
-                && razao && cidadeUser && bairroUser && numeroUser && cep && listBairros && listCidades ?
+                && razao && cidadeUser && bairroUser && numeroUser && cep && listBairros && listCidades && alpha && acento ?
                     <button
                     type="button" 
                     data-bs-toggle="modal" 
@@ -497,10 +513,15 @@ export default function FormularioCadastro () {
             </>
         
         :
+        usuario && usuario.length > 0 ?
+        <div>
+            {window.location.href = '/perfil/user/config'}
+        </div>
+        :
         <div className={styles.cont_empty}>
             <img src='https://img.freepik.com/free-vector/user-verification-unauthorized-access-prevention-private-account-authentication-cyber-security-people-entering-login-password-safety-measures_335657-8.jpg?size=626&ext=jpg&ga=GA1.2.995514839.1678974862&semt=ais' className={styles.logo_empty}/>
-            <h4>Você já está cadastrado</h4>
-            <Link to="/perfil/user/config"
+            <h4>Faça Login para Continuar!</h4>
+            <Link to="/login"
             className={styles.btn_continue}
             >Continuar</Link>
         </div>

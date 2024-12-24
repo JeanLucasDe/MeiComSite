@@ -140,6 +140,7 @@ export default function FormularioEdit () {
 
 
 
+
     return (
         <>
         {user && usuario && usuario.map(dados => {
@@ -531,8 +532,9 @@ export default function FormularioEdit () {
                                             className={styles.input}
                                             onChange={(el)=> setModalidade(el.target.value)}
                                             >
-                                                <option>--</option>
+                                                <option selected disabled defaultChecked>--</option>
                                                 <option>Alimentação</option>
+                                                <option value='Agenda'>Agendamento</option>
                                             </select>
                                             {mod && mod != "--" &&
                                                 <button

@@ -4,13 +4,14 @@ import { useState } from "react"
 import { doc, updateDoc,  deleteDoc, getFirestore, collection, getDocs,setDoc} from "@firebase/firestore";
 import App from "../../../Hooks/App";
 import {FaCheck, FaUndo } from "react-icons/fa"
+import moment from "moment";
+import { toast, ToastContainer } from "react-toastify";
 
 
 export default function HomeAgenda (props) {
 
     const [ prod, cliente, vendas, agenda, servicos] = useOutletContext()
     const [stage, setStage] = useState(0)
-    const [pack, setPack] = useState()
     const [escolhaServico, setEscolhaServico] = useState()
     const [escolhaData, setEscolhaData] = useState()
     const [escolhaHora, setEscolhaHora] = useState()
@@ -21,7 +22,7 @@ export default function HomeAgenda (props) {
     const [selectDate, setSelectDate] = useState(false)
     const [nome, setNome] = useState()
     const [celular, setCelular] = useState()
-    const [finalHour, setFinalHour] = useState()
+    var [finalHour, setFinalHour] = useState()
 
 
     const SeparaHoras = (item) => {
@@ -100,24 +101,64 @@ export default function HomeAgenda (props) {
         setSelectHour(false)
     }
 
+
+
+
+
+
+
+
+
     const Confirmar = async () => {
         let result = []
         agenda && agenda.map(dados => {
-            if (dados.date == escolhaData) {
+            if (dados.id == escolhaData) {
+                dados.agenda.map(item=> {
+                    listHoras.map(horas => {
+                        if (horas.hora == item.hora) {
+                            item.nome = nome;
+                            item.telefone = celular;
+                            item.servico = Service
+                        }
+                    })
+                })
+            }
+        })
+        agenda && agenda.map(dados => {
+            if (dados.id == escolhaData) {
                 dados.agenda.map(item => {
                     result.push(item)
                 })
             }
         })
+
+
+
         await updateDoc(doc(db, `MeiComSite/${cliente && cliente[0].email}/agenda`, escolhaData), {
             agenda: result
         });
+
+
+        toast.success('Horário Agendado com sucesso!')
+        window.location.href = cliente && cliente[0].site
     }
+
+
+
+
+
+
+
+
+
+
 
     const FormataValor = (valor) => {
         var valorFormatado = valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
         return valorFormatado
     }
+
+    const fimHour = parseFloat(finalHour) + 1
 
     return (
 
@@ -198,13 +239,12 @@ export default function HomeAgenda (props) {
                                     return (
                                         <option
                                         value={dados.date}
-                                        >{dados.date}</option>
+                                        >{moment(dados.date).format('DD/MM/YYYY')}</option>
                                     )
                                 })}
                             </select>:
-                            <p>{escolhaData}</p>
+                            <p>{moment(escolhaData).format('DD/MM/YYYY')}</p>
                             }
-                            {console.log(escolhaData)}
                             {selectDate ?
                                 <button
                                 onClick={()=> setSelectDate(false)}
@@ -229,7 +269,7 @@ export default function HomeAgenda (props) {
                         {selectDate && 
                         <div>
                             <h5>Escolha a Hora</h5>
-                            <p>Até {escolhaServico.hora} horas</p>
+                            <p>{escolhaServico.hora} hora(s)</p>
                             <div
                             className={styles.cont_horas}
                             >
@@ -301,7 +341,7 @@ export default function HomeAgenda (props) {
                     <h5>Confirme seus dados</h5>
                     <p>Data : {escolhaData}</p>
                     <p>Serviço: {Service}</p>
-                    <p>Horario: das {escolhaHora}h as {finalHour}h</p>
+                    <p>Horario: das {escolhaHora}h as {fimHour}h</p>
                     <div className={styles.line}/>
                     <form
                     className={styles.form}
@@ -346,6 +386,7 @@ export default function HomeAgenda (props) {
 
                 
             </div>
+            <ToastContainer/>
         </>
         )
 }
