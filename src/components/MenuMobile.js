@@ -27,41 +27,13 @@ export default function MenuMobile (props) {
                 className={styles.mod}
                 >Demonstração</li></Link>
 
-                <Link to="/catalogo/alimentação"><li
+                <Link to="/catalogo"><li
                 type={props.type}
                 data-bs-dismiss={props.data_bs_dismiss}
                 aria-label={props.aria_label}
                 className={styles.mod}
                 >Explorar</li></Link>
-
-                <Link to="/perfil/user/categorias"><li
-                type={props.type}
-                data-bs-dismiss={props.data_bs_dismiss}
-                aria-label={props.aria_label}
-                className={styles.mod}
-                >Loja</li></Link>
-
-                <Link to="/perfil/user/online"><li
-                type={props.type}
-                data-bs-dismiss={props.data_bs_dismiss}
-                aria-label={props.aria_label}
-                className={styles.mod}
-                >Pedidos</li></Link>
-
-                <Link to="/perfil/user/vendas"><li
-                type={props.type}
-                data-bs-dismiss={props.data_bs_dismiss}
-                aria-label={props.aria_label}
-                className={styles.mod}
-                >Relatório</li></Link>
                 
-                <Link to="/entregas"><li
-                type={props.type}
-                data-bs-dismiss={props.data_bs_dismiss}
-                aria-label={props.aria_label}
-                className={styles.mod}
-                >Entregas</li></Link>
-
                 
                 <Link to="/perfil/user/config"><li
                 type={props.type}

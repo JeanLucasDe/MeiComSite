@@ -110,3 +110,17 @@
 .cont_modal {
     padding: 1em;
 }
+.date {
+    margin-left: .6em;
+    margin-bottom: 0em;
+    font-size: .9em;
+    font-weight: 500;
+}
+.btn_delete_account {
+    padding: 0.5em;
+    border-color: red;
+    color: red;
+    background-color: #fff;
+    border-radius: 7px;
+    font-weight: 500;
+}

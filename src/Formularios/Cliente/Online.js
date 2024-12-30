@@ -19,7 +19,7 @@ export default function Online () {
 
     return (
         <>
-            {usuario && usuario[0].admin ?
+            {usuario && usuario[0].admin && usuario[0].mod == 'Alimentação' ?
             <>
                 <div className={styles.container}>
                     <div className={styles.title}>
@@ -38,7 +38,8 @@ export default function Online () {
             :
             <div className={styles.cont_empty}>
                 <img src="https://img.freepik.com/free-vector/hand-drawn-facepalm-illustration_23-2150199871.jpg?size=626&ext=jpg&ga=GA1.1.995514839.1678974862&semt=ais"/>
-                <h4>Desculpe, você ainda não tem permissão para prosseguir</h4>
+                <h4>Opa, Algo deu errado.</h4>
+                <p>Contate nosso suporte <Link to='/suporte'>suporte</Link></p>
 
             </div>
             }

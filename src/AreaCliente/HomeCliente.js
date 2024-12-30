@@ -31,6 +31,8 @@ export default function HomeCliente () {
 
     
     const {abre, fecha, pause} =  cliente.length > 0 && cliente[0]
+    const modalidade = cliente.length > 0 && cliente[0].mod
+    
 
     const getUsers = async () => {
         const data = await getDocs(UserCollection);
@@ -47,11 +49,24 @@ export default function HomeCliente () {
 
         if (cliente && cliente.length > 0) {
             if (cliente[0].admin) {
-                if (horarioAtual <= fechaHora && horarioAtual >= abreHora && pause) {
-                    setFuncionamento(2)
-                } else if (!pause){
-                    setFuncionamento(3)
-                }
+                if (modalidade == 'Agenda') {
+                    if (pause) {
+                        setFuncionamento(2)
+                    } else {
+                        setFuncionamento(3)
+                    }
+                } 
+                if (modalidade == 'Alimentação') {
+                    if (pause) {
+                        if (horarioAtual >= abreHora && horarioAtual <= fechaHora) {
+                            setFuncionamento(2)
+                        } else {
+                            setFuncionamento(3)
+                        }
+                    } else {
+                        setFuncionamento(3)
+                    }
+                } 
             } else {
                 setFuncionamento(0)
             }
@@ -77,38 +92,31 @@ export default function HomeCliente () {
 
 
 
-
     return (
         <>
             {funcionamento == 1  && <Loading/>}
-            {funcionamento > 0 ?
-                <div>
-                    {funcionamento == 2 ?
-                    <div>
-                        <Outlet context={[prod && prod, cliente, vendas, agenda, servicos]}/>
-                    </div>:
-                    funcionamento == 3 &&
-                    <div>
-                        <div className={styles.cont_empty}>
-                            <img src="https://img.freepik.com/free-vector/postponed-concept-hand-drawn-design_23-2148500980.jpg?size=626&ext=jpg&ga=GA1.1.995514839.1678974862&semt=ais"
-                            />
-                            <h5>Desculpe, estamos fechados.</h5>
-                        </div>
-                    </div>
-                    }
-                </div>
-                
-                :
-                
+
+
+            {funcionamento == 2 &&
+            <div>
+                <Outlet context={[prod && prod, cliente, vendas, agenda, servicos]}/>
+            </div>}
+
+            {funcionamento == 3 &&
+            <div>
                 <div className={styles.cont_empty}>
-                    <img src="https://img.freepik.com/free-vector/computer-user-human-character-program-windows_1284-63445.jpg?size=626&ext=jpg&ga=GA1.1.995514839.1678974862&semt=ais"
+                    <img src="https://img.freepik.com/free-vector/postponed-concept-hand-drawn-design_23-2148500980.jpg?size=626&ext=jpg&ga=GA1.1.995514839.1678974862&semt=ais"
                     />
-                    <h5>Ainda não há permissão para exibir esta página.</h5>
+                    <h5>Desculpe, estamos fechados.</h5>
                 </div>
-            
+            </div>
             }
-            <LinkMeiComSite/>
-            
+                
+            {funcionamento == 0  && <div className={styles.cont_empty}>
+                <img src="https://img.freepik.com/free-vector/computer-user-human-character-program-windows_1284-63445.jpg?size=626&ext=jpg&ga=GA1.1.995514839.1678974862&semt=ais"
+                />
+                <h5>Ainda não há permissão para exibir esta página.</h5>
+            </div>}
 
         </>
         )

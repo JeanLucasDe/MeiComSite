@@ -71,7 +71,7 @@ export default function Categorias () {
 
     return (
             <>
-                {usuario.length > 0 && usuario[0].theme == "Cardapio" &&
+                {usuario.length > 0 && usuario[0].mod == "Alimentação" &&
                     <div className={`${styles[usuario && usuario[0].theme]}`}> 
                         <div className={styles.container}>
                             <div className={styles.header_prod}>

@@ -1,7 +1,7 @@
 import { useState } from "react"
 import styles from "./Servicos.module.css"
 import BoxConfirm from "../../../../components/BoxConfirm"
-import { useOutletContext } from "react-router-dom"
+import { Link, useOutletContext } from "react-router-dom"
 import {FaPenAlt, FaPlus, FaTrashAlt} from "react-icons/fa"
 
 export default function Servicos () {
@@ -46,7 +46,7 @@ export default function Servicos () {
 
     return (
         <>
-            {state == 1 ? 
+            {state == 1 && usuario && usuario[0].mod == 'Agenda' ? 
             <div
             className={styles.container}
             >
@@ -101,57 +101,11 @@ export default function Servicos () {
             </div>
             :
             <div className={styles.cont_modal}>
-                <h5>Novo Serviço</h5>
-                <div className="line"/>
-                <div
-                className="row"
-                >
-                    <div className="col-lg-6">
-                        <form
-                        >
-                            <p className={styles.label}>Nome :</p>
-                            <input type="text" onChange={(el) => setNome(el.target.value)}
-                            required
-                            className={styles.input}
-                            />
-                            <p className={styles.label}>Valor :</p>
-                            <input type="number" onChange={(el) => setValor(el.target.value)} required
-                            className={styles.input}
-                            />
-                            <div>
-                                <p className={styles.label}>Duração (min: 1hora) :</p>
-                                <input type="time" onChange={(el) => setHora(el.target.value)}
-                                min="00:30" max="12:00" required
-                                className={styles.input}
-                                title="Apartir de 1 hora"
-                                />
-                            </div>
-                            <div
-                            className={styles.cont_btn}
-                            >
-                                <button
-                                onClick={(el)=> {
-                                    el.preventDefault()
-                                    setState(1)
-                                    setNome('')
-                                    setHora('')
-                                    setValor('')
-                                }}
-                                    className={styles.button_back}
-                                >Cancelar</button>
-                                {nome && valor && horaV  && <button
-                                type="button"
-                                data-bs-toggle="modal"
-                                data-bs-target={`#ModalConfirmTrash`}
-                                className={styles.button_new}
-                                onClick={(el)=> {
-                                    el.preventDefault()
-                                    setAção('AddServico')
-                                }}
-                                >Confirmar</button>}
-                            </div>
-                        </form>
-                    </div>
+                <div className={styles.cont_empty}>
+                    <img src="https://img.freepik.com/free-vector/hand-drawn-facepalm-illustration_23-2150199871.jpg?size=626&ext=jpg&ga=GA1.1.995514839.1678974862&semt=ais"/>
+                    <h4>Opa, Algo deu errado.</h4>
+                    <p>Contate nosso suporte <Link to='/suporte'>suporte</Link></p>
+
                 </div>
             </div>
             }

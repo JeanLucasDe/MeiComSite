@@ -85,7 +85,7 @@ function App() {
 
               </Route>
 
-              <Route path="/catalogo/:modalidade" element={<Catalogo/>}/>
+              <Route path="/catalogo" element={<Catalogo/>}/>
 
 
 

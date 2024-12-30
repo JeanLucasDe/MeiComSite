@@ -97,18 +97,21 @@ export default function HomeAgenda (props) {
         })
 
 
-
+        
         setSelectHour(false)
     }
+    const number = cliente && cliente[0].telefone;  // Número de telefone (com código de país)
+    const message = `Olá, gostaria de confirmar meu agendamento para o dia ${moment(escolhaData).format('DD/MM/YYYY')} as ${escolhaHora}h para o serviço: ${Service}`; 
 
-
-
-
-
-
-
-
-
+    function sendMessageToWhatsApp(number, message) {
+        toast.success('Agendamento Concluído com sucesso!')
+        setTimeout(function() {
+            const encodedMessage = encodeURIComponent(message);
+            const url = `https://wa.me/+55${number}?text=${encodedMessage}`; 
+            window.location.href = url;
+        }, 2000);
+      }
+      
     const Confirmar = async () => {
         let result = []
         agenda && agenda.map(dados => {
@@ -131,34 +134,20 @@ export default function HomeAgenda (props) {
                 })
             }
         })
-
-
-
         await updateDoc(doc(db, `MeiComSite/${cliente && cliente[0].email}/agenda`, escolhaData), {
             agenda: result
         });
-
-
-        toast.success('Horário Agendado com sucesso!')
-        window.location.href = cliente && cliente[0].site
+        sendMessageToWhatsApp(number,message)
     }
-
-
-
-
-
-
-
-
-
-
-
     const FormataValor = (valor) => {
         var valorFormatado = valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
         return valorFormatado
     }
 
     const fimHour = parseFloat(finalHour) + 1
+
+
+      
 
     return (
 
@@ -236,11 +225,13 @@ export default function HomeAgenda (props) {
                                 >
                                 <option value="" data-default disabled selected></option>
                                 {agenda && agenda.map(dados => {
-                                    return (
-                                        <option
-                                        value={dados.date}
-                                        >{moment(dados.date).format('DD/MM/YYYY')}</option>
-                                    )
+                                    if (moment().format('YYYY-MM-DD') <= dados.date) {
+                                        return (
+                                            <option
+                                            value={dados.date}
+                                            >{moment(dados.date).format('DD/MM/YYYY')}</option>
+                                        )
+                                    }
                                 })}
                             </select>:
                             <p>{moment(escolhaData).format('DD/MM/YYYY')}</p>
@@ -283,12 +274,8 @@ export default function HomeAgenda (props) {
                                                         setEscolhaHora(item.hora)
                                                         if (item.disp) {
                                                             SeparaHoras(item)
-
-
-
-
                                                         } else {
-                                                            console.log('ocupado')
+                                                            return
                                                         }
                                                     }}
                                                     value={item.hora}

@@ -85,9 +85,15 @@ export default function Agenda () {
     moment.locale('pt')
     const dia = moment(escolhaDate).format('dddd')
     
+    const CancelaAgenda = () => {
+        
+    }
+
+
+
     return (
         <>
-        {usuario.length > 0 && usuario[0].mod =="Agenda" &&
+        {usuario && usuario.length > 0 && usuario[0].mod =="Agenda" &&
             <div className={styles.container}>
                 <h5>Bem Vindo(a) a Sua Agenda</h5>
                 <div className="line"/>
@@ -95,16 +101,10 @@ export default function Agenda () {
                     className={styles.cont_buttons}
                     >
                         <button
-                        type="button"
-                        data-bs-toggle="modal"
-                        data-bs-target={`#ModalNew`}
-                        className={styles.button_new}
-                        ><FaCalendarAlt/> Agendar</button>
-                        <button
                         className={styles.button_new}
                         onClick={() => setHorarios(true)}
                         >
-                            Abrir Horários
+                            <FaCalendarAlt/> Abrir Horário
                         </button>
                     </div>
                 {horarios && 
@@ -150,6 +150,7 @@ export default function Agenda () {
                         className="row"
                         >
                             <div className="col-lg-8">
+                                <p className={styles.date}>Data:</p>
                                 {escolhaDate && <p>Selecione a Data</p>}
                                 <input type="date" onChange={(el)=> setEscolhaDate(el.target.value)}
                                 className={styles.input}/>
@@ -301,6 +302,12 @@ export default function Agenda () {
                             <p>Nome: {cliente && cliente.nome}</p>
                             <p>Telefone: {cliente && cliente.telefone}</p>
                             <p>Serviço: {cliente && cliente.servico}</p>
+                            <button
+                            onClick={() => {
+                                CancelaAgenda()
+                            }}
+                            className={styles.btn_delete_account}
+                            >Cancelar Agenda</button>
                         </div>
                     </div>
                 </div>
