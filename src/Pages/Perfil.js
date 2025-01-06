@@ -54,7 +54,6 @@ export default function Perfil () {
         }
     },[])
 
-    
     const usuario = usuarios && user && usuarios.filter(dados => dados.email == user.email)
 
     const getUsuarioVendas = async() => {
@@ -131,7 +130,7 @@ export default function Perfil () {
                                 <NavBarUser mod={usuario && usuario[0].mod}/>
                             </div>
                             <div className={`${styles.main} col-md-10`}>
-                                <Outlet context={[mod, produtos && produtos, usuario, vendas, user, servicos && servicos, agenda && agenda]}
+                                <Outlet context={[mod, produtos && produtos, usuario, vendas, user, agenda,servicos]}
                                 />
                             </div>
                         </div>

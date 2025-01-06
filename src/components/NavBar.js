@@ -37,7 +37,7 @@ return (
         <div className={styles.content}>
             <Link to="/" className={styles.logo_content}><img src={logo} className={styles.logo}/> <span className={styles.f_serif}>eiComSite</span></Link>
             <div className={styles.menu}>
-            <Link to="/catalogo/alimentação">Explorar</Link>
+            <Link to="/catalogo">Explorar</Link>
             <Link to="/page/demo" target="_blank">Demo</Link>
             <Link to="/suporte">Ajuda</Link>
             </div>

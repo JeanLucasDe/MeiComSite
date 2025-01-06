@@ -146,7 +146,7 @@ export default function NavBarUser (props) {
                     </SwiperSlide>
                     <SwiperSlide>
                         <NavLink
-                        to="/perfil/user/vendas"
+                        to="/perfil/user/relatorio"
                         className={({ isActive, isPending }) =>
                             isPending ? styles.isPendingMob : isActive ? styles.isActiveMob : styles.isPendingMob
                         }
@@ -181,7 +181,7 @@ export default function NavBarUser (props) {
                             ><FaClipboardList className={styles.icon}/> Agenda
                             </NavLink>
                             <NavLink
-                            to={"/perfil/user/vendas" }
+                            to={"/perfil/user/relatorio" }
                             className={({ isActive, isPending }) =>
                                 isPending ? styles.isPending : isActive ? styles.isActive : styles.isPending
                             }

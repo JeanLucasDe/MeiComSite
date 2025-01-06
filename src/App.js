@@ -36,6 +36,7 @@ import Box_idLoja from "./Pages/Box_idLoja";
 import EntregaPedido from "./Pages/EntregaPedido";
 import Agenda from "./AreaCliente/layouts/Agenda/P.Serviço/Agenda";
 import Servicos from "./AreaCliente/layouts/Agenda/P.Serviço/Servicos";
+import Relatório from "./Formularios/Cliente/Relatório";
 
 
 
@@ -79,6 +80,7 @@ function App() {
                 <Route path="/perfil/user/online" element={<Online/>}/>
                 <Route path="/perfil/user/categorias/:categoriaa" element={<Produtos/>}/>
                 <Route path="/perfil/user/config" element={<FormularioEdit/>}/>
+                <Route path="/perfil/user/relatorio" element={<Relatório/>}/>
                 <Route path="/perfil/user/vendas" element={<Vendas/>}>
                     <Route index element={<FiltroVendas/>}/>
                 </Route>

@@ -20,7 +20,7 @@ export default function Vendas () {
 
     return (
             <>
-                {usuario.length > 0 && usuario[0].admin ?
+                {usuario.length > 0 && usuario[0].admin && usuario[0].mod == 'Alimentação' ?
                 <Outlet  context={[vendas && vendas, usuario]} />
                 :
                 <div className={styles.cont_empty}>

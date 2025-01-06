@@ -16,6 +16,7 @@ export default function HomeAgenda (props) {
     const [escolhaData, setEscolhaData] = useState()
     const [escolhaHora, setEscolhaHora] = useState()
     const [Service, setSelectService] = useState()
+    const [valor, setValor] = useState()
     const [listHoras, setListHoras] = useState()
     const [selectHour, setSelectHour] = useState(false)
     const db = getFirestore(App)
@@ -24,82 +25,14 @@ export default function HomeAgenda (props) {
     const [celular, setCelular] = useState()
     var [finalHour, setFinalHour] = useState()
 
-
-    const SeparaHoras = (item) => {
-        if (!selectHour) {
-            const listHour = []
-            const horas = []
-            const result = (parseInt(item.hora) + parseInt(escolhaServico.hora))
-            agenda && agenda.map(dados => {
-                if (dados.date == hoje.getFullYear()+'-'+meses[mesAtual].id+'-'+selectDate) {
-                    dados.agenda.map(item => {horas.push(item.hora)})
-                }
-            })
-            const max = Math.max.apply(null, horas)
-            if (result - 1 <= max) {
-                setFinalHour(result - 1)
-                for (let i = parseInt(item.hora); i < result; i++) {
-                    listHour.push({'hora': i.toString()})
-                }
-                setListHoras(listHour)
-                const numbers = [];
-                agenda && agenda.map(dados => {
-                    if (dados.date == escolhaData) {
-                        dados.agenda.map(item => {
-                            listHour.map(horas => {
-                                if (horas.hora == item.hora) {
-                                    numbers.push(item.disp)
-                                }
-                            })
-                        })
-                        
-                    }
-                })
-                const allTrue = numbers.every(function(number) {
-                return number == true;
-                });
-                if (allTrue) {
-                    agenda && agenda.map(dados => {
-                        if (dados.date == hoje.getFullYear()+'-'+meses[mesAtual].id+'-'+selectDate) {
-                            dados.agenda.map(item => {
-                                listHour.map(horas => {
-                                    if (horas.hora == item.hora) {
-                                        item.disp = false
-                                    }
-                                })
-                            })
-                            
-                        }
-                    })
-                    setSelectHour(true)
-                    toast.success('Horário Selecionado')
-                }
-            }
-        } 
+    const geraId = () => {
+        const numeroAleatorio = Math.floor(Math.random() * 100000);
+        return numeroAleatorio
     }
+    const id = geraId()
 
-
-    const CancelaHora = () => {
-
-        agenda && agenda.map(dados => {
-            if (dados.date == hoje.getFullYear()+'-'+meses[mesAtual].id+'-'+selectDate) {
-                dados.agenda.map(item => {
-                    listHoras.map(horas => {
-                        if (horas.hora == item.hora) {
-                            item.disp = true
-                        }
-                    })
-                })
-                
-            }
-        })
-
-
-        
-        setSelectHour(false)
-    }
     const number = cliente && cliente[0].telefone;  // Número de telefone (com código de país)
-    const message = `Olá, gostaria de confirmar meu agendamento para o dia ${moment(escolhaData).format('DD/MM/YYYY')} as ${escolhaHora}h para o serviço: ${Service}`; 
+    const message = `Olá,me chamo ${nome} e gostaria de confirmar meu agendamento para o dia ${moment(escolhaData).format('DD/MM/YYYY')} as ${escolhaHora}h para o serviço: ${Service}, id: ${id}`; 
 
     function sendMessageToWhatsApp(number, message) {
         toast.success('Agendamento Concluído com sucesso!')
@@ -110,33 +43,6 @@ export default function HomeAgenda (props) {
         }, 2000);
       }
       
-    const Confirmar = async () => {
-        let result = []
-        agenda && agenda.map(dados => {
-            if (dados.id == escolhaData) {
-                dados.agenda.map(item=> {
-                    listHoras.map(horas => {
-                        if (horas.hora == item.hora) {
-                            item.nome = nome;
-                            item.telefone = celular;
-                            item.servico = Service
-                        }
-                    })
-                })
-            }
-        })
-        agenda && agenda.map(dados => {
-            if (dados.id == escolhaData) {
-                dados.agenda.map(item => {
-                    result.push(item)
-                })
-            }
-        })
-        await updateDoc(doc(db, `MeiComSite/${cliente && cliente[0].email}/agenda`, escolhaData), {
-            agenda: result
-        });
-        sendMessageToWhatsApp(number,message)
-    }
     const FormataValor = (valor) => {
         var valorFormatado = valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
         return valorFormatado
@@ -196,7 +102,7 @@ export default function HomeAgenda (props) {
     function obterDiaDaSemana(data) {
         const diasDaSemana = [
           'Dom', 'Seg', 'Ter', 'Qua', 
-          'Qui', 'Sex', 'Sáb'
+          'Qui', 'Sex', 'Sáb','Dom'
         ];
       
         const dataObj = new Date(data); // Converte a data para um objeto Date
@@ -207,7 +113,7 @@ export default function HomeAgenda (props) {
         }
       
         // Retorna o dia da semana correspondente à data
-        return diasDaSemana[dataObj.getDay()];
+        return diasDaSemana[dataObj.getDay()+1];
       }
       
 
@@ -245,8 +151,116 @@ export default function HomeAgenda (props) {
         // Retornar no formato hh:mm AM/PM
         return `${hora12 < 10 ? '0': ''}${hora12}:00 ${periodo}`;
       }
-
       
+
+      const Confirmar = async () => {
+        if(nome, celular) {
+
+            let result = []
+            agenda && agenda.map(dados => {
+                if (dados.id == dataEscolhida) {
+                    dados.agenda.map(item=> {
+                        listHoras.map(horas => {
+                            if (horas.hora == item.hora) {
+                                item.nome = nome;
+                                item.telefone = celular;
+                                item.servico = Service
+                                item.status = 0
+                                item.valor = valor
+                                item.id = id
+                            }
+                        })
+                    })
+                }
+            })
+            agenda && agenda.map(dados => {
+                if (dados.id == dataEscolhida) {
+                    dados.agenda.map(item => {
+                        result.push(item)
+                    })
+                }
+            })
+
+            await updateDoc(doc(db, `MeiComSite/${cliente && cliente[0].email}/agenda`, dataEscolhida), {
+                agenda: result
+            });
+            sendMessageToWhatsApp(number,message)
+        } else {
+            toast.error('Todos os campos devem ser preenchidos')
+        }
+    }
+    const SeparaHoras = (item) => {
+        if (!selectHour) {
+            const listHour = []
+            const horas = []
+            const result = (parseInt(item.hora) + parseInt(escolhaServico.hora))
+            agenda && agenda.map(dados => {
+                if (dados.date == dataEscolhida) {
+                    dados.agenda.map(item => {horas.push(item.hora)})
+                }
+            })
+            const max = Math.max.apply(null, horas)
+            if (result - 1 <= max) {
+                setFinalHour(result - 1)
+                for (let i = parseInt(item.hora); i < result; i++) {
+                    listHour.push({'hora': i.toString()})
+                }
+                setListHoras(listHour)
+                const numbers = [];
+                agenda && agenda.map(dados => {
+                    if (dados.date == dataEscolhida) {
+                        dados.agenda.map(item => {
+                            listHour.map(horas => {
+                                if (horas.hora == item.hora) {
+                                    numbers.push(item.disp)
+                                }
+                            })
+                        })
+                        
+                    }
+                })
+                const allTrue = numbers.every(function(number) {
+                return number == true;
+                });
+                if (allTrue) {
+                    agenda && agenda.map(dados => {
+                        if (dados.date == dataEscolhida) {
+                            dados.agenda.map(item => {
+                                listHour.map(horas => {
+                                    if (horas.hora == item.hora) {
+                                        item.disp = false
+                                        rolarParaFinal()
+                                    }
+                                })
+                            })
+                            
+                        }
+                    })
+                    setSelectHour(true)
+                    toast.success('Horário Selecionado')
+                }  else toast.error('Horário Indisponível')
+            }
+        } 
+    }
+
+
+    const CancelaHora = () => {
+
+        agenda && agenda.map(dados => {
+            if (dados.date == hoje.getFullYear()+'-'+meses[mesAtual].id+'-'+selectDate) {
+                dados.agenda.map(item => {
+                    listHoras.map(horas => {
+                        if (horas.hora == item.hora) {
+                            item.disp = true
+                        }
+                    })
+                })
+                
+            }
+        })
+        setSelectHour(false)
+    }
+    
 
     return (
 
@@ -280,7 +294,7 @@ export default function HomeAgenda (props) {
                         onClick={()=> {
                             setSelectDate(false)
                             CancelaHora()
-                            setStage(0)}}
+                            setStage(stage - 1)}}
                         />
                         <h1
                         className={styles.title_1}
@@ -299,12 +313,14 @@ export default function HomeAgenda (props) {
                         onClick={()=> {
                             setSelectDate(false)
                             CancelaHora()
-                            setStage(1)}}
+                            setStage(stage - 1)}}
                         />
                         <h1
                         className={styles.title_1}
                         >{Service}
                         </h1>
+                        <h5>{escolhaServico.hora} horas</h5>
+                        <h5>{FormataValor(parseInt(escolhaServico.valor))}</h5>
                     </div>
                     
                     }
@@ -326,6 +342,7 @@ export default function HomeAgenda (props) {
                                 onClick={()=> {
                                     setEscolhaServico(dados)
                                     setSelectService(dados.nome)
+                                    setValor(dados.valor)
                                     rolarParaFinal()
                                 }
                                 }
@@ -378,7 +395,7 @@ export default function HomeAgenda (props) {
                                 onClick={proximoMes}
                                 />
                             </div>
-                            <div>
+                            <div className={styles.container_cont_dates}>
 
                                 {!todosUndefined ? 
                                 <div className={styles.cont_dates}>
@@ -411,44 +428,19 @@ export default function HomeAgenda (props) {
                                     <p>Não há datas disponíveis</p>
                                 </div>
                                 }
+
+                        </div>
                             {selectDate &&
                             <button
-                            onClick={()=> setSelectDate(false)}
-                            className={styles.btn_trocar}
+                            onClick={()=> {
+                                setSelectDate(false)
+                                CancelaHora()
+                            }}
+                            className={`${styles.bg_w} ${styles.btn_trocar}`}
                             >
                                 <FaUndo/> Trocar
                             </button>
                             }
-
-                        </div>
-
-
-
-
-                            {stage == 0 && selectDate ?
-                                <button
-                                onClick={()=> setSelectDate(false)}
-                                className={styles.btn_trocar}
-                                >
-                                    <FaUndo/> Trocar
-                                </button>
-                                :
-                                escolhaData &&
-                                <button
-                                onClick={()=> {
-                                    if(escolhaData) {
-                                        setSelectDate(true)
-                                    }
-                                }}
-                                className={styles.check}
-                                >
-                                    <FaCheck/>
-                                </button>
-                            }
-
-
-
-
 
                         </div>
                         {selectDate && 
@@ -470,7 +462,6 @@ export default function HomeAgenda (props) {
                                                     className={`${item.disp ? styles.disp : styles.indisp} ${styles.hora}`}
 
                                                     onClick={()=> {
-
                                                         setEscolhaHora(item.hora)
                                                         if (item.disp) {
                                                             SeparaHoras(item)
@@ -495,7 +486,7 @@ export default function HomeAgenda (props) {
                     }
                         
                     {stage == 2 && selectHour && <button
-                    className={styles.btn_trocar}
+                    className={`${styles.b_g} ${styles.btn_trocar}`}
                     onClick={()=> CancelaHora() }
                     ><FaUndo/> Trocar</button>}
                     {stage == 2 && selectHour &&
@@ -508,53 +499,50 @@ export default function HomeAgenda (props) {
 
 
                 {stage == 3 &&
-                <div
-                className={styles.cont_stage}
-                >
-                    <h5>Confirme seus dados</h5>
-                    <p>Data : {escolhaData}</p>
-                    <p>Serviço: {Service}</p>
-                    <p>Horario: das {escolhaHora}h as {fimHour}h</p>
-                    <div className={styles.line}/>
-                    <form
-                    className={styles.form}
-                    >
-                        <label 
-                        className={styles.label}
-                        >Nome Completo:</label>
-                        <input type="text" onChange={(el)=> setNome(el.target.value)}
-                        className={styles.input}
-                        />
-                        <label
-                        className={styles.label}
-                        >Celular:</label>
-                        <input type="number" onChange={(el)=> setCelular(el.target.value)}
-                        className={styles.input}
-                        />
-                        <div
-                        className={styles.cont_buttonsNec}
-                        >
-                            <button
-                            onClick={(el) => {
-                                setStage(1)
-                                el.preventDefault()
-                            }}
-                            className={styles.btn_back}
-                            >Voltar</button>
-                            <button
-                            onClick={(el) => {
-                                if(nome, celular) {
-                                    Confirmar()
-                                }
-                                el.preventDefault()
-                            }}
-                            className={styles.btn_next}
-                            >
-                                Confirmar
-                            </button>
+                <>
+                
+                <div className={styles.m_cont_3}>
+                    <div className={styles.container_3}>
+                        <h1 className={styles.heading_3}>Quase lá</h1>
+                        <div className={styles.inputGroup_3}>
+                            <label className={styles.label_3} htmlFor="nome">Nome:</label>
+                            <input
+                            type="text"
+                            id="nome"
+                            name="nome"
+                            placeholder="Digite seu nome"
+                            value={nome}
+                            onChange={(e) => setNome(e.target.value)}
+                            className={styles.input_3}
+                            />
                         </div>
-                    </form>
+                        <div className={styles.inputGroup_3}>
+                            <label className={styles.label_3} htmlFor="telefone">Telefone:</label>
+                            <input
+                            type="tel"
+                            id="telefone"
+                            name="telefone"
+                            placeholder="Digite seu telefone"
+                            value={celular}
+                            onChange={(e) => setCelular(e.target.value)}
+                            className={styles.input_3}
+                            />
+                        </div>
+                        <button onClick={()=> Confirmar()} className={styles.btnWhatsApp_3}>
+                            <img
+                            src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg"
+                            alt="WhatsApp"
+                            width="25"
+                            height="25"
+                            className={styles.btnImage_3}
+                            />
+                            Enviar para o WhatsApp
+                        </button>
+                        <p className={styles.note_3}>Ao clicar, você será redirecionado para o WhatsApp.</p>
+                    </div>
                 </div>
+                </>
+
                 }
 
                 

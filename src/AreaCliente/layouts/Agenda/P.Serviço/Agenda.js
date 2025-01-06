@@ -14,7 +14,7 @@ import 'moment/locale/pt-br';
 
 export default function Agenda () {
     
-    const [mod, produtos, usuario, vendas, user, servicos, agenda] = useOutletContext()
+    const [mod, produtos, usuario, vendas, user, agenda, servicos] = useOutletContext()
 
     const db = getFirestore(App)
     const [date, setDate] = useState()

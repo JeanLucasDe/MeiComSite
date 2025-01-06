@@ -2,11 +2,14 @@ import { useState } from "react";
 import BoxConfirm from "../../components/BoxConfirm";
 import styles from "./DetalhesVenda.module.css"
 import {FaCheck, FaExclamation} from "react-icons/fa"
+import moment from "moment";
 
 
 export default function DetalhesVenda (props) {
 
     const obj = props.obj && props.obj
+    const agendamento = props.agendamento && props.agendamento || {}
+
 
 
     
@@ -25,10 +28,150 @@ export default function DetalhesVenda (props) {
     }
 
     const status = ReturnState()
+    
 
+    const styles = {
+        container: {
+          width: '100%',
+          maxWidth: '600px',
+          margin: '0px auto',
+          backgroundColor: '#fff',
+          padding: '20px',
+          borderRadius: '10px',
+          boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+          fontFamily: 'Arial, sans-serif',
+        },
+        header: {
+          textAlign: 'center',
+          marginBottom: '30px',
+        },
+        title: {
+          fontSize: '28px',
+          color: '#2c3e50',
+          fontWeight: '700',
+        },
+        subTitle: {
+          fontSize: '16px',
+          color: '#7f8c8d',
+          marginTop: '5px',
+        },
+        detailsContainer: {
+          marginBottom: '30px',
+        },
+        detailRow: {
+          display: 'flex',
+          justifyContent: 'space-between',
+          marginBottom: '10px',
+          fontSize: '16px',
+          color: '#34495e',
+        },
+        label: {
+          fontWeight: 'bold',
+        },
+        value: {
+          color: '#2c3e50',
+        },
+        status: {
+          Confirmado: {
+            color: '#27ae60',
+            fontWeight: 'bold',
+          },
+          Pendente: {
+            color: '#f39c12',
+            fontWeight: 'bold',
+          },
+          Cancelado: {
+            color: '#e74c3c',
+            fontWeight: 'bold',
+          },
+        },
+        actionButtonContainer: {
+          textAlign: 'center',
+        },
+        button: {
+          padding: '12px 30px',
+          backgroundColor: '#3498db',
+          color: '#fff',
+          border: 'none',
+          borderRadius: '5px',
+          fontSize: '16px',
+          cursor: 'pointer',
+          transition: 'background-color 0.3s',
+        },
+        buttonHover: {
+          backgroundColor: '#2980b9',
+        },
+      };
+
+      function formatarHoraParaAMPM(hora) {
+        // Garantir que a hora e o minuto estão dentro dos intervalos válidos
+        if (hora < 0 || hora > 23) {
+          return 'Hora ou minuto inválido';
+        }
+      
+        // Determinar AM ou PM
+        const periodo = hora >= 12 ? 'PM' : 'AM';
+      
+        // Converter a hora para o formato de 12 horas
+        const hora12 = hora % 12 || 12; // Se for 0 (meia-noite), exibe 12
+      
+        // Retornar no formato hh:mm AM/PM
+        return `${hora12 < 10 ? '0': ''}${hora12}:00 ${periodo}`;
+      }
+      
 
     return (
             <>
+            
+            {props.mod == 'Agenda' ? 
+                <div style={styles.container}>
+                    {/* Cabeçalho */}
+                    <div style={styles.header}>
+                        <h1 style={styles.title}>Comprovante de Agendamento</h1>
+                        <p style={styles.subTitle}>Detalhes do agendamento</p>
+                    </div>
+
+                    
+                    <div style={styles.detailsContainer}>
+                        <div style={styles.detailRow}>
+                        <span style={styles.label}>Código do Agendamento:</span>
+                        <span style={styles.value}>{agendamento.id}</span>
+                        </div>
+                        <div style={styles.detailRow}>
+                        <span style={styles.label}>Cliente:</span>
+                        <span style={styles.value}>{agendamento.nome}</span>
+                        </div>
+                        <div style={styles.detailRow}>
+                        <span style={styles.label}>Data:</span>
+                        <span style={styles.value}>{moment(props.date).format('DD/MM/YYYY')}</span>
+                        </div>
+                        <div style={styles.detailRow}>
+                        <span style={styles.label}>Hora:</span>
+                        <span style={styles.value}>{formatarHoraParaAMPM(agendamento.hora)}</span>
+                        </div>
+                        <div style={styles.detailRow}>
+                            <span style={styles.label}>Serviço:</span>
+                            <span style={styles.value}>{agendamento.servico}</span>
+                        </div>
+                        <div style={styles.detailRow}>
+                            <span style={styles.label}>Valor:</span>
+                            <span style={styles.value}>{agendamento.valor && FormataValor(parseInt(agendamento.valor))}</span>
+                        </div>
+                        <div style={styles.detailRow}>
+                        <span style={styles.label}>Status:</span>
+                        <span style={styles.status[agendamento.status]}>
+                            {agendamento.status == 0 && 'Pendente'}
+                            {agendamento.status == 1 && 'Concluído'}
+                            {agendamento.status == 2 && 'Cancelado'}
+                        </span>
+                        </div>
+                    </div>
+
+                    
+                </div>
+
+
+            :
             <div className={styles.container}>
             <div className={styles.block}
             type={props.type} 
@@ -116,6 +259,7 @@ export default function DetalhesVenda (props) {
                 />
             </div>
 
+            }
 
         
             </>

@@ -39,7 +39,7 @@ export default function ButtonLogin () {
             {user ? 
             <div>
             
-            <img src={!user.avatar ? "https://img.freepik.com/free-vector/cute-girl-working-laptop-with-coffee-cup-illustration_138676-2398.jpg?size=626&ext=jpg&ga=GA1.1.995514839.1678974862&semt=sph" : user.avatar} className={styles.avatar}
+            <img src={!user.avatar ? "https://www.shutterstock.com/image-vector/avatar-gender-neutral-silhouette-vector-600nw-2526512481.jpg" : user.avatar} className={styles.avatar}
             type="button" 
             data-bs-toggle="dropdown" 
             aria-expanded="false"

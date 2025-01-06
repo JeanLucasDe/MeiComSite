@@ -37,6 +37,7 @@ export default function Exposed (props) {
 
 
 
+    console.log(lojas)
 
     return (
             <>
@@ -44,8 +45,9 @@ export default function Exposed (props) {
                     <ul className={`${styles.list}`}>
                         {lojas && lojas.map(dados => {
                             if (dados.admin) {
-                                if (FormataHora(dados.abre) <= horarioAtual && horarioAtual <= FormataHora(dados.fecha)) {
-                                    return (
+                                if (dados.mod == 'Alimentação'){
+                                    if (FormataHora(dados.abre) <= horarioAtual && horarioAtual <= FormataHora(dados.fecha)) {
+                                        return (
                                             <div className={styles.cont_link}>
                                                 <div className="row">
                                                     <div className="col-1">
@@ -69,9 +71,36 @@ export default function Exposed (props) {
                                                 </div>
                                             </div>
                                         )
-                                } else {
+                                    } else {
+                                        return (
+                                            <div className={`${styles.closed} ${styles.cont_link}`}>
+                                                <div className="row">
+                                                    <div className="col-1">
+                                                        <div className={styles.cont_icon}>
+                                                            
+                                                        </div>
+                                                    </div>
+                                                    <div className="col-11">
+                                                        <Link to={`/${dados.site}`}
+                                                        >
+                                                            <li key={dados.id}>
+                                                                <div>
+                                                                    <div>
+                                                                        <h5>{dados.razao}</h5>
+                                                                        <p>{FormataHora(dados.abre)}h às {FormataHora(dados.fecha)}h</p>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                        </Link>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        )
+                                    }
+                                    
+                                } if (dados.mod=='Agenda') {
                                     return (
-                                        <div className={`${styles.closed} ${styles.cont_link}`}>
+                                        <div className={styles.cont_link}>
                                             <div className="row">
                                                 <div className="col-1">
                                                     <div className={styles.cont_icon}>
@@ -85,7 +114,6 @@ export default function Exposed (props) {
                                                             <div>
                                                                 <div>
                                                                     <h5>{dados.razao}</h5>
-                                                                    <p>Aberto até {FormataHora(dados.fecha)}h</p>
                                                                 </div>
                                                             </div>
                                                         </li>

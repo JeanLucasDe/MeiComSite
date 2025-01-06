@@ -7,7 +7,7 @@ import { toast } from "react-toastify"
 
 export default function Servicos () {
 
-    const [mod, produtos, usuario, vendas, user,servicos] = useOutletContext()
+    const [mod, produtos, usuario, vendas, user,agenda, servicos] = useOutletContext()
     const [hora, setHora] = useState('')
     const [valor, setValor] = useState()
     const [nome, setNome] = useState()
