@@ -6,7 +6,7 @@ import moment from "moment"
 import AddAgenda from "./AddAgenda"
 import { deleteDoc, doc, getFirestore, setDoc, updateDoc } from "firebase/firestore"
 import App from "../../../../Hooks/App"
-import {FaCalendarAlt, FaCalendarCheck, FaCheck, FaCheckCircle, FaClock, FaCut, FaPlusCircle, FaTimesCircle, FaUser} from "react-icons/fa"
+import {FaCalendarAlt, FaCalendarCheck, FaCheck, FaCheckCircle, FaClock, FaCut, FaHandHoldingUsd, FaPlusCircle, FaTimesCircle, FaUser} from "react-icons/fa"
 import { toast, ToastContainer } from "react-toastify"
 import 'moment/locale/pt-br';
 
@@ -374,14 +374,23 @@ export default function Agenda () {
                 <div className="modal fade" id="ModalView" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div className={`modal-dialog modal-md`}>
                         <div className="modal-content">
-                            <div className={styles.card_container}>
+                            <div className={styles.card_container}
+                            >
+                                <div
+                                type="button"
+                                data-bs-toggle="modal"
+                                data-bs-target={`#ModalView`}
+                                className={styles.toggle}
+                                >
+
+                                </div>
                                 <div className={styles.card}>
                                     <h3 className={styles.card_title}>Agendamento Confirmado</h3>
                                     <div className={styles.card_info}>
-                                    <p><FaUser className={styles.icon} /> <strong>Cliente:</strong> João Silva</p>
-                                    <p><FaCut className={styles.icon} /> <strong>Serviço:</strong> Corte de Cabelo</p>
-                                    <p><FaCalendarAlt className={styles.icon} /> <strong>Data:</strong> 10/01/2025</p>
-                                    <p><FaClock className={styles.icon} /> <strong>Hora:</strong> 14:30</p>
+                                    <p><FaUser className={styles.icon} /> <strong>Cliente:</strong> {cliente &&cliente.nome}</p>
+                                    <p><FaHandHoldingUsd className={styles.icon}/> <strong>Serviço:</strong> {cliente &&cliente.servico}</p>
+                                    <p><FaCalendarAlt className={styles.icon} /> <strong>Data:</strong> {moment(escolhaDate).format('DD/MM/YYYY')}</p>
+                                    <p><FaClock className={styles.icon} /> <strong>Hora:</strong> {cliente && cliente.hora}h</p>
                                     </div>
                                     {cliente && cliente.status == 1 &&
                                     <div className={styles.button_group}>
