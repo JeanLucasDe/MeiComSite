@@ -124,3 +124,105 @@
     border-radius: 7px;
     font-weight: 500;
 }
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
+
+.card_container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: linear-gradient(135deg, #ffffff, #ff8800cc);
+  font-family: 'Roboto', sans-serif;
+  z-index: 100;
+}
+
+
+.card {
+  background: #ffffff;
+  border-radius: 15px;
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+  padding: 30px 20px;
+  width: 320px;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+
+.card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 25px rgba(0, 0, 0, 0.3);
+}
+
+
+.card_title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #2d3436;
+  margin-bottom: 20px;
+}
+
+
+.card_content p {
+  margin: 10px 0;
+  color: #636e72;
+  font-size: 1rem;
+}
+
+
+.button_group {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: 20px;
+  }
+  
+.btn {
+flex: 1;
+padding: 12px;
+font-size: 1rem;
+font-weight: bold;
+color: #fff;
+border: none;
+border-radius: 50px;
+cursor: pointer !important;
+text-decoration: none;
+transition: all 0.3s ease;
+box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+margin: 0em .6em;
+}
+
+/* Botão "Concluir" */
+.btn_conclude {
+background: linear-gradient(135deg, #ffb95d, #FF9100);
+cursor: pointer;
+}
+
+.btn_conclude:hover {
+background: linear-gradient(135deg, #20c997, #28a745);
+box-shadow: 0 6px 15px rgba(32, 201, 151, 0.5);
+transform: scale(1.05);
+}
+
+/* Botão "Cancelar" */
+.btn_cancel {
+background: linear-gradient(135deg, #dc3545, #e55353);
+}
+
+.btn_cancel:hover {
+background: linear-gradient(135deg, #e55353, #dc3545);
+box-shadow: 0 6px 15px rgba(220, 53, 69, 0.5);
+transform: scale(1.05);
+}
+.disp {
+    color: #000;
+}
+.btn_cancelar {
+    padding: 0.5em;
+    border-color: red;
+    color: red;
+    background-color: #fff;
+    border-radius: 7px;
+    font-weight: 500;
+    margin: .6em;
+}

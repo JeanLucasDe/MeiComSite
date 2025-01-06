@@ -161,8 +161,8 @@ export default function DetalhesVenda (props) {
                         <span style={styles.label}>Status:</span>
                         <span style={styles.status[agendamento.status]}>
                             {agendamento.status == 0 && 'Pendente'}
-                            {agendamento.status == 1 && 'Concluído'}
-                            {agendamento.status == 2 && 'Cancelado'}
+                            {agendamento.status == 2 && 'Concluído'}
+                            {agendamento.status == 1 && 'Cancelado'}
                         </span>
                         </div>
                     </div>

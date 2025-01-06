@@ -165,7 +165,7 @@ export default function HomeAgenda (props) {
                                 item.nome = nome;
                                 item.telefone = celular;
                                 item.servico = Service
-                                item.status = 0
+                                item.status = 1
                                 item.valor = valor
                                 item.id = id
                             }

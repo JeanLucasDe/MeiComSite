@@ -2,6 +2,8 @@ import { useState } from "react";
 import { useOutletContext } from "react-router-dom";
 import moment from "moment";
 import DetalhesVenda from "./DetalhesVenda";
+import styles_ from "./Relatorio.module.css"
+import { FaArrowLeft } from "react-icons/fa";
 
 
 
@@ -127,47 +129,15 @@ export default function Relatório () {
           textAlign: 'left',
           fontSize: '14px',
           color: '#333',
-        },
-        filterContainer: {
-          marginBottom: '20px',
-          display: 'grid',
-          gap: '15px',
-          gridTemplateColumns: '1fr 1fr 1fr 1fr', // 4 colunas para desktop
-        },
-        filterGroup: {
-          display: 'flex',
-          flexDirection: 'column',
-        },
-        filterLabel: {
-          fontSize: '16px',
-          color: '#34495e',
-          marginBottom: '5px',
-        },
-        input: {
-          padding: '10px',
-          fontSize: '16px',
-          borderRadius: '8px',
-          border: '1px solid #ddd',
-          outline: 'none',
-          transition: 'border-color 0.3s ease',
-          width: '100%', // Input responsivo
-        },
-        '@media (max-width: 768px)': {
-    filterContainer: {
-      gridTemplateColumns: '1fr 1fr', // 2 colunas em tablets e telas pequenas
-    },
-  },
-
-  '@media (max-width: 480px)': {
-    filterContainer: {
-      gridTemplateColumns: '1fr', // 1 coluna em telas de dispositivos móveis (ex: smartphones)
-    },
-  },
+        }
        
       };
     return (
         <>
         <div style={styles.container}>
+          <FaArrowLeft onClick={()=>{
+            setStage(1)
+            setDate('')}}/>
             <h1 style={styles.heading}>Relatório de Atendimentos</h1>
             
             
@@ -179,7 +149,7 @@ export default function Relatório () {
                 id="data"
                 value={filtroData}
                 onChange={(e) => setFiltroData(e.target.value)}
-                style={styles.input}
+                className={styles_.input}
                 />
                 }
                 {stage == 2 &&
@@ -213,26 +183,25 @@ export default function Relatório () {
             }
             {stage == 2 && 
             <div>
-              {/* Filtros */}
-                <div style={styles.filterContainer}>
+                <div className={styles_.filterContainer}>
                   {/* Filtro por Nome */}
-                  <div style={styles.filterGroup}>
-                    <label htmlFor="nome" style={styles.filterLabel}>Filtrar por Nome:</label>
+                  <div className={styles_.filterGroup}>
+                    <label htmlFor="nome" style={styles_.filterLabel}>Filtrar por Nome:</label>
                     <input
                       type="text"
                       id="nome"
                       value={filtroNome}
                       onChange={(e) => setFiltroNome(e.target.value)}
                       placeholder="Nome do cliente"
-                      style={styles.input}
+                      className={styles_.input}
                     />
                   </div>
 
                   {/* Filtro por Status */}
-                  <div style={styles.filterGroup}>
-                    <label htmlFor="status" style={styles.filterLabel}>Filtrar por Status:</label>
+                  <div className={styles_.filterGroup}>
+                    <label htmlFor="status" style={styles_.filterLabel}>Filtrar por Status:</label>
                     <select
-                    style={styles.input}
+                    className={styles_.input}
                     onChange={(el) => setFiltroStatus(el.target.value)}
                     >
                       <option value=''/>
@@ -243,15 +212,15 @@ export default function Relatório () {
                   </div>
 
                   {/* Filtro por ID */}
-                  <div style={styles.filterGroup}>
-                    <label htmlFor="id" style={styles.filterLabel}>Filtrar por ID:</label>
+                  <div className={styles_.filterGroup}>
+                    <label htmlFor="id" style={styles_.filterLabel}>Filtrar por ID:</label>
                     <input
                       type="text"
                       id="id"
                       value={filtroId}
                       onChange={(e) => setFiltroId(e.target.value)}
                       placeholder="ID do atendimento"
-                      style={styles.input}
+                      className={styles_.input}
                     />
                   </div>
                   </div>
@@ -274,8 +243,8 @@ export default function Relatório () {
                       <td style={styles.tableCell}>{!atendimento.nome ? 'Vazio' : atendimento.nome.split(' ')[0]}</td>
                       <td style={styles.tableCell}>
                           {atendimento.status == 0 && 'Pendente'}
-                          {atendimento.status == 1 && 'Concluído'}
-                          {atendimento.status == 2 && 'Cancelado'}
+                          {atendimento.status == 1 && 'Cancelado'}
+                          {atendimento.status == 2 && 'Concluído'}
                       </td>
                       </tr>
                   ))}

@@ -4,9 +4,9 @@ import styles from "./Agenda.module.css"
 import { useState } from "react"
 import moment from "moment"
 import AddAgenda from "./AddAgenda"
-import { doc, getFirestore, setDoc } from "firebase/firestore"
+import { deleteDoc, doc, getFirestore, setDoc, updateDoc } from "firebase/firestore"
 import App from "../../../../Hooks/App"
-import {FaCalendarAlt, FaCalendarCheck, FaCheck, FaCheckCircle, FaPlusCircle, FaTimesCircle} from "react-icons/fa"
+import {FaCalendarAlt, FaCalendarCheck, FaCheck, FaCheckCircle, FaClock, FaCut, FaPlusCircle, FaTimesCircle, FaUser} from "react-icons/fa"
 import { toast, ToastContainer } from "react-toastify"
 import 'moment/locale/pt-br';
 
@@ -18,14 +18,12 @@ export default function Agenda () {
 
     const db = getFirestore(App)
     const [date, setDate] = useState()
-    const DateDefault = moment().format('DD/MM/YYYY')
-    const abre = usuario && usuario[0].abre
-    const fecha = usuario && usuario[0].fecha
     const [horarios, setHorarios] = useState(false)
     const [escolhaDate, setEscolhaDate] = useState()
     const [stage, setStage] = useState(0)
     const [cliente, setCliente] = useState()
-
+    var [countDelete, setCountDelete] = useState(0)
+    const [pedidoDelete, setPedidoDelete] = useState('')
 
 
 
@@ -86,11 +84,78 @@ export default function Agenda () {
     moment.locale('pt')
     const dia = moment(escolhaDate).format('dddd')
     
-    const CancelaAgenda = () => {
-        
+
+    const CancelaAgenda = async(cliente) => {
+
+        setCountDelete(countDelete += 1)
+                
+        if (countDelete == 1) {
+            toast.error('Clique 2 vezes para confirmar')
+            setPedidoDelete(cliente)
+        }
+        if (countDelete == 2) {
+            if (pedidoDelete != cliente) {
+                return toast.error('Clique 2 vezes para confirmar')
+            }
+            Horas.length > 0 && Horas[0].agenda.map(dados => {
+                if (dados.id == cliente.id) {
+                    dados.nome=''
+                    dados.telefone=''
+                    dados.servico=''
+                    dados.disp = true
+                }
+            }) 
+            toast.success('Agenda Cancelada')
+            await updateDoc(doc(db, `MeiComSite/${user && user.email}/agenda`, escolhaDate ? escolhaDate: moment(date).format('YYYY-MM-DD')), {
+                agenda: Horas.length > 0 && Horas[0].agenda
+            });
+        }
+        setTimeout(() => {
+            setCountDelete(0)
+        }, 1000);
     }
 
+    const ConfirmarAgenda = async(cliente) => {
+        setCountDelete(countDelete += 1)
+                
+        if (countDelete == 1) {
+            toast.error('Clique 2 vezes para confirmar')
+            setPedidoDelete(cliente)
+        }
+        if (countDelete == 2) {
+            if (pedidoDelete != cliente) {
+                return toast.error('Clique 2 vezes para confirmar')
+            }
+            Horas.length > 0 && Horas[0].agenda.map(dados => {
+                if (dados.id == cliente.id) {
+                    dados.status = 2
+                }
+            }) 
+            toast.success('Finalizado com sucesso!')
+            await updateDoc(doc(db, `MeiComSite/${user && user.email}/agenda`, escolhaDate ? escolhaDate: moment(date).format('YYYY-MM-DD')), {
+                agenda: Horas.length > 0 && Horas[0].agenda
+            });
+        }
+        setTimeout(() => {
+            setCountDelete(0)
+        }, 1000);
+    }
 
+    const DeletarData = async() => {
+        setCountDelete(countDelete += 1)
+        if (countDelete == 1) {
+            toast.error('Clique 2 vezes para confirmar')
+        }
+
+        if (countDelete == 2) {
+            toast.success('Finalizado com sucesso!')
+            const ref = doc(db, `MeiComSite/${user && user.email}/agenda`, escolhaDate?escolhaDate:moment(date).format('YYYY-MM-DD'))
+            await deleteDoc(ref)
+        }
+        setTimeout(() => {
+            setCountDelete(0)
+        }, 1000);
+    }
 
     return (
         <>
@@ -176,7 +241,12 @@ export default function Agenda () {
                                     onClick={() => setStage(2)}
                                     className={`${stage == 2 && styles.stage_on} ${styles.buttns}`}
                                     >Livres</button>
+                                    {Horas.length > 0 && <button
+                                    className={` ${styles.btn_cancelar}`}
+                                    onClick={()=>DeletarData()}
+                                    >Cancelar Data</button>}
                                 </div>
+                                
                                 <div
                                 className={styles.cont_horarios}
                                 >
@@ -189,21 +259,37 @@ export default function Agenda () {
                                                     {Horas.map(dados => {
                                                         return (
                                                             dados.agenda.map(item => {
-                                                                return (
-                                                                    <li
-                                                                    key={item.hora}
-                                                                    className={`${styles.hora} ${item.disp ? styles.on : styles.off }`}
-                                                                    type="button"
-                                                                    data-bs-toggle="modal"
-                                                                    data-bs-target={`#ModalView`}
-                                                                    onClick={() => setCliente(item)}
-                                                                    >
-                                                                        <p>
-                                                                            <span>{!item.disp ? <FaCalendarCheck className={styles.icon}/>: <FaPlusCircle className={styles.icon}/>}</span>
-                                                                                {item.hora}:00 horas
-                                                                        </p>
-                                                                    </li>
-                                                                )
+                                                                if (item.disp){
+                                                                    return (
+                                                                        <li
+                                                                        key={item.hora}
+                                                                        className={`${styles.hora} ${item.disp ? styles.on : styles.off } ${item.status == 0 && styles.disp}`}
+                                                                        onClick={() => setCliente(item)}
+                                                                        >
+                                                                            <p>
+                                                                                <span>{!item.disp ? <FaCalendarCheck className={styles.icon}/>: <FaPlusCircle className={styles.icon}/>}</span>
+                                                                                    {item.hora}:00 horas
+                                                                            </p>
+                                                                        </li>
+                                                                    )
+                                                                } else {
+                                                                    return (
+                                                                        <li
+                                                                        key={item.hora}
+                                                                        className={`${styles.hora} ${item.disp ? styles.on : styles.off }`}
+                                                                        type="button"
+                                                                        data-bs-toggle="modal"
+                                                                        data-bs-target={`#ModalView`}
+                                                                        onClick={() => setCliente(item)}
+                                                                        >
+                                                                            <p>
+                                                                                <span>{!item.disp ? <FaCalendarCheck className={styles.icon}/>: <FaPlusCircle className={styles.icon}/>}</span>
+                                                                                    {item.hora}:00 horas
+                                                                            </p>
+                                                                            {item.status == 2 &&<p>finalizado</p>}
+                                                                        </li>
+                                                                    )
+                                                                }
                                                             })
                                                         )
                                                     })}
@@ -284,35 +370,37 @@ export default function Agenda () {
 
             </div>
         }
-            <div className="modal " id="ModalNew" tabindex="-1" aria-labelledby="exampleModalLabel">
-                <div className={`modal-dialog modal-md`}>
-                    <div className="modal-content">
-                        <AddAgenda/>
-                    </div>
-                </div>
-            </div>  
-
-            <div className="modal " id="ModalView" tabindex="-1" aria-labelledby="exampleModalLabel">
-                <div className={`modal-dialog modal-md`}>
-                    <div className="modal-content">
-                        <div
-                        className={styles.cont_modal}
-                        >
-                            <h5>Cliente</h5>
-                            <div className="line"/>
-                            <p>Nome: {cliente && cliente.nome}</p>
-                            <p>Telefone: {cliente && cliente.telefone}</p>
-                            <p>Serviço: {cliente && cliente.servico}</p>
-                            <button
-                            onClick={() => {
-                                CancelaAgenda()
-                            }}
-                            className={styles.btn_delete_account}
-                            >Cancelar Agenda</button>
+        
+                <div className="modal fade" id="ModalView" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div className={`modal-dialog modal-md`}>
+                        <div className="modal-content">
+                            <div className={styles.card_container}>
+                                <div className={styles.card}>
+                                    <h3 className={styles.card_title}>Agendamento Confirmado</h3>
+                                    <div className={styles.card_info}>
+                                    <p><FaUser className={styles.icon} /> <strong>Cliente:</strong> João Silva</p>
+                                    <p><FaCut className={styles.icon} /> <strong>Serviço:</strong> Corte de Cabelo</p>
+                                    <p><FaCalendarAlt className={styles.icon} /> <strong>Data:</strong> 10/01/2025</p>
+                                    <p><FaClock className={styles.icon} /> <strong>Hora:</strong> 14:30</p>
+                                    </div>
+                                    {cliente && cliente.status == 1 &&
+                                    <div className={styles.button_group}>
+                                        <button className={`${styles.btn} ${styles.btn_cancel}`} 
+                                        onClick={()=> CancelaAgenda(cliente)}
+                                        >
+                                            Cancelar
+                                        </button>
+                                        <button className={`${styles.btn} ${styles.btn_conclude}`} 
+                                        onClick={()=> ConfirmarAgenda(cliente)}
+                                        >
+                                            Concluir
+                                        </button>
+                                    </div>}
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>        
             <ToastContainer/>
         </>
         )
