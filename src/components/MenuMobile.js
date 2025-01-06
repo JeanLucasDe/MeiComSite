@@ -20,20 +20,6 @@ export default function MenuMobile (props) {
                 className={styles.mod}
                 >Home</li></Link>
 
-                <Link to="/page/demo"><li
-                type={props.type}
-                data-bs-dismiss={props.data_bs_dismiss}
-                aria-label={props.aria_label}
-                className={styles.mod}
-                >Demonstração</li></Link>
-
-                <Link to="/catalogo"><li
-                type={props.type}
-                data-bs-dismiss={props.data_bs_dismiss}
-                aria-label={props.aria_label}
-                className={styles.mod}
-                >Explorar</li></Link>
-                
                 
                 <Link to="/perfil/user/config"><li
                 type={props.type}

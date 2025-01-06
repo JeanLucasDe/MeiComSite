@@ -16,10 +16,8 @@ return (
                 <div className="line"></div>
             </div>
         </div>
-    <Link
+    <div
     className={styles.link}
-    to="/page/demo"
-    target="_blank"
     >
         <Swiper
             spaceBetween={10}
@@ -40,7 +38,7 @@ return (
                             <SwiperSlide>
                                 <div className={styles.box}>
                                     <div className={styles.cont_img}>
-                                        <img src={dados.img}/>
+                                        <Link to={dados.link} target="_blank"><img src={dados.img}/></Link>
                                     </div>
                                     <p className={styles.name_template}>{dados.name}</p>
                                 </div>
@@ -48,7 +46,7 @@ return (
                         )
                 })}
         </Swiper>
-    </Link>
+    </div>
     </div>
     </>
     )

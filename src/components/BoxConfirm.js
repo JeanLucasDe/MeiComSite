@@ -70,6 +70,7 @@ export default function BoxConfirm (props) {
             rua: obj.rua,
             cep: obj.cep,
             admin: false,
+            pause:true
             });
 
         window.location.reload()

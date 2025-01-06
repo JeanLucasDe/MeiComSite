@@ -21,16 +21,15 @@ export default function Negocios(props) {
                             to="/login"
                             >Começar Grátis</Link>
                     :
-                        <Link to={usuario && usuario.length == 0 ? "/cadastro": "/perfil/user/categorias"}>
+                        <Link to={usuario && usuario.length == 0 ? "/login": "/perfil/user/config"}>
                             <button className={styles.btn_start}>Começar Grátis</button>
                         </Link>
                         
                     }
 
-                    <Link to="/page/demo"
-                    target="_blank"
+                    <Link to="/suporte"
                     >
-                        <button className={styles.btn_plan}>Demonstração</button>
+                        <button className={styles.btn_plan}>Ajuda</button>
                     </Link>
                 </div>
             </div>

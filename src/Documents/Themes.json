@@ -1,8 +1,16 @@
 [
     {
         "id":1,
-        "name":"Wpp",
+        "name":"Cardápio",
         "modalidade":"Alimentação",
-        "img":"https://cdn.dribbble.com/users/2925499/screenshots/14954848/media/a37f299da3927d25223003329124b732.png?resize=400x300&vertical=center"
+        "img":"https://img.freepik.com/vetores-gratis/molde-do-menu-do-restaurante-no-design-plano_23-2147757711.jpg?ga=GA1.1.1918771653.1726187012&semt=ais_hybrid",
+        "link":"/jlanches"
+    },
+    {
+        "id":2,
+        "name":"Agenda",
+        "modalidade":"Agendamento",
+        "img":"https://img.freepik.com/vetores-gratis/reserve-sua-data-no-celular_23-2148552969.jpg?ga=GA1.1.1918771653.1726187012&semt=ais_hybrid",
+        "link":"/jcabelos"
     }
 ]

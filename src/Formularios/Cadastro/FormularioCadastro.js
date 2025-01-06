@@ -275,7 +275,7 @@ export default function FormularioCadastro () {
                                                 onChange={(el)=> {
                                                     setSite(el.target.value.toLowerCase().replaceAll(' ', ''))
                                                 }}
-                                                maxLength={10}
+                                                maxLength={20}
                                                 required
                                                 placeholder="meusite"
                                                 />

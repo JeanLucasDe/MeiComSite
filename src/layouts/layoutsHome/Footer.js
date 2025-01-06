@@ -14,7 +14,7 @@ export default function Footer () {
                             Acreditamos no novo e investindo em tecnologia, você pode ir muito além.
                         </p>
                         <div className={styles.redes}>
-                            <a href="https://www.instagram.com/bro.lucass/" target="_blank" className={styles.icon}>
+                            <a href="https://www.instagram.com/jeanlsantoss/" target="_blank" className={styles.icon}>
                                 <FaInstagram/>
                             </a>
                             <a href="https://api.whatsapp.com/send?phone=71981298548&text=" target="_blank" className={styles.icon}>
@@ -28,7 +28,8 @@ export default function Footer () {
                     <div className={styles.container_lists}>
                         <ul className={styles.list}>
                             <h4>Modalidades</h4>
-                            <li><Link to="/catalogo/alimentação">Restaurante</Link></li>
+                            <li><Link to="/">Restaurante</Link></li>
+                            <li><Link to="/">Prestador de Serviços</Link></li>
                         </ul>
                         <ul className={styles.list}>
                             <h4>Empresa</h4>
@@ -56,8 +57,8 @@ export default function Footer () {
     <div id="flush-collapseOne" className="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
             <div className="accordion-body">
                 <ul className={styles.list}>
-                  <li><Link to="/catalogo/shopping">Loja Virtual</Link></li>
-                  <li><Link to="/catalogo/alimentação">Restaurante</Link></li>
+                  <li><Link to="/">Prestador de serviço</Link></li>
+                  <li><Link to="/">Restaurante</Link></li>
                 </ul>
             </div>
     </div>

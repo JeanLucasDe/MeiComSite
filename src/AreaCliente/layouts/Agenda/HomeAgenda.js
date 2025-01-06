@@ -354,7 +354,7 @@ export default function HomeAgenda (props) {
                                     >
                                         <div>
                                             <p className={styles.name_service}>{dados.nome}</p>
-                                            <p>{dados.hora} horas</p>
+                                            <p>{dados.hora} horas de duração</p>
                                         </div>
                                         <div>
                                             <p

@@ -179,6 +179,7 @@ export default function FormularioEdit () {
                                         onChange={(el)=> {
                                             setSite(el.target.value)
                                         }}
+                                        maxLength={20}
                                         defaultValue={dados.site}/>
                                         </div>
 
