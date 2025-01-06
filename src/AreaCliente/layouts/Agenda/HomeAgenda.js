@@ -3,7 +3,7 @@ import styles from "./HomeAgenda.module.css"
 import { useState } from "react"
 import { doc, updateDoc,  deleteDoc, getFirestore, collection, getDocs,setDoc} from "@firebase/firestore";
 import App from "../../../Hooks/App";
-import {FaCheck, FaUndo } from "react-icons/fa"
+import {FaArrowLeft, FaArrowRight, FaCheck, FaUndo } from "react-icons/fa"
 import moment from "moment";
 import { toast, ToastContainer } from "react-toastify";
 
@@ -31,7 +31,7 @@ export default function HomeAgenda (props) {
             const horas = []
             const result = (parseInt(item.hora) + parseInt(escolhaServico.hora))
             agenda && agenda.map(dados => {
-                if (dados.date == escolhaData) {
+                if (dados.date == hoje.getFullYear()+'-'+meses[mesAtual].id+'-'+selectDate) {
                     dados.agenda.map(item => {horas.push(item.hora)})
                 }
             })
@@ -60,7 +60,7 @@ export default function HomeAgenda (props) {
                 });
                 if (allTrue) {
                     agenda && agenda.map(dados => {
-                        if (dados.date == escolhaData) {
+                        if (dados.date == hoje.getFullYear()+'-'+meses[mesAtual].id+'-'+selectDate) {
                             dados.agenda.map(item => {
                                 listHour.map(horas => {
                                     if (horas.hora == item.hora) {
@@ -72,19 +72,17 @@ export default function HomeAgenda (props) {
                         }
                     })
                     setSelectHour(true)
+                    toast.success('Horário Selecionado')
                 }
             }
-            else console.log('Limite de tempo excede')
-        } else {
-            console.log('horario sleecionado')
-        }
+        } 
     }
 
 
     const CancelaHora = () => {
 
         agenda && agenda.map(dados => {
-            if (dados.date == escolhaData) {
+            if (dados.date == hoje.getFullYear()+'-'+meses[mesAtual].id+'-'+selectDate) {
                 dados.agenda.map(item => {
                     listHoras.map(horas => {
                         if (horas.hora == item.hora) {
@@ -147,96 +145,287 @@ export default function HomeAgenda (props) {
     const fimHour = parseFloat(finalHour) + 1
 
 
+    const formataTelefone = (numero) => {
+        // Remove caracteres não numéricos
+        const numeros = numero.replace(/\D/g, '');
+    
+        // Verifica se o número tem 11 ou 10 dígitos
+        if (numeros.length === 11) {
+          // Formato para número de celular (com DDD)
+          return `(${numeros.slice(0, 2)}) ${numeros.slice(2, 7)}-${numeros.slice(7)}`;
+        } else if (numeros.length === 10) {
+          // Formato para número fixo (com DDD)
+          return `(${numeros.slice(0, 2)}) ${numeros.slice(2, 6)}-${numeros.slice(6)}`;
+        } else {
+          return numero; // Retorna o número original caso não seja válido
+        }
+      };
+    
+      const rolarParaFinal = () => {
+        window.scrollTo({
+          top: document.documentElement.scrollHeight, // Vai até o final da página
+          behavior: 'smooth' // Rolar suavemente
+        });
+      };
+
+
+
+      const meses = [
+        {mes:'Janeiro',id:'01'}, 
+        {mes:'Fevereiro',id:'02'}, 
+        {mes:'Abril',id:'03'},
+        {mes:'Março',id:'04'}, 
+        {mes:'Maio',id:'05'}, 
+        {mes:'Junho',id:'06'},
+        {mes:'Julho',id:'07'}, 
+        {mes:'Agosto',id:'08'}, 
+        {mes:'Setembro',id:'09'}, 
+        {mes:'Outubro',id:'10'}, 
+        {mes:'Novembro',id:'11'}, 
+        {mes:'Dezembro',id:'12'}, 
+      ];
+      const [mesAtual, setMesAtual] = useState(new Date().getMonth());
+
+      const proximoMes = () => {
+        setMesAtual((prevMes) => (prevMes + 1) % 12);
+      };
+    const mesAnterior = () => {
+        setMesAtual((prevMes) => (prevMes - 1 + 12) % 12); // Vai para o mês anterior, voltando ao Dezembro após Janeiro
+    };
+
+    function obterDiaDaSemana(data) {
+        const diasDaSemana = [
+          'Dom', 'Seg', 'Ter', 'Qua', 
+          'Qui', 'Sex', 'Sáb'
+        ];
+      
+        const dataObj = new Date(data); // Converte a data para um objeto Date
+      
+        // Verifica se a data é válida
+        if (isNaN(dataObj)) {
+          return 'Data inválida';
+        }
+      
+        // Retorna o dia da semana correspondente à data
+        return diasDaSemana[dataObj.getDay()];
+      }
+      
+
+      const hoje = new Date();
+
+
+
+      const ListDias = agenda && agenda.filter(dados => {
+        if (parseInt(dados.date.split('-')[1]) == meses[mesAtual].id) {
+            if (hoje.getFullYear() == parseInt(dados.date.split('-')[0])) {
+                if (hoje.getDate() <= parseInt(dados.date.split('-')[2]) ) {
+                    return dados
+                }
+            }
+        } 
+    })
+
+    const todosUndefined = ListDias.every(item => item === undefined);
+
+
+    const dataEscolhida = hoje.getFullYear()+'-'+meses[mesAtual].id+'-'+selectDate
+
+    function formatarHoraParaAMPM(hora) {
+        // Garantir que a hora e o minuto estão dentro dos intervalos válidos
+        if (hora < 0 || hora > 23) {
+          return 'Hora ou minuto inválido';
+        }
+      
+        // Determinar AM ou PM
+        const periodo = hora >= 12 ? 'PM' : 'AM';
+      
+        // Converter a hora para o formato de 12 horas
+        const hora12 = hora % 12 || 12; // Se for 0 (meia-noite), exibe 12
+      
+        // Retornar no formato hh:mm AM/PM
+        return `${hora12 < 10 ? '0': ''}${hora12}:00 ${periodo}`;
+      }
+
       
 
     return (
 
         <>
             <div className={styles.container}>
-                <div
-                className={styles.header}
-                >
-                    <h1>{cliente && cliente[0].razao}</h1>
-                    <div className={styles.end}>
-                        <p>{cliente && cliente[0].rua}, {cliente && cliente[0].numero} </p>
-                        <p>{cliente && cliente[0].cidade}, {cliente && cliente[0].bairro}</p>
-                        <p>{cliente && cliente[0].telefone}</p>
-                    </div>
-                
-                </div>
-                
-                {stage == 0 && 
-                <div className={styles.cont_stage}>
-                    <h3
-                    className={styles.font_title}
-                    >Selecione o serviço</h3>
-                    <div className={styles.line}/>
+                {stage == 0 &&
+
+                <div>
                     <div
-                    className={styles.cont_buttons}
+                    className={styles.header}
                     >
+                        <h1
+                        className={styles.title}
+                        >{cliente && cliente[0].razao}</h1>
+                    </div>
+                    <div className={styles.footer}>
+                        <div className={styles.line}/>
+                        <button className={styles.btn_start}
+                        onClick={() => setStage(1)}
+                        >
+                            
+                        Ir para Agenda</button>
+                    </div>
+                </div>    
+                 }
+                {stage > 0 &&
+                <div className={styles.header_1}>
+                    {stage == 1 ?
+                    <div>
+                        <FaArrowLeft className={styles.btn_back_1}
+                        onClick={()=> {
+                            setSelectDate(false)
+                            CancelaHora()
+                            setStage(0)}}
+                        />
+                        <h1
+                        className={styles.title_1}
+                        >{cliente[0].razao}
+                        </h1>
+                        <div className={styles.endereco}>
+                            <h5>{cliente[0].cidade}, {cliente[0].bairro}</h5>
+                            <h5>{cliente[0].rua} nº{cliente[0].numero}</h5>
+                            <h5>{formataTelefone(cliente[0].telefone)}</h5>
+                        </div>
+                        <div className={styles.line}/>
+                    </div>
+                    :
+                    <div>
+                        <FaArrowLeft className={styles.btn_back_1}
+                        onClick={()=> {
+                            setSelectDate(false)
+                            CancelaHora()
+                            setStage(1)}}
+                        />
+                        <h1
+                        className={styles.title_1}
+                        >{Service}
+                        </h1>
+                    </div>
+                    
+                    }
+                    
+                </div>
+                }
+                {stage == 1 && 
+                <div className={styles.cont_stage}>
+                    
+                    <div className={styles.main_1}>
+                        <h4 className={styles.under}>Serviços</h4>
+                        <div
+                        className={styles.cont_buttons}
+                        >
                         {servicos && servicos.map(dados => {
                             return (
                                 <button
                                 className={`${Service == dados.nome && styles.select} ${styles.button}`}
                                 onClick={()=> {
                                     setEscolhaServico(dados)
-                                    setSelectService(dados.nome)}}
+                                    setSelectService(dados.nome)
+                                    rolarParaFinal()
+                                }
+                                }
                                 value={dados.nome}
                                 key={dados.nome}
                                 >
                                     <div
-                                    className={styles.info}
+                                    className={`${styles.info}`}
                                     >
                                         <div>
-                                            <p className={styles.enriqueta_regular}>{dados.nome}</p>
+                                            <p className={styles.name_service}>{dados.nome}</p>
                                             <p>{dados.hora} horas</p>
                                         </div>
-                                        <p
-                                        className={styles.cookie_regular}
-                                        >{FormataValor(parseFloat(dados.valor))}</p>
+                                        <div>
+                                            <p
+                                            className={`${Service == dados.nome && styles.select} ${styles.price}`}
+                                            >{FormataValor(parseFloat(dados.valor))}</p>
+                                        </div>
                                     </div>
                                 </button>
                             )
                         })}
+                    </div>
+                    <div className={`${styles.green} ${styles.line}`}/>
                     {Service && 
                     <button
                     className={styles.btn_next}
                     onClick={()=> {
                         setEscolhaServico(escolhaServico)
-                        setStage(1)
+                        setStage(2)
                     }}
                     >Avançar</button>
                     }
+
                     </div>
                 </div>
                 }
-
-
-                {stage == 1 && 
-                    <div
-                    className={styles.cont_stage}
-                    >
-                        {escolhaServico && <h4>{escolhaServico.nome}</h4>}
+                {stage == 2 && 
+                    <div>
                         <div className={styles.line}/>
-                        <div>
-                            <h5>Escolha a data:</h5>
-                            {!selectDate?<select
-                                onChange={(el)=> setEscolhaData(el.target.value)}
-                                >
-                                <option value="" data-default disabled selected></option>
-                                {agenda && agenda.map(dados => {
-                                    if (moment().format('YYYY-MM-DD') <= dados.date) {
-                                        return (
-                                            <option
-                                            value={dados.date}
-                                            >{moment(dados.date).format('DD/MM/YYYY')}</option>
-                                        )
+                        <div className={styles.cont_stage_1}>
+                            <h3 className={styles.Enriqueta}>2025</h3>
+                            <div className={styles.cont_months}>
+                                <FaArrowLeft
+                                onClick={mesAnterior}
+                                />
+                                <p className={`${styles.under} ${styles.Enriqueta}`}
+                                >{meses[mesAtual].mes}</p>
+                                <FaArrowRight
+                                onClick={proximoMes}
+                                />
+                            </div>
+                            <div>
+
+                                {!todosUndefined ? 
+                                <div className={styles.cont_dates}>
+                                    {
+                                    ListDias && ListDias.map(dados => {
+                                        
+                                            return (
+                                                <button className={`
+                                                    ${selectDate ? dados.date.split('-')[2] == selectDate ? styles.on : styles.off: styles.btn_date }
+                                                    `}
+                                                    onClick={()=> 
+                                                    {
+                                                        if (!selectDate) {
+                                                            setSelectDate((dados.date.split('-')[2]))
+                                                        }    
+                                                    }
+                                                }
+                                                    
+                                                >
+                                                    <p>{obterDiaDaSemana(dados.date)}</p>
+                                                    <p>{(dados.date.split('-')[2])}</p>
+                                                </button>
+                                            )
+                                        
+                                    })
                                     }
-                                })}
-                            </select>:
-                            <p>{moment(escolhaData).format('DD/MM/YYYY')}</p>
+                                </div>
+                            :
+                                <div>
+                                    <p>Não há datas disponíveis</p>
+                                </div>
+                                }
+                            {selectDate &&
+                            <button
+                            onClick={()=> setSelectDate(false)}
+                            className={styles.btn_trocar}
+                            >
+                                <FaUndo/> Trocar
+                            </button>
                             }
-                            {selectDate ?
+
+                        </div>
+
+
+
+
+                            {stage == 0 && selectDate ?
                                 <button
                                 onClick={()=> setSelectDate(false)}
                                 className={styles.btn_trocar}
@@ -256,21 +445,32 @@ export default function HomeAgenda (props) {
                                     <FaCheck/>
                                 </button>
                             }
+
+
+
+
+
                         </div>
                         {selectDate && 
-                        <div>
-                            <h5>Escolha a Hora</h5>
-                            <p>{escolhaServico.hora} hora(s)</p>
-                            <div
-                            className={styles.cont_horas}
-                            >
+                        <div
+                        className={styles.cont_horarios}
+                        >
+                            <h5 className={styles.title_2}>Horários</h5>
+                            <div>
+                                <ul
+                                className={styles.list}
+                                >
                                 {agenda && agenda.map(dados => {
-                                    if (dados.date == escolhaData) {
+                                    if (dados.date == dataEscolhida) {
                                         return (
                                             dados.agenda.map(item => {
                                                 return (
-                                                    <div
+                                                    <li
+                                                    key={item.id}
+                                                    className={`${item.disp ? styles.disp : styles.indisp} ${styles.hora}`}
+
                                                     onClick={()=> {
+
                                                         setEscolhaHora(item.hora)
                                                         if (item.disp) {
                                                             SeparaHoras(item)
@@ -279,49 +479,35 @@ export default function HomeAgenda (props) {
                                                         }
                                                     }}
                                                     value={item.hora}
-                                                    className={`${item.disp ? styles.on : styles.off} ${styles.hora}`}
                                                     >
-                                                        {item.hora}
-                                                    </div>
+                                                        <p className={styles.hora_info}>{formatarHoraParaAMPM(item.hora)}</p>
+                                                    </li>
                                                 )
                                             })
                                         )
                                     }
                                 })}
+                                </ul>
                             </div>
                         </div>
                         }
-
-                        {selectHour && <button
-                        className={styles.btn_trocar}
-                        onClick={()=> CancelaHora() }
-                        ><FaUndo/> Trocar</button>}
-
-
-                        <div 
-                        className={styles.cont_buttonsNec}
-                        >
-                            <button
-                            onClick={() => {
-                                setEscolhaData()
-                                setEscolhaHora()
-                                setStage(0)
-                                setSelectDate(false)
-                            }}
-                            className={styles.btn_back}
-                            >Voltar</button>
-                            
-                            {selectHour &&
-                            <button
-                            onClick={() => setStage(2)}
-                            className={styles.btn_next}
-                            >
-                                Avançar
-                            </button>}
-                        </div>
                     </div>
-                }
-                {stage == 2 &&
+                    }
+                        
+                    {stage == 2 && selectHour && <button
+                    className={styles.btn_trocar}
+                    onClick={()=> CancelaHora() }
+                    ><FaUndo/> Trocar</button>}
+                    {stage == 2 && selectHour &&
+                    <button
+                    onClick={() => setStage(3)}
+                    className={styles.btn_next}
+                    >
+                        Avançar
+                    </button>}
+
+
+                {stage == 3 &&
                 <div
                 className={styles.cont_stage}
                 >

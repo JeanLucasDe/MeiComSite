@@ -2,7 +2,8 @@ import { useState } from "react"
 import styles from "./Servicos.module.css"
 import BoxConfirm from "../../../../components/BoxConfirm"
 import { Link, useOutletContext } from "react-router-dom"
-import {FaPenAlt, FaPlus, FaTrashAlt} from "react-icons/fa"
+import {FaArrowLeft, FaPenAlt, FaPlus, FaTrashAlt} from "react-icons/fa"
+import { toast } from "react-toastify"
 
 export default function Servicos () {
 
@@ -23,8 +24,9 @@ export default function Servicos () {
         ação,
         nome,
         valor,
-        hora,
-        uid
+        hora: hora.toString(),
+        uid,
+        id
     }
 
     const FormataValor = (valor) => {
@@ -46,58 +48,121 @@ export default function Servicos () {
 
     return (
         <>
-            {state == 1 && usuario && usuario[0].mod == 'Agenda' ? 
-            <div
-            className={styles.container}
-            >
-                <button
-                onClick={()=> setState(2)} 
-                className={`${styles.margin_Bottom} ${styles.button_new}`}
-                ><span><FaPlus/></span>  Novo</button>
-
-                <div>
-                    <h5>Meus Serviços</h5>
-                    <div className="line"/>
-                    <ul
-                    className={styles.list}
+            {usuario && usuario[0].mod == 'Agenda' ? 
+            <div>
+                {state == 1  &&
+                    <div
+                    className={styles.container}
                     >
-                        {servicos && servicos.map(dados => {
-                            return(
-                                <li
-                                key={dados.id}
-                                className={styles.item}
-                                >
-                                    <div
-                                    className={styles.info_item}
-                                    >
-                                        <div>
-                                            <p className={styles.nome}>{dados.nome}</p>
-                                            <p>{dados.hora} horas</p>
-                                        </div>
-                                        <p>{FormataValor(parseInt(dados.valor))}</p>
-                                    </div>
-
-                                    <div
-                                    className={styles.cont_pen}
-                                    >
-                                        <FaPenAlt
-                                        className={styles.edit}
-                                        type="button"
-                                        data-bs-toggle="modal"
-                                        data-bs-target={`#ModalConfirmEdit`}
-                                        onClick={() => {
-                                            setNome(dados.nome)
-                                            setHora(dados.hora)
-                                            setValor(dados.valor)
-                                            setUid(dados.id)
-                                            setAção('EditarServico')}}
-                                        />
-                                    </div>
-                                </li>
-                            )
-                        })}
-                    </ul>
-                </div>
+                        <button
+                        onClick={()=> setState(2)}
+                        className={`${styles.margin_Bottom} ${styles.button_new}`}
+                        ><span><FaPlus/></span>  Novo</button>
+                        <div>
+                            <h5>Meus Serviços</h5>
+                            <div className="line"/>
+                            {servicos.length > 0 ?
+                            
+                            <ul
+                            className={styles.list}
+                            >
+                                {servicos && servicos.map(dados => {
+                                    return(
+                                        <li
+                                        key={dados.id}
+                                        className={styles.item}
+                                        >
+                                            <div
+                                            className={styles.info_item}
+                                            >
+                                                <div>
+                                                    <p className={styles.nome}>{dados.nome}</p>
+                                                    <p>{dados.hora} horas</p>
+                                                </div>
+                                                <p>{FormataValor(parseInt(dados.valor))}</p>
+                                            </div>
+                                            <div
+                                            className={styles.cont_pen}
+                                            >
+                                                <FaPenAlt
+                                                className={styles.edit}
+                                                type="button"
+                                                data-bs-toggle="modal"
+                                                data-bs-target={`#ModalConfirm`}
+                                                onClick={() => {
+                                                    setNome(dados.nome)
+                                                    setHora(dados.hora)
+                                                    setValor(dados.valor)
+                                                    setUid(dados.id)
+                                                    setAção('EditarServico')}}
+                                                />
+                                            </div>
+                                        </li>
+                                    )
+                                })}
+                            </ul>:
+                            <div className={styles.cont_modal}>
+                            <div className={styles.cont_empty}>
+                                <img src="https://img.freepik.com/free-vector/hand-drawn-facepalm-illustration_23-2150199871.jpg?size=626&ext=jpg&ga=GA1.1.995514839.1678974862&semt=ais"/>
+                                <h4>Você ainda não tem serviços</h4>
+                                <p>Comece a adicionar</p>
+            
+                            </div>
+                        </div>
+                            }
+                        </div>
+                    </div>}
+                {state == 2 &&
+                <div className="row">
+                    <div className="col-md-8">
+                        <div
+                        className={styles.container}
+                        >
+                            <button
+                            className={`${styles.margin_Bottom} ${styles.button_new} ${styles.back}`}
+                            onClick={()=>{
+                                setNome('')
+                                setHora('')
+                                setValor('')
+                                setState(1)}}
+                            ><FaArrowLeft/> Voltar</button>
+                            <h5>Adicionar Serviço</h5>
+                            <div>
+                                <p className={styles.label}>Nome:</p>
+                                <input type='text'
+                                className={styles.input}
+                                onChange={(el)=> setNome(el.target.value)}
+                                />
+                                <p className={styles.label}>Preço:</p>
+                                <input type='number'
+                                className={styles.input}
+                                onChange={(el)=> setValor(el.target.value)}
+                                />
+                                <p className={styles.label}>Tempo:</p>
+                                <input type='number'
+                                className={styles.input}
+                                onChange={(el)=> setHora(el.target.value)}
+                                />
+                                {nome && valor && hora ?
+                                <button
+                                type="button"
+                                data-bs-toggle="modal"
+                                data-bs-target={`#ModalConfirm`}
+                                className={styles.confirm}
+                                onClick={() => {
+                                    setAção('AddServico')
+                                }}
+                                >Salvar</button>
+                                :
+                                <button disabled className={styles.cancel}>
+                                    Salvar
+                                </button>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>}
+                
             </div>
             :
             <div className={styles.cont_modal}>
@@ -110,30 +175,9 @@ export default function Servicos () {
             </div>
             }
 
-            <div className="modal fade" id="ModalConfirmTrash" tabindex="-1" aria-labelledby="exampleModalLabel">
-                <div className={`modal-dialog modal-sm`}>
-                    <div className="modal-content">
-                        <BoxConfirm
-                            type="button"
-                            dismiss="modal"
-                            aria_label="Close"
-                            data_bs_toggle="modal" 
-                            data_bs_target={`#ModalConfirmTrash`}
-                            obj={obj}
-                            id={id}
-                            uid={uid}
-                            email = {usuario && usuario[0].email}
-                            />
-                    </div>
-                </div>
-            </div>
 
 
-
-
-
-
-            <div className="modal fade" id="ModalConfirmEdit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div className="modal fade" id="ModalConfirm" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div className={`modal-dialog modal-md`}>
                 <div className="modal-content">
                     <div>
@@ -142,9 +186,10 @@ export default function Servicos () {
                         dismiss="modal"
                         aria_label="Close"
                         data_bs_toggle="modal" 
-                        data_bs_target={`#ModalConfirmEdit`}
+                        data_bs_target={`#ModalConfirm`}
                         obj={obj}
                         email = {usuario && usuario[0].email}
+                        servicos={servicos}
                         />
                     </div>
                 </div>

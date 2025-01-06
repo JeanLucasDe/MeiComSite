@@ -62,7 +62,8 @@ export default function Agenda () {
                 agenda: ListHours
             })
             toast.success('Data Adicionada com sucesso!')
-            window.location.reload()
+        } else {
+            toast.error('Esta data já esta aberta')
         }
         
     }

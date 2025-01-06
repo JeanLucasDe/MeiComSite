@@ -87,3 +87,24 @@
     height: 200px;
     margin: 0em auto;
 }
+.confirm {
+    border: none;
+    padding: 0.5em;
+    background-color: #ff8800;
+    color: #fff;
+    margin-right: 1em;
+    border-radius: 10px ;
+}
+.cancel {
+    border: none;
+    padding: 0.5em;
+    background-color: #c0c0c0;
+    color: #fff;
+    margin-right: 1em;
+    border-radius: 10px ;
+}
+.back {
+    background-color: #b3b3b3;
+    color: #000;
+    font-weight: 400;
+}

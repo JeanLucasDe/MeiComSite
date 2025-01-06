@@ -11,6 +11,7 @@ import { toast, ToastContainer } from 'react-toastify';
 export default function BoxConfirm (props) {
 
     const obj = props.obj && props.obj
+    const servicos = props.servicos && props.servicos
     const db = getFirestore(App)
     const [user, setUser] = useState();
     const [nome, setNome] = useState();
@@ -159,23 +160,13 @@ export default function BoxConfirm (props) {
     }
 
 
-    const AddServico = async() => {
-        await setDoc(doc(db, `MeiComSite/${user && user.email}/servicos`, `${props.id}`), {
-            nome:obj.nome,
-            valor:obj.valor,
-            hora:obj.hora,
-            agenda: []
-        })
-        window.location.reload()
-        
-    }
     const deletacompra = (nome) => {
         let produtosSalvos = new Array()
-
+        
         if (localStorage.hasOwnProperty(`itenscarrinho.${site}`)) {
             produtosSalvos = JSON.parse(localStorage.getItem(`itenscarrinho.${site}`))
         }
-
+        
         let index = produtosSalvos.findIndex(prop => prop.nome == nome)
         
         produtosSalvos.splice(index, 1) 
@@ -200,7 +191,7 @@ export default function BoxConfirm (props) {
         });
         window.location.reload()
     }
-
+    
     const apagaStorage = () => {
         let produtosSalvos = new Array()
         
@@ -210,30 +201,42 @@ export default function BoxConfirm (props) {
         
         
         let index = props.dados && produtosSalvos.findIndex(prop => prop.categoria == props.dados.categoria)
-
+        
         produtosSalvos.splice(index, 1) 
-
+        
         localStorage.setItem(`meicomsiteteste`,JSON.stringify(produtosSalvos))
         window.location.reload()
-
+        
     }
 
-
+    
     const FormataValor = (valor) => {
         var valorFormatado = valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
         return valorFormatado
     }
 
-
+    
     function horaMaiorQueUmaHora() {
         const p = hora && hora.split(':')
         if (parseInt(p[0])>0) {
             return parseInt(p[0])
         }
-      }
-      
-      const horaV = horaMaiorQueUmaHora()
+    }
+    
+    const horaV = horaMaiorQueUmaHora()
+    
+    const AddServico = async() => {
+        await setDoc(doc(db, `MeiComSite/${user && user.email}/servicos`, `${obj.id}`), {
+            nome:obj.nome,
+            valor:obj.valor,
+            hora:obj.hora,
+            agenda: []
+        })
+        window.location.reload()
+        
+    }
 
+    
     const EditServico = async() => {
         try {
             if (!hora) {
@@ -531,12 +534,12 @@ export default function BoxConfirm (props) {
                 className={styles.input}
                 onChange={(el)=> setNome(el.target.value)}
                 />
-                <input type='text'
+                <input type='number'
                 placeholder={FormataValor(parseInt(obj.valor))}
                 className={styles.input}
                 onChange={(el)=> setValor(el.target.value)}
                 />
-                <input type='time'
+                <input type='number'
                 placeholder={obj.hora}
                 className={styles.input}
                 onChange={(el)=> setHora(el.target.value)}
