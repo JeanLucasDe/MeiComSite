@@ -231,6 +231,7 @@ export default function BoxConfirm (props) {
             nome:obj.nome,
             valor:obj.valor,
             hora:obj.hora,
+            precofixo:obj.precoFixo,
             agenda: []
         })
         window.location.reload()

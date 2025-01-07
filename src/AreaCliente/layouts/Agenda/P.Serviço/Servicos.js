@@ -14,6 +14,7 @@ export default function Servicos () {
     const [state, setState] = useState(1)
     const [ação, setAção] = useState()
     const [uid, setUid] = useState()
+    const [selecionado, setSelecionado] = useState("");
     const geraId = () => {
         const numeroAleatorio = Math.floor(Math.random() * 100000);
         return numeroAleatorio
@@ -26,6 +27,7 @@ export default function Servicos () {
         valor,
         hora: hora.toString(),
         uid,
+        precoFixo:selecionado,
         id
     }
 
@@ -33,18 +35,12 @@ export default function Servicos () {
         var valorFormatado = valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
         return valorFormatado
     }
-
-    function horaMaiorQueUmaHora() {
-        const p = hora && hora.split(':')
-        if (parseInt(p[0])>0) {
-            return parseInt(p[0])
-        }
-      }
-      
-      const horaV = horaMaiorQueUmaHora()
-
-
+      const handleChange = (event) => {
+        setSelecionado(event.target.value); // Atualiza o estado com o valor do botão de rádio selecionado
+      };
     
+
+
 
     return (
         <>
@@ -119,7 +115,7 @@ export default function Servicos () {
                         className={styles.container}
                         >
                             <button
-                            className={`${styles.margin_Bottom} ${styles.button_new} ${styles.back}`}
+                            className={`${styles.margin_Bottom} ${styles.back}`}
                             onClick={()=>{
                                 setNome('')
                                 setHora('')
@@ -134,9 +130,32 @@ export default function Servicos () {
                                 onChange={(el)=> setNome(el.target.value)}
                                 />
                                 <p className={styles.label}>Preço:</p>
+                                <div>
+                                    <input
+                                        type="radio"
+                                        id="opcao1"
+                                        name="opcoes"
+                                        value="1"
+                                        checked={selecionado === "1"}
+                                        onChange={handleChange}
+                                        />
+                                        <span className={styles.m_left}>Preço Fixo</span>
+                                </div>
+                                <div>
+                                    <input
+                                    type="radio"
+                                    id="opcao2"
+                                    name="opcoes"
+                                    value="2"
+                                    checked={selecionado === "2"}
+                                    onChange={handleChange}
+                                    />
+                                    <span className={styles.m_left}>Apartir</span>
+                                </div>
                                 <input type='number'
                                 className={styles.input}
                                 onChange={(el)=> setValor(el.target.value)}
+                                placeholder="R$ 00"
                                 />
                                 <p className={styles.label}>Tempo de duração:</p>
                                 <input type='number'
@@ -144,7 +163,7 @@ export default function Servicos () {
                                 onChange={(el)=> setHora(el.target.value)} 
                                 placeholder="Apenas número"
                                 />
-                                {nome && valor && hora ?
+                                {selecionado && nome && valor && hora ?
                                 <button
                                 type="button"
                                 data-bs-toggle="modal"

@@ -328,6 +328,7 @@ export default function HomeAgenda (props) {
                         >{Service}
                         </h1>
                         <h5>{escolhaServico.hora} hora{escolhaServico.hora > 1 && 's'} de duração</h5>
+                        <h5 className={styles.apartir}>{escolhaServico.precofixo =='2' && 'Apartir de'}</h5>
                         <h5>{FormataValor(parseInt(escolhaServico.valor))}</h5>
                     </div>
                     
@@ -362,9 +363,10 @@ export default function HomeAgenda (props) {
                                     >
                                         <div>
                                             <p className={styles.name_service}>{dados.nome}</p>
-                                            <p>{dados.hora} horas de duração</p>
+                                            <p>{dados.hora} hora{dados.hora > 1 && 's'} de duração</p>
                                         </div>
                                         <div>
+                                            <p className={styles.apartir}>{dados.precofixo == '2' && 'Apartir de'}</p>
                                             <p
                                             className={`${Service == dados.nome && styles.select} ${styles.price}`}
                                             >{FormataValor(parseFloat(dados.valor))}</p>

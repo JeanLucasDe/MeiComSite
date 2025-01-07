@@ -104,7 +104,11 @@
     border-radius: 10px ;
 }
 .back {
-    background-color: #b3b3b3;
     color: #000;
-    font-weight: 400;
+    font-weight: 500;
+    border: none !important;
+    background-color: transparent;
+}
+.m_left {
+    margin-left: .6em;
 }
