@@ -47,11 +47,6 @@ export default function Agenda () {
                     disp: true,
                 })
             }
-            const result = agenda && agenda.filter(dados => {
-                if (dados.date == date) {
-                    return dados
-                } 
-            })
             setListHours(ListHoursT)
         }
         SeparaHorarios()
@@ -60,11 +55,14 @@ export default function Agenda () {
 
 
     const AddData = async() => {
-        await setDoc(doc(db, `MeiComSite/${usuario && usuario[0].email}/agenda`, `${date}`), {
-            date,
-            agenda: ListHours
-        })
-        toast.success('Data Adicionada com sucesso!')
+        const indice = agenda.findIndex((h) => h.date === date);
+        if (indice < 0) {
+            await setDoc(doc(db, `MeiComSite/${usuario && usuario[0].email}/agenda`, `${date}`), {
+                date,
+                agenda: ListHours
+            })
+            toast.success('Data Adicionada com sucesso!')
+        } else toast.error('Esta Data já está ocupada')
     }
 
 
@@ -227,6 +225,10 @@ export default function Agenda () {
                                     <input type="date" onChange={(el)=> setDate(el.target.value)}
                                     className={styles.input}
                                     />
+                                    <div className={styles.cont_b_oran}>
+                                        <div className={styles.b_oran}/>
+                                        <p>disponível</p>
+                                    </div>
                                     {date && ListHours && 
                                     <div>
                                         <div style={{ display: "flex", gap: "30px" }}>
