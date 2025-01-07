@@ -75,7 +75,10 @@ export default function Servicos () {
                                                     <p className={styles.nome}>{dados.nome}</p>
                                                     <p>{dados.hora} horas</p>
                                                 </div>
-                                                <p>{FormataValor(parseInt(dados.valor))}</p>
+                                                <div>
+                                                    {dados.precofixo =='2' && <span className={styles.apartir}>apartir</span>}
+                                                    <p>{FormataValor(parseInt(dados.valor))}</p>
+                                                </div>
                                             </div>
                                             <div
                                             className={styles.cont_pen}

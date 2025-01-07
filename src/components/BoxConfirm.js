@@ -18,6 +18,7 @@ export default function BoxConfirm (props) {
     const [hora, setHora] = useState('');
     const [valor, setValor] = useState();
     const [produtos, setProdutos] = useState([])
+    const [selecionado, setSelecionado] = useState("");
     const UserCollection = collection(db, "MeiComSite")
     const {site} = useParams()
     
@@ -251,6 +252,9 @@ export default function BoxConfirm (props) {
                 await updateDoc(doc(db, `MeiComSite/${user && user.email}/servicos`, obj.uid), {
                     valor: !valor ? obj.valor : valor
                 });
+                await updateDoc(doc(db, `MeiComSite/${user && user.email}/servicos`, obj.uid), {
+                    precofixo: !selecionado ? obj.precofixo: selecionado
+                });
                 window.location.reload()
             } else {
                 if (horaV) {
@@ -262,6 +266,9 @@ export default function BoxConfirm (props) {
                     });
                     await updateDoc(doc(db, `MeiComSite/${user && user.email}/servicos`, obj.uid), {
                         valor: !valor ? obj.valor : valor
+                    });
+                    await updateDoc(doc(db, `MeiComSite/${user && user.email}/servicos`, obj.uid), {
+                        precofixo: !selecionado ? obj.precofixo: selecionado
                     });
                     window.location.reload()
                 } else {
@@ -279,6 +286,9 @@ export default function BoxConfirm (props) {
         toast.success('Deletado com sucesso!')
         window.location.reload()
     }
+    const handleChange = (event) => {
+        setSelecionado(event.target.value); // Atualiza o estado com o valor do botão de rádio selecionado
+      };
 
     return (
         <>
@@ -533,11 +543,33 @@ export default function BoxConfirm (props) {
                 className={styles.input}
                 onChange={(el)=> setNome(el.target.value)}
                 />
+                <input
+                    type="radio"
+                    id="opcao1"
+                    name="opcoes"
+                    value="1"
+                    checked={selecionado === "1"}
+                    onChange={handleChange}
+                    />
+                    <span className={styles.m_left}>Preço Fixo</span>
+                </div>
+                <div>
+                    <input
+                    type="radio"
+                    id="opcao2"
+                    name="opcoes"
+                    value="2"
+                    checked={selecionado === "2"}
+                    onChange={handleChange}
+                    />
+                    <span className={styles.m_left}>Apartir</span>
+                </div>
                 <input type='number'
                 placeholder={FormataValor(parseInt(obj.valor))}
                 className={styles.input}
                 onChange={(el)=> setValor(el.target.value)}
                 />
+                <div>
                 <input type='number'
                 placeholder={obj.hora}
                 className={styles.input}
@@ -552,8 +584,10 @@ export default function BoxConfirm (props) {
                 
                 <button className={styles.confirm}
                 onClick={()=> {
-                    if(hora || valor || nome) {
+                    if(hora || valor || nome || selecionado) {
                         EditServico()
+                    } else {
+                        toast.error('Nenhuma alteração')
                     }
                 }}
                 >Salvar</button>
