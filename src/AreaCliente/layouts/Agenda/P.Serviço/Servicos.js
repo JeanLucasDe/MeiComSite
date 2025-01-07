@@ -138,10 +138,11 @@ export default function Servicos () {
                                 className={styles.input}
                                 onChange={(el)=> setValor(el.target.value)}
                                 />
-                                <p className={styles.label}>Tempo:</p>
+                                <p className={styles.label}>Tempo de duração:</p>
                                 <input type='number'
                                 className={styles.input}
-                                onChange={(el)=> setHora(el.target.value)}
+                                onChange={(el)=> setHora(el.target.value)} 
+                                placeholder="Apenas número"
                                 />
                                 {nome && valor && hora ?
                                 <button
