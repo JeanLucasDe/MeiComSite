@@ -9,6 +9,7 @@ import App from "../../../../Hooks/App"
 import {FaCalendarAlt, FaCalendarCheck, FaCheck, FaCheckCircle, FaClock, FaCut, FaHandHoldingUsd, FaPlusCircle, FaTimesCircle, FaUser} from "react-icons/fa"
 import { toast, ToastContainer } from "react-toastify"
 import 'moment/locale/pt-br';
+import Test_gg from "./Teste_gg"
 
 
 
@@ -24,10 +25,11 @@ export default function Agenda () {
     const [cliente, setCliente] = useState()
     var [countDelete, setCountDelete] = useState(0)
     const [pedidoDelete, setPedidoDelete] = useState('')
+    const [ListHours, setListHours] = useState()
 
 
 
-
+    console.log(ListHours)
     const AddData = async() => {
         const DiferencaHoras = () => {
             let abre = usuario && usuario[0].abre 
@@ -53,16 +55,24 @@ export default function Agenda () {
                 return dados
             } 
         })
+        setListHours(ListHours)
 
-        if (!result.length) {
-            await setDoc(doc(db, `MeiComSite/${usuario && usuario[0].email}/agenda`, `${date}`), {
-                date,
-                agenda: ListHours
-            })
-            toast.success('Data Adicionada com sucesso!')
-        } else {
-            toast.error('Esta data já esta aberta')
-        }
+
+
+
+
+
+
+
+        ////***if (!result.length) {
+            //await setDoc(doc(db, `MeiComSite/${usuario && usuario[0].email}/agenda`, `${date}`), {
+                //date,
+                //agenda: ListHours
+            //})
+            //toast.success('Data Adicionada com sucesso!')
+        //} else {
+            //toast.error('Esta data já esta aberta')
+        //}/////
         
     }
 
@@ -204,6 +214,7 @@ export default function Agenda () {
                                     ><FaTimesCircle/></button>
                                 </div>
                             </div>
+                            {ListHours && <Test_gg/>}
                         </div>
                     </div>
                 </div>

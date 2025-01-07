@@ -62,6 +62,7 @@ export default function Login () {
                 avatar: photoURL,
                 name: displayName
             })
+            window.location.href="/perfil/user/config"
         }
     }
 

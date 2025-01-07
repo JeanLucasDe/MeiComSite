@@ -396,8 +396,9 @@ export default function FormularioCadastro () {
                                                     type="button"
                                                     onClick={(e)=> {
                                                         e.preventDefault()
-                                                        if (!novoBairro && !taxa) return
-                                                        salvarBairro(novoBairro, taxa)
+                                                        if (novoBairro && taxa) {
+                                                            salvarBairro(novoBairro, taxa)
+                                                        }
                                                     }}
                                                     >Salvar</button>
                                                     <button
@@ -416,8 +417,8 @@ export default function FormularioCadastro () {
                                                 type="button"
                                                 className={styles.btn_add_cidade}
                                                 onClick={(e)=> {
+                                                        setAddBairro(!addBairro)
                                                     e.preventDefault()
-                                                    setAddBairro(!addBairro)
                                                 }}
                                                 ><FaPlusCircle/> Adicionar</button>
                                             </div>
@@ -473,7 +474,7 @@ export default function FormularioCadastro () {
                                         onChange={(el)=> setModalidade(el.target.value)}
                                         >
                                             <option value="-" selected disabled defaultChecked>-</option>
-                                            <option value="Alimentação">Alimentação</option>
+                                            <option value="Alimentação" disabled>Alimentação (em construção)</option>
                                             <option value="Agenda">Agendamento</option>
                                         </select>
                                     </div>

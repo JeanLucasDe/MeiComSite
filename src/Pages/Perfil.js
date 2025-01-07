@@ -110,8 +110,9 @@ export default function Perfil () {
             <NavBar/>
                 
                 {!user ? loading : user ?
+
                 <div className={styles.container}>
-                    {stage == 1 ? <Loading/>:
+                    {stage == 1 ? window.location.href = '/cadastro':
                         usuario && usuario[0].mod == "Alimentação"?
                         <div className="row">
 
