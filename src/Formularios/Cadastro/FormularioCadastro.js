@@ -532,15 +532,17 @@ export default function FormularioCadastro () {
 
         <div className="modal fade" id="ModalAdd" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div className={`modal-dialog modal-md`}>
-                <div className="modal-content">
-                    <BoxConfirm
-                    obj={obj}
-                    type="button" 
-                    data_bs_toggle="modal" 
-                    data_bs_target="#ModalAdd"
-                    listBairros={listBairros}
-                    listCidades={listCidades}
-                    />
+                <div className={styles.cont_box}>
+                    <div className="modal-content">
+                            <BoxConfirm
+                            obj={obj}
+                            type="button"
+                            data_bs_toggle="modal"
+                            data_bs_target="#ModalAdd"
+                            listBairros={listBairros}
+                            listCidades={listCidades}
+                            />
+                    </div>
                 </div>
             </div>
         </div>

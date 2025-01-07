@@ -282,27 +282,24 @@ export default function BoxConfirm (props) {
     return (
         <>
         {obj.ação == "Iniciar Cadastro" &&
-        <div className={styles.container}>
-            <h4>Confirma seus dados?</h4>
-            <div className='line'></div>
-            <div className={styles.cont_btn}>
-
-                
-                <button className={styles.confirm}
-                onClick={AdicionarUSer}
-                type={props.type} 
-                data-bs-toggle={props.data_bs_toggle} 
-                data-bs-target={props.data_bs_target}
-                >Confirmo</button>
-
-
-                <button className={styles.cancel}
-                type={props.type} 
-                data-bs-toggle={props.data_bs_toggle} 
-                data-bs-target={props.data_bs_target}
-                >Cancelar</button>
+            <div className={styles.container}>
+                    <h4>Confirma seus dados?</h4>
+                    <div className='line'></div>
+                    <div className={styles.cont_btn}>
+            
+                        <button className={styles.confirm}
+                        onClick={AdicionarUSer}
+                        type={props.type}
+                        data-bs-toggle={props.data_bs_toggle}
+                        data-bs-target={props.data_bs_target}
+                        >Confirmar</button>
+                        <button className={styles.cancel}
+                        type={props.type}
+                        data-bs-toggle={props.data_bs_toggle}
+                        data-bs-target={props.data_bs_target}
+                        >Cancelar</button>
+                    </div>
             </div>
-        </div>
         }
          {obj.ação == "Editar" &&
         <div className={styles.container}>

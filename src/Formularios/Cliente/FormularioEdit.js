@@ -56,7 +56,7 @@ export default function FormularioEdit () {
    const ApagaUsuário = async () => {
     const ref = doc(db, `MeiComSite`, user && user.email)
     await deleteDoc(ref)
-    window.location.reload()
+    window.location.href = '/'
     }
     
     const copyToClipboard = (text) => {
@@ -138,13 +138,10 @@ export default function FormularioEdit () {
     }
     
 
-    
-
-
 
     return (
         <>
-        {user && usuario && usuario.map(dados => {
+        {user && usuario.length && usuario.map(dados => {
             if (dados.iduser == user.id) {
                 return (
                     <>
@@ -609,7 +606,7 @@ export default function FormularioEdit () {
                             data-bs-toggle="modal"
                             data-bs-target="#ModalDeleteUser"
                             className={styles.btn_delete_account}
-                            >Deletar esta conta</button>
+                            >Apagar esta conta</button>
                             <button
                             type="button"
                             data-bs-toggle="modal"

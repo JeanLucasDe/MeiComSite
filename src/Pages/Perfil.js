@@ -17,7 +17,7 @@ export default function Perfil () {
     const [verifica, setVerfica] = useState(false)
     const [modo, setModo] = useState()
     const [user, setUser] = useState();
-    const [stage, setStage] = useState(1)
+    const [stage, setStage] = useState(0)
     const [produtos, setProdutos] = useState([])
     const [servicos, setServicos] = useState([])
     const [agenda, setAgenda] = useState([])
@@ -31,6 +31,7 @@ export default function Perfil () {
     const UserCollectionServicos = collection(db, `MeiComSite/${user && user.email}/servicos`)
     const UserCollectionAgenda = collection(db, `MeiComSite/${user && user.email}/agenda`)
 
+    
     useEffect (()=>{
         try{
             auth.onAuthStateChanged(user => {
@@ -48,35 +49,30 @@ export default function Perfil () {
                 const dataUser = await getDocs(Collec)
                 setUsuarios((dataUser.docs.map((doc) => ({...doc.data(), id: doc.id}))))
             };
+            const getUsuarioVendas = async() => {
+                const data = await getDocs(UserCollection);
+                setProdutos((data.docs.map((doc) => ({...doc.data(), id: doc.id}))))
+                const dataVendas = await getDocs(UserCollectionVendas);
+                setVendas((dataVendas.docs.map((doc) => ({...doc.data(), id: doc.id}))))
+                const dataServicos = await getDocs(UserCollectionServicos);
+                setServicos((dataServicos.docs.map((doc) => ({...doc.data(), id: doc.id}))))
+                const dataAgenda = await getDocs(UserCollectionAgenda);
+                setAgenda((dataAgenda.docs.map((doc) => ({...doc.data(), id: doc.id}))))
+        
+                setLoading(true)
+            }
             getUsers()
+            getUsuarioVendas()
         } catch (e) {
             <button> tentar novamente </button>
         }
     },[])
 
-    const usuario = usuarios && user && usuarios.filter(dados => dados.email == user.email)
+    const usuario = usuarios && user && usuarios.filter(dados => dados.email == user.email) || []
 
-    const getUsuarioVendas = async() => {
-        const data = await getDocs(UserCollection);
-        setProdutos((data.docs.map((doc) => ({...doc.data(), id: doc.id}))))
-        const dataVendas = await getDocs(UserCollectionVendas);
-        setVendas((dataVendas.docs.map((doc) => ({...doc.data(), id: doc.id}))))
-        const dataServicos = await getDocs(UserCollectionServicos);
-        setServicos((dataServicos.docs.map((doc) => ({...doc.data(), id: doc.id}))))
-        const dataAgenda = await getDocs(UserCollectionAgenda);
-        setAgenda((dataAgenda.docs.map((doc) => ({...doc.data(), id: doc.id}))))
+    
 
-        setLoading(true)
-        setStage(2)
-    }
-
-    if (usuario && usuario.length > 0) {
-        if (!loading) {
-            getUsuarioVendas()
-        }
-    }
-
-
+   
     
     const pegaDados = () => {
         let produtosSalvos = new Array()
@@ -105,28 +101,29 @@ export default function Perfil () {
     
 
 
+
+
+
     return (
         <div>
             <NavBar/>
-                
-                {!user ? loading : user ?
-
-                <div className={styles.container}>
-                    {stage == 1 ? window.location.href = '/cadastro':
-                        usuario && usuario[0].mod == "Alimentação"?
+            <div className={styles.container}>
+                {usuario.length > 0 ?
+                    <div>
+                        {usuario && usuario[0].mod == 'Alimentação' && 
                         <div className="row">
-
                             <div className={`${styles.col} col-md-2`}>
                                 <NavBarUser mod={usuario && usuario[0].mod}/>
                             </div>
-
-
                             <div className={`${styles.main} col-md-10`}>
+                                
                                 <Outlet context={[mod, produtos && produtos, usuario, vendas, user]} className={styles.main}/>
                             </div>
-                        </div>
-                        :usuario && usuario[0].mod == "Agenda" && 
-                        <div className="row">
+                        </div>}
+                        
+                        
+                        {usuario && usuario[0].mod == 'Agenda' && 
+                            <div className="row">
                             <div className={`${styles.col} col-md-2`}>
                                 <NavBarUser mod={usuario && usuario[0].mod}/>
                             </div>
@@ -134,9 +131,11 @@ export default function Perfil () {
                                 <Outlet context={[mod, produtos && produtos, usuario, vendas, user, agenda,servicos]}
                                 />
                             </div>
-                        </div>
-                    }
-                    {stage == 2 && !usuario.length > 0 &&
+                        </div>}
+
+
+                    </div>
+                    :
                     <div className={styles.cont_empty}>
                         <img src='https://img.freepik.com/free-vector/user-verification-unauthorized-access-prevention-private-account-authentication-cyber-security-people-entering-login-password-safety-measures_335657-8.jpg?size=626&ext=jpg&ga=GA1.2.995514839.1678974862&semt=ais' className={styles.logo}/>
                         <h4>Complete seu cadastro para Continuar</h4>
@@ -144,18 +143,20 @@ export default function Perfil () {
                         className={styles.btn_continue}
                         >Continuar</Link>
                     </div>
-                    }
+                }
+                    
+                    
                     
                 </div>
-                :
-                <div className={styles.cont_empty}>
-                        <img src='https://img.freepik.com/free-vector/user-verification-unauthorized-access-prevention-private-account-authentication-cyber-security-people-entering-login-password-safety-measures_335657-8.jpg?size=626&ext=jpg&ga=GA1.2.995514839.1678974862&semt=ais' className={styles.logo}/>
-                        <h4>Faça Login Para continuar</h4>
-                        <Link to="/login"
-                        className={styles.btn_continue}
-                        >Continuar</Link>
-                    </div>
-                }
+                
+                {!user && <div className={styles.cont_empty}>
+                    <img src='https://img.freepik.com/free-vector/user-verification-unauthorized-access-prevention-private-account-authentication-cyber-security-people-entering-login-password-safety-measures_335657-8.jpg?size=626&ext=jpg&ga=GA1.2.995514839.1678974862&semt=ais' className={styles.logo}/>
+                    <h4>Faça Login Para continuar</h4>
+                    <Link to="/login"
+                    className={styles.btn_continue}
+                    >Continuar</Link>
+                </div>}
+                
                 
             <Footer/>
         </div>
