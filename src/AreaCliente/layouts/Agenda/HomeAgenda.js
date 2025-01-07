@@ -3,7 +3,7 @@ import styles from "./HomeAgenda.module.css"
 import { useState } from "react"
 import { doc, updateDoc,  deleteDoc, getFirestore, collection, getDocs,setDoc} from "@firebase/firestore";
 import App from "../../../Hooks/App";
-import {FaArrowLeft, FaArrowRight, FaCheck, FaUndo } from "react-icons/fa"
+import {FaArrowLeft, FaArrowRight, FaCheck, FaRegCalendarTimes, FaUndo } from "react-icons/fa"
 import moment from "moment";
 import { toast, ToastContainer } from "react-toastify";
 
@@ -79,8 +79,8 @@ export default function HomeAgenda (props) {
       const meses = [
         {mes:'Janeiro',id:'01'}, 
         {mes:'Fevereiro',id:'02'}, 
-        {mes:'Abril',id:'03'},
         {mes:'Março',id:'04'}, 
+        {mes:'Abril',id:'03'},
         {mes:'Maio',id:'05'}, 
         {mes:'Junho',id:'06'},
         {mes:'Julho',id:'07'}, 
@@ -327,7 +327,7 @@ export default function HomeAgenda (props) {
                         className={styles.title_1}
                         >{Service}
                         </h1>
-                        <h5>{escolhaServico.hora} horas</h5>
+                        <h5>{escolhaServico.hora} hora{escolhaServico.hora > 1 && 's'} de duração</h5>
                         <h5>{FormataValor(parseInt(escolhaServico.valor))}</h5>
                     </div>
                     
@@ -433,7 +433,7 @@ export default function HomeAgenda (props) {
                                 </div>
                             :
                                 <div>
-                                    <p>Não há datas disponíveis</p>
+                                    <FaRegCalendarTimes className={styles.date_indisp}/>
                                 </div>
                                 }
 
