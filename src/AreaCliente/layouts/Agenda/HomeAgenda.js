@@ -119,14 +119,23 @@ export default function HomeAgenda (props) {
 
       const hoje = new Date();
 
-
-
+      //if ( hoje.getDate() <= parseInt(dados.date.split('-')[2]) ) {
+        //return dados
+    //}
       const ListDias = agenda && agenda.filter(dados => {
         if (parseInt(dados.date.split('-')[1]) == meses[mesAtual].id) {
             if (hoje.getFullYear() == parseInt(dados.date.split('-')[0])) {
-                if (hoje.getDate() <= parseInt(dados.date.split('-')[2]) ) {
+                if (mesAtual+1 == hoje.getMonth()+1) {
+                    if (hoje.getMonth()+1 == parseInt(dados.date.split('-')[1])) {
+                        if (hoje.getDate() <= parseInt(dados.date.split('-')[2]) ) {
+                            return dados
+                        }
+                    } 
+                } else  if (mesAtual+1 == parseInt(dados.date.split('-')[1])) {
                     return dados
                 }
+
+                
             }
         } 
     })
@@ -242,7 +251,6 @@ export default function HomeAgenda (props) {
             }
         } 
     }
-
 
     const CancelaHora = () => {
 
@@ -434,7 +442,9 @@ export default function HomeAgenda (props) {
                             <button
                             onClick={()=> {
                                 setSelectDate(false)
-                                CancelaHora()
+                                if(selectHour) {
+                                    CancelaHora()
+                                }
                             }}
                             className={`${styles.bg_w} ${styles.btn_trocar}`}
                             >

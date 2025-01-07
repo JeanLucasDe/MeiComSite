@@ -194,6 +194,24 @@ export default function Agenda () {
       const coluna1 = ListHours && ListHours.slice(0, metade) || [];
       const coluna2 = ListHours && ListHours.slice(metade) || [];
 
+
+      function obterDiaDaSemana(data) {
+        const diasDaSemana = [
+          'Dom', 'Seg', 'Ter', 'Qua', 
+          'Qui', 'Sex', 'Sáb','Dom'
+        ];
+      
+        const dataObj = new Date(data); // Converte a data para um objeto Date
+      
+        // Verifica se a data é válida
+        if (isNaN(dataObj)) {
+          return 'Data inválida';
+        }
+      
+        // Retorna o dia da semana correspondente à data
+        return diasDaSemana[dataObj.getDay()+1];
+      }
+
     return (
         <>
         {usuario && usuario.length > 0 && usuario[0].mod =="Agenda" &&
