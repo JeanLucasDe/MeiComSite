@@ -1,7 +1,7 @@
 
 import { useOutletContext } from "react-router-dom"
 import styles from "./Agenda.module.css"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import moment from "moment"
 import AddAgenda from "./AddAgenda"
 import { deleteDoc, doc, getFirestore, setDoc, updateDoc } from "firebase/firestore"
@@ -28,52 +28,43 @@ export default function Agenda () {
     const [ListHours, setListHours] = useState()
 
 
-
-    console.log(ListHours)
-    const AddData = async() => {
-        const DiferencaHoras = () => {
-            let abre = usuario && usuario[0].abre 
-            let fecha = usuario && usuario[0].fecha
-            const Diff = parseInt(fecha.split(':')[0]) -  parseInt(abre.split(':')[0])
-            return Diff
-        }
-        var abre = usuario && usuario[0].abre 
-        const Diferenca = DiferencaHoras()
-        const ListHours = []
-        for (let i = 0; i < Diferenca; i++) {
-            let d = parseInt(abre.split(':')[0])
-            let r = d+=i
-            ListHours.push({
-                hora: r.toString(),
-                disp: true,
+    useEffect(()=>{
+        const SeparaHorarios = () => {
+            const DiferencaHoras = () => {
+                let abre = usuario && usuario[0].abre 
+                let fecha = usuario && usuario[0].fecha
+                const Diff = parseInt(fecha.split(':')[0]) -  parseInt(abre.split(':')[0])
+                return Diff
+            }
+            var abre = usuario && usuario[0].abre 
+            const Diferenca = DiferencaHoras()
+            const ListHoursT = []
+            for (let i = 0; i < Diferenca; i++) {
+                let d = parseInt(abre.split(':')[0])
+                let r = d+=i
+                ListHoursT.push({
+                    hora: r.toString(),
+                    disp: true,
+                })
+            }
+            const result = agenda && agenda.filter(dados => {
+                if (dados.date == date) {
+                    return dados
+                } 
             })
+            setListHours(ListHoursT)
         }
+        SeparaHorarios()
+    },[])
+    
 
 
-        const result = agenda && agenda.filter(dados => {
-            if (dados.date == date) {
-                return dados
-            } 
+    const AddData = async() => {
+        await setDoc(doc(db, `MeiComSite/${usuario && usuario[0].email}/agenda`, `${date}`), {
+            date,
+            agenda: ListHours
         })
-        setListHours(ListHours)
-
-
-
-
-
-
-
-
-        ////***if (!result.length) {
-            //await setDoc(doc(db, `MeiComSite/${usuario && usuario[0].email}/agenda`, `${date}`), {
-                //date,
-                //agenda: ListHours
-            //})
-            //toast.success('Data Adicionada com sucesso!')
-        //} else {
-            //toast.error('Esta data já esta aberta')
-        //}/////
-        
+        toast.success('Data Adicionada com sucesso!')
     }
 
 
@@ -167,6 +158,44 @@ export default function Agenda () {
         }, 1000);
     }
 
+    const DispHorario = async(index) => {
+        const updatedHorarios = [...Horas[0].agenda];
+        const indice = updatedHorarios.findIndex((h) => h.hora === index);
+        setCountDelete(countDelete += 1)
+        if (countDelete == 1) {
+            toast.error('Clique 2 vezes para confirmar')
+        }
+        if (countDelete == 2) {
+            updatedHorarios[indice].disp = !updatedHorarios[indice].disp;
+            await updateDoc(doc(db, `MeiComSite/${user && user.email}/agenda`, escolhaDate ? escolhaDate: moment(date).format('YYYY-MM-DD')), {
+                agenda: updatedHorarios
+            });
+
+        }
+        setTimeout(() => {
+            setCountDelete(0)
+        }, 1000);
+    }
+
+    function formatarHoraParaAMPM(hora) {
+        if (hora < 0 || hora > 23) {
+          return 'Hora ou minuto inválido';
+        }
+        const periodo = hora >= 12 ? 'PM' : 'AM';
+        const hora12 = hora % 12 || 12; 
+        return `${hora12 < 10 ? '0': ''}${hora12}:00 ${periodo}`;
+      }
+
+      const toggleDisponivel = (index) => {
+        const updatedHorarios = [...ListHours];
+        updatedHorarios[index].disp = !updatedHorarios[index].disp;
+        setHorarios(updatedHorarios);
+      };
+    
+      const metade = ListHours && Math.ceil(ListHours.length / 2) || 0;
+      const coluna1 = ListHours && ListHours.slice(0, metade) || [];
+      const coluna2 = ListHours && ListHours.slice(metade) || [];
+
     return (
         <>
         {usuario && usuario.length > 0 && usuario[0].mod =="Agenda" &&
@@ -194,27 +223,56 @@ export default function Agenda () {
                             <div
                             className={styles.cont_input_date}
                             >
-                                <div>
+                                <div className={styles.date_in}>
                                     <input type="date" onChange={(el)=> setDate(el.target.value)}
                                     className={styles.input}
                                     />
+                                    {date && ListHours && 
+                                    <div>
+                                        <div style={{ display: "flex", gap: "30px" }}>
+                                            {[coluna1, coluna2].map((coluna, colIndex) => (
+                                                <div key={colIndex}>
+                                                {coluna.map((horario, index) => (
+                                                    <div
+                                                    key={index}
+                                                    onClick={() => toggleDisponivel(colIndex * metade + index)}
+                                                    style={{
+                                                        margin: "5px 0",
+                                                        backgroundColor: !horario.disp ? "#cbcbcb" : "#FF9100",
+                                                        cursor: "pointer",
+                                                        textAlign: "center",
+                                                        border: "1px solid #ccc",
+                                                        borderRadius: "5px",
+                                                    }}
+                                                    className={styles.horario}
+                                                    >
+                                                    {formatarHoraParaAMPM(horario.hora)}
+                                                    </div>
+                                                ))}
+                                                </div>
+                                            ))}
+                                    </div>
+                            </div>}
+
                                 </div>
                                 <div
-                                className={styles.cont_input_date}
+                                className={styles.cont_input_date_buttons}
                                 >
-                                    {date && <button
-                                    onClick={() => AddData(moment(date).format('DD/MM/YYYY'))}
-                                    className={styles.button_new}
-                                    ><FaCheckCircle/></button>}
-                                    <button
-                                    onClick={() => {
-                                        setDate('')
-                                        setHorarios(false)}}
-                                    className={styles.button_back}
-                                    ><FaTimesCircle/></button>
+                                    <div className={`${styles.p_B} ${styles.cont_input_date_buttons}`}>
+                                        {date &&
+                                        <button
+                                        onClick={() => AddData(moment(date).format('DD/MM/YYYY'))}
+                                        className={styles.button_new}
+                                        ><FaCheckCircle/></button>}
+                                        <button
+                                        onClick={() => {
+                                            setDate('')
+                                            setHorarios(false)}}
+                                        className={styles.button_back}
+                                        ><FaTimesCircle/></button>
+                                    </div>
                                 </div>
                             </div>
-                            {ListHours && <Test_gg/>}
                         </div>
                     </div>
                 </div>
@@ -257,7 +315,6 @@ export default function Agenda () {
                                     onClick={()=>DeletarData()}
                                     >Cancelar Data</button>}
                                 </div>
-                                
                                 <div
                                 className={styles.cont_horarios}
                                 >
@@ -276,6 +333,9 @@ export default function Agenda () {
                                                                         key={item.hora}
                                                                         className={`${styles.hora} ${item.disp ? styles.on : styles.off } ${item.status == 0 && styles.disp}`}
                                                                         onClick={() => setCliente(item)}
+                                                                        type="button"
+                                                                        data-bs-toggle="modal"
+                                                                        data-bs-target={`#ModalViewRR`}
                                                                         >
                                                                             <p>
                                                                                 <span>{!item.disp ? <FaCalendarCheck className={styles.icon}/>: <FaPlusCircle className={styles.icon}/>}</span>
@@ -363,7 +423,8 @@ export default function Agenda () {
 
 
                                         : 
-                                        <div>
+                                        <div className={styles.cont_img}>
+                                            <img src="https://img.freepik.com/vetores-gratis/icone-de-fornecimento-escolar-do-bloco-de-notas_24877-83689.jpg?t=st=1736284693~exp=1736288293~hmac=2cfd63658d0990d11281f5fbda0177dbd67785fcf01e19d588acbdfd5a9bad42&w=740" className={styles.img}/>
                                             <h5>Esta Data está Livre</h5>
                                         </div>
                                         
@@ -395,13 +456,14 @@ export default function Agenda () {
                                 >
 
                                 </div>
+                                {cliente && cliente.nome ? 
                                 <div className={styles.card}>
                                     <h3 className={styles.card_title}>Agendamento Confirmado</h3>
                                     <div className={styles.card_info}>
-                                    <p><FaUser className={styles.icon} /> <strong>Cliente:</strong> {cliente &&cliente.nome}</p>
-                                    <p><FaHandHoldingUsd className={styles.icon}/> <strong>Serviço:</strong> {cliente &&cliente.servico}</p>
-                                    <p><FaCalendarAlt className={styles.icon} /> <strong>Data:</strong> {moment(escolhaDate).format('DD/MM/YYYY')}</p>
-                                    <p><FaClock className={styles.icon} /> <strong>Hora:</strong> {cliente && cliente.hora}h</p>
+                                        <p><FaUser className={styles.icon} /> <strong>Cliente:</strong> {cliente &&cliente.nome}</p>
+                                        <p><FaHandHoldingUsd className={styles.icon}/> <strong>Serviço:</strong> {cliente &&cliente.servico}</p>
+                                        <p><FaCalendarAlt className={styles.icon} /> <strong>Data:</strong> {moment(escolhaDate).format('DD/MM/YYYY')}</p>
+                                        <p><FaClock className={styles.icon} /> <strong>Hora:</strong> {cliente && cliente.hora}h</p>
                                     </div>
                                     {cliente && cliente.status == 1 &&
                                     <div className={styles.button_group}>
@@ -416,6 +478,50 @@ export default function Agenda () {
                                             Concluir
                                         </button>
                                     </div>}
+                                </div>
+                                :
+                                <div className={styles.card}>
+                                    <h3 className={styles.card_title}>Disponibilizar Horário</h3>
+                                    
+                                    <div className={styles.button_group}>
+                                        <button className={`${styles.btn} ${styles.btn_cancel}`} 
+                                        type="button"
+                                        data-bs-toggle="modal"
+                                        data-bs-target={`#ModalView`}
+                                        >
+                                            Cancelar
+                                        </button>
+                                        <button className={`${styles.btn} ${styles.btn_conclude}`} 
+                                        onClick={()=> DispHorario(cliente.hora)}
+                                        >
+                                            Confirmar
+                                        </button>
+                                    </div>
+                                </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div className="modal fade" id="ModalViewRR" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div className={`modal-dialog modal-md`}>
+                        <div className="modal-content">
+                            <div className={styles.card}>
+                                <h3 className={styles.card_title}>Fechar Horário</h3>
+                                
+                                <div className={styles.button_group}>
+                                    <button className={`${styles.btn} ${styles.btn_cancel}`} 
+                                    type="button"
+                                    data-bs-toggle="modal"
+                                    data-bs-target={`#ModalViewRR`}
+                                    >
+                                        Cancelar
+                                    </button>
+                                    <button className={`${styles.btn} ${styles.btn_conclude}`} 
+                                    onClick={()=> DispHorario(cliente.hora)}
+                                    >
+                                        Confirmar
+                                    </button>
                                 </div>
                             </div>
                         </div>

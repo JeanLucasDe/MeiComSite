@@ -1,5 +1,5 @@
 .container {
-    margin-top: 3em !important;
+    margin: 3em 0em!important;
 }
 .cont_hours {
     display: flex;
@@ -38,9 +38,23 @@
 .cont_buttons button {
     margin: 1em 1em 2em 0em;
 }
+.date_in {
+    margin-bottom: 2em;
+}
 .cont_input_date {
     display: flex;
     justify-content: space-between;
+    position: relative;
+}
+.cont_input_date_buttons {
+    display: flex;
+    justify-content: space-between;
+    position: absolute;
+    bottom: 0em;
+    right: 0em;
+}
+.cont_input_date_buttons button{
+    height: 50px;
 }
 .input {
     margin-right: 2em;
@@ -223,11 +237,29 @@ transform: scale(1.05);
     color: #000;
 }
 .btn_cancelar {
-    padding: 0.5em;
+    padding: 0.2em;
     border-color: red;
     color: red;
     background-color: #fff;
     border-radius: 7px;
     font-weight: 500;
     margin: .6em;
+}
+.horario {
+    padding: .6em;
+    font-weight: 600 !important;
+    color: #fff;
+}
+.disponivel {
+    background-color: #0819b1;
+    text-decoration: dashed;
+}
+.cont_img {
+    margin: 2em auto;
+    width: 100%;
+    text-align: center;
+}
+.img {
+    height: 200px;
+    margin: 0em auto;
 }

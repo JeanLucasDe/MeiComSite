@@ -48,21 +48,9 @@ export default function Perfil () {
             const getUsers = async () => {
                 const dataUser = await getDocs(Collec)
                 setUsuarios((dataUser.docs.map((doc) => ({...doc.data(), id: doc.id}))))
+                
             };
-            const getUsuarioVendas = async() => {
-                const data = await getDocs(UserCollection);
-                setProdutos((data.docs.map((doc) => ({...doc.data(), id: doc.id}))))
-                const dataVendas = await getDocs(UserCollectionVendas);
-                setVendas((dataVendas.docs.map((doc) => ({...doc.data(), id: doc.id}))))
-                const dataServicos = await getDocs(UserCollectionServicos);
-                setServicos((dataServicos.docs.map((doc) => ({...doc.data(), id: doc.id}))))
-                const dataAgenda = await getDocs(UserCollectionAgenda);
-                setAgenda((dataAgenda.docs.map((doc) => ({...doc.data(), id: doc.id}))))
-        
-                setLoading(true)
-            }
             getUsers()
-            getUsuarioVendas()
         } catch (e) {
             <button> tentar novamente </button>
         }
@@ -71,7 +59,22 @@ export default function Perfil () {
     const usuario = usuarios && user && usuarios.filter(dados => dados.email == user.email) || []
 
     
-
+    if (usuario.length > 0) {
+        if (!loading) {
+            const dataSeach = async() => {
+                const data = await getDocs(UserCollection);
+                setProdutos((data.docs.map((doc) => ({...doc.data(), id: doc.id}))))
+                const dataVendas = await getDocs(UserCollectionVendas);
+                setVendas((dataVendas.docs.map((doc) => ({...doc.data(), id: doc.id}))))
+                const dataServicos = await getDocs(UserCollectionServicos);
+                setServicos((dataServicos.docs.map((doc) => ({...doc.data(), id: doc.id}))))
+                const dataAgenda = await getDocs(UserCollectionAgenda);
+                setAgenda((dataAgenda.docs.map((doc) => ({...doc.data(), id: doc.id}))))
+            }
+            dataSeach()
+            setLoading(true)
+        }
+    }
    
     
     const pegaDados = () => {
@@ -103,12 +106,13 @@ export default function Perfil () {
 
 
 
-
     return (
         <div>
             <NavBar/>
             <div className={styles.container}>
-                {usuario.length > 0 ?
+                {!loading ? <Loading/>: 
+                <div>
+                    {usuario.length > 0 ?
                     <div>
                         {usuario && usuario[0].mod == 'Alimentação' && 
                         <div className="row">
@@ -144,11 +148,6 @@ export default function Perfil () {
                         >Continuar</Link>
                     </div>
                 }
-                    
-                    
-                    
-                </div>
-                
                 {!user && <div className={styles.cont_empty}>
                     <img src='https://img.freepik.com/free-vector/user-verification-unauthorized-access-prevention-private-account-authentication-cyber-security-people-entering-login-password-safety-measures_335657-8.jpg?size=626&ext=jpg&ga=GA1.2.995514839.1678974862&semt=ais' className={styles.logo}/>
                     <h4>Faça Login Para continuar</h4>
@@ -156,6 +155,14 @@ export default function Perfil () {
                     className={styles.btn_continue}
                     >Continuar</Link>
                 </div>}
+
+                </div>
+            }
+                
+                    
+            </div>
+                
+                
                 
                 
             <Footer/>
