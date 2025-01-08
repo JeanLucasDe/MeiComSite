@@ -21,9 +21,9 @@ export default function Relatório () {
     const [filtroId, setFiltroId] = useState('');
 
     
-    
+    console.log(mesAtual)
     const filtrarAtendimentos = () => {
-      const id = meses.findIndex((mes)=> mes.mes == mesAtual)
+      const id = mesAtual ? meses.findIndex((mes)=> mes.mes == mesAtual) : ''
       const indice = id+1 < 10 ? '0'+(id+1) : id+1
         return agenda.filter((atendimento) => {
           const dateMatch = filtroData === '' || atendimento.date === filtroData;
@@ -92,8 +92,6 @@ export default function Relatório () {
       ];
 
 
-      const id = meses.findIndex((mes)=> mes.mes == mesAtual)
-      console.log(id+1 < 10 ? '0'+(id+1) : id+1)
     
     const styles = {
         container: {
