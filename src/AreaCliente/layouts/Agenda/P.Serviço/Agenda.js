@@ -160,15 +160,12 @@ export default function Agenda () {
         const updatedHorarios = [...Horas[0].agenda];
         const indice = updatedHorarios.findIndex((h) => h.hora === index);
         setCountDelete(countDelete += 1)
-        if (countDelete == 1) {
-            toast.error('Clique 2 vezes para confirmar')
-        }
         if (countDelete == 2) {
             updatedHorarios[indice].disp = !updatedHorarios[indice].disp;
             await updateDoc(doc(db, `MeiComSite/${user && user.email}/agenda`, escolhaDate ? escolhaDate: moment(date).format('YYYY-MM-DD')), {
                 agenda: updatedHorarios
             });
-
+            toast.success('Horário Alterado')
         }
         setTimeout(() => {
             setCountDelete(0)
@@ -526,24 +523,34 @@ export default function Agenda () {
                 <div className="modal fade" id="ModalViewRR" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div className={`modal-dialog modal-md`}>
                         <div className="modal-content">
-                            <div className={styles.card}>
-                                <h3 className={styles.card_title}>Fechar Horário</h3>
-                                
-                                <div className={styles.button_group}>
-                                    <button className={`${styles.btn} ${styles.btn_cancel}`} 
-                                    type="button"
-                                    data-bs-toggle="modal"
-                                    data-bs-target={`#ModalViewRR`}
-                                    >
-                                        Cancelar
-                                    </button>
-                                    <button className={`${styles.btn} ${styles.btn_conclude}`} 
-                                    onClick={()=> DispHorario(cliente.hora)}
-                                    >
-                                        Confirmar
-                                    </button>
+                        <div className={styles.card_container}
+                            >
+                                <div
+                                type="button"
+                                data-bs-toggle="modal"
+                                data-bs-target={`#ModalView`}
+                                className={styles.toggle}
+                                >
                                 </div>
-                            </div>
+                                <div className={styles.card}>
+                                    <h3 className={styles.card_title}>Fechar Horário</h3>
+                                    <p>Clique 2 vezes para confirmar</p>
+                                    <div className={styles.button_group}>
+                                        <button className={`${styles.btn} ${styles.btn_cancel}`} 
+                                        type="button"
+                                        data-bs-toggle="modal"
+                                        data-bs-target={`#ModalViewRR`}
+                                        >
+                                            Cancelar
+                                        </button>
+                                        <button className={`${styles.btn} ${styles.btn_conclude}`} 
+                                        onClick={()=> DispHorario(cliente.hora)}
+                                        >
+                                            Confirmar
+                                        </button>
+                                    </div>
+                                </div>
+                        </div>
                         </div>
                     </div>
                 </div>
