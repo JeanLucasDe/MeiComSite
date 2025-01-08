@@ -499,7 +499,7 @@ export default function Agenda () {
                                 :
                                 <div className={styles.card}>
                                     <h3 className={styles.card_title}>Disponibilizar Horário</h3>
-                                    
+                                    <p>Clique 2 vezes para confirmar</p>
                                     <div className={styles.button_group}>
                                         <button className={`${styles.btn} ${styles.btn_cancel}`} 
                                         type="button"
