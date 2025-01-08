@@ -1,3 +1,6 @@
+.back_green {
+    background-color: #0b2200;
+}
 .container {
     text-align: center;
     margin: -4em 0em 0em 0em;
@@ -21,10 +24,11 @@
     display: block;
     border: none;
     background-color: transparent;
-    border-bottom: 1px solid #2b2b2b;
     width: 100%;
 }
-
+.button:not(:last-child) {
+    border-bottom: 1px solid #2b2b2b;
+}
 .select {
     background-color: #0b2200;
     color: #fff !important;
@@ -47,9 +51,10 @@
 .btn_trocar {
     background-color: transparent;
     border: 1px solid #dadada;
-    margin: 2em 0em 1em 0em;
+    margin: 2em auto 1em auto;
     border-radius: 10px;
     padding: 0.5em;
+    display: block;
 }
 .b_g {
     margin-top: 0em;
@@ -80,16 +85,6 @@
     border: none;
     border-bottom: 1px solid #f85b00;
 }
-
-
-
-
-
-
-
-
-
-
 .service {
     background-color: #ddd;
     padding: 1em;
@@ -105,11 +100,6 @@
     margin: 2em auto 4em auto;
     
 }
-
-
-
-
-
 .Enriqueta {
     font-family: "Enriqueta", serif;
     font-weight: 600;
@@ -177,6 +167,7 @@
 .main_1 {
     text-align: left;
     padding: 1em;
+    background-color: #fff9e3;
     text-transform: uppercase;
 }
 .cont_buttons {
@@ -242,6 +233,7 @@
     overflow-y: hidden;
     overflow-x: auto; 
     white-space: nowrap;
+    background-color: #f9f9f9;
 }
 .container_cont_dates::-webkit-scrollbar {
     height: 10px; /* Altura da barra de rolagem */
@@ -310,6 +302,7 @@
 .cont_horarios {
     padding: 2em;
     text-align: left;
+    background-color: #fff9e3;
 }
 .title_2 {
     font-family: "Enriqueta", serif;
@@ -355,6 +348,7 @@
     width: 100%;
     display: flex;
     justify-content: center;
+    background-color: #fff9e3;
 }
 .container_3 {
     background-color: #fff;
@@ -423,3 +417,23 @@
     font-size: .9em;
     margin-bottom: 0em;
 }
+@keyframes slideUp {
+    from {
+      transform: translateY(5%); /* Começa fora da tela, para baixo */
+      opacity: 0; /* Começa invisível */
+    }
+    to {
+      transform: translateY(0); /* Finaliza na posição normal */
+      opacity: 1; /* Fica totalmente visível */
+    }
+  }
+  
+  /* Estilo base da div */
+  .div_animada {
+    background-color: lightblue;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    opacity: 0; /* Inicialmente invisível */
+    transform: translateY(100%); /* Posiciona fora da tela (abaixo) */
+    animation: slideUp 1s forwards; /* A animação é aplicada quando o componente é montado */
+  }

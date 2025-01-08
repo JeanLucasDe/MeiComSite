@@ -71,6 +71,7 @@ export default function BoxConfirm (props) {
             rua: obj.rua,
             cep: obj.cep,
             admin: false,
+            cor:obj.cor,
             pause:true
             });
 
@@ -87,7 +88,6 @@ export default function BoxConfirm (props) {
                 prod.push(item)
             }
         })    
-
         await updateDoc(doc(db, "MeiComSite", user.email), {
             nome: !obj.nome ? prod[0].nome : obj.nome
         });
@@ -123,6 +123,9 @@ export default function BoxConfirm (props) {
         });
         await updateDoc(doc(db, "MeiComSite", user.email), {
             fecha: !obj.fecha ? prod[0].fecha : obj.fecha
+        });
+        await updateDoc(doc(db, "MeiComSite", user.email), {
+            cor: !obj.cor ? prod[0].cor : obj.cor
         });
         window.location.reload()
     }

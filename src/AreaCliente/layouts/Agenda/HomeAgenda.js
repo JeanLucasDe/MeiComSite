@@ -284,7 +284,11 @@ export default function HomeAgenda (props) {
                         className={styles.title}
                         >{cliente && cliente[0].razao}</h1>
                     </div>
-                    <div className={styles.footer}>
+                    <div className={`${styles.footer}`}
+                    style={{ 
+                        backgroundColor: cliente[0].cor && cliente[0].cor 
+                    }}
+                    >
                         <div className={styles.line}/>
                         <button className={styles.btn_start}
                         onClick={() => setStage(1)}
@@ -295,13 +299,19 @@ export default function HomeAgenda (props) {
                 </div>    
                  }
                 {stage > 0 &&
-                <div className={styles.header_1}>
+                <div className={styles.header_1}
+                style={{ 
+                    backgroundColor: cliente[0].cor && cliente[0].cor 
+                }}
+                >
                     {stage == 1 ?
                     <div>
                         <FaArrowLeft className={styles.btn_back_1}
                         onClick={()=> {
                             setSelectDate(false)
-                            CancelaHora()
+                            if(selectHour) {
+                                CancelaHora()
+                            }
                             setStage(stage - 1)}}
                         />
                         <h1
@@ -320,7 +330,9 @@ export default function HomeAgenda (props) {
                         <FaArrowLeft className={styles.btn_back_1}
                         onClick={()=> {
                             setSelectDate(false)
-                            CancelaHora()
+                            if(selectHour) {
+                                CancelaHora()
+                            }
                             setStage(stage - 1)}}
                         />
                         <h1
@@ -347,7 +359,11 @@ export default function HomeAgenda (props) {
                         {servicos && servicos.map(dados => {
                             return (
                                 <button
-                                className={`${Service == dados.nome && styles.select} ${styles.button}`}
+                                className={` ${styles.button}`}
+                                style={{ 
+                                    backgroundColor: Service == dados.nome && cliente[0].cor ,
+                                    color:Service == dados.nome && cliente[0].cor && '#ffff'
+                                }}
                                 onClick={()=> {
                                     setEscolhaServico(dados)
                                     setSelectService(dados.nome)
@@ -368,7 +384,10 @@ export default function HomeAgenda (props) {
                                         <div>
                                             <p className={styles.apartir}>{dados.precofixo == '2' && 'Apartir de'}</p>
                                             <p
-                                            className={`${Service == dados.nome && styles.select} ${styles.price}`}
+                                            className={` ${styles.price}`}
+                                            style={{ 
+                                                color:Service == dados.nome && cliente[0].cor && '#ffff'
+                                            }}
                                             >{FormataValor(parseFloat(dados.valor))}</p>
                                         </div>
                                     </div>
@@ -393,7 +412,11 @@ export default function HomeAgenda (props) {
                 {stage == 2 && 
                     <div>
                         <div className={styles.line}/>
-                        <div className={styles.cont_stage_1}>
+                        <div className={styles.cont_stage_1}
+                        style={{ 
+                            backgroundColor: cliente[0].cor 
+                        }}
+                        >
                             <h3 className={styles.Enriqueta}>2025</h3>
                             <div className={styles.cont_months}>
                                 <FaArrowLeft
@@ -405,7 +428,11 @@ export default function HomeAgenda (props) {
                                 onClick={proximoMes}
                                 />
                             </div>
-                            <div className={styles.container_cont_dates}>
+                            <div className={styles.container_cont_dates}
+                            style={{
+                                backgroundColor:cliente[0].cor
+                            }}
+                            >
 
                                 {!todosUndefined ? 
                                 <div className={styles.cont_dates}>
@@ -416,6 +443,9 @@ export default function HomeAgenda (props) {
                                                 <button className={`
                                                     ${selectDate ? dados.date.split('-')[2] == selectDate ? styles.on : styles.off: styles.btn_date }
                                                     `}
+                                                    style={{ 
+                                                        backgroundColor:selectDate == dados.date.split('-')[2] && cliente[0].cor
+                                                    }}
                                                     onClick={()=> 
                                                     {
                                                         if (!selectDate) {
@@ -472,7 +502,9 @@ export default function HomeAgenda (props) {
                                                     <li
                                                     key={item.id}
                                                     className={`${item.disp ? styles.disp : styles.indisp} ${styles.hora}`}
-
+                                                    style={{ 
+                                                        backgroundColor:item.disp && cliente[0].cor
+                                                    }}
                                                     onClick={()=> {
                                                         setEscolhaHora(item.hora)
                                                         if (item.disp) {
@@ -492,65 +524,67 @@ export default function HomeAgenda (props) {
                                 })}
                                 </ul>
                             </div>
+                            {stage == 2 && selectHour && <button
+                            className={`${styles.b_g} ${styles.btn_trocar}`}
+                            onClick={()=> CancelaHora() }
+                            ><FaUndo/> Trocar</button>}
+                            {stage == 2 && selectHour &&
+                            <button
+                            onClick={() => setStage(3)}
+                            className={styles.btn_next}
+                            >
+                                Avançar
+                            </button>}
                         </div>
                         }
                     </div>
                     }
                         
-                    {stage == 2 && selectHour && <button
-                    className={`${styles.b_g} ${styles.btn_trocar}`}
-                    onClick={()=> CancelaHora() }
-                    ><FaUndo/> Trocar</button>}
-                    {stage == 2 && selectHour &&
-                    <button
-                    onClick={() => setStage(3)}
-                    className={styles.btn_next}
-                    >
-                        Avançar
-                    </button>}
 
 
                 {stage == 3 &&
                 <>
                 
-                <div className={styles.m_cont_3}>
-                    <div className={styles.container_3}>
-                        <h1 className={styles.heading_3}>Quase lá</h1>
-                        <div className={styles.inputGroup_3}>
-                            <label className={styles.label_3} htmlFor="nome">Nome:</label>
-                            <input
-                            type="text"
-                            id="nome"
-                            name="nome"
-                            placeholder="Digite seu nome"
-                            value={nome}
-                            onChange={(e) => setNome(e.target.value)}
-                            className={styles.input_3}
-                            />
+                <div className={styles.div_animada}>
+                    <div className={`${styles.m_cont_3}`}>
+                        <div className={styles.container_3}>
+                            <h1 className={styles.heading_3}>Quase lá</h1>
+                            <div className={styles.inputGroup_3}>
+                                <label className={styles.label_3} htmlFor="nome">Nome:</label>
+                                <input
+                                type="text"
+                                id="nome"
+                                name="nome"
+                                placeholder="Digite seu nome"
+                                value={nome}
+                                onChange={(e) => setNome(e.target.value)}
+                                className={styles.input_3}
+                                />
+                            </div>
+                            <div className={styles.inputGroup_3}>
+                                <label className={styles.label_3} htmlFor="telefone">Telefone:</label>
+                                <input
+                                type="tel"
+                                id="telefone"
+                                name="telefone"
+                                placeholder="Digite seu telefone"
+                                value={celular}
+                                onChange={(e) => setCelular(e.target.value)}
+                                className={styles.input_3}
+                                />
+                            </div>
+                            <button onClick={()=> Confirmar()} className={styles.btnWhatsApp_3}>
+                                <img
+                                src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg"
+                                alt="WhatsApp"
+                                width="25"
+                                height="25"
+                                className={styles.btnImage_3}
+                                />
+                                Enviar para o WhatsApp
+                            </button>
+                            <p className={styles.note_3}>Ao clicar, você será redirecionado para o WhatsApp.</p>
                         </div>
-                        <div className={styles.inputGroup_3}>
-                            <label className={styles.label_3} htmlFor="telefone">Telefone:</label>
-                            <input
-                            type="tel"
-                            id="telefone"
-                            name="telefone"
-                            placeholder="Digite seu telefone"
-                            value={celular}
-                            onChange={(e) => setCelular(e.target.value)}
-                            className={styles.input_3}
-                            />
-                        </div>
-                        <button onClick={()=> Confirmar()} className={styles.btnWhatsApp_3}>
-                            <img
-                            src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg"
-                            alt="WhatsApp"
-                            width="25"
-                            height="25"
-                            className={styles.btnImage_3}
-                            />
-                            Enviar para o WhatsApp
-                        </button>
-                        <p className={styles.note_3}>Ao clicar, você será redirecionado para o WhatsApp.</p>
                     </div>
                 </div>
                 </>

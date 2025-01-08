@@ -70,6 +70,7 @@ export default function FormularioCadastro () {
     const [deletebairro, setDeleteBairro] = useState()
     const [deleteCidade, setDeleteCidade] = useState()
     const [modalidade, setModalidade] = useState('')
+    const [cor, setCor] = useState()
 
     const [cidadeUser, setCidadeUser] = useState()
     const [bairroUser, setBairroUser] = useState()
@@ -111,6 +112,7 @@ export default function FormularioCadastro () {
     listBairros,
     listCidades,
     theme:modalidade,
+    cor,
     ação:ação,
     }
     
@@ -248,6 +250,14 @@ export default function FormularioCadastro () {
                                     required
                                     placeholder="Digite Aqui"
                                     maxLength={8}
+                                    />
+                                    <p>Cor</p>
+                                    <input type='text' 
+                                    placeholder="#0000"
+                                    value={cor}
+                                    onChange={(e)=> setCor(e.target.value)}/>
+                                    <input type='color' 
+                                    onChange={(e)=> setCor(e.target.value)}
                                     />
                                 </div>
                                 <div className="col-sm-6">

@@ -29,6 +29,7 @@ export default function FormularioEdit () {
     const [deletebairro, setDeleteBairro] = useState()
     const [taxa, setTaxa] = useState()
     const [pause, setPause] = useState()
+    const [cor, setCor] = useState()
 
 
     const [cidadeUser, setCidadeUser] = useState()
@@ -120,6 +121,7 @@ export default function FormularioEdit () {
         deleteCidade,
         listBairros,
         listCidades,
+        cor,
         ação:ação
     }
 
@@ -179,7 +181,7 @@ export default function FormularioEdit () {
                                         }}
                                         maxLength={20}
                                         defaultValue={dados.site}/>
-                                        </div>
+                                    </div>
 
                                     <div className="col-lg-6">
                                         <label>Telefone</label>
@@ -188,9 +190,18 @@ export default function FormularioEdit () {
                                             setPhone(el.target.value)
                                         }}
                                         defaultValue={dados.telefone}/>
+                                        <p>Cor</p>
+                                        <input type='text' 
+                                        placeholder="#0000"
+                                        value={cor}
+                                        onChange={(e)=> setCor(e.target.value)}/>
+                                        <input type='color' 
+                                        onChange={(e)=> setCor(e.target.value)}
+                                        defaultValue={dados.cor && dados.cor}
+                                        />
                                     </div>
                                     <div className={styles.cont_save}>
-                                        {nome || phone || razao || site || logo ?
+                                        {nome || phone || razao || site || logo || cor ?
                                             <button
                                             type="button" 
                                             data-bs-toggle="modal" 
