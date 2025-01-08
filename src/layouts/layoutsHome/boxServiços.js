@@ -15,11 +15,11 @@ return (
                     <h3>Se joga no novo!</h3>
                     <h4 className="title_light">Torne o seu negócio Virtual</h4>
                     <ul className={styles.list}>
-                        <li><FaRegCheckCircle/> Taxa de Transporte</li>
+                        <li><FaRegCheckCircle/> Adicione Serviços</li>
                         {/**<li><FaRegCheckCircle/> Integração do pix mercado pago</li>*/}
                         <li><FaRegCheckCircle/> Integração com firebase</li>
-                        <li><FaRegCheckCircle/> Central de Pedidos</li>
-                        <li><FaRegCheckCircle/> Fácil Manipulação de produtos</li>
+                        <li><FaRegCheckCircle/> Relatório</li>
+                        <li><FaRegCheckCircle/> Fácil Integração do usuário</li>
                         <li>Muito mais</li>
                     </ul>
                 </div>

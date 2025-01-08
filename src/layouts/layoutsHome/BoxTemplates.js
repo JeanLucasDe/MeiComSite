@@ -38,7 +38,7 @@ return (
                             <SwiperSlide>
                                 <div className={styles.box}>
                                     <div className={styles.cont_img}>
-                                        <Link to={dados.link} target="_blank"><img src={dados.img}/></Link>
+                                        <Link to={dados.link}><img src={dados.img}/></Link>
                                     </div>
                                     <p className={styles.name_template}>{dados.name}</p>
                                 </div>

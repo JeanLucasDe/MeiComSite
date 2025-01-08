@@ -23,7 +23,7 @@ return (
                         <li><strong>Preencha suas informações.</strong></li>
                         <li><strong>Informe os locais que vai atender.</strong></li>
                         <li><strong>Selecione sua modalidade.</strong></li>
-                        <li><strong>Adicione seus produtos.</strong></li>
+                        <li><strong>Comece.</strong></li>
                     </ol>
 
                     {user ?

@@ -13,9 +13,9 @@ export default function BoxModalidade () {
                     <Link to="/catalogo/alimentação" className={styles.link}>
                         <div className={styles.box}>
                             <div className={styles.container_icon}>
-                                <img src="https://img.freepik.com/fotos-gratis/grupo-de-chefs-trabalhando-na-cozinha_53876-42734.jpg?w=740&t=st=1679160064~exp=1679160664~hmac=49f50619d469ee55761e61c8a10b5cdc98aef441a4f6d4c6d632c10563603cff"/>
+                                <img src="https://img.freepik.com/fotos-gratis/grupo-de-chefs-trabalhando-na-cozinha_53876-42734.jpg?w=740&t=st=1679160064~exp=1679160664~hmac=49f50619d469ee55761e61c8a10b5cdc98aef441a4f6d4c6d632c10563603cff" className={styles.dashed}/>
                                 <div className={styles.container_title}>
-                                    <h4>Restaurantes</h4>
+                                    <h4>Restaurantes(construção)</h4>
                                 </div>
                             </div>
                                 <div>
