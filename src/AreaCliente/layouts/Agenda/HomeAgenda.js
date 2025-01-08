@@ -417,7 +417,7 @@ export default function HomeAgenda (props) {
                             backgroundColor: cliente[0].cor 
                         }}
                         >
-                            <h3 className={styles.Enriqueta}>2025</h3>
+                            <h3 className={styles.Enriqueta}>{hoje.getFullYear()}</h3>
                             <div className={styles.cont_months}>
                                 <FaArrowLeft
                                 onClick={mesAnterior}

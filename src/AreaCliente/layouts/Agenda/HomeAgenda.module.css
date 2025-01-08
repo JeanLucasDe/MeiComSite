@@ -233,7 +233,6 @@
     overflow-y: hidden;
     overflow-x: auto; 
     white-space: nowrap;
-    background-color: #f9f9f9;
 }
 .container_cont_dates::-webkit-scrollbar {
     height: 10px; /* Altura da barra de rolagem */
