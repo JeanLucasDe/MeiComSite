@@ -528,7 +528,7 @@ export default function Agenda () {
                                 <div
                                 type="button"
                                 data-bs-toggle="modal"
-                                data-bs-target={`#ModalView`}
+                                data-bs-target={`#ModalViewRR`}
                                 className={styles.toggle}
                                 >
                                 </div>

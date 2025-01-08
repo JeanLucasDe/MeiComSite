@@ -15,7 +15,7 @@ export default function Relatório () {
     const [date, setDate] = useState()
     const [horarios, setHorarios] = useState()
     const [agendamento, setAgendamento] = useState()
-
+    const [mesAtual, setMesAtual] = useState()
     const [filtroNome, setFiltroNome] = useState('');
     var [filtroStatus, setFiltroStatus] = useState('');
     const [filtroId, setFiltroId] = useState('');
@@ -23,8 +23,12 @@ export default function Relatório () {
     
     
     const filtrarAtendimentos = () => {
+      const id = meses.findIndex((mes)=> mes.mes == mesAtual)
+      const indice = id+1 < 10 ? '0'+(id+1) : id+1
         return agenda.filter((atendimento) => {
-          return filtroData === '' || atendimento.date === filtroData;
+          const dateMatch = filtroData === '' || atendimento.date === filtroData;
+          const MonthMatch = indice === '' || atendimento.date.split('-')[1] === indice;
+          return dateMatch && MonthMatch;
         });
       };
 
@@ -41,10 +45,10 @@ export default function Relatório () {
     
           return dataMatch && nomeMatch && statusMatch && idMatch
         });
+
+
       };
-
-
-      
+     
     const s = (d) => {
         setDate(d.date)
         setHorarios(d.agenda)
@@ -52,18 +56,11 @@ export default function Relatório () {
     }
 
     function formatarHoraParaAMPM(hora) {
-        // Garantir que a hora e o minuto estão dentro dos intervalos válidos
         if (hora < 0 || hora > 23) {
           return 'Hora ou minuto inválido';
         }
-      
-        // Determinar AM ou PM
         const periodo = hora >= 12 ? 'PM' : 'AM';
-      
-        // Converter a hora para o formato de 12 horas
-        const hora12 = hora % 12 || 12; // Se for 0 (meia-noite), exibe 12
-      
-        // Retornar no formato hh:mm AM/PM
+        const hora12 = hora % 12 || 12; 
         return `${hora12 < 10 ? '0': ''}${hora12}:00 ${periodo}`;
       }
       function obterDiaDaSemana(data) {
@@ -72,19 +69,31 @@ export default function Relatório () {
           'Qui', 'Sex', 'Sáb','Dom'
         ];
       
-        const dataObj = new Date(data); // Converte a data para um objeto Date
-      
-        // Verifica se a data é válida
+        const dataObj = new Date(data); 
         if (isNaN(dataObj)) {
           return 'Data inválida';
         }
-      
-        // Retorna o dia da semana correspondente à data
         return diasDaSemana[dataObj.getDay()+1];
       }
 
-      
-    
+      const meses = [
+        {mes:'Janeiro',id:'01'}, 
+        {mes:'Fevereiro',id:'02'}, 
+        {mes:'Março',id:'03'}, 
+        {mes:'Abril',id:'04'},
+        {mes:'Maio',id:'05'}, 
+        {mes:'Junho',id:'06'},
+        {mes:'Julho',id:'07'}, 
+        {mes:'Agosto',id:'08'}, 
+        {mes:'Setembro',id:'09'}, 
+        {mes:'Outubro',id:'10'}, 
+        {mes:'Novembro',id:'11'}, 
+        {mes:'Dezembro',id:'12'}, 
+      ];
+
+
+      const id = meses.findIndex((mes)=> mes.mes == mesAtual)
+      console.log(id+1 < 10 ? '0'+(id+1) : id+1)
     
     const styles = {
         container: {
@@ -135,9 +144,12 @@ export default function Relatório () {
     return (
         <>
         <div style={styles.container}>
-          <FaArrowLeft onClick={()=>{
-            setStage(1)
-            setDate('')}}/>
+            {stage > 1 && 
+            <FaArrowLeft onClick={()=>{
+            setStage(stage-1)
+            setDate('')}}
+            className={styles.b_left}
+            />}
             <h1 style={styles.heading}>Relatório de Atendimentos</h1>
             
             
@@ -154,6 +166,24 @@ export default function Relatório () {
                 }
                 {stage == 2 &&
                 <h5>{moment(date).format('DD/MM/YYYY')}</h5>
+                }
+            </div>
+            <div style={styles.filterContainer}>
+                {stage == 1 &&
+                <div>
+                  <label htmlFor="data" style={styles.filterLabel}>Filtrar por Mês:</label>
+                  <select
+                  className={styles_.input}
+                  onChange={(el)=> setMesAtual(el.target.value)}
+                  >
+                      {meses.map(dados => {
+                        return (
+                          <option
+                          >{dados.mes}</option>
+                        )
+                      })}
+                  </select>
+                </div>
                 }
             </div>
 
@@ -234,6 +264,7 @@ export default function Relatório () {
                   </thead>
                   <tbody>
                   {filtrarAtendimentosHora().map((atendimento) => (
+                    
                       <tr key={atendimento.id} style={styles.tableRow}
                       data-bs-toggle="modal"
                       data-bs-target={`#ModalView`}

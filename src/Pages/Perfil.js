@@ -17,7 +17,6 @@ export default function Perfil () {
     const [verifica, setVerfica] = useState(false)
     const [modo, setModo] = useState()
     const [user, setUser] = useState();
-    const [stage, setStage] = useState(0)
     const [produtos, setProdutos] = useState([])
     const [servicos, setServicos] = useState([])
     const [agenda, setAgenda] = useState([])
@@ -48,7 +47,8 @@ export default function Perfil () {
             const getUsers = async () => {
                 const dataUser = await getDocs(Collec)
                 setUsuarios((dataUser.docs.map((doc) => ({...doc.data(), id: doc.id}))))
-                
+                const usuario = usuarios && user && usuarios.filter(dados => dados.email == user.email) || []
+
             };
             getUsers()
         } catch (e) {
@@ -58,25 +58,30 @@ export default function Perfil () {
 
     const usuario = usuarios && user && usuarios.filter(dados => dados.email == user.email) || []
 
-    
-    if (usuario.length > 0) {
-        if (!loading) {
-            const dataSeach = async() => {
-                const data = await getDocs(UserCollection);
-                setProdutos((data.docs.map((doc) => ({...doc.data(), id: doc.id}))))
-                const dataVendas = await getDocs(UserCollectionVendas);
-                setVendas((dataVendas.docs.map((doc) => ({...doc.data(), id: doc.id}))))
-                const dataServicos = await getDocs(UserCollectionServicos);
-                setServicos((dataServicos.docs.map((doc) => ({...doc.data(), id: doc.id}))))
-                const dataAgenda = await getDocs(UserCollectionAgenda);
-                setAgenda((dataAgenda.docs.map((doc) => ({...doc.data(), id: doc.id}))))
+    if (user) {
+        setTimeout(()=> {
+            if (usuario.length > 0) {
+                if (!loading) {
+                    const dataSeach = async() => {
+                        const data = await getDocs(UserCollection);
+                        setProdutos((data.docs.map((doc) => ({...doc.data(), id: doc.id}))))
+                        const dataVendas = await getDocs(UserCollectionVendas);
+                        setVendas((dataVendas.docs.map((doc) => ({...doc.data(), id: doc.id}))))
+                        const dataServicos = await getDocs(UserCollectionServicos);
+                        setServicos((dataServicos.docs.map((doc) => ({...doc.data(), id: doc.id}))))
+                        const dataAgenda = await getDocs(UserCollectionAgenda);
+                        setAgenda((dataAgenda.docs.map((doc) => ({...doc.data(), id: doc.id}))))
+                    }
+                    dataSeach()
+                    setLoading(true)
+                }
+            } else {
+                setLoading(true)
             }
-            dataSeach()
-            setLoading(true)
-        }
+        },2000)
     }
    
-    
+
     const pegaDados = () => {
         let produtosSalvos = new Array()
         
@@ -110,7 +115,7 @@ export default function Perfil () {
         <div>
             <NavBar/>
             <div className={styles.container}>
-                {!loading ? <Loading/>: 
+                {!loading ? <Loading/> : 
                 <div>
                     {usuario.length > 0 ?
                     <div>
