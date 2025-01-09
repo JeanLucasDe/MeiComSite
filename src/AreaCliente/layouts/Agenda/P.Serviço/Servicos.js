@@ -3,7 +3,7 @@ import styles from "./Servicos.module.css"
 import BoxConfirm from "../../../../components/BoxConfirm"
 import { Link, useOutletContext } from "react-router-dom"
 import {FaArrowLeft, FaPenAlt, FaPlus, FaTrashAlt} from "react-icons/fa"
-import { toast } from "react-toastify"
+import NotificacaoDono from "./Teste_gg"
 
 export default function Servicos () {
 
@@ -44,6 +44,7 @@ export default function Servicos () {
 
     return (
         <>
+            <NotificacaoDono/>
             {usuario && usuario[0].mod == 'Agenda' ? 
             <div>
                 {state == 1  &&

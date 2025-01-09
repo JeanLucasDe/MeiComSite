@@ -38,8 +38,6 @@ import Agenda from "./AreaCliente/layouts/Agenda/P.Serviço/Agenda";
 import Servicos from "./AreaCliente/layouts/Agenda/P.Serviço/Servicos";
 import Relatório from "./Formularios/Cliente/Relatório";
 
-
-
 function App() {
   return (
       <Router>

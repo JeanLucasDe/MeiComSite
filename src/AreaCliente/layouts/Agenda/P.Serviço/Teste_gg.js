@@ -1,64 +1,60 @@
-import { useState } from "react";
+import React, { useState, useEffect } from 'react';
 
-export default function Test () {
+const NotificacaoDono = () => {
+  const [socket, setSocket] = useState(null);
+  const [pedidos, setPedidos] = useState([]);
 
-  const [horarios, setHorarios] = useState([
-    { hora: "08:00", disponivel: true },
-    { hora: "09:00", disponivel: true },
-    { hora: "10:00", disponivel: true },
-    { hora: "11:00", disponivel: true },
-    { hora: "12:00", disponivel: true },
-    { hora: "13:00", disponivel: true },
-    { hora: "14:00", disponivel: true },
-    { hora: "15:00", disponivel: true },
-    { hora: "16:00", disponivel: true },
-    { hora: "17:00", disponivel: true },
-  ]);
+  useEffect(() => {
+    // Conectar ao WebSocket
+    const ws = new WebSocket('ws://localhost:8080');
+    setSocket(ws);
 
-  const toggleDisponivel = (index) => {
-    const updatedHorarios = [...horarios];
-    updatedHorarios[index].disponivel = !updatedHorarios[index].disponivel;
-    setHorarios(updatedHorarios);
+    ws.onopen = () => {
+      console.log('Conectado ao servidor WebSocket');
+      ws.send(JSON.stringify({ role: 'businessOwner' }));
+    };
 
-    // Retornando a lista atualizada no console
-    console.log("Lista atualizada:", updatedHorarios);
-  };
+    ws.onmessage = (event) => {
+      const data = JSON.parse(event.data);
 
-  // Dividir horários em duas colunas
-  const metade = Math.ceil(horarios.length / 2);
-  const coluna1 = horarios.slice(0, metade);
-  const coluna2 = horarios.slice(metade);
+      if (data.type === 'newOrder') {
+        const { order, clientName } = data;
+        setPedidos((prev) => [...prev, { order, clientName }]);
+
+        // Mostrar notificação
+        if (Notification.permission === 'granted') {
+          new Notification('Novo Pedido', {
+            body: `Pedido de ${clientName}: ${order}`,
+          });
+        }
+      }
+    };
+
+    ws.onclose = () => console.log('Desconectado do WebSocket');
+    ws.onerror = (error) => console.error('Erro no WebSocket:', error);
+
+    return () => ws.close();
+  }, []);
+
+  // Solicitar permissão para notificações
+  useEffect(() => {
+    if (Notification.permission === 'default') {
+      Notification.requestPermission();
+    }
+  }, []);
 
   return (
-    <div style={{ display: "flex", gap: "20px" }}>
-      {[coluna1, coluna2].map((coluna, colIndex) => (
-        <div key={colIndex}>
-          {coluna.map((horario, index) => {
-            const globalIndex = colIndex * metade + index;
-            return (
-              <div
-                key={globalIndex}
-                onClick={() => toggleDisponivel(globalIndex)}
-                style={{
-                  padding: "10px",
-                  margin: "5px 0",
-                  backgroundColor: horario.disponivel
-                    ? "lightgreen"
-                    : "lightcoral",
-                  cursor: "pointer",
-                  textAlign: "center",
-                  border: "1px solid #ccc",
-                  borderRadius: "5px",
-                }}
-              >
-                {horario.hora}
-              </div>
-            );
-          })}
-        </div>
-      ))}
+    <div>
+      <h1>Dono do Negócio - Pedidos Recebidos</h1>
+      <ul>
+        {pedidos.map((pedido, index) => (
+          <li key={index}>
+            <strong>{pedido.clientName}</strong>: {pedido.order}
+          </li>
+        ))}
+      </ul>
     </div>
   );
+};
 
-
-}
+export default NotificacaoDono;
