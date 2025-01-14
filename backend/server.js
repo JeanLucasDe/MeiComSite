@@ -1,9 +1,11 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const admin = require("firebase-admin");
+const cors = require('cors');
 
 const app = express();
 app.use(bodyParser.json());
+app.use(cors());
 
 // Inicialize o Firebase Admin SDK com o arquivo de credenciais
 const serviceAccount = require("./credencials/fir-auth-99797-firebase-adminsdk-p141e-aab96092e7.json"); // Substitua o caminho correto
