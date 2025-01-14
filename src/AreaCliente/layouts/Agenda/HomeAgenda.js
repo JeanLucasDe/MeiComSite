@@ -6,7 +6,7 @@ import {App} from "../../../Hooks/App";
 import {FaArrowLeft, FaArrowRight, FaCheck, FaRegCalendarTimes, FaUndo } from "react-icons/fa"
 import moment from "moment";
 import { toast, ToastContainer } from "react-toastify";
-
+import axios from 'axios'
 
 export default function HomeAgenda (props) {
 
@@ -279,39 +279,30 @@ export default function HomeAgenda (props) {
 
 
 
+
+
+
+
+
+
+
+
+
+
     
     const handleSendNotification = async () => {
-        if (!cliente && cliente[0].tokenID) {
-          alert('Token não encontrado');
-          return;
-        }
-    
-        const messageData = {
-          token: cliente && cliente[0].tokenID,
-          title: 'Novo Pedido',
-          message: 'Você tem um novo pedido na loja!',
-        };
-    
         try {
-          // Envia o token para o backend (que já está configurado para enviar a notificação)
-          const response = await fetch('https://sitemei.netlify.app/send-notification', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                token: cliente && cliente[0].tokenID,
-                title: 'Novo Pedido',
-                message: 'Você tem um novo pedido na loja!',
-              }),
-          });
-    
-          const data = await response.json();
-          if (data.message) {
-            alert('Notificação enviada com sucesso!');
-          }
-        } catch (error) {
-            console.error('Erro ao enviar notificação:', error);
+            const data = {
+                title:"Titulo",
+                body:"Corpo",
+                deviceToken:"do92glEmJ7rTdVvltbLgLR:APA91bF7eAkPU3etkET7b78RPga24c_Yi9aYSRyeU_FC34P5qHLXL_HZMqOH6RQDXxSjaBWzUOfbgq6wGO8McRtgeU6RhQovT3jNfdDNifcYh5smjyeY1rk"
+            }
+            const result = await axios.post("https://sitemei.netlify.app/api/firebase/send-notification", data)
+            if (result == 200) {
+                console.log('sucesso!')
+            } 
+        } catch(error) {
+            console.log(error)
         }
       };
 
@@ -320,7 +311,8 @@ export default function HomeAgenda (props) {
 
         <>
             <div className={styles.container}>
-            
+            <button onClick={handleSendNotification}>Finalizar Pedido</button>
+
                 {stage == 0 &&
 
                 <div>
