@@ -1,7 +1,7 @@
 import { Form, useOutletContext, useParams } from "react-router-dom"
 import styles from "./BoxPedido.module.css"
 import { useState,useEffect } from "react"
-import App from "../../../Hooks/App"
+import {App} from "../../../Hooks/App"
 import { collection,  getFirestore, getDocs} from "@firebase/firestore";
 import { FaCheck, FaGenderless } from "react-icons/fa";
 

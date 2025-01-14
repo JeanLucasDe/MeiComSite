@@ -4,7 +4,7 @@ import { toast, ToastContainer } from "react-toastify"
 import { FaEdit, FaMinusCircle, FaPlus, FaPlusCircle, FaRegLaughBeam, FaRegPaperPlane, FaSave, FaTrashAlt } from "react-icons/fa"
 import styles1 from "../../AreaCliente/layouts/Wpp/Conversation.module.css"
 import {useParams } from "react-router-dom"
-import App from "../../Hooks/App"
+import {App} from "../../Hooks/App"
 import '@firebase/firestore';
 import { getFirestore} from "@firebase/firestore";
 import BoxPedido from "../../AreaCliente/layouts/Wpp/BoxPedido"

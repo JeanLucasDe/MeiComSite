@@ -4,7 +4,7 @@ import styles from "./NavigationBar.module.css"
 import { Link, useParams } from "react-router-dom"
 import { useEffect, useState } from "react"
 import { getFirestore, collection, getDocs} from "@firebase/firestore";
-import App from "../../Hooks/App"
+import {App} from "../../Hooks/App"
 
 
 

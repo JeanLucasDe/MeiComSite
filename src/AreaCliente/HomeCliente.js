@@ -1,5 +1,5 @@
 import { useState,useEffect } from "react"
-import App from "../Hooks/App"
+import {App} from "../Hooks/App"
 import '@firebase/firestore';
 import { getFirestore, collection, getDocs} from "@firebase/firestore";
 import { Outlet, useParams } from "react-router-dom"
@@ -29,7 +29,6 @@ export default function HomeCliente () {
     const UserCollectionAgenda = collection(db, `MeiComSite/${cliente.length > 0 && cliente[0].email}/agenda`)
 
 
-    
     const {abre, fecha, pause} =  cliente.length > 0 && cliente[0]
     const modalidade = cliente.length > 0 && cliente[0].mod
     

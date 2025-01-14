@@ -1,7 +1,7 @@
 import { Link, Outlet, useParams } from "react-router-dom"
 import styles from "./Carrinho.module.css"
 import { getFirestore, collection, getDocs} from "@firebase/firestore";
-import App from "../../Hooks/App";
+import {App} from "../../Hooks/App";
 import { useEffect, useState } from "react";
 import {FaPlus, FaMinus, FaTrash} from "react-icons/fa"
 import NavShop from "../components/NavShop"

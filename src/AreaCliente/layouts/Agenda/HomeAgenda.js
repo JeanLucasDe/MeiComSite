@@ -1,8 +1,8 @@
 import { useOutletContext } from "react-router-dom"
 import styles from "./HomeAgenda.module.css"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { doc, updateDoc,  deleteDoc, getFirestore, collection, getDocs,setDoc} from "@firebase/firestore";
-import App from "../../../Hooks/App";
+import {App} from "../../../Hooks/App";
 import {FaArrowLeft, FaArrowRight, FaCheck, FaRegCalendarTimes, FaUndo } from "react-icons/fa"
 import moment from "moment";
 import { toast, ToastContainer } from "react-toastify";
@@ -268,12 +268,60 @@ export default function HomeAgenda (props) {
         })
         setSelectHour(false)
     }
+
+
+
+
+
+
+
+
+
+
+
     
+    const handleSendNotification = async () => {
+        if (!cliente && cliente[0].tokenID) {
+          alert('Token não encontrado');
+          return;
+        }
+    
+        const messageData = {
+          token: cliente && cliente[0].tokenID,
+          title: 'Novo Pedido',
+          message: 'Você tem um novo pedido na loja!',
+        };
+    
+        try {
+          // Envia o token para o backend (que já está configurado para enviar a notificação)
+          const response = await fetch('http://sitemei.netlify.app/send-notification', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                token: cliente && cliente[0].tokenID,
+                title: 'Novo Pedido',
+                message: 'Você tem um novo pedido na loja!',
+              }),
+          });
+    
+          const data = await response.json();
+          if (data.message) {
+            alert('Notificação enviada com sucesso!');
+          }
+        } catch (error) {
+            console.error('Erro ao enviar notificação:', error);
+        }
+      };
+
 
     return (
 
         <>
             <div className={styles.container}>
+            <button onClick={handleSendNotification}>Finalizar Pedido</button>
+
                 {stage == 0 &&
 
                 <div>
@@ -289,6 +337,7 @@ export default function HomeAgenda (props) {
                         backgroundColor: cliente[0].cor && cliente[0].cor 
                     }}
                     >
+                        
                         <div className={styles.line}/>
                         <button className={styles.btn_start}
                         onClick={() => setStage(1)}

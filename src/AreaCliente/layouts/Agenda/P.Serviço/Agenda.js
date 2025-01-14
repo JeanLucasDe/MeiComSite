@@ -5,7 +5,7 @@ import { useEffect, useState } from "react"
 import moment from "moment"
 import AddAgenda from "./AddAgenda"
 import { deleteDoc, doc, getFirestore, setDoc, updateDoc } from "firebase/firestore"
-import App from "../../../../Hooks/App"
+import {App} from "../../../../Hooks/App"
 import {FaCalendarAlt, FaCalendarCheck, FaCheck, FaCheckCircle, FaClock, FaCut, FaHandHoldingUsd, FaPlusCircle, FaTimesCircle, FaUser} from "react-icons/fa"
 import { toast, ToastContainer } from "react-toastify"
 import 'moment/locale/pt-br';

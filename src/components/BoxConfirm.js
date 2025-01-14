@@ -1,5 +1,5 @@
 import styles from './BoxConfirm.module.css'
-import App from "../Hooks/App"
+import {App} from "../Hooks/App"
 import '@firebase/firestore';
 import { doc, updateDoc,  deleteDoc, getFirestore, collection, getDocs,setDoc} from "@firebase/firestore";
 import { useState,useEffect } from "react"
@@ -72,6 +72,7 @@ export default function BoxConfirm (props) {
             cep: obj.cep,
             admin: false,
             cor:obj.cor,
+            tokenID:obj.tokenID,
             pause:true
             });
 

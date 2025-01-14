@@ -37,8 +37,25 @@ import EntregaPedido from "./Pages/EntregaPedido";
 import Agenda from "./AreaCliente/layouts/Agenda/P.Serviço/Agenda";
 import Servicos from "./AreaCliente/layouts/Agenda/P.Serviço/Servicos";
 import Relatório from "./Formularios/Cliente/Relatório";
+import { useEffect } from "react";
+
 
 function App() {
+
+
+  useEffect(() => {
+    // Solicitar permissão ao usuário para notificações
+    Notification.requestPermission().then((permission) => {
+      if (permission === "granted") {
+        console.log("Permissão concedida para notificações.");
+      } else {
+        console.error("Permissão para notificações negada.");
+      }
+    });
+  }, []);
+
+
+
   return (
       <Router>
         <Container>

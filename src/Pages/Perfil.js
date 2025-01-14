@@ -6,10 +6,12 @@ import styles from "../layouts/layoutsPerfil/NavBarUser.module.css"
 import Loading from "../components/Loading"
 import { useState,useEffect } from "react"
 import {auth} from "../Service/firebase"
-import App from "../Hooks/App"
+import {App, vapidKey} from "../Hooks/App"
 import '@firebase/firestore';
-import { getFirestore, collection, getDocs} from "@firebase/firestore";
+import { getFirestore, collection, getDocs,doc, setDoc} from "@firebase/firestore";
 import {  Link, Outlet } from "react-router-dom"
+import { getMessaging, getToken } from "firebase/messaging";
+
 
 
 export default function Perfil () {
@@ -23,8 +25,12 @@ export default function Perfil () {
     const [usuarios, setUsuarios] = useState([])
     const [vendas, setVendas] = useState([])
     const [loading, setLoading] = useState(false)
+    const [tokens, setTokens] = useState([])
+    const [tokenID, setTokenId] = useState()
     const db = getFirestore(App)
+    const messaging = getMessaging(App);
     const Collec = collection(db, "MeiComSite")
+    const UserCollectionTokens = collection(db, "tokens")
     const UserCollection = collection(db, `MeiComSite/${user && user.email}/produtos`)
     const UserCollectionVendas = collection(db, `MeiComSite/${user && user.email}/vendas`)
     const UserCollectionServicos = collection(db, `MeiComSite/${user && user.email}/servicos`)
@@ -58,6 +64,36 @@ export default function Perfil () {
 
     const usuario = usuarios && user && usuarios.filter(dados => dados.email == user.email) || []
 
+    const getNotificationToken = () => {
+        // Obtém o token do dispositivo
+        getToken(messaging, { vapidKey })
+          .then((currentToken) => {
+            if (currentToken) {
+              console.log("Token obtido com sucesso:");
+              setTokenId(currentToken)
+              saveTokenToFirestore(usuario && usuario[0].email, currentToken)
+              // Agora você pode salvar esse token no seu banco de dados
+            } else {
+              console.log("Não foi possível obter o token.");
+            }
+          })
+          .catch((err) => {
+            console.error("Erro ao obter o token:", err);
+          });
+      };
+
+    const saveTokenToFirestore = async (userId, token) => {
+    try {
+        // Salve o token no Firestore associado ao usuário
+        await setDoc(doc(db, "tokens", userId), {
+        notificationToken: token,
+        });
+        console.log("Token salvo com sucesso!");
+    } catch (err) {
+        console.error("Erro ao salvar o token:", err);
+    }
+    };
+
     if (user) {
         setTimeout(()=> {
             if (usuario.length > 0) {
@@ -71,9 +107,12 @@ export default function Perfil () {
                         setServicos((dataServicos.docs.map((doc) => ({...doc.data(), id: doc.id}))))
                         const dataAgenda = await getDocs(UserCollectionAgenda);
                         setAgenda((dataAgenda.docs.map((doc) => ({...doc.data(), id: doc.id}))))
+                        const dataTokens = await getDocs(UserCollectionTokens);
+                        setTokens((dataTokens.docs.map((doc) => ({...doc.data(), id: doc.id}))))
                     }
                     dataSeach()
                     setLoading(true)
+                    getNotificationToken()
                 }
             } else {
                 setLoading(true)
@@ -106,10 +145,6 @@ export default function Perfil () {
             setVerfica(true)
         } 
     }
-    
-
-
-
 
     return (
         <div>

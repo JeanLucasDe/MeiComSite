@@ -12,7 +12,7 @@ import Footer from "../layouts/layoutsHome/Footer"
 
 import { useState,useEffect } from "react"
 import {auth} from "../Service/firebase"
-import App from "../Hooks/App"
+import {App} from "../Hooks/App"
 import '@firebase/firestore';
 import { getFirestore, collection, getDocs} from "@firebase/firestore";
 

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import App from "../../Hooks/App"
+import {App} from "../../Hooks/App"
 import '@firebase/firestore';
 import { getFirestore, collection, getDocs} from "@firebase/firestore";
 import styles from "./Exposed.module.css"

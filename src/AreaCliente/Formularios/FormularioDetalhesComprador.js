@@ -3,7 +3,7 @@ import { useOutletContext, useParams } from "react-router-dom";
 import styles from "./FormularioDetalhesComprador.module.css"
 import '@firebase/firestore';
 import { getFirestore, collection, getDocs, updateDoc, doc, setDoc} from "@firebase/firestore";
-import App from "../../Hooks/App";
+import {App }from "../../Hooks/App";
 import moment from "moment";
 
 

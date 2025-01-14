@@ -1,12 +1,11 @@
 import { useState } from "react"
 import styles from "./FormEdit.module.css"
-import App from "../../Hooks/App"
+import {App} from "../../Hooks/App"
 import '@firebase/firestore';
 import { doc, updateDoc, getFirestore} from "@firebase/firestore";
 import { FaPlusCircle, FaRegSave, FaTimesCircle, FaTrash } from "react-icons/fa";
 import { toast, ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
-import Visualizar from "./Visualizar";
 
 export default function FormEdit (props) {
 

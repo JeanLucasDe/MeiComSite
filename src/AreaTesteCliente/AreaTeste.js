@@ -3,7 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import NavShop from "../AreaCliente/components/NavShop"
 import Loading from "../components/Loading"
 import { useEffect, useState } from "react"
-import App from "../Hooks/App"
+import {App} from "../Hooks/App"
 import '@firebase/firestore';
 import { getFirestore, collection, getDocs} from "@firebase/firestore";
 import { FaShoppingBag } from "react-icons/fa";

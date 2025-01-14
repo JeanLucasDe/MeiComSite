@@ -1,7 +1,7 @@
 import { FaAngleDoubleRight } from "react-icons/fa"
 import { Link } from "react-router-dom"
 import styles from "./MenuMobileCliente.module.css"
-import App from "../../Hooks/App"
+import {App} from "../../Hooks/App"
 import { useEffect,useState } from "react"
 import { getFirestore, collection, getDocs} from "@firebase/firestore";
 

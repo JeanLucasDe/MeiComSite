@@ -2,7 +2,7 @@
 import styles from "./ViewPedido.module.css"
 import { useState,useEffect } from "react"
 import {auth} from "../Service/firebase"
-import App from "../Hooks/App"
+import {App} from "../Hooks/App"
 import '@firebase/firestore';
 import { getFirestore, collection, getDocs} from "@firebase/firestore";
 import NavBar from "../components/NavBar"

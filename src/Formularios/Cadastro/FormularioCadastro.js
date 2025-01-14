@@ -1,21 +1,23 @@
 import styles from "./FormularioCadastro.module.css"
 import BoxConfirm from "../../components/BoxConfirm"
-import { Link, useOutletContext} from "react-router-dom"
+import { Link} from "react-router-dom"
 import { useState, useEffect} from "react"
 import {FaCheck, FaPlusCircle, FaTimes} from "react-icons/fa"
-import moment from "moment"
 import { toast, ToastContainer } from "react-toastify"
-import App from "../../App"
+import {vapidKey, App} from "../../Hooks/App"
 import { auth } from "../../Service/firebase"
 import { getFirestore, collection, getDocs} from "@firebase/firestore";
 import NavBar from "../../components/NavBar";
+import { getMessaging, getToken } from "firebase/messaging";
 
 export default function FormularioCadastro () {
 
     const [user, setUser] = useState();
     const [state, setState] = useState(false)
     const [usuarios, setUsuarios] = useState([])
+    const [tokenID, setTokenId] = useState()
     const db = getFirestore(App)
+    const messaging = getMessaging(App);
     const Collec = collection(db, "MeiComSite")
 
     useEffect (()=>{
@@ -31,6 +33,7 @@ export default function FormularioCadastro () {
                     })
                 }
             })
+            getNotificationToken()
         } catch (e) {
             <button> tentar novamente </button>
         }
@@ -93,6 +96,24 @@ export default function FormularioCadastro () {
         return numeroAleatorio
     }
     const idCat = geraId()
+
+    const getNotificationToken = () => {
+    // Obtém o token do dispositivo
+    getToken(messaging, { vapidKey })
+        .then((currentToken) => {
+        if (currentToken) {
+            console.log("Token obtido com sucesso:");
+            setTokenId(currentToken)
+            // Agora você pode salvar esse token no seu banco de dados
+        } else {
+            console.log("Não foi possível obter o token.");
+        }
+        })
+        .catch((err) => {
+        console.error("Erro ao obter o token:", err);
+        });
+    };
+
     
     const obj = {
     nome,
@@ -113,6 +134,7 @@ export default function FormularioCadastro () {
     listCidades,
     theme:modalidade,
     cor,
+    tokenID,
     ação:ação,
     }
     

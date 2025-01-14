@@ -4,7 +4,7 @@ import { toast, ToastContainer } from "react-toastify"
 import { FaEdit, FaMinusCircle, FaPlus, FaPlusCircle, FaRegLaughBeam, FaRegPaperPlane, FaSave, FaTrashAlt } from "react-icons/fa"
 import styles1 from "./Conversation.module.css"
 import { useOutletContext, useParams } from "react-router-dom"
-import App from "../../../Hooks/App"
+import {App} from "../../../Hooks/App"
 import '@firebase/firestore';
 import { doc, getFirestore, setDoc} from "@firebase/firestore";
 import moment from "moment/moment"

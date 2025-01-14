@@ -1,37 +1,56 @@
-const WebSocket = require('ws');
-const express = require('express');
+const express = require("express");
+const bodyParser = require("body-parser");
+const admin = require("firebase-admin");
+
 const app = express();
-const port = process.env.PORT || 5000;
+app.use(bodyParser.json());
 
-// Servidor WebSocket
-const wss = new WebSocket.Server({ noServer: true });
-
-// Conexões WebSocket
-wss.on('connection', (ws) => {
-  console.log('Novo cliente conectado');
-  
-  // Enviar uma mensagem para o cliente
-  ws.send('Você está conectado ao servidor de notificações!');
-  
-  // Ouvir mensagens do cliente
-  ws.on('message', (message) => {
-    console.log('Mensagem recebida: ', message);
-  });
+// Inicialize o Firebase Admin SDK com o arquivo de credenciais
+const serviceAccount = require("./credencials/fir-auth-99797-firebase-adminsdk-p141e-aab96092e7.json"); // Substitua o caminho correto
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount)
 });
 
-// Roteamento do servidor
-app.get('/', (req, res) => {
-  res.send('Servidor Backend');
+// Função para enviar notificações
+const sendNotification = async (token, title, message) => {
+  try {
+    const messagePayload = {
+      notification: {
+        title: title,
+        body: message,
+      },
+      token: token, // Token do destinatário
+    };
+
+    // Envia a notificação para o token do destinatário
+    const response = await admin.messaging().send(messagePayload);
+
+    console.log("Notificação enviada com sucesso:", response);
+    return { success: true };
+  } catch (error) {
+    console.error("Erro ao enviar notificação:", error);
+    throw new Error("Erro ao enviar notificação.");
+  }
+};
+
+// Rota para enviar notificação
+app.post("/send-notification", async (req, res) => {
+  const { token, title, message } = req.body;
+  
+  if (!token || !title || !message) {
+    return res.status(400).json({ error: "Dados inválidos. Envie token, title e message." });
+  }
+
+  try {
+    await sendNotification(token, title, message);
+    res.status(200).json({ message: "Notificação enviada com sucesso!" });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
 });
 
 // Iniciar o servidor
-const server = app.listen(port, () => {
-  console.log(`Servidor rodando na porta ${port}`);
-});
-
-// Atualizando o servidor para suportar WebSocket
-server.on('upgrade', (request, socket, head) => {
-  wss.handleUpgrade(request, socket, head, (ws) => {
-    wss.emit('connection', ws, request);
-  });
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Servidor rodando na porta ${PORT}`);
 });

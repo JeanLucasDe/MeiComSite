@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import styles from "./FormAdd.module.css"
 import '@firebase/firestore';
 import {  getFirestore, doc,  setDoc, updateDoc} from "@firebase/firestore";
-import App from "../../Hooks/App"
+import{ App }from "../../Hooks/App"
 import Visualizar from "./Visualizar";
 import { FaPlusCircle, FaTrash } from "react-icons/fa";
 import { toast, ToastContainer } from "react-toastify";

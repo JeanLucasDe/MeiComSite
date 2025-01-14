@@ -1,6 +1,6 @@
 import styles from "./NavShop.module.css"
 import { useState } from "react"
-import App from "../../Hooks/App"
+import {App} from "../../Hooks/App"
 import '@firebase/firestore';
 import { getFirestore, collection, getDocs} from "@firebase/firestore";
 import {  Link, useParams } from "react-router-dom";

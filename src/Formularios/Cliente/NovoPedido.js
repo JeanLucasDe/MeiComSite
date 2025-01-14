@@ -1,5 +1,5 @@
 import { useState } from "react"
-import App from "../../Hooks/App"
+import {App} from "../../Hooks/App"
 import styles from "./NovoPedido.module.css"
 import { Form, useOutletContext, useParams } from "react-router-dom"
 import '@firebase/firestore';

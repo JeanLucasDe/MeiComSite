@@ -1,6 +1,6 @@
 import styles from "./Categorias.module.css"
 import { useState } from "react"
-import App from "../../Hooks/App"
+import {App} from "../../Hooks/App"
 import '@firebase/firestore';
 import {FaEdit,  FaPlusCircle, FaTrashAlt} from "react-icons/fa"
 import { getFirestore, setDoc, doc, updateDoc} from "@firebase/firestore";

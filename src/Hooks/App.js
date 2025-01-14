@@ -12,4 +12,7 @@ const firebaseConfig = {
   };
 const App = firebase.initializeApp(firebaseConfig)
 
-export default App
+const vapidKey = "BA6S9WD0UpWmB94zmX9szFl2fICZb3N7BaBjTvt75i2mSm_MWjNzIktvsR7FHNTXGB3u5-JeUg_xLLzTFHJR6co"
+
+
+export  {App, firebaseConfig, vapidKey}

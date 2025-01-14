@@ -1,7 +1,7 @@
 import { Link, NavLink, useOutletContext } from "react-router-dom"
 import styles from "./HomeCardapio.module.css"
 import {FaBars, FaCircle, FaHome, FaShoppingBag, FaShoppingCart} from "react-icons/fa"
-import App from "../../../Hooks/App"
+import {App} from "../../../Hooks/App"
 import '@firebase/firestore';
 import { getFirestore, collection, getDocs} from "@firebase/firestore";
 import { useState } from "react";

@@ -3,7 +3,7 @@ import styles from "./BoxSubTotal.module.css"
 import {FaTrash} from "react-icons/fa"
 import { useState } from "react"
 import { doc, getFirestore, setDoc} from "@firebase/firestore";
-import App from "../../../Hooks/App";
+import {App} from "../../../Hooks/App";
 import moment from "moment";
 
 export default function BoxSubTotal (props) {

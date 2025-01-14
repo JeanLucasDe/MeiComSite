@@ -3,7 +3,7 @@ import styles from "./Online.module.css"
 import {FaUser,FaCompactDisc, FaBars, FaClock, FaAngleDoubleRight, FaAngleDoubleLeft} from "react-icons/fa"
 import DetalhesVenda from "./DetalhesVenda"
 import { useState } from "react"
-import App from "../../Hooks/App"
+import {App} from "../../Hooks/App"
 import '@firebase/firestore';
 import { doc, updateDoc,  deleteDoc, getFirestore} from "@firebase/firestore";
 import {Swiper,SwiperSlide} from "swiper/react";

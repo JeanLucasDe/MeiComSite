@@ -1,6 +1,6 @@
 import { Link, useParams } from "react-router-dom"
 import styles from "./ViewPedido.module.css"
-import App from "../Hooks/App"
+import {App} from "../Hooks/App"
 import { useState, useEffect } from "react"
 import '@firebase/firestore';
 import { getFirestore, collection, getDocs} from "@firebase/firestore";

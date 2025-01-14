@@ -1,7 +1,7 @@
 import styles from "./FormularioEdit.module.css"
 import BoxConfirm from "../../components/BoxConfirm"
 import { useState } from "react"
-import App from "../../Hooks/App"
+import {App} from "../../Hooks/App"
 import '@firebase/firestore';
 import { getFirestore, updateDoc, doc, deleteDoc} from "@firebase/firestore";
 import {FaEdit, FaPauseCircle, FaPlayCircle, FaPlusCircle} from "react-icons/fa"

@@ -3,7 +3,7 @@ import styles from "./AddAgenda.module.css"
 import moment from "moment"
 import { useState } from "react"
 import { doc, getFirestore, updateDoc } from "firebase/firestore/lite"
-import App from "../../../../Hooks/App"
+import {App} from "../../../../Hooks/App"
 
 export default function AddAgenda () {
     const [mod, produtos, usuario, vendas, user, servicos,agenda] = useOutletContext()
