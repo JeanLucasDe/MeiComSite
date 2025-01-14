@@ -294,7 +294,7 @@ export default function HomeAgenda (props) {
     
         try {
           // Envia o token para o backend (que já está configurado para enviar a notificação)
-          const response = await fetch('http://sitemei.netlify.app/send-notification', {
+          const response = await fetch('https://sitemei.netlify.app/send-notification', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
