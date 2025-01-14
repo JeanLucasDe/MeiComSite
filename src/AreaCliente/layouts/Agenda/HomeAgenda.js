@@ -311,7 +311,7 @@ export default function HomeAgenda (props) {
 
         <>
             <div className={styles.container}>
-            <button onClick={handleSendNotification}>Finalizar Pedido</button>
+            
 
                 {stage == 0 &&
 
