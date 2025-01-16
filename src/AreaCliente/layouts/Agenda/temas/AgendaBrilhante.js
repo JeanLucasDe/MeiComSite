@@ -14,10 +14,11 @@ export default function AgendaBrilhante () {
     const [ prod, cliente, vendas, agenda, servicos] = useOutletContext()
     var [finalHour, setFinalHour] = useState()
     const [listHoras, setListHoras] = useState()
+    const [formattedNumber, setFormattedNumber] = useState('');
     const db = getFirestore(App)
     
     const [selectedTime, setSelectedTime] = useState(false);
-    const {razao,especialidade, descrição,abre, fecha,telefone} = cliente && cliente[0]
+    const {razao,especialidade, descrição,telefone, cor, foto} = cliente && cliente[0]
 
     function formatarHoraParaAMPM(hora) {
         // Garantir que a hora e o minuto estão dentro dos intervalos válidos
@@ -169,32 +170,42 @@ export default function AgendaBrilhante () {
     const id = geraId()
 
     
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        
-        if (user && targetNumber) {
-            const message = `Olá,me chamo ${user} e gostaria de confirmar meu agendamento para o dia ${moment(selectedDate.date).format('DD/MM/YYYY')} as ${selectHora}h para o serviço: ${selectedService.nome}, id: ${id}`; 
-            
-            const whatsappUrl = `https://wa.me/${targetNumber}?text=${message}`;
-            Confirmar()
-            window.open(whatsappUrl, '_blank');
-            window.location.reload()
+
+    const formatBrazilianPhone = (number) => {
+        if (!number) return '';
+    
+        // Remove caracteres não numéricos
+        const cleanNumber = number.replace(/\D/g, '');
+    
+        // Adiciona o código do país +55, se não estiver presente
+        const fullNumber = cleanNumber.startsWith('55') ? cleanNumber : `55${cleanNumber}`;
+        const phoneWithoutCode = fullNumber.slice(2);
+    
+        // Limita o comprimento para evitar números inválidos
+        if (phoneWithoutCode.length > 11) {
+            return `+55 (${phoneWithoutCode.slice(0, 2)}) ${phoneWithoutCode.slice(2, 7)}-${phoneWithoutCode.slice(7, 11)}`;
+        }
+    
+        // Formata dinamicamente conforme o número é digitado
+        if (phoneWithoutCode.length <= 2) {
+            return `+55 (${phoneWithoutCode}`;
+        } else if (phoneWithoutCode.length <= 7) {
+            return `+55 (${phoneWithoutCode.slice(0, 2)}) ${phoneWithoutCode.slice(2)}`;
         } else {
-            alert('Por favor, preencha os dois campos corretamente.');
+            return `+55 (${phoneWithoutCode.slice(0, 2)}) ${phoneWithoutCode.slice(2, 7)}-${phoneWithoutCode.slice(7)}`;
         }
     };
 
-    const formatPhoneNumber = (number) => {
-        if (!number) return '';
-        const cleanNumber = number.replace(/\D/g, '');
-        const formatted = cleanNumber.replace(
-            /^(\d{2})(\d{2})(\d{5})(\d{4})$/, 
-            "+$1 ($2) $3-$4"
-        );
-        return formatted;
+    const [inputValue, setInputValue] = useState('');
+
+    const handleInputChange = (e) => {
+        const rawValue = e.target.value;
+        const formattedValue = formatBrazilianPhone(rawValue);
+        setTargetNumber(formattedValue);
     };
 
-     const Confirmar = async () => {
+     const Confirmar = async (e) => {
+        e.preventDefault()
             if(user, targetNumber) {
     
                 let result = []
@@ -222,38 +233,116 @@ export default function AgendaBrilhante () {
                         })
                     }
                 })
-    
+                
                 await updateDoc(doc(db, `MeiComSite/${cliente && cliente[0].email}/agenda`, selectedDate.date), {
                     agenda: result
                 });
+
+                if (user && targetNumber) {
+                    const message = `Olá,me chamo ${user} e gostaria de confirmar meu agendamento para o dia ${moment(selectedDate.date).format('DD/MM/YYYY')} as ${selectHora}h para o serviço: ${selectedService.nome}, id: ${id}`; 
+                    
+                    const whatsappUrl = `https://wa.me/${telefone}?text=${message}`;
+                    window.open(whatsappUrl, '_blank');
+                    setTimeout(()=> {window.location.reload()},1000)
+                } else {
+                    alert('Por favor, preencha os dois campos corretamente.');
+                }
+
+
+
             } 
         }
 
+        function lightenColor(hex, percent) {
+            // Remove o # do começo da string, se existir
+            hex = hex.replace('#', '');
+        
+            // Converte a cor hexadecimal para RGB
+            let r = parseInt(hex.substring(0, 2), 16);
+            let g = parseInt(hex.substring(2, 4), 16);
+            let b = parseInt(hex.substring(4, 6), 16);
+        
+            // Aumenta o brilho de cada componente (RGB)
+            r = Math.min(255, Math.floor(r + (255 - r) * percent));
+            g = Math.min(255, Math.floor(g + (255 - g) * percent));
+            b = Math.min(255, Math.floor(b + (255 - b) * percent));
+        
+            // Converte de volta para hexadecimal
+            let newHex = '#' + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1).toUpperCase();
+        
+            return newHex;
+        }
+        function darkenColor(hex, percent) {
+            // Remove o # do começo da string, se existir
+            hex = hex.replace('#', '');
+        
+            // Converte a cor hexadecimal para RGB
+            let r = parseInt(hex.substring(0, 2), 16);
+            let g = parseInt(hex.substring(2, 4), 16);
+            let b = parseInt(hex.substring(4, 6), 16);
+        
+            // Reduz o brilho de cada componente (RGB)
+            r = Math.max(0, Math.floor(r * (1 - percent)));
+            g = Math.max(0, Math.floor(g * (1 - percent)));
+            b = Math.max(0, Math.floor(b * (1 - percent)));
+        
+            // Converte de volta para hexadecimal
+            let newHex = '#' + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1).toUpperCase();
+        
+            return newHex;
+        }
+        
+        let brighterColor = lightenColor(cor, 0.9); 
+        let mediumColor = lightenColor(cor, 0.7);
+        let darkerColor = darkenColor(cor, 0.6); 
+
+        console.log(foto)
 
     return (
         <div className="cont">
-            <section id="professional">
+            <section id="professional"
+            style={{
+                backgroundColor: cor 
+            }}
+            >
                 <div className="container">
                     <div className="profile">
                         <div class="profile-image">
-                            <img src="https://img.freepik.com/fotos-gratis/mulher-de-negocios-do-smiley-que-levanta-e-que-escreve-em-seu-diario_23-2147656474.jpg?ga=GA1.1.1918771653.1726187012&semt=ais_tags_boosted" alt="Profissional"/>
+                            <img src={foto ? foto : "https://img.freepik.com/fotos-gratis/mulher-de-negocios-do-smiley-que-levanta-e-que-escreve-em-seu-diario_23-2147656474.jpg?ga=GA1.1.1918771653.1726187012&semt=ais_tags_boosted"} alt="Profissional"/>
                         </div>
                         <div className="profile-info">
-                            <h2 className="name">{razao}</h2>
-                            <p className="title">{especialidade && especialidade}</p>
-                            <p className="description">{descrição && descrição}</p>
+                            <h2 className="name"
+                            style={{
+                                color: darkerColor
+                            }}
+                            >{razao}</h2>
+                            <p className="title"
+                            style={{
+                                color: mediumColor
+                            }}
+                            >{especialidade && especialidade}</p>
+                            <p className="description"
+                            style={{
+                                color: brighterColor
+                            }}
+                            >{descrição && descrição}</p>
                         </div>
                     </div>
 
                 <div className="schedule">
                         {stage == 1 && (
                             <div className="service-selection">
-                            <h2 className="schedule-title">Escolha o serviço</h2>
+                            <h2 className="schedule-title" style={{
+                                color:darkerColor
+                            }}>Escolha o serviço</h2>
                             <div className="service-btns">
                                 {servicos && servicos.map((service) => (
                                 <button
                                     key={service.id}
                                     className="service-btn"
+                                    style={{
+                                        backgroundColor:darkerColor
+                                    }}
                                     onClick={() => handleServiceSelect(service)}
                                 >
                                     {service.nome} - {FormataValor(parseInt(service.valor))}
@@ -265,11 +354,24 @@ export default function AgendaBrilhante () {
 
                         {stage == 2  && (
                             <div className="time-selection">
-                                <h1 className="schedule-title">{selectedService.nome}</h1>
-                                <h4 className="schedule-title h4">Escolha o horário</h4>
+                                <h1 className="schedule-title"
+                                style={{
+                                    color:darkerColor
+                                }}
+                                >{selectedService.nome}</h1>
+                                <h4 className="schedule-title h4"
+                                style={{
+                                    color:darkerColor
+                                }}
+                                >Escolha o horário</h4>
                                 <p>Dura {selectedService.hora} hora{parseInt(selectedService.hora) > 0 ? 's': ''}</p>
                                 <p className="service-price">Preço: {FormataValor(parseInt(selectedService.valor))}</p>
-                                {selectedTime && <button className="back-btn" onClick={CancelaHora}>
+                                {selectedTime && 
+                                <button className="back-btn" onClick={CancelaHora}
+                                style={{
+                                    backgroundColor:cor
+                                }}
+                                >
                                     Trocar
                                 </button>}
                                 <Swiper
@@ -286,20 +388,36 @@ export default function AgendaBrilhante () {
                                         },
                                       }}
                                 >
+                                    
                                     <div className="schedule-times">
                                             {agenda && agenda.map((dados) =>
+                                                (moment(dados.date).format('YYYY-MM-DD') >= moment().format('YYYY-MM-DD')) && 
                                                 selectedService && (
-                                                <SwiperSlide>
+                                                <SwiperSlide
+                                                key={dados.date}
+                                                >
                                                     <div key={dados.id} className="time-slot">
-                                                        <div className="day">{moment(dados.date).format('DD/MM/YYYY')}</div>
-                                                        <div className="day">{obterDiaDaSemana(dados.date)}</div>
+                                                        <div className="day"
+                                                        style={{
+                                                            color:darkerColor
+                                                        }}
+                                                        >{moment(dados.date).format('DD/MM/YYYY')}</div>
+                                                        <div className="day"
+                                                        style={{
+                                                            color:darkerColor
+                                                        }}
+                                                        >{obterDiaDaSemana(dados.date)}</div>
                                                         <div className="hours">
                                                             {dados.agenda.map(item => (
                                                                 <button
-                                                                key={item.id}
-                                                                className={`time-btn ${!item.disp ? 'selected' : ''}
-                                                                ${item.selected && 'selecionado'}
+                                                                key={item.hora}
+                                                                className={`time-btn ${!item.disp && !item.selected ? 'selected' : ''}
                                                                 `}
+                                                                style={{
+                                                                    backgroundColor: !item.selected ? darkerColor: cor,
+                                                                    color: item.selected ? darkerColor: cor
+                                                                }}
+                                                                
                                                                 onClick={() => {
                                                                     SeparaHoras(item, dados)
                                                                     setSelectedDate(dados)
@@ -317,16 +435,23 @@ export default function AgendaBrilhante () {
                                     </div>
                                 </Swiper>
                                 <div className="cont_btn">
-                                    <button className="back-btn" onClick={handleBack}>
-                                        Voltar
-                                    </button>
                                     <button className="back-btn confirm" onClick={()=> {
                                         if (selectedTime ) {
                                             setStage(3)
                                         }
                                         }}
+                                        style={{
+                                            backgroundColor:darkerColor
+                                        }}
                                         >
                                         Confirmar
+                                    </button>
+                                    <button className="back-btn" onClick={handleBack}
+                                    style={{
+                                        backgroundColor:cor
+                                    }}
+                                    >
+                                        Voltar
                                     </button>
                                 </div>
                             </div>
@@ -334,7 +459,7 @@ export default function AgendaBrilhante () {
                         {stage == 3 &&(
                         <div className="confirmation-container">
                             <h1 className="schedule-title">Confirmação via WhatsApp</h1>
-                            <form onSubmit={handleSubmit}>
+                            <form >
                                 <input 
                                     type="text" 
                                     value={user} 
@@ -345,15 +470,18 @@ export default function AgendaBrilhante () {
                                 />
                                 <input 
                                     type="tel" 
-                                    value={formatPhoneNumber(targetNumber)} 
-                                    onChange={(e) => setTargetNumber(e.target.value)} 
+                                    defaultValue={'55'}
+                                    value={targetNumber}
+                                    onChange={handleInputChange}
                                     placeholder="Número de destino (com DDD)" 
                                     required 
                                     className="formatted-input"
                                 />
                                 <div >
-                                    <button type="submit" className="confirmation-button back-btn">Enviar Confirmação</button>
-                                    <button type="submit" className="confirmation-button back-btn dash" onClick={()=>setStage(stage-1)}>Voltar</button>
+                                    <button className="confirmation-button back-btn"
+                                    onClick={(e) => Confirmar(e)}
+                                    >Enviar Confirmação</button>
+                                    <button className="confirmation-button back-btn dash" onClick={()=>setStage(stage-1)}>Voltar</button>
                                 </div>
                             </form>
                             <p className="confirmation-footer">Digite os números no formato internacional, por exemplo: +5511999999999</p>

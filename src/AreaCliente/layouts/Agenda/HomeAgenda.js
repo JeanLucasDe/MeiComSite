@@ -281,7 +281,7 @@ export default function HomeAgenda (props) {
     return (
 
         <>
-            {theme == 'Agenda 2' && 
+            {theme == 'school' && 
             <>
             <School/>
             </>}

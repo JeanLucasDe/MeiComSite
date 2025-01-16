@@ -6,7 +6,7 @@
 
 /* Seção do profissional */
 #professional {
-    background: linear-gradient(to bottom, #4CAF50, #388E3C);
+    background-color: #388E3C;
     color: white;
     padding: 5rem 0;
     border-radius: 12px;
@@ -41,7 +41,7 @@
     font-size: 2.5rem;
     font-weight: 700;
     margin-bottom: 0.5rem;
-    color: #FFD700;
+    color: #fff;
 }
 
 .title {
@@ -104,7 +104,6 @@
   
   .service-price {
     font-size: 1.5rem;
-    color: #FF5722;
     margin: 1rem 0;
     font-weight: bold;
   }
@@ -148,7 +147,6 @@
   }
   
   .time-btn {
-    background: #4CAF50;
     color: white;
     padding: 0.7rem 1.5rem;
     border-radius: 30px;
@@ -159,12 +157,13 @@
   }
   
   .time-btn:hover {
-    background-color: #388E3C;
     transform: translateY(-5px);
   }
   
   .time-btn.selected {
-    background-color: #555 ;
+    background-color: #dddddd !important;
+    color: #bbbbbb !important;
+    cursor: default;
   }
   .selecionado {
     background-color: #FF5722 !important;
@@ -172,7 +171,6 @@
   } 
   
   .back-btn {
-    background-color: #f44336;
     color: white;
     font-size: 1.4rem;
     padding: 1rem 2rem;
@@ -181,7 +179,7 @@
     cursor: pointer;
     transition: background-color 0.3s, transform 0.3s;
     display: block;
-    margin: 2rem auto 0;
+    margin: 2rem auto 1em auto;
   }
   
   .back-btn:hover {
@@ -193,6 +191,7 @@
   }
   .cont_btn {
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
   }
   .confirm {

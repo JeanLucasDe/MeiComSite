@@ -215,7 +215,7 @@ export default function FormularioEdit () {
                                         <p>Cor</p>
                                         <input type='text' 
                                         placeholder="#0000"
-                                        value={cor}
+                                        defaultValue={dados.cor}
                                         onChange={(e)=> setCor(e.target.value)}/>
                                         <input type='color' 
                                         onChange={(e)=> setCor(e.target.value)}
