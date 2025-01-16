@@ -6,7 +6,8 @@ import {App} from "../../../Hooks/App";
 import {FaArrowLeft, FaArrowRight, FaCheck, FaRegCalendarTimes, FaUndo } from "react-icons/fa"
 import moment from "moment";
 import { toast, ToastContainer } from "react-toastify";
-import axios from 'axios'
+import School from "./temas/School";
+import AgendaBrilhante from "./temas/AgendaBrilhante";
 
 export default function HomeAgenda (props) {
 
@@ -24,6 +25,7 @@ export default function HomeAgenda (props) {
     const [nome, setNome] = useState()
     const [celular, setCelular] = useState()
     var [finalHour, setFinalHour] = useState()
+
 
     const geraId = () => {
         const numeroAleatorio = Math.floor(Math.random() * 100000);
@@ -270,49 +272,27 @@ export default function HomeAgenda (props) {
     }
 
 
+    const {theme} = cliente && cliente[0]
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
-    const handleSendNotification = async () => {
-        try {
-            const data = {
-                title:"Titulo",
-                body:"Corpo",
-                deviceToken:"do92glEmJ7rTdVvltbLgLR:APA91bF7eAkPU3etkET7b78RPga24c_Yi9aYSRyeU_FC34P5qHLXL_HZMqOH6RQDXxSjaBWzUOfbgq6wGO8McRtgeU6RhQovT3jNfdDNifcYh5smjyeY1rk"
-            }
-            const result = await axios.post("https://sitemei.netlify.app/api/firebase/send-notification", data)
-            if (result == 200) {
-                console.log('sucesso!')
-            } 
-        } catch(error) {
-            console.log(error)
-        }
-      };
 
 
     return (
 
         <>
-            <div className={styles.container}>
-            
+            {theme == 'Agenda 2' && 
+            <>
+            <School/>
+            </>}
+            {theme == 'Agenda Brilhante' && 
+            <>
+            <AgendaBrilhante/>
+            </>}
 
+
+            {theme == 'Agenda' &&<div className={styles.container}>
+                    
                 {stage == 0 &&
 
                 <div>
@@ -632,7 +612,7 @@ export default function HomeAgenda (props) {
                 }
 
                 
-            </div>
+            </div>}
             <ToastContainer/>
         </>
         )

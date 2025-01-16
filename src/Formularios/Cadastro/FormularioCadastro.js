@@ -80,6 +80,8 @@ export default function FormularioCadastro () {
     const [rua, setRua] = useState()
     const [cep, setCep] = useState()
     const [numeroUser, setNumeroUser] = useState()
+    const [desc, setDesc] = useState()
+    const [especialidade, setEspecialidade] = useState()
 
 
     var [seed, setSeed] = useState(0)
@@ -135,6 +137,8 @@ export default function FormularioCadastro () {
     theme:modalidade,
     cor,
     tokenID,
+    especialidade,
+    descrição: desc,
     ação:ação,
     }
     
@@ -219,6 +223,22 @@ export default function FormularioCadastro () {
                                     <input type="text"
                                     onChange={(el)=> {
                                         setRazao(el.target.value)
+                                    }}
+                                    required
+                                    placeholder="Digite Aqui"
+                                    />
+                                    <label>Especialidade *</label>
+                                    <input type="text"
+                                    onChange={(el)=> {
+                                        setEspecialidade(el.target.value)
+                                    }}
+                                    required
+                                    placeholder="Digite Aqui"
+                                    />
+                                    <label>Descreva sua especialidade *</label>
+                                    <textarea type="text"
+                                    onChange={(el)=> {
+                                        setDesc(el.target.value)
                                     }}
                                     required
                                     placeholder="Digite Aqui"
@@ -521,7 +541,7 @@ export default function FormularioCadastro () {
                     </div>
             </div>
             <div className={styles.cont_save}>
-                {nome && modalidade && modalidade != '-' && phone 
+                {desc && especialidade && nome && modalidade && modalidade != '-' && phone 
                 && razao && cidadeUser && bairroUser && numeroUser && cep && listBairros && listCidades && alpha && acento ?
                     <button
                     type="button" 

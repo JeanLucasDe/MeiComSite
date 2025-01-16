@@ -14,7 +14,7 @@
     .form label {
     display: block;
     }
-    .form input {
+    .form input, .form textarea {
         width: 100%;
         margin-bottom: 0.6em;
         border-radius: 2px;

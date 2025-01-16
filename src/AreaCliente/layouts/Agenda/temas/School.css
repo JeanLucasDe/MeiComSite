@@ -1,0 +1,359 @@
+body {
+    font-family: 'Poppins Sans', sans-serif;
+    line-height: 1.8;
+    font-optical-sizing: auto;
+    font-style: normal;
+}
+
+@media screen and (min-width:320px) {
+    .nav ul {
+        padding-left: 0em !important;
+    }
+    .nav ul li a{
+        font-size: 1em !important;
+    }
+}
+@media screen and (min-width:810px) {
+    .nav ul li a{
+        font-size: 1.2em !important;
+    }
+}
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto 0 auto;
+}
+.cont {
+    margin-top: -4em;
+}
+.title {
+    font-weight: 700;
+    font-size: 3em;
+}
+.desc {
+    margin-top: 1.4em;
+    font-size: 1.5em;
+}
+.logo {
+    margin: 0em 0.5em;
+    height: 100px;
+}
+/* Estilo do cabeçalho */
+.header_container {
+    margin: 0em auto;
+    
+}
+
+.contact_info {
+    font-size: 1.2rem;
+    color: white;
+    font-weight: bold;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+    
+}
+
+.header {
+    background: linear-gradient(to right, #700000, #700000);
+    color: white;
+    padding: 1.5rem 0;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    
+}
+.about {
+    border-top: 5px solid #700000;
+    border-bottom: 5px solid #700000;
+}
+.nav ul {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    margin-top: 1rem;
+    gap: 2rem;
+}
+
+.nav ul li a {
+    text-decoration: none;
+    color: white;
+    font-size: 1.2rem;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+.nav ul li a:hover {
+    color: #FFD700;
+    text-shadow: 0 0 10px #FFD700;
+}
+/*about*/
+.about {
+    position: relative;
+    background: url('https://img.freepik.com/fotos-gratis/livro-com-fundo-de-placa-verde_1150-3837.jpg?ga=GA1.1.1918771653.1726187012&semt=ais_tags_boosted') no-repeat center center/cover; /* Imagem de fundo */
+    color: white;
+    padding: 8rem 2rem;
+    text-align: center;
+    box-shadow: inset 0 0 100px rgba(0, 0, 0, 0.4);
+    border-bottom: 4px solid #700000;
+}
+
+.about .container {
+    position: relative;
+    z-index: 1;
+}
+
+.about .intro {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+    background: rgba(0, 0, 0, 0.5); /* Sobrecarga para melhorar contraste */
+    border-radius: 10px;
+}
+
+.about .title {
+    font-size: 3rem;
+    font-weight: bold;
+    color: #FFD700; /* Cor vibrante */
+    margin-bottom: 1rem;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+    animation: fadeIn 1s ease-out;
+}
+
+.about .desc {
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+    color: #FFF;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+}
+
+.about .cta-button {
+    padding: 0.8rem 2rem;
+    background-color: #700000;
+    color: white;
+    font-size: 1.2rem;
+    font-weight: bold;
+    border-radius: 30px;
+    text-decoration: none;
+    transition: background 0.3s ease, transform 0.3s ease;
+    margin-top: 1rem;
+    display: inline-block;
+}
+
+.about .cta-button:hover {
+    background-color: #d42c2c;
+    transform: translateY(-5px);
+}
+
+/* Animação de fade-in para o título */
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .about {
+        padding: 6rem 1rem;
+    }
+
+    .about .title {
+        font-size: 2.4rem;
+    }
+
+    .about .desc {
+        font-size: 1.2rem;
+    }
+
+    .about .cta-button {
+        font-size: 1rem;
+        padding: 0.6rem 1.5rem;
+    }
+}
+
+
+/*programs*/
+.programs {
+    padding: 4rem 2rem;
+    background: #f1f8e9;
+    border-top: 5px solid #700000;
+    border-bottom: 5px solid #700000;
+    text-align: center;
+}
+
+.programs h2 {
+    color: #700000;
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2);
+}
+
+.programs p {
+    font-size: 1.2rem;
+    color: #555;
+    margin-bottom: 3rem;
+}
+
+.programs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.program-card {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.program-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.program-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.program-card h3 {
+    font-size: 1.5rem;
+    color: #440000;
+    margin: 1rem;
+}
+
+.program-card p {
+    font-size: 1rem;
+    color: #666;
+    margin: 0 1rem 1.5rem;
+}
+
+.program-card .learn-more {
+    display: block;
+    text-align: center;
+    margin: 1rem auto;
+    padding: 0.5rem 2rem;
+    font-size: 1rem;
+    font-weight: bold;
+    color: white;
+    background: #700000;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: background 0.3s;
+}
+
+.program-card .learn-more:hover {
+    background: #d42c2c;
+}
+
+
+/* Seções principais */
+section {
+    padding: 3rem 0;
+    background-color: #ffffff;
+    margin: 2rem 0;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+section h2 {
+    text-align: center;
+    color: #700000;
+    font-size: 2.2rem;
+    margin-bottom: 1.5rem;
+}
+
+section p {
+    text-align: center;
+    color: #666;
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+    padding: 0 2rem;
+}
+.cont_img_large {
+    width: 100% !important;
+    height: 400px;
+    background-image: url("https://img.freepik.com/fotos-gratis/escolar-com-um-caderno-nas-maos-o-por-do-sol-no-fundo-da-escola-vai-para-a-escola_169016-58164.jpg?ga=GA1.1.1918771653.1726187012&semt=ais_tags_boosted");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat !important;
+}
+.img_large {
+    width: 100% !important;
+    height: 100%;
+}
+.images {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+}
+
+.images img {
+    width: 340px;
+    height: 230px;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.images img:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* Contato */
+.contact address {
+    text-align: center;
+    font-size: 1.1rem;
+    line-height: 2;
+    background: #e8f5e9;
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.contact address p {
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+}
+
+.location {
+    padding: 3rem 0;
+    background-color: #f1f8e9;
+    border-top: 4px solid #700000;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.location h2 {
+    text-align: center;
+    color: #700000;
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.location p {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #555;
+    margin-bottom: 2rem;
+}
+
+/* Rodapé */
+.footer {
+    background: linear-gradient(to right, #700000, #700000);
+    color: white;
+    text-align: center;
+    padding: 1.5rem 0;
+    margin-top: 2rem;
+    font-size: 1rem;
+    font-weight: 600;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}

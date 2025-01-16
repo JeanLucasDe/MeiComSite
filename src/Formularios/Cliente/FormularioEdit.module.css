@@ -31,7 +31,7 @@
         width: 100%;
         margin-bottom: 0.6em;
     }
-    .form input {
+    .form input, .form textarea {
         border: none;
         border-bottom: 1px solid #dddd;
         border-radius: 5px;

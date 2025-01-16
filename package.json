@@ -28,7 +28,7 @@
     "react-scripts": "^5.0.1",
     "react-toastify": "^9.1.2",
     "socket.io-client": "^4.8.1",
-    "swiper": "^9.1.1",
+    "swiper": "^9.4.1",
     "web-vitals": "^2.1.4",
     "ws": "^8.18.0"
   },

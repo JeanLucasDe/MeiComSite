@@ -73,6 +73,8 @@ export default function BoxConfirm (props) {
             admin: false,
             cor:obj.cor,
             tokenID:obj.tokenID,
+            descrição:obj.descrição,
+            especialidade: obj.especialidade,
             pause:true
             });
 
@@ -91,6 +93,12 @@ export default function BoxConfirm (props) {
         })    
         await updateDoc(doc(db, "MeiComSite", user.email), {
             nome: !obj.nome ? prod[0].nome : obj.nome
+        });
+        await updateDoc(doc(db, "MeiComSite", user.email), {
+            especialidade: !obj.especialidade ? prod[0].especialidade : obj.especialidade
+        });
+        await updateDoc(doc(db, "MeiComSite", user.email), {
+            descrição: !obj.descrição ? prod[0].descrição : obj.descrição
         });
         await updateDoc(doc(db, "MeiComSite", user.email), {
             razao: !obj.razao ? prod[0].razao : obj.razao

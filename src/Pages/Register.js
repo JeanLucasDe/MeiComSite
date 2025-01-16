@@ -86,7 +86,7 @@ export default function Register () {
             window.location.href = '/cadastro'
         })
         .catch(()=> {
-            toast.error('Este email já existe!')
+            toast.error('Este email já existe ou está incorreto')
         })
     }
 

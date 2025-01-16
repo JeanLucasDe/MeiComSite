@@ -52,6 +52,8 @@ export default function FormularioEdit () {
     const [addCidade, setAddCidade] = useState()
     const [addBairro, setAddBairro] = useState()
     const [deleteEmail, setDeleteEmail] = useState()
+    const [desc, setDesc] = useState()
+    const [especialidade, setEspecialidade] = useState()
     
 
    const ApagaUsuário = async () => {
@@ -121,6 +123,8 @@ export default function FormularioEdit () {
         deleteCidade,
         listBairros,
         listCidades,
+        especialidade,
+        descrição: desc,
         cor,
         ação:ação
     }
@@ -190,6 +194,24 @@ export default function FormularioEdit () {
                                             setPhone(el.target.value)
                                         }}
                                         defaultValue={dados.telefone}/>
+                                        <label>Especialidade *</label>
+                                        <input type="text"
+                                        onChange={(el)=> {
+                                            setEspecialidade(el.target.value)
+                                        }}
+                                        required
+                                        placeholder="Digite Aqui"
+                                        defaultValue={dados.especialidade}
+                                        />
+                                        <label>Descreva sua especialidade *</label>
+                                        <textarea type="text"
+                                        onChange={(el)=> {
+                                            setDesc(el.target.value)
+                                        }}
+                                        required
+                                        placeholder="Digite Aqui"
+                                        defaultValue={dados.descrição}
+                                        />
                                         <p>Cor</p>
                                         <input type='text' 
                                         placeholder="#0000"
@@ -201,7 +223,7 @@ export default function FormularioEdit () {
                                         />
                                     </div>
                                     <div className={styles.cont_save}>
-                                        {nome || phone || razao || site || logo || cor ?
+                                        {desc|| especialidade || nome || phone || razao || site || logo || cor ?
                                             <button
                                             type="button" 
                                             data-bs-toggle="modal" 
