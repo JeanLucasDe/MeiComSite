@@ -43,16 +43,7 @@ import { useEffect } from "react";
 function App() {
 
 
-  useEffect(() => {
-    // Solicitar permissão ao usuário para notificações
-    Notification.requestPermission().then((permission) => {
-      if (permission === "granted") {
-        console.log("Permissão concedida para notificações.");
-      } else {
-        console.error("Permissão para notificações negada.");
-      }
-    });
-  }, []);
+  
 
 
 
