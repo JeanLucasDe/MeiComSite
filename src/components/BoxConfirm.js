@@ -134,6 +134,9 @@ export default function BoxConfirm (props) {
             fecha: !obj.fecha ? prod[0].fecha : obj.fecha
         });
         await updateDoc(doc(db, "MeiComSite", user.email), {
+            theme: !obj.theme ? prod[0].theme : obj.theme
+        });
+        await updateDoc(doc(db, "MeiComSite", user.email), {
             cor: !obj.cor ? prod[0].cor : obj.cor
         });
         window.location.reload()

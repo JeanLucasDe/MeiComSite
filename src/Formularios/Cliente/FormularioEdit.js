@@ -565,10 +565,10 @@ export default function FormularioEdit () {
                                             onChange={(el)=> setModalidade(el.target.value)}
                                             >
                                                 <option selected disabled defaultChecked>--</option>
-                                                <option>Alimentação</option>
+                                                <option disabled >Alimentação (construção)</option>
                                                 <option value='Agenda'>Agendamento</option>
                                             </select>
-                                            {mod && mod != "--" &&
+                                            {modalidade&&
                                                 <button
                                                 className={`${styles.save} ${styles.btn_delete}`}
                                                 type="button" 
@@ -594,6 +594,17 @@ export default function FormularioEdit () {
                                         </div>
                                         }
                                         
+                                    </div>
+                                    <label>Tema:</label>
+                                    <div>
+                                        <select
+                                        className={styles.input}
+                                        onChange={(el)=> setTheme(el.target.value)}
+                                        >
+                                            <option selected disabled defaultChecked>--</option>
+                                            <option value='Agenda'>Agenda Padrão</option>
+                                            <option value='Agenda Brilhante'>Agenda Brilhante</option>
+                                        </select>    
                                     </div>
                                     <div className={styles.cont_check}>
                                         <button
