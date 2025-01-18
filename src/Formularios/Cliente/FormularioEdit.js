@@ -4,7 +4,7 @@ import { useState } from "react"
 import {App} from "../../Hooks/App"
 import '@firebase/firestore';
 import { getFirestore, updateDoc, doc, deleteDoc} from "@firebase/firestore";
-import {FaEdit, FaPauseCircle, FaPlayCircle, FaPlusCircle} from "react-icons/fa"
+import { FaPlusCircle} from "react-icons/fa"
 import moment from 'moment/moment';
 import { toast, ToastContainer } from "react-toastify"
 import 'react-toastify/dist/ReactToastify.css';
@@ -129,19 +129,7 @@ export default function FormularioEdit () {
         ação:ação
     }
 
-    const PauseActives = async(state) => {
-        
-        if (state) {
-            await updateDoc(doc(db, `MeiComSite`, user && user.email), {
-                pause: false
-            });
-        } else {
-            await updateDoc(doc(db, `MeiComSite`, user && user.email), {
-                pause: true
-            });
-        }
-        window.location.reload()
-    }
+    
     
 
 
@@ -166,62 +154,16 @@ export default function FormularioEdit () {
                                             setNome(el.target.value)
                                         }}
                                         defaultValue={dados.nome}/>
-                                        <label>Razão Social</label>
-                                        <input type="text"
-                                        onChange={(el)=> {
-                                            setRazao(el.target.value)
-                                        }}
-                                        defaultValue={dados.razao}/>
+                                        
                                         <label>Nascimento </label>
                                         <input type="text"
                                         defaultValue={moment(dados.nascimento).format('DD/MM/YYYY')}
                                         disabled
                                         />
-                                        <label>Site </label>
-                                        <strong>meicomsite.netlify.app/{dados.site}</strong>
-                                        <input type="text"
-                                        onChange={(el)=> {
-                                            setSite(el.target.value)
-                                        }}
-                                        maxLength={20}
-                                        defaultValue={dados.site}/>
+                                        
                                     </div>
 
-                                    <div className="col-lg-6">
-                                        <label>Telefone</label>
-                                        <input type="phone"
-                                        onChange={(el)=> {
-                                            setPhone(el.target.value)
-                                        }}
-                                        defaultValue={dados.telefone}/>
-                                        <label>Especialidade *</label>
-                                        <input type="text"
-                                        onChange={(el)=> {
-                                            setEspecialidade(el.target.value)
-                                        }}
-                                        required
-                                        placeholder="Digite Aqui"
-                                        defaultValue={dados.especialidade}
-                                        />
-                                        <label>Descreva sua especialidade *</label>
-                                        <textarea type="text"
-                                        onChange={(el)=> {
-                                            setDesc(el.target.value)
-                                        }}
-                                        required
-                                        placeholder="Digite Aqui"
-                                        defaultValue={dados.descrição}
-                                        />
-                                        <p>Cor</p>
-                                        <input type='text' 
-                                        placeholder="#0000"
-                                        defaultValue={dados.cor}
-                                        onChange={(e)=> setCor(e.target.value)}/>
-                                        <input type='color' 
-                                        onChange={(e)=> setCor(e.target.value)}
-                                        defaultValue={dados.cor && dados.cor}
-                                        />
-                                    </div>
+                                    
                                     <div className={styles.cont_save}>
                                         {desc|| especialidade || nome || phone || razao || site || logo || cor ?
                                             <button
@@ -471,175 +413,6 @@ export default function FormularioEdit () {
 
 
                         <div className={styles.line}/>
-
-                        <div className={styles.container}>
-                            <h4>Seu negócio</h4>
-                            <div className="row">
-                                <div className="col-md-6">
-                                    <label>Cidade *</label>
-                                    <input type="text"
-                                    onChange={(el)=> {
-                                        setCidadeUser(el.target.value)
-                                    }}
-                                    required
-                                    defaultValue={dados.cidade}
-                                    placeholder="Digite Aqui"
-                                    />
-                                    <label>Bairro *</label>
-                                    <input type="text"
-                                    onChange={(el)=> {
-                                        setBairroUser(el.target.value)
-                                    }}
-                                    required
-                                    defaultValue={dados.bairro}
-                                    placeholder="Digite Aqui"
-                                    
-                                    />
-                                    <label>Rua *</label>
-                                    <input type="text"
-                                    defaultValue={dados.rua}
-                                    onChange={(el)=> {
-                                        setRua(el.target.value)
-                                    }}
-                                    required
-                                    placeholder="Digite Aqui"
-                                    />
-
-
-                                </div>
-                                <div className="col-md-6">
-                                    <label>Número *</label>
-                                    <input type="text"
-                                    onChange={(el)=> {
-                                        setNumeroUser(el.target.value)
-                                    }}
-                                    defaultValue={dados.numero}
-                                    required
-                                    placeholder="Digite Aqui"
-                                    />
-                                    <label>CEP *</label>
-                                    <input type="number"
-                                    defaultValue={dados.cep}
-                                    onChange={(el)=> {
-                                        setCep(el.target.value)
-                                    }}
-                                    required
-                                    placeholder="Digite Aqui"
-                                    maxLength={8}
-                                    />
-                                    <label>Abertura *</label>
-                                    <input type="time"
-                                    onChange={(el)=> {
-                                        setAbertura(el.target.value)
-                                    }}
-                                    defaultValue={dados.abre}
-                                    required
-                                    />
-                                    <label>Fechamento *</label>
-                                    <input type="time"
-                                    onChange={(el)=> {
-                                        setFecha(el.target.value)
-                                    }}
-                                    defaultValue={dados.fecha}
-                                    required
-                                    />
-
-
-
-
-                                    <div className={styles.cont_theme}>
-                                        <label>Segmento:</label>
-                                        {!alterMod &&
-                                        <div>
-                                            <strong>{dados.mod}</strong>
-                                            <FaEdit
-                                            onClick={() => setAlterMod(!alterMod)}
-                                            type="button"
-                                            />
-                                        </div>
-                                        }
-                                        {alterMod && alterMod != "--" &&
-                                        <div>
-                                            <select
-                                            className={styles.input}
-                                            onChange={(el)=> setModalidade(el.target.value)}
-                                            >
-                                                <option selected disabled defaultChecked>--</option>
-                                                <option disabled >Alimentação (construção)</option>
-                                                <option value='Agenda'>Agendamento</option>
-                                            </select>
-                                            {modalidade&&
-                                                <button
-                                                className={`${styles.save} ${styles.btn_delete}`}
-                                                type="button" 
-                                                data-bs-toggle="modal" 
-                                                data-bs-target="#ModalAdd"
-                                                onClick={(el)=> {
-                                                    el.preventDefault()
-                                                    setAção("Editar")
-                                                }}
-                                                >
-                                                    Salvar
-                                                </button>
-                                            }
-
-                                            <button
-                                            className={`${styles.btn_delete}`}
-                                            onClick={()=> {
-                                                setAlterMod(false)
-                                            }}
-                                            >
-                                                Cancelar
-                                            </button>
-                                        </div>
-                                        }
-                                        
-                                    </div>
-                                    <label>Tema:</label>
-                                    <div>
-                                        <select
-                                        className={styles.input}
-                                        onChange={(el)=> setTheme(el.target.value)}
-                                        >
-                                            <option selected disabled defaultChecked>--</option>
-                                            <option value='Agenda'>Agenda Padrão</option>
-                                            <option value='Agenda Brilhante'>Agenda Brilhante</option>
-                                        </select>    
-                                    </div>
-                                    <div className={styles.cont_check}>
-                                        <button
-                                        className={`${styles.btn_pause} ${dados.pause ? styles.btn_pause : styles.off}`}
-                                        onClick={() => {
-                                            PauseActives(dados.pause)
-                                        }}
-                                        >{dados.pause ?<span><FaPauseCircle className={styles.icon}/> Pausar Atividades</span>: <span><FaPlayCircle className={styles.icon}/> Retomar Atividades</span>}</button>
-                                    </div>
-                                </div>
-                            <div className={styles.cont_save}>
-                                {cidadeUser || bairroUser || numeroUser || rua || cep || modalidade || abre || fecha || pause || !pause ?
-                                    <button
-                                    type="button"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#ModalAdd"
-                                    className={styles.btn_save_add}
-                                    onClick={(el)=> {
-                                        el.preventDefault()
-                                        setAção("Editar")
-                                    }}
-                                    >
-                                        Salvar
-                                    </button>
-                                :
-                                <button
-                                className={`${styles.btn_save_add} ${styles.disabled}`}
-                                onClick={(el)=> {
-                                    el.preventDefault()
-                                }}
-                                >Salvar</button>
-                                }
-                            </div>
-                        </div>
-                    </div>
                     <div className={styles.line}/>
 
                     <div className={styles.container}>

@@ -64,35 +64,7 @@ export default function Perfil () {
 
     const usuario = usuarios && user && usuarios.filter(dados => dados.email == user.email) || []
 
-    const getNotificationToken = () => {
-        // Obtém o token do dispositivo
-        getToken(messaging, { vapidKey })
-          .then((currentToken) => {
-            if (currentToken) {
-              console.log("Token obtido com sucesso:");
-              setTokenId(currentToken)
-              saveTokenToFirestore(usuario && usuario[0].email, currentToken)
-              // Agora você pode salvar esse token no seu banco de dados
-            } else {
-              console.log("Não foi possível obter o token.");
-            }
-          })
-          .catch((err) => {
-            console.error("Erro ao obter o token:", err);
-          });
-      };
-
-    const saveTokenToFirestore = async (userId, token) => {
-    try {
-        // Salve o token no Firestore associado ao usuário
-        await setDoc(doc(db, "tokens", userId), {
-        notificationToken: token,
-        });
-        console.log("Token salvo com sucesso!");
-    } catch (err) {
-        console.error("Erro ao salvar o token:", err);
-    }
-    };
+    
 
     if (user) {
         setTimeout(()=> {
@@ -112,7 +84,6 @@ export default function Perfil () {
                     }
                     dataSeach()
                     setLoading(true)
-                    getNotificationToken()
                 }
             } else {
                 setLoading(true)
@@ -157,7 +128,7 @@ export default function Perfil () {
                         {usuario && usuario[0].mod == 'Alimentação' && 
                         <div className="row">
                             <div className={`${styles.col} col-md-2`}>
-                                <NavBarUser mod={usuario && usuario[0].mod}/>
+                                <NavBarUser mod={usuario && usuario[0].mod} usuario={usuario && usuario[0]} user={user}/>
                             </div>
                             <div className={`${styles.main} col-md-10`}>
                                 
@@ -167,15 +138,15 @@ export default function Perfil () {
                         
                         
                         {usuario && usuario[0].mod == 'Agenda' && 
-                            <div className="row">
-                            <div className={`${styles.col} col-md-2`}>
-                                <NavBarUser mod={usuario && usuario[0].mod}/>
-                            </div>
-                            <div className={`${styles.main} col-md-10`}>
-                                <Outlet context={[mod, produtos && produtos, usuario, vendas, user, agenda,servicos]}
-                                />
-                            </div>
-                        </div>}
+                            <div >
+                                <div className={`${styles.col}`}>
+                                    <NavBarUser mod={usuario && usuario[0].mod} usuario={usuario && usuario[0]} user={user}/>
+                                </div>
+                                <div className={`${styles.main}`}>
+                                    <Outlet context={[mod, produtos && produtos, usuario, vendas, user, agenda,servicos]}
+                                    />
+                                </div>
+                            </div>}
 
 
                     </div>
@@ -205,7 +176,6 @@ export default function Perfil () {
                 
                 
                 
-            <Footer/>
         </div>
         )
 }

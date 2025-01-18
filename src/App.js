@@ -34,10 +34,17 @@ import View_pedido from "./Pages/View_pedido";
 import Box_Pedido from "./Pages/Box_Pedido";
 import Box_idLoja from "./Pages/Box_idLoja";
 import EntregaPedido from "./Pages/EntregaPedido";
-import Agenda from "./AreaCliente/layouts/Agenda/P.Serviço/Agenda";
+import Agenda from "./Formularios/Cliente/Agenda";
 import Servicos from "./AreaCliente/layouts/Agenda/P.Serviço/Servicos";
 import Relatório from "./Formularios/Cliente/Relatório";
 import { useEffect } from "react";
+import FormularioHorario from "./Formularios/Cliente/FormularioHorario";
+import FormularioEmpresa from "./Formularios/Cliente/FormularioEmpresa";
+import FormularioClientes from "./Formularios/Cliente/FormularioClientes";
+import FormularioTheme from "./Formularios/Cliente/FormularioTheme";
+import FormularioPainel from "./Formularios/Cliente/FormularioPainel";
+import FormularioAssinatura from "./Formularios/Cliente/FormularioAssinatura";
+import FormularioConsultas from "./Formularios/Cliente/FormularioConsultas";
 
 
 function App() {
@@ -86,6 +93,13 @@ function App() {
                 <Route path="/perfil/user/online" element={<Online/>}/>
                 <Route path="/perfil/user/categorias/:categoriaa" element={<Produtos/>}/>
                 <Route path="/perfil/user/config" element={<FormularioEdit/>}/>
+                <Route path="/perfil/user/horarios" element={<FormularioHorario/>}/>
+                <Route path="/perfil/user/empresa" element={<FormularioEmpresa/>}/>
+                <Route path="/perfil/user/temas" element={<FormularioTheme/>}/>
+                <Route path="/perfil/user/painel" element={<FormularioPainel/>}/>
+                <Route path="/perfil/user/clientes" element={<FormularioClientes/>}/>
+                <Route path="/perfil/user/assinatura" element={<FormularioAssinatura/>}/>
+                <Route path="/perfil/user/consultas" element={<FormularioConsultas/>}/>
                 <Route path="/perfil/user/relatorio" element={<Relatório/>}/>
                 <Route path="/perfil/user/vendas" element={<Vendas/>}>
                     <Route index element={<FiltroVendas/>}/>

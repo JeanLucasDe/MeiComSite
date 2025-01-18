@@ -274,13 +274,26 @@
     .copy_link {
         font-size: 0.9em;
     }
+    .day_number {
+        padding: .7em;
+        font-size: 0.8rem ; /* Ainda menor para telas pequenas */
+        margin-left: -1.3em;
+        text-align: center;
+    }
 }
+
 @media screen and (min-width:576px) {
     .container {
         width: 80%;
     }
     .copy_link {
         font-size: 1em;
+    }
+} 
+@media screen and (min-width:900px) {
+    .day_number {
+        margin-left: 0em;
+        font-size: 1.2rem ; /* Ainda menor para telas pequenas */
     }
 }
 
@@ -343,4 +356,7 @@
 }
 .icon {
     font-size: 0.9em;
+}
+.d_block {
+    display: block;
 }

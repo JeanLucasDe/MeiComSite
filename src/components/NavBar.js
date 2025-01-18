@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom"
 import styles from "./NavBar.module.css"
-import {FaBars, FaHome} from "react-icons/fa"
+import {FaBars, FaHome, FaUser} from "react-icons/fa"
 import MenuMobile from "./MenuMobile"
 import ButtonLogin from "./ButtonLogin"
 import logo from "../imagens/logo.png"
@@ -40,12 +40,15 @@ return (
             </div>
             <div className={styles.login}>
                 {user &&
-                <Link to="/perfil/user/config" className={styles.icon_home}><FaHome/></Link>
+                <Link to="/" className={styles.icon_home}><FaHome/></Link>
                 }
                 
                 <div className={styles.border_left}></div>
-
-                <ButtonLogin/>
+                {user &&
+                <Link to="/perfil/user/painel" className={styles.icon_home}><FaUser/></Link>
+                }
+                
+                
                 <div>
                     <FaBars className={`${styles.icon_mobile} navbar-toggler`} 
                     type="button" 
@@ -63,6 +66,9 @@ return (
                         type="button"
                         data_bs_dismiss="offcanvas" 
                         aria_label="Close"
+                        user={user}
+                        
+
                         />
                     </div>
                 </div>
