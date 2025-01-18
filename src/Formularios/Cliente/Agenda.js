@@ -144,7 +144,6 @@ export default function Agenda () {
             agenda:hours
         });
     } 
-    window.location.reload()
     
 }
 
