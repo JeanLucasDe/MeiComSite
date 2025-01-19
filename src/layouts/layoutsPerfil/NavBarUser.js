@@ -143,13 +143,13 @@ export default function NavBarUser (props) {
                             }
                             ><FaClipboardList className={styles.icon}/> Agenda
                             </NavLink>
-                            {/***<NavLink
+                            {/**<NavLink
                             to="/perfil/user/consultas"
                             className={({ isActive, isPending }) =>
                                 isPending ? styles.isPending : isActive ? styles.isActive : styles.isPending
                             }
                             ><FaClock className={styles.icon}/> Consultas
-                            </NavLink>***/}
+                            </NavLink>**/}
                             {/***<NavLink
                             to="/perfil/user/clientes"
                             className={({ isActive, isPending }) =>

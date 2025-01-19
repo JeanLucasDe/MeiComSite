@@ -51,6 +51,9 @@
     .cont_token input {
         margin-left: 1em;
     }
+    .title {
+        margin-bottom: .5em !important;
+    }
     .title_small {
         font-weight: 600;
     }
@@ -275,7 +278,7 @@
         font-size: 0.9em;
     }
     .day_number {
-        padding: .7em;
+        padding: .4em;
         font-size: 0.8rem ; /* Ainda menor para telas pequenas */
         margin-left: -1.3em;
         text-align: center;
