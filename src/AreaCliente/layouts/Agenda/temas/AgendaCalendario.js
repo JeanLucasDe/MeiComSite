@@ -266,7 +266,21 @@ let darkerColor = darkenColor(cor, 0.6);
 
             } 
         }
-
+        function formatarHoraParaAMPM(hora) {
+          // Garantir que a hora e o minuto estão dentro dos intervalos válidos
+          if (hora < 0 || hora > 23) {
+            return 'Hora ou minuto inválido';
+          }
+        
+          // Determinar AM ou PM
+          const periodo = hora >= 12 ? 'PM' : 'AM';
+        
+          // Converter a hora para o formato de 12 horas
+          const hora12 = hora % 12 || 12; // Se for 0 (meia-noite), exibe 12
+        
+          // Retornar no formato hh:mm AM/PM
+          return `${hora12 < 10 ? '0': ''}${hora12}:00 ${periodo}`;
+        }
 
   return (
 
@@ -443,7 +457,7 @@ let darkerColor = darkenColor(cor, 0.6);
                             }))
                         }}
                         >
-                        {slot.hora}
+                        {formatarHoraParaAMPM(parseInt(slot.hora))}
                         </li>
                     ))}
                 </ul>
