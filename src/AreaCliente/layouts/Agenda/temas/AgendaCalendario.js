@@ -39,7 +39,6 @@ const AgendaCalendario = () => {
       }))
   };
 
-
   // Função para separar as horas de acordo com o serviço
   const SeparaHoras = (item, date) => {
 
@@ -113,6 +112,18 @@ const AgendaCalendario = () => {
         stage3: false, // Alterna o estado de stage2
         stage4: false, // Alterna o estado de stage2
       }))
+      agenda && agenda.map(dados => {
+        if (dados.date == selectedDate) {
+            dados.agenda.map(item => {
+                listHoras.map(horas => {
+                    if (horas.hora == item.hora.split(':')[0]) {
+                        item.disp = true
+                    }
+                })
+            })
+            
+        }
+    })
   };
   const FormataValor = (valor) => {
     var valorFormatado = valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
