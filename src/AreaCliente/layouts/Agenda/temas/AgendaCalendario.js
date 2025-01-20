@@ -338,7 +338,7 @@ let darkerColor = darkenColor(cor, 0.6);
               }}
             >
               <h2>Escolha um Serviço</h2>
-              <ul>
+              <ul className='ul-margin'>
                 {servicos.map((service) => (
                   <li
                     key={service.id}
