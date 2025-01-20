@@ -30,6 +30,7 @@ export default function FormularioTheme () {
                 <option selected disabled defaultChecked>--</option>
                 <option value='Agenda'>Agenda Padrão</option>
                 <option value='Agenda Brilhante'>Agenda Brilhante</option>
+                <option value='Agenda Calendario'>Agenda Calendario</option>
             </select>  
             <p>Cor</p>
             <input type='text' 

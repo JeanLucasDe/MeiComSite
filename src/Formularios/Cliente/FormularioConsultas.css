@@ -97,12 +97,12 @@
 
   /* Exibe somente o cliente, data, hora e status */
   .td:nth-child(1),
-  th:nth-child(1) {
+  .th:nth-child(1) {
     display: none; /* Oculta o ID */
   }
 
   .td:nth-child(5),
-  th:nth-child(5) {
+  .th:nth-child(5) {
     display: none; /* Oculta o status com texto */
   }
 

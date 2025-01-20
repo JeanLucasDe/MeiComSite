@@ -196,7 +196,6 @@ export default function AgendaBrilhante () {
         }
     };
 
-    const [inputValue, setInputValue] = useState('');
 
     const handleInputChange = (e) => {
         const rawValue = e.target.value;
@@ -296,7 +295,6 @@ export default function AgendaBrilhante () {
         let mediumColor = lightenColor(cor, 0.7);
         let darkerColor = darkenColor(cor, 0.6); 
 
-        console.log(foto)
 
     return (
         <div className="cont">

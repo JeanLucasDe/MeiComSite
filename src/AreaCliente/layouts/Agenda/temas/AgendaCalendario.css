@@ -1,4 +1,18 @@
 /* Agenda2.css */
+.cont-agenda-calendar {
+    font-family: "Dosis", serif;
+    font-optical-sizing: auto;
+    font-weight: 700;
+}
+
+.header-main2 {
+    background-color: var(--user-color-light);
+    width: 100%;    
+    padding: 1em ;
+    margin-top: -4em;
+}
+
+
 .scheduler {
     font-family: 'Arial', sans-serif;
     background: linear-gradient(to bottom right, #e8f5e9, #c8e6c9);
@@ -7,6 +21,10 @@
     max-width: 700px;
     margin: 20px auto;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  }
+  .razao {
+    margin-bottom: 2em;
+    color: #fff;
   }
   
   .scheduler-header {
@@ -18,18 +36,26 @@
     color: #388e3c;
     font-size: 2.5rem;
   }
-  
+  .paragh {
+    color: #777;
+    font-weight: 600;
+  }
   .scheduler-header p {
     color: #777;
     font-size: 1.2rem;
   }
-  
+  .calendar {
+    margin: 0em auto;
+    border: none;
+  }
   .service-selection, .calendar-container, .time-selection, .confirmation {
+    text-align: center;
     background: white;
     padding: 25px;
     border-radius: 15px;
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
-    margin-bottom: 20px;
+    width: 50%;
+    margin: .5em auto;
   }
   
   .service-selection h2, .calendar-container h2, .time-selection h2, .confirmation h2 {
@@ -49,16 +75,20 @@
     justify-content: space-between;
     align-items: center;
   }
+  .time-selection ul {
+    padding: 0em;
+    list-style-type: none;
+  }
   
   .service-item:hover {
-    background: #388e3c;
-    color: white;
+    background: var(--user-color) !important;
   }
   
   .service-details {
     display: flex;
     justify-content: space-between;
     width: 100%;
+    text-align: left;
   }
   
   .service-name {
@@ -73,7 +103,8 @@
   
   /* Calendário */
   .available-date {
-    background-color: #8BC34A;
+    background-color: var(--user-color-dark);
+    color: var(--user-color-light);
   }
   
   .unavailable-date {
@@ -91,12 +122,12 @@
   }
   
   .time-item.available:hover {
-    background-color: #8BC34A;
+    background-color: var(--user-color);
     color: white;
   }
   
   .time-item.unavailable {
-    background-color: #FF5722;
+    background-color: #777;
     color: white;
   }
   
@@ -159,5 +190,94 @@
     display: flex;
     justify-content: space-between;
     margin-top: 20px;
+  }
+  .center {
+
+    display: block !important;
+    margin: 2em auto 0em auto!important;
+  }
+
+
+
+
+
+
+
+
+
+  .stage-counter {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .stage-container {
+    display: flex;
+    align-items: center;
+  }
+  
+  .line-stage {
+    margin-top: -1.6em;
+    width: 50px;
+    height: 4px;
+    background-color: #ccc;
+    transition: background-color 0.3s ease;
+  }
+  
+  .line-stage.line-completed {
+    background-color: #4caf50;
+  }
+  
+  .stage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 10px;
+    text-align: center;
+  }
+  
+  .circle {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 2px solid #ccc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    transition: all 0.3s ease;
+  }
+  
+  .stage-completed .circle {
+    background-color: #4caf50;
+    color: white;
+  }
+  
+  .label-span {
+    font-size: 1em !important;
+    margin-top: 5px;
+    font-size: 14px;
+    color: #ffff;
+  }
+
+  
+  /* Media Query para dispositivos móveis */
+  @media (max-width: 600px) {
+    .circle {
+      width: 20px;
+      height: 20px;
+      font-size: 12px;
+    }
+    .label-span {
+      font-size: 1em;
+    }
+  
+    .line-stage {
+      width: 20px;
+      height: 3px;
+    }
+    .service-selection, .calendar-container, .time-selection, .confirmation {
+        width: 100%;
+    }
   }
   

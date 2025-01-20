@@ -8,7 +8,7 @@ import moment from "moment";
 import { toast, ToastContainer } from "react-toastify";
 import School from "./temas/School";
 import AgendaBrilhante from "./temas/AgendaBrilhante";
-import Agenda2 from "./temas/Agenda2"
+import AgendaCalendario from "./temas/AgendaCalendario";
 
 export default function HomeAgenda (props) {
 
@@ -290,9 +290,9 @@ export default function HomeAgenda (props) {
             <>
             <AgendaBrilhante/>
             </>}
-            {theme == 'Agenda 2' && 
+            {theme == 'Agenda Calendario' && 
             <>
-            <Agenda2/>
+            <AgendaCalendario/>
             </>}
 
 
