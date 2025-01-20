@@ -14,7 +14,7 @@ export default function Agenda() {
   const [selectedDates, setSelectedDates] = useState([]); // Armazena múltiplas datas
   const { abre, fecha, email } = usuario && usuario[0];
   const dif = parseInt(fecha.split(":")[0]) - parseInt(abre.split(":")[0]);
-  const [hours, setHours] = useState([]);
+  const [listHours ,setListHours] = useState([]);
 
   const monthNames = [
     "Janeiro",
@@ -97,9 +97,9 @@ export default function Agenda() {
     for (const { date, hours } of selectedDates) {
       const index = agenda.findIndex((dados) => dados.date === date);
       if (index >= 0) {
-        await updateDoc(doc(db, `MeiComSite/${email}/agenda`, date), { date, agenda: hours });
+        await updateDoc(doc(db, `MeiComSite/${email}/agenda`, date), { date, agenda: selectedDates[0].hours });
       } else {
-        await setDoc(doc(db, `MeiComSite/${email}/agenda`, date), { date, agenda: hours });
+        await setDoc(doc(db, `MeiComSite/${email}/agenda`, date), { date, agenda: selectedDates[0].hours });
       }
     }
     setSelectedDates([]); // Limpa as datas selecionadas após confirmar
@@ -166,6 +166,7 @@ export default function Agenda() {
           (hour, index, self) =>
             self.findIndex((h) => h.hora === hour.hora) === index // Remove duplicados
         );
+        
 
         if (!allNamesValid) {
           if (selectedDates.length > 1) {
@@ -199,7 +200,8 @@ export default function Agenda() {
                                         <input
                                           type="checkbox"
                                           checked={hour.disp}
-                                          onChange={() => toggleDisponibilidade(hour.dateKey, index)}
+                                          onChange={() => {
+                                            toggleDisponibilidade(hour.dateKey, index)}}
                                           disabled={hour.nome}
                                         />
                                       </td>

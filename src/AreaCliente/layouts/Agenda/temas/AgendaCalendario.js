@@ -363,6 +363,7 @@ let darkerColor = darkenColor(cor, 0.6);
               <h2>Selecione uma Data</h2>
               <Calendar
                 className="calendar"
+                 locale="pt-BR"
                 onClickDay={handleDateClick}
                 tileDisabled={({ date, view }) => {
                 // Bloqueia datas no passado no modo de visualização "month"
@@ -372,7 +373,7 @@ let darkerColor = darkenColor(cor, 0.6);
                 return false;
                 }}
                 formatShortWeekday={(locale, date) => {
-                  const weekdays = ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'];
+                  const weekdays = ['Dom','Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
                   return weekdays[date.getDay()];
                 }}
                 tileClassName={({ date, view }) => {
