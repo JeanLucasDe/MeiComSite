@@ -104,6 +104,7 @@ export default function Agenda() {
     }
     setSelectedDates([]); // Limpa as datas selecionadas após confirmar
     alert("Agenda confirmada!");
+    setTimeout(()=> window.location.reload(), 1000)
   };
 
   return (
@@ -157,23 +158,6 @@ export default function Agenda() {
         const allNamesValid = selectedDates.every(({ hours }) =>
           hours.every((hour) => !hour.nome )
         );
-        const allDatesValid = selectedDates.every(({ date, hours }) => {
-          const isFromAgenda = agenda.some((item) => item.date === date); // Verifica se é da agenda existente
-          if (isFromAgenda) {
-            return hours.every((hour) => !hour.disp); // Restringe apenas para horários da agenda
-          }
-          return true; // Permite horários editados
-        });
-
-
-        if (!allDatesValid || !allNamesValid) return (
-          <div>
-            <div className="line"/>
-            <h5>Alguma Data já está comprometida</h5>
-          </div>
-        )// Se qualquer data contiver horário com "nome", não exibe nada
-
-        
         const consolidatedHours = selectedDates
         .flatMap(({ date, hours }) =>
           hours.map((hour) => ({ ...hour, dateKey: date })) // Inclui o dateKey em cada horário
@@ -182,7 +166,73 @@ export default function Agenda() {
           (hour, index, self) =>
             self.findIndex((h) => h.hora === hour.hora) === index // Remove duplicados
         );
-        // Junta todos os horários das datas selecionadas, removendo duplicados
+
+        if (!allNamesValid) {
+          if (selectedDates.length > 1) {
+            return (
+              <div>
+                <div className="line"/>
+                <h5>Alguma Data já está comprometida</h5>
+                <p>Deve ser Alterada individualmente</p>
+              </div>
+            )
+          } else {
+            return (
+              <div>
+                <div className="line"/>
+                  <div>
+                    {consolidatedHours &&
+                      <div style={{ marginTop: "2rem" }}>
+                              <h4>Horários Selecionados</h4>
+                              <table style={{ margin: "auto", borderCollapse: "collapse", width: "100%" }}>
+                                <thead>
+                                  <tr>
+                                    <th style={{ border: "1px solid #ddd", padding: "8px" }}>Horário</th>
+                                    <th style={{ border: "1px solid #ddd", padding: "8px" }}>Disponível</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  {consolidatedHours.map((hour, index) => (
+                                    <tr key={index}>
+                                      <td style={{ border: "1px solid #ddd", padding: "8px" }}>{hour.hora}</td>
+                                      <td style={{ border: "1px solid #ddd", padding: "8px" }}>
+                                        <input
+                                          type="checkbox"
+                                          checked={hour.disp}
+                                          onChange={() => toggleDisponibilidade(hour.dateKey, index)}
+                                          disabled={hour.nome}
+                                        />
+                                      </td>
+                                    </tr>
+                                  ))}
+                            </tbody>
+                          </table>
+                      </div>
+                    }
+                    <div style={{ marginTop: "2rem", textAlign: "center" }}>
+                    <button
+                      onClick={() => ConfirmarAgenda()}
+                      style={{
+                        padding: "10px 20px",
+                        fontSize: "1.2rem",
+                        color: "#fff",
+                        backgroundColor: "#FF9100",
+                        border: "none",
+                        borderRadius: "5px",
+                        cursor: "pointer",
+                        fontWeight: "700",
+                      }}
+                    >
+                      Confirmar
+                    </button>
+                  </div>
+                </div>
+        
+              </div>
+            )
+          }
+        }
+
         return (
             <div>
               {consolidatedHours &&
