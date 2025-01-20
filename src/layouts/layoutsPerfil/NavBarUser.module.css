@@ -224,3 +224,10 @@
 .cont_mob {
     background-color: #FF9100;
 }
+.img_avatar {
+    margin: .6em auto;
+    display: block;
+    width: 55px;
+    height: 50px;
+    border-radius: 50%;
+}

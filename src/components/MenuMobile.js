@@ -1,4 +1,4 @@
-import {FaCog, FaDatabase, FaClipboardList, FaStore, FaCalendarAlt, FaArrowAltCircleRight, FaArrowCircleDown, FaArrowRight, FaArrowDown, FaHome, FaHouseDamage, FaClock, FaAngleDown, FaAngleLeft, FaTh, FaToolbox, FaDonate, FaHandHoldingUsd, FaDollarSign, FaConciergeBell, FaAngleRight} from "react-icons/fa"
+import {FaCog, FaDatabase, FaClipboardList, FaStore, FaCalendarAlt, FaArrowAltCircleRight, FaArrowCircleDown, FaArrowRight, FaArrowDown, FaHome, FaHouseDamage, FaClock, FaAngleDown, FaAngleLeft, FaTh, FaToolbox, FaDonate, FaHandHoldingUsd, FaDollarSign, FaConciergeBell, FaAngleRight, FaBroom} from "react-icons/fa"
 import { Link, NavLink, useOutletContext } from "react-router-dom"
 import styles from "../layouts/layoutsPerfil/NavBarUser.module.css"
 import { useState } from "react"
@@ -53,13 +53,14 @@ export default function MenuMobile (props) {
                     }
                     ><FaClipboardList className={styles.icon}/> Agenda
                     </NavLink>
-                    {/*<NavLink
+                    <NavLink
                     to="/perfil/user/consultas"
                     className={({ isActive, isPending }) =>
                         isPending ? styles.isPending : isActive ? styles.isActive : styles.isPending
                     }
                     ><FaClock className={styles.icon}/> Consultas
                     </NavLink>
+                    {/*
                     <NavLink
                     to="/perfil/user/agenda"
                     className={({ isActive, isPending }) =>
@@ -102,7 +103,7 @@ export default function MenuMobile (props) {
                             className={({ isActive, isPending }) =>
                                 isPending ? styles.isPending : isActive ? styles.isActive : styles.isPending
                             }
-                            ><FaCog className={styles.icon}/> Temas
+                            ><FaBroom className={styles.icon}/> Temas
                             </NavLink>
                         </div>
                     }

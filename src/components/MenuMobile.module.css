@@ -30,4 +30,7 @@
         margin: 0.5em auto;
         text-decoration: none !important;
     }
+    .view_mob {
+        width: 50% !important;
+    }
 }

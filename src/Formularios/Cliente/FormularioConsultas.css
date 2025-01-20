@@ -6,6 +6,8 @@
 .h1 {
   color: #333;
   margin-bottom: 20px;
+  font-size: 2em;
+  font-weight: bold;
 }
 
 .filters {
@@ -21,6 +23,7 @@
   border-radius: 5px;
   cursor: pointer;
   font-weight: 600;
+  transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .button.active {
@@ -29,23 +32,38 @@
 
 .button:hover {
   background-color: #FF9100;
+  transform: scale(1.05);
 }
 
 .table {
   width: 100%;
   border-collapse: collapse;
   margin-top: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
 }
 
 .th,
 .td {
-  padding: 10px;
+  padding: 15px;
   text-align: left;
   border-bottom: 1px solid #ddd;
 }
 
 .th {
   background-color: #f4f4f4;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.td {
+  background-color: #fff;
+  transition: background-color 0.2s ease;
+}
+
+.td:hover {
+  background-color: #f9f9f9;
 }
 
 .status-circle {
@@ -69,19 +87,22 @@
 /* Responsividade */
 @media (max-width: 970px) {
   .table {
-    font-size: .9em;
+    font-size: 0.9em;
   }
 
-  .th, td {
+  .th,
+  .td {
     padding: 8px;
   }
 
   /* Exibe somente o cliente, data, hora e status */
-  .td:nth-child(1), th:nth-child(1) {
+  .td:nth-child(1),
+  th:nth-child(1) {
     display: none; /* Oculta o ID */
   }
 
-  .td:nth-child(5), th:nth-child(5) {
+  .td:nth-child(5),
+  th:nth-child(5) {
     display: none; /* Oculta o status com texto */
   }
 
@@ -99,6 +120,9 @@
   .status-circle {
     display: block;
   }
+}
+.input {
+  width: 50% !important;
 }
 
 @media (min-width: 769px) {

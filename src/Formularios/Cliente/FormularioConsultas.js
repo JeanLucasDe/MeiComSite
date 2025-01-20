@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./FormularioConsultas.css";
+import styles from "./FormularioEdit.module.css"
 import moment from "moment/moment";
 import { useOutletContext } from "react-router-dom";
 
@@ -224,7 +225,7 @@ const FormularioConsulta = () => {
             type="month"
             value={filter.customMonth}
             onChange={(e) => setFilter({ ...filter, customMonth: e.target.value })}
-            className="input"
+            className={styles.input}
           />
         </div>
       )}
@@ -235,7 +236,7 @@ const FormularioConsulta = () => {
             type="date"
             value={filter.customDate}
             onChange={(e) => setFilter({ ...filter, customDate: e.target.value })}
-            className="input"
+            className={styles.input}
           />
         </div>
       )}

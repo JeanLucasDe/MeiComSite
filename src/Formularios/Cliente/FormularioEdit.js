@@ -154,6 +154,13 @@ export default function FormularioEdit () {
                                             setNome(el.target.value)
                                         }}
                                         defaultValue={dados.nome}/>
+                                        <label>Email </label>
+                                        <input type="text"
+                                        onChange={(el)=> {
+                                            setNome(el.target.value)
+                                        }}
+                                        disabled
+                                        defaultValue={dados.email}/>
                                         
                                         <label>Nascimento </label>
                                         <input type="text"

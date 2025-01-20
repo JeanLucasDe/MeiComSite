@@ -103,51 +103,7 @@ export default function FormularioEmpresa () {
                     required
                     placeholder="Digite Aqui"
                     />
-
-
-                </div>
-                <div className="col-md-6">
-                <label>Razão Social</label>
-                <input type="text"
-                onChange={(el)=> {
-                    setRazao(el.target.value)
-                }}
-                defaultValue={dados.razao}/>
-                <label>Site: </label>
-                <strong className={styles.d_block}>meicomsite.netlify.app/{dados.site}</strong>
-                <input type="text"
-                onChange={(el)=> {
-                    setSite(el.target.value)
-                }}
-                maxLength={20}
-                defaultValue={dados.site}/>
-                <label>Telefone</label>
-                <input type="phone"
-                onChange={(el)=> {
-                    setPhone(el.target.value)
-                }}
-                defaultValue={dados.telefone}/>
-                <label>Especialidade *</label>
-                <input type="text"
-                onChange={(el)=> {
-                    setEspecialidade(el.target.value)
-                }}
-                required
-                placeholder="Digite Aqui"
-                defaultValue={dados.especialidade}
-                />
-                <label>Descreva sua especialidade *</label>
-                <textarea type="text"
-                onChange={(el)=> {
-                    setDesc(el.target.value)
-                }}
-                required
-                placeholder="Digite Aqui"
-                defaultValue={dados.descrição}
-                className={styles.input}
-                />
-                
-                <label>Número *</label>
+<label>Número *</label>
                 <input type="text"
                 onChange={(el)=> {
                     setNumeroUser(el.target.value)
@@ -226,6 +182,48 @@ export default function FormularioEmpresa () {
                         }}
                         >{dados.pause ?<span><FaPauseCircle className={styles.icon}/> Pausar Atividades</span>: <span><FaPlayCircle className={styles.icon}/> Retomar Atividades</span>}</button>
                     </div>
+
+                </div>
+                <div className="col-md-6">
+                <label>Razão Social</label>
+                <input type="text"
+                onChange={(el)=> {
+                    setRazao(el.target.value)
+                }}
+                defaultValue={dados.razao}/>
+                <label>Site: </label>
+                <strong className={styles.d_block}>meicomsite.netlify.app/{dados.site}</strong>
+                <input type="text"
+                onChange={(el)=> {
+                    setSite(el.target.value)
+                }}
+                maxLength={20}
+                defaultValue={dados.site}/>
+                <label>Telefone</label>
+                <input type="phone"
+                onChange={(el)=> {
+                    setPhone(el.target.value)
+                }}
+                defaultValue={dados.telefone}/>
+                <label>Especialidade *</label>
+                <input type="text"
+                onChange={(el)=> {
+                    setEspecialidade(el.target.value)
+                }}
+                required
+                placeholder="Digite Aqui"
+                defaultValue={dados.especialidade}
+                />
+                <label>Descreva sua especialidade *</label>
+                <textarea type="text"
+                onChange={(el)=> {
+                    setDesc(el.target.value)
+                }}
+                required
+                placeholder="Digite Aqui"
+                defaultValue={dados.descrição}
+                className={styles.input}
+                />
                 </div>
             <div className={styles.cont_save}>
                 {cidadeUser || bairroUser || numeroUser || rua || cep || modalidade ||  pause || !pause|| desc|| phone || site || razao ?

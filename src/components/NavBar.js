@@ -59,7 +59,7 @@ return (
 
             </div>
         </div>
-            <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+            <div className={`${styles.width} offcanvas offcanvas-end`} tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
                 <div class="h-100%">
                     <div class="overflow-auto"> 
                         <MenuMobile 
