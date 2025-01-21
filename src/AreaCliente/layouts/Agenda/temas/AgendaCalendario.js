@@ -370,7 +370,10 @@ let darkerColor = darkenColor(cor, 0.6);
                         <p className="service-name">{service.nome}</p>
                         <p className="service-duration">{`Duração: ${service.hora}h`}</p>
                       </div>
-                      <span className="service-price">{`${FormataValor(parseInt(service.valor))}`}</span>
+                      <div>
+                        {service.precofixo == '2' && <p className='apartir'>apartir</p>}
+                        <span className="service-price">{`${FormataValor(parseInt(service.valor))}`}</span>
+                      </div>
                     </div>
                   </li>
                 ))}
@@ -438,7 +441,8 @@ let darkerColor = darkenColor(cor, 0.6);
             >
                 <h1 className='title_service'>{selectedService.nome}</h1>
                 <p className='paragh'>Duração {selectedService.hora} hora{parseInt(selectedService.hora) > 1 ? "s": ''}</p>
-                <p className='paragh'>Valor: {FormataValor(parseInt(selectedService.valor))}</p>
+                <p className='paragh'>Valor: {selectedService.precofixo == '2' && <p className='apartir'>apartir</p>}
+                <span className='price' style={{color:darkerColor}}>{FormataValor(parseInt(selectedService.valor))}</span></p>
                 <h3>Horários Disponíveis</h3>
                 <ul>
                     {agenda
@@ -478,8 +482,12 @@ let darkerColor = darkenColor(cor, 0.6);
               <p>
                 Serviço: <strong>{selectedService.nome}</strong>
               </p>
-              <p>
-                Valor: <strong>{FormataValor(parseInt(selectedService.valor))}</strong>
+              <p className='service-details center-f'>
+                <div>Valor:</div> 
+                <div>
+                  {selectedService.precofixo == '2' && <p className='apartir'>apartir</p>}
+                  <strong>{FormataValor(parseInt(selectedService.valor))}</strong>
+                </div>
               </p>
               <p>
                 Data: <strong>{moment(selectedDate).format('DD/MM/YYYY')}</strong>

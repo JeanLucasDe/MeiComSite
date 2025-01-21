@@ -11,3 +11,8 @@
 .cancel {
     background-color: #fc7070;
 }
+.close{
+    background-color: #fff;
+    color: #000;
+    border: 1px solid #fc7070;
+}

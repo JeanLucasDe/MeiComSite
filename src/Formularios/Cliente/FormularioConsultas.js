@@ -292,7 +292,7 @@ const FormularioConsulta = () => {
                     type="button" 
                     aria_label="Close"
                     data_bs_toggle="modal" 
-                    data_bs_target="#ModalDetalhesVenda"
+                    data_bs_target="#ModalView"
                     />
                 </div>
             </div>

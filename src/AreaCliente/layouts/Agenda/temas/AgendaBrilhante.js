@@ -335,17 +335,41 @@ export default function AgendaBrilhante () {
                             <h2 className="schedule-title" style={{
                                 color:darkerColor
                             }}>Escolha o serviço</h2>
-                            <div className="service-btns">
+                            <div className="service-btns"
+
+                            >
                                 {servicos && servicos.map((service) => (
                                 <button
                                     key={service.id}
                                     className="service-btn"
                                     style={{
-                                        backgroundColor:darkerColor
+                                        backgroundColor:darkerColor,
+                                        color:darkerColor
                                     }}
                                     onClick={() => handleServiceSelect(service)}
                                 >
-                                    {service.nome} - {FormataValor(parseInt(service.valor))}
+                                    <div className="sec-servic">
+                                        <div>
+                                            <p
+                                            style={{
+                                                color:brighterColor
+                                            }}
+                                            >{service.nome}</p> 
+                                        </div>
+                                        <div>
+                                            <p
+                                            style={{
+                                                color:brighterColor
+                                            }}
+                                            >
+                                            {service.precofixo == '2' && <p className="apartir" style={{
+                                                color:mediumColor
+                                            }}>apartir</p>}
+                                            {FormataValor(parseInt(service.valor))}
+                                            </p>
+                                        </div>
+
+                                    </div>
                                 </button>
                                 ))}
                             </div>
@@ -365,7 +389,18 @@ export default function AgendaBrilhante () {
                                 }}
                                 >Escolha o horário</h4>
                                 <p>Dura {selectedService.hora} hora{parseInt(selectedService.hora) > 0 ? 's': ''}</p>
-                                <p className="service-price">Preço: {FormataValor(parseInt(selectedService.valor))}</p>
+
+                                <p className='service-details center-f'>
+                                    <div><span>Valor: </span> </div> 
+                                    <div>
+                                    {selectedService.precofixo == '2' && <p className='apartir'>apartir</p>}
+                                    <strong style={{color:darkerColor}}>{FormataValor(parseInt(selectedService.valor))}</strong>
+                                    </div>
+                                </p>
+
+
+
+
                                 {selectedTime && 
                                 <button className="back-btn" onClick={CancelaHora}
                                 style={{
@@ -415,7 +450,7 @@ export default function AgendaBrilhante () {
                                                                 `}
                                                                 style={{
                                                                     backgroundColor: !item.selected ? darkerColor: cor,
-                                                                    color: item.selected ? darkerColor: cor
+                                                                    color: item.selected ? brighterColor: brighterColor
                                                                 }}
                                                                 
                                                                 onClick={() => {
@@ -464,8 +499,12 @@ export default function AgendaBrilhante () {
                                 <p>
                                     Serviço: <strong>{selectedService.nome}</strong>
                                 </p>
-                                <p>
-                                    Valor: <strong>{FormataValor(parseInt(selectedService.valor))}</strong>
+                                <p className='service-details center-f'>
+                                    <div><span>Valor: </span> </div> 
+                                    <div>
+                                    {selectedService.precofixo == '2' && <p className='apartir'>apartir</p>}
+                                    <strong >{FormataValor(parseInt(selectedService.valor))}</strong>
+                                    </div>
                                 </p>
                                 <p>
                                     Data: <strong>{moment(selectedDate.date).format('DD/MM/YYYY')}</strong>

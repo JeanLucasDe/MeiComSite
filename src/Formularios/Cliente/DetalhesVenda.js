@@ -3,6 +3,7 @@ import moment from "moment";
 import styles_ from "./DetalhesVenda.module.css"
 import { doc, getFirestore, updateDoc} from "@firebase/firestore";
 import { App } from "../../Hooks/App";
+import {FaTimes} from "react-icons/fa"
 
 
 export default function DetalhesVenda (props) {
@@ -246,6 +247,14 @@ export default function DetalhesVenda (props) {
                           onClick={()=> handleAlterStatus("cancelar")}
                           >
                           Cancelar Agenda
+                          </button>
+                          <button
+                          className={`${styles_.btn} ${styles_.close}`}
+                          type={props.type} 
+                          data-bs-toggle={props.data_bs_toggle} 
+                          data-bs-target={props.data_bs_target}
+                          >
+                          Sair
                           </button>
                             
 

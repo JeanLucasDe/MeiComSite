@@ -23,6 +23,22 @@
     margin-bottom: 4rem;
     flex-wrap: wrap;
 }
+.sec-servic {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  text-align: left !important;
+  margin: 0em .7em !important;
+}
+.sec-servic p {
+  text-align: left;
+  padding: 0em;
+  margin-bottom: 0em;
+  
+}
+.sec-servic p:first-child {
+  margin-right: .7em;
+}
 .w100 {
   width: 100% !important;
 }
@@ -77,21 +93,20 @@
   }
   
   .service-btns {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 2rem;
-    margin-top: 2rem;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 100%;
   }
   
   .service-btn {
-    background-color: #4CAF50;
-    color: white;
     font-size: 1.2rem;
-    padding: 1rem 2rem;
     border-radius: 8px;
     border: none;
     cursor: pointer;
     transition: background-color 0.3s, transform 0.3s;
+    margin: .7em;
+    padding: .7em;
   }
   
   .service-btn:hover {
