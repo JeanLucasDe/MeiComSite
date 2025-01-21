@@ -42,7 +42,9 @@
     align-items: center;
     justify-content: space-between;
     margin-bottom: 1em;
-    border-bottom: 1px dashed #000;
+    background-color: #e0e0e0;
+    padding: .5em;
+    border-radius: 10px;
     position: relative;
     width: 100%;
 }

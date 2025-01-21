@@ -56,12 +56,7 @@ export default function Servicos () {
                 ><FaPlus/></button>} 
 
                 {state == 1  &&
-                    <div
-                    className={styles.container}
-                    >
                         <div>
-                            <h5>Meus Serviços</h5>
-                            <div className="line"/>
                             {servicos.length > 0 ?
                             
                             <ul
@@ -113,8 +108,7 @@ export default function Servicos () {
             
                             </div>
                         </div>
-                            }
-                        </div>
+                        }
                     </div>}
                 {state == 2 &&
                 <div className="row">

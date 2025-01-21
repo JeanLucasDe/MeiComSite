@@ -53,37 +53,35 @@ const data = [
 
     
 
-    const resultado = agenda.length > 0 && data.map(mes => {
+    const resultado = agenda.length > 0 && data.map((mes) => {
         // Filtra as datas para o mês correspondente
-        const values = agenda.filter(data => {
-          const mesData = new Date(data.date).getMonth() + 1; // Obtém o número do mês
-          return mesData == mes.numero;
+        const values = agenda.filter((data) => {
+          const mesData = new Date(data.date + "T00:00:00Z").getUTCMonth() + 1; // Obtém o número do mês corretamente
+          return mesData === mes.numero; // Compara com o número do mês
         });
       
-        // Soma os valores das datas desse mês
+        // Soma os valores das datas desse mês, evitando duplicação de IDs e verificando status
         const totalValue = values.reduce((acc, item) => {
-
-            const idsContados = new Set(); // Usado para controlar os ids já somados
-            // Soma os valores do próprio item da agenda (se estiver na lista de datas)
-            const agendaValue = item.agenda.reduce((sum, agendaItem) => {
-            if (!agendaItem.disp && !idsContados.has(agendaItem.id)) {
-                // Se o horário não está disponível e o id ainda não foi contado
-                idsContados.add(agendaItem.id); // Marca o id como contado
-                return sum + agendaItem.valor > 0 && parseInt(agendaItem.valor); // Soma o valor
+          const idsContados = new Set(); // Usado para controlar os IDs já somados
+          const agendaValue = item.agenda.reduce((sum, agendaItem) => {
+            if (
+              !agendaItem.disp && // O item não está disponível
+              agendaItem.status === 2 && // Verifica se o status é "Concluído"
+              !idsContados.has(agendaItem.id) // O ID ainda não foi contado
+            ) {
+              idsContados.add(agendaItem.id); // Marca o ID como contado
+              return sum += (parseInt(agendaItem.valor) > 0 ? parseInt(agendaItem.valor) : 0); // Soma o valor
             }
-            return sum;
-            }, 0);
-            // Retorna o valor total somado
-            return acc + agendaValue;
+            return sum; // Ignora se o ID já foi contado ou o status não é 2
+          }, 0);
+      
+          return acc + agendaValue; // Soma os valores acumulados
         }, 0);
       
         // Retorna o mês com o total de valores somados e as datas filtradas
         return { ...mes, total: totalValue, values };
       });
       
-    
-
-
 
     return (
         <>
@@ -111,7 +109,7 @@ const data = [
                 </Typography>
                 <Box sx={{ overflowX: "auto" }}>
                 <Box sx={{ minWidth: "800px" }}>
-                    <BarChart width={1200} height={400} data={resultado}>
+                    <BarChart width={1200} height={500} data={resultado}>
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis dataKey="month" />
                     <YAxis />

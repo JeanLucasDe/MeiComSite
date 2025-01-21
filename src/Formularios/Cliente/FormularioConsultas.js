@@ -4,11 +4,15 @@ import styles from "./FormularioEdit.module.css"
 import moment from "moment/moment";
 import { useOutletContext } from "react-router-dom";
 import DetalhesVenda from "./DetalhesVenda";
+import Loading from "../../components/Loading"
 
 const FormularioConsulta = () => {
   const [mod, produtos, usuario, vendas, user, agenda, servicos] = useOutletContext();
   const [agendamento, setAgendamento] = useState()
+  const [Date, setDate] = useState()
+  const [loading, setLoading] = useState(false)
 
+  const {email} = usuario && usuario[0]
 
   const [filter, setFilter] = useState({
     period: "todas", // "dia", "semana", "mes"
@@ -59,11 +63,12 @@ const FormularioConsulta = () => {
 
   // Função para filtrar o status
   const isStatusMatch = (scheduleStatus) => {
-    return filter.status === "todas" || scheduleStatus === filter.status;
+    return filter.status === "todas" || scheduleStatus == filter.status;
   };
 
   // Função para garantir que não haja agendamentos duplicados pelo id
   const uniqueSchedules = (schedules) => {
+    
     const seenIds = new Set();
     return schedules.filter((schedule) => {
       if (seenIds.has(schedule.id)) {
@@ -85,6 +90,7 @@ const FormularioConsulta = () => {
     });
 
     // Aplicando a função uniqueSchedules para garantir que não haja duplicidades
+    
     return filteredAppointments.map((appointment) => ({
       ...appointment,
       agenda: uniqueSchedules(appointment.agenda), // Filtra os agendamentos únicos por ID
@@ -133,6 +139,19 @@ const FormularioConsulta = () => {
     // Retornar no formato hh:mm AM/PM
     return `${hora12 < 10 ? '0': ''}${hora12}:00 ${periodo}`;
   }
+
+  const calculateTotalRevenue = () => {
+    const filteredAppointments = filterAppointments();
+    let total = 0;
+    filteredAppointments.forEach((appointment) => {
+      appointment.agenda.forEach((schedule) => {
+        if (schedule.status === 2 && schedule.valor) { // Considerando "concluído" como status 2
+          total += parseFloat(schedule.valor);
+        }
+      });
+    });
+    return total.toFixed(2); // Exibindo com duas casas decimais
+  };
 
   return (
     <div className="app">
@@ -196,30 +215,33 @@ const FormularioConsulta = () => {
       )}
 
       {/* Filtro de Status */}
-      {(filter.period !== "todas" && filter.period !== "dia") && (
+      {(filter.period !== "todas" && filter.period != "dia") && (
         <div className="filters">
           <h2>Selecione o Status</h2>
           <button
-            className={`button ${filter.status === 1 ? "active" : ""}`}
+            className={`button ${filter.status == 1 ? "active" : ""}`}
             onClick={() => setFilter({ ...filter, status: 1 })}
           >
             Pendentes
           </button>
           <button
-            className={`button ${filter.status === 2 ? "active" : ""}`}
+            className={`button ${filter.status == 2 ? "active" : ""}`}
             onClick={() => setFilter({ ...filter, status: 2 })}
           >
             Concluídos
           </button>
           <button
-            className={`button ${filter.status === 3 ? "active" : ""}`}
+            className={`button ${filter.status == 3 ? "active" : ""}`}
             onClick={() => setFilter({ ...filter, status: 3 })}
           >
             Cancelados
           </button>
         </div>
       )}
-
+      {/* Caixa com total de faturamento */}
+      <div className="total-box">
+        <h2>Total de Faturamento: R$ {calculateTotalRevenue()}</h2>
+      </div>
       {/* Tabela de Agendamentos */}
       <table className="table">
         <thead>
@@ -232,11 +254,13 @@ const FormularioConsulta = () => {
           </tr>
         </thead>
         <tbody>
-          {filterAppointments().map((appointment, index) =>
+          {filterAppointments().length && filterAppointments().map((appointment, index) =>
             appointment.agenda.map((schedule, scheduleIndex) => {
               if (schedule.nome) {
                 return (
-                  <tr key={`${index}-${scheduleIndex}`} className="tr" onClick={()=> setAgendamento(schedule)}
+                  <tr key={`${index}-${scheduleIndex}`} className="tr" onClick={()=> {
+                    setDate(appointment)
+                    setAgendamento(schedule)}}
                     data-bs-toggle="modal"
                     data-bs-target={`#ModalView`}
                   >
@@ -260,8 +284,10 @@ const FormularioConsulta = () => {
             <div className={`modal-dialog modal-md`}>
                 <div className="modal-content">
                     <DetalhesVenda
+                    agenda={agenda}
                     agendamento = {agendamento}
-                    date={agendamento && agendamento.date}
+                    date={Date}
+                    email={email}
                     mod='Agenda'
                     type="button" 
                     aria_label="Close"

@@ -1,15 +1,19 @@
 import { useState } from "react";
 import moment from "moment";
 import styles_ from "./DetalhesVenda.module.css"
+import { doc, getFirestore, updateDoc} from "@firebase/firestore";
+import { App } from "../../Hooks/App";
 
 
 export default function DetalhesVenda (props) {
 
     const obj = props.obj && props.obj
     const agendamento = props.agendamento && props.agendamento || {}
+    const agenda = props.agenda &&props.agenda
+    const date = props.date && props.date
+    const email = props.email && props.email
+    const db = getFirestore(App)
     var [count, setCount] = useState(0)
-
-
 
     
     const FormataValor = (valor) => {
@@ -101,6 +105,27 @@ export default function DetalhesVenda (props) {
         buttonHover: {
           backgroundColor: '#2980b9',
         },
+        boxStyle : {
+          backgroundColor: "#f9f9f9",
+          borderTop: "2px solid rgb(255, 61, 47)",
+          borderRadius: "8px",
+          padding: "16px",
+          textAlign: "center",
+          fontFamily: "Arial, sans-serif",
+          color: "#000",
+          boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+          margin: "20px auto",
+        },
+      
+        textStyle : {
+          fontSize: "16px",
+          fontWeight: "bold",
+          marginBottom:'0'
+        },
+      
+        highlightStyle : {
+          color: "#d32f2f",
+        }
       };
 
       function formatarHoraParaAMPM(hora) {
@@ -118,19 +143,41 @@ export default function DetalhesVenda (props) {
         // Retornar no formato hh:mm AM/PM
         return `${hora12 < 10 ? '0': ''}${hora12}:00 ${periodo}`;
       }
-      
-      const handleAlterStatus = (status) => {
+      const handleAlterStatus = async(status) => {
         setCount(count+=1)
         
-        if (count == 1) {
-          console.log('clique 2 vezes')
-        } 
         if (count == 2) {
-          console.log('confirmado')
+          const listHours = []
           if (status == "confirmar") {
-              agendamento.status = 2
+              agenda.filter(dados => {
+                if (dados.date == date.date){
+                  dados.agenda.filter(item => {
+                    if (item.id == agendamento.id) {
+                      item.status = 2
+                    }
+                    listHours.push(item)
+                  })
+                }
+              })
+              await updateDoc(doc(db, `MeiComSite/${email}/agenda`, date.id), {
+                agenda: listHours
+              });
+            agendamento.status = 2
           }
           if (status == "cancelar") {
+              agenda.filter(dados => {
+                if (dados.date == date.date){
+                  dados.agenda.filter(item => {
+                    if (item.id == agendamento.id) {
+                      item.status = 3
+                    }
+                    listHours.push(item)
+                  })
+                }
+              })
+              await updateDoc(doc(db, `MeiComSite/${email}/agenda`, date.id), {
+                agenda: listHours
+              });
               agendamento.status = 3
           }
         }
@@ -162,7 +209,7 @@ export default function DetalhesVenda (props) {
                         </div>
                         <div style={styles.detailRow}>
                         <span style={styles.label}>Data:</span>
-                        <span style={styles.value}>{moment(props.date).format('DD/MM/YYYY')}</span>
+                        <span style={styles.value}>{moment(date && date.date).format('DD/MM/YYYY')}</span>
                         </div>
                         <div style={styles.detailRow}>
                         <span style={styles.label}>Hora:</span>
@@ -184,20 +231,23 @@ export default function DetalhesVenda (props) {
                             {agendamento.status == 3 && 'Cancelado'}
                         </span>
                       </div>
-                        <button
-                        className={`${styles_.btn}`}
-                        onClick={()=> handleAlterStatus("confirmar")}
-                        >
-                        Confirmar Agenda
-                        </button>
-                        <button
-                        className={`${styles_.btn} ${styles_.cancel}`}
-                        onClick={()=> handleAlterStatus("cancelar")}
-                        >
-                        Cancelar Agenda
-                        </button>
-                          
-                    </div>
+                        <div  style={styles.boxStyle}>
+                          <p style={styles.textStyle}>Clique <strong style={styles.highlightStyle}>duas vezes</strong> para confirmar</p>
+                        </div>
+                        </div>
+                          <button
+                          className={`${styles_.btn}`}
+                          onClick={()=> handleAlterStatus("confirmar")}
+                          >
+                          Confirmar Agenda
+                          </button>
+                          <button
+                          className={`${styles_.btn} ${styles_.cancel}`}
+                          onClick={()=> handleAlterStatus("cancelar")}
+                          >
+                          Cancelar Agenda
+                          </button>
+                            
 
                     
                 </div>
