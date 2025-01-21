@@ -4,7 +4,7 @@ import { useOutletContext } from "react-router-dom";
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
 import { App } from "../../Hooks/App";
 import { doc, getFirestore, setDoc, updateDoc } from "firebase/firestore";
-import moment from "moment/moment";
+import TipBox from "../../components/TipBox"
 
 export default function Agenda() {
   const [mod, produtos, usuario, vendas, user, agenda, servicos] = useOutletContext();
@@ -108,185 +108,184 @@ export default function Agenda() {
   };
 
   return (
-    <div className={styles.container}>
-      <h1 
-      className={styles.title}
-      style={{ fontFamily: "Arial, sans-serif", maxWidth: "600px", margin: "auto", textAlign: "center" }}>Faça seu Horário</h1>
-      <div className="line"/>
-      <div style={{ fontFamily: "Arial, sans-serif", maxWidth: "600px", margin: "auto", textAlign: "center" }}>
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1rem" }}>
-          <FaAngleLeft onClick={handlePrevMonth} style={{ cursor: "pointer" }} />
-          <h2>{`${monthNames[currentMonth]} ${currentYear}`}</h2>
-          <FaAngleRight onClick={handleNextMonth} style={{ cursor: "pointer" }} />
-        </div>
-
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(7, 1fr)", gap: "5px", fontWeight: "bold" }}>
-          {["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"].map((day) => (
-            <div key={day}>{day}</div>
-          ))}
-        </div>
-
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(7, 1fr)", gap: "5px" }}>
-          {Array.from({ length: firstDay }).map((_, index) => (
-            <div key={`empty-${index}`}></div>
-          ))}
-          {daysArray.map((day) => {
-            const dateKey = `${currentYear}-${String(currentMonth + 1).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
-            const isSelected = selectedDates.some((date) => date.date === dateKey);
-            return (
-              <div
-                key={day}
-                onClick={() => handleDayClick(day)}
-                style={{
-                  cursor: "pointer",
-                  textAlign: "center",
-                }}
-              >
-                <span className={styles.day_number}
-                style={{
-                  backgroundColor: isSelected ? "#FF9100" : "",
-                  color: isSelected ? "#fff" : "#000",
-                  fontWeight:isSelected ? "bold" : "normal",
-                }}
-                >{day}</span>
-              </div>
-            );
-          })}
-        </div>
-        {selectedDates.length > 0 && (() => {
-        // Verifica se todas as datas selecionadas têm horários válidos (sem o atributo "nome")
-        const allNamesValid = selectedDates.every(({ hours }) =>
-          hours.every((hour) => !hour.nome )
-        );
-        const consolidatedHours = selectedDates
-        .flatMap(({ date, hours }) =>
-          hours.map((hour) => ({ ...hour, dateKey: date })) // Inclui o dateKey em cada horário
-        )
-        .filter(
-          (hour, index, self) =>
-            self.findIndex((h) => h.hora === hour.hora) === index // Remove duplicados
-        );
-        
-
-        if (!allNamesValid) {
-          if (selectedDates.length > 1) {
-            return (
-              <div>
-                <div className="line"/>
-                <h5>Alguma Data já está comprometida</h5>
-                <p>Deve ser Alterada individualmente</p>
-              </div>
-            )
-          } else {
-            return (
-              <div>
-                <div className="line"/>
-                  <div>
-                    {consolidatedHours &&
-                      <div style={{ marginTop: "2rem" }}>
-                              <h4>Horários Selecionados</h4>
-                              <table style={{ margin: "auto", borderCollapse: "collapse", width: "100%" }}>
-                                <thead>
-                                  <tr>
-                                    <th style={{ border: "1px solid #ddd", padding: "8px" }}>Horário</th>
-                                    <th style={{ border: "1px solid #ddd", padding: "8px" }}>Disponível</th>
-                                  </tr>
-                                </thead>
-                                <tbody>
-                                  {consolidatedHours.map((hour, index) => (
-                                    <tr key={index}>
-                                      <td style={{ border: "1px solid #ddd", padding: "8px" }}>{hour.hora}</td>
-                                      <td style={{ border: "1px solid #ddd", padding: "8px" }}>
-                                        <input
-                                          type="checkbox"
-                                          checked={hour.disp}
-                                          onChange={() => {
-                                            toggleDisponibilidade(hour.dateKey, index)}}
-                                          disabled={hour.nome}
-                                        />
-                                      </td>
-                                    </tr>
-                                  ))}
-                            </tbody>
-                          </table>
-                      </div>
-                    }
-                    <div style={{ marginTop: "2rem", textAlign: "center" }}>
-                    <button
-                      onClick={() => ConfirmarAgenda()}
-                      style={{
-                        padding: "10px 20px",
-                        fontSize: "1.2rem",
-                        color: "#fff",
-                        backgroundColor: "#FF9100",
-                        border: "none",
-                        borderRadius: "5px",
-                        cursor: "pointer",
-                        fontWeight: "700",
-                      }}
-                    >
-                      Confirmar
-                    </button>
-                  </div>
-                </div>
-        
-              </div>
-            )
-          }
-        }
-
-        return (
-            <div>
-              {consolidatedHours &&
-                <div style={{ marginTop: "2rem" }}>
-                    <h3>Horários Selecionados</h3>
-                    <table style={{ margin: "auto", borderCollapse: "collapse", width: "100%" }}>
-                      <thead>
-                        <tr>
-                          <th style={{ border: "1px solid #ddd", padding: "8px" }}>Horário</th>
-                          <th style={{ border: "1px solid #ddd", padding: "8px" }}>Disponível</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {consolidatedHours.map((hour, index) => (
-                          <tr key={index}>
-                            <td style={{ border: "1px solid #ddd", padding: "8px" }}>{hour.hora}</td>
-                            <td style={{ border: "1px solid #ddd", padding: "8px" }}>
-                              <input
-                                type="checkbox"
-                                checked={hour.disp}
-                                onChange={() => toggleDisponibilidade(hour.dateKey, index)}
-                              />
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                </div>
-                }
-                <div style={{ marginTop: "2rem", textAlign: "center" }}>
-                <button
-                  onClick={() => ConfirmarAgenda()}
+    <div>
+      <TipBox message="Dica: Para alterar multiplas datas, selecione primeiro uma data vazia" />
+      <div className={styles.container}>
+        <h1
+        className={styles.title}
+        style={{ fontFamily: "Arial, sans-serif", maxWidth: "600px", margin: "auto", textAlign: "center" }}>Faça seu Horário</h1>
+        <div className="line"/>
+        <div style={{ fontFamily: "Arial, sans-serif", maxWidth: "600px", margin: "auto", textAlign: "center" }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1rem" }}>
+            <FaAngleLeft onClick={handlePrevMonth} style={{ cursor: "pointer" }} />
+            <h2>{`${monthNames[currentMonth]} ${currentYear}`}</h2>
+            <FaAngleRight onClick={handleNextMonth} style={{ cursor: "pointer" }} />
+          </div>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(7, 1fr)", gap: "5px", fontWeight: "bold" }}>
+            {["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"].map((day) => (
+              <div key={day}>{day}</div>
+            ))}
+          </div>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(7, 1fr)", gap: "5px" }}>
+            {Array.from({ length: firstDay }).map((_, index) => (
+              <div key={`empty-${index}`}></div>
+            ))}
+            {daysArray.map((day) => {
+              const dateKey = `${currentYear}-${String(currentMonth + 1).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
+              const isSelected = selectedDates.some((date) => date.date === dateKey);
+              return (
+                <div
+                  key={day}
+                  onClick={() => handleDayClick(day)}
                   style={{
-                    padding: "10px 20px",
-                    fontSize: "1.2rem",
-                    color: "#fff",
-                    backgroundColor: "#FF9100",
-                    border: "none",
-                    borderRadius: "5px",
                     cursor: "pointer",
-                    fontWeight: "700",
+                    textAlign: "center",
                   }}
                 >
-                  Confirmar
-                </button>
-              </div>
-            </div>
-            
-        );
-      })()}
+                  <span className={styles.day_number}
+                  style={{
+                    backgroundColor: isSelected ? "#FF9100" : "",
+                    color: isSelected ? "#fff" : "#000",
+                    fontWeight:isSelected ? "bold" : "normal",
+                  }}
+                  >{day}</span>
+                </div>
+              );
+            })}
+          </div>
+          {selectedDates.length > 0 && (() => {
+          // Verifica se todas as datas selecionadas têm horários válidos (sem o atributo "nome")
+          const allNamesValid = selectedDates.every(({ hours }) =>
+            hours.every((hour) => !hour.nome )
+          );
+          const consolidatedHours = selectedDates
+          .flatMap(({ date, hours }) =>
+            hours.map((hour) => ({ ...hour, dateKey: date })) // Inclui o dateKey em cada horário
+          )
+          .filter(
+            (hour, index, self) =>
+              self.findIndex((h) => h.hora === hour.hora) === index // Remove duplicados
+          );
       
-        
+          if (!allNamesValid) {
+            if (selectedDates.length > 1) {
+              return (
+                <div>
+                  <div className="line"/>
+                  <h5>Alguma Data já está comprometida</h5>
+                  <p>Deve ser Alterada individualmente</p>
+                </div>
+              )
+            } else {
+              return (
+                <div>
+                  <div className="line"/>
+                    <div>
+                      {consolidatedHours &&
+                        <div style={{ marginTop: "2rem" }}>
+                                <h4>Horários Selecionados</h4>
+                                <table style={{ margin: "auto", borderCollapse: "collapse", width: "100%" }}>
+                                  <thead>
+                                    <tr>
+                                      <th style={{ border: "1px solid #ddd", padding: "8px" }}>Horário</th>
+                                      <th style={{ border: "1px solid #ddd", padding: "8px" }}>Disponível</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    {consolidatedHours.map((hour, index) => (
+                                      <tr key={index}>
+                                        <td style={{ border: "1px solid #ddd", padding: "8px" }}>{hour.hora}</td>
+                                        <td style={{ border: "1px solid #ddd", padding: "8px" }}>
+                                          <input
+                                            type="checkbox"
+                                            checked={hour.disp}
+                                            onChange={() => {
+                                              toggleDisponibilidade(hour.dateKey, index)}}
+                                            disabled={hour.nome}
+                                          />
+                                        </td>
+                                      </tr>
+                                    ))}
+                              </tbody>
+                            </table>
+                        </div>
+                      }
+                      <div style={{ marginTop: "2rem", textAlign: "center" }}>
+                      <button
+                        onClick={() => ConfirmarAgenda()}
+                        style={{
+                          padding: "10px 20px",
+                          fontSize: "1.2rem",
+                          color: "#fff",
+                          backgroundColor: "#FF9100",
+                          border: "none",
+                          borderRadius: "5px",
+                          cursor: "pointer",
+                          fontWeight: "700",
+                        }}
+                      >
+                        Confirmar
+                      </button>
+                    </div>
+                  </div>
+      
+                </div>
+              )
+            }
+          }
+          return (
+              <div>
+                {consolidatedHours &&
+                  <div style={{ marginTop: "2rem" }}>
+                      <h3>Horários Selecionados</h3>
+                      <table style={{ margin: "auto", borderCollapse: "collapse", width: "100%" }}>
+                        <thead>
+                          <tr>
+                            <th style={{ border: "1px solid #ddd", padding: "8px" }}>Horário</th>
+                            <th style={{ border: "1px solid #ddd", padding: "8px" }}>Disponível</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {consolidatedHours.map((hour, index) => (
+                            <tr key={index}>
+                              <td style={{ border: "1px solid #ddd", padding: "8px" }}>{hour.hora}</td>
+                              <td style={{ border: "1px solid #ddd", padding: "8px" }}>
+                                <input
+                                  type="checkbox"
+                                  checked={hour.disp}
+                                  onChange={() => toggleDisponibilidade(hour.dateKey, index)}
+                                />
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                  </div>
+                  }
+                  <div style={{ marginTop: "2rem", textAlign: "center" }}>
+                  <button
+                    onClick={() => ConfirmarAgenda()}
+                    style={{
+                      padding: "10px 20px",
+                      fontSize: "1.2rem",
+                      color: "#fff",
+                      backgroundColor: "#FF9100",
+                      border: "none",
+                      borderRadius: "5px",
+                      cursor: "pointer",
+                      fontWeight: "700",
+                    }}
+                  >
+                    Confirmar
+                  </button>
+                </div>
+              </div>
+      
+          );
+        })()}
+      
+      
+        </div>
       </div>
     </div>
   );

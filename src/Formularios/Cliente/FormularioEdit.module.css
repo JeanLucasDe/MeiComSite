@@ -283,12 +283,36 @@
         margin-left: -1.3em;
         text-align: center;
     }
+    .box_infos {
+        display: flex;
+        justify-content:space-between;
+        width: 100%;
+        margin: 1em auto;
+    }
+    .info {
+        padding: .5em;
+        width: 100%;
+    }
+    .consultas {
+        background-color: #bbbbbb;
+    }
+    .servicos {
+        background-color: #ffb451;
+    }
+    .clientes {
+        background-color: #161616;
+        color: #fff;
+    }
 }
 
 @media screen and (min-width:576px) {
+    .box_infos {
+        width: 80%;
+    }
     .container {
         width: 80%;
     }
+
     .copy_link {
         font-size: 1em;
     }

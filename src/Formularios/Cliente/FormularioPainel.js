@@ -87,70 +87,23 @@ const data = [
 
     return (
         <>
-        <div className={styles.container}>
+
+
+        <div className={styles.box_infos}>
+            <div className={`${styles.consultas} ${styles.info}`}>
+                <h5>Consultas</h5>
+                <h5>{consultas.length}</h5>
+            </div>
+            <div className={`${styles.servicos} ${styles.info}`}>
+                <h5>Serviços</h5>
+                <h5>{servicos.length}</h5>
+            </div>
+            <div className={`${styles.clientes} ${styles.info}`}>
+                <h5>Clientes</h5>
+                <h5>{clientesLista.length}</h5>
+            </div>
+        </div>
         <Box sx={{ padding: "20px", minHeight: "100vh" }}>
-            <Grid container spacing={2} marginBottom={4}>
-                {/* Blocos no topo */}
-                
-                <Grid item xs={12} md={4}>
-                    <Paper
-                    elevation={3}
-                    sx={{
-                        padding: "20px",
-                        backgroundColor: "#FF9100",
-                        color: "#fff",
-                        textAlign: "center",
-                        borderRadius: "10px",
-                    }}
-                    >
-                    <Typography variant="h5">Consultas</Typography>
-                    <Typography variant="h4" fontWeight="bold">
-                        {consultas.length}
-                    </Typography>
-                    </Paper>
-                </Grid>
-                    <Grid item xs={12} md={4}>
-                    <Link to="/perfil/user/servicos" style={{
-                        textDecoration:"none",
-
-                    }}>
-                        <Paper
-                        elevation={3}
-                        sx={{
-                            padding: "20px",
-                            backgroundColor: "#FF9100",
-                            color: "#fff",
-                            textAlign: "center",
-                            borderRadius: "10px",
-                        }}
-                        >
-                        <Typography variant="h5">Serviços</Typography>
-                        <Typography variant="h4" fontWeight="bold">
-                            {servicos && servicos.length}
-                        </Typography>
-                        </Paper>
-                    </Link>
-                </Grid>
-                <Grid item xs={12} md={4}>
-                    <Paper
-                    elevation={3}
-                    sx={{
-                        padding: "20px",
-                        backgroundColor: "#FF9100",
-                        color: "#fff",
-                        textAlign: "center",
-                        borderRadius: "10px",
-                    }}
-                    >
-                    <Typography variant="h5">Clientes</Typography>
-                    <Typography variant="h4" fontWeight="bold">
-                        {clientesLista && clientesLista.length}
-                    </Typography>
-                    </Paper>
-                </Grid>
-                
-            </Grid>
-
             {/* Gráfico com rolagem horizontal */}
             <Paper elevation={3} sx={{ padding: "20px", borderRadius: "10px" }}>
                 <Typography variant="h6" marginBottom={2}>
@@ -170,8 +123,6 @@ const data = [
                 </Box>
             </Paper>
         </Box>
-
-        </div>
         
         </>
     )

@@ -3,58 +3,12 @@ import "./FormularioConsultas.css";
 import styles from "./FormularioEdit.module.css"
 import moment from "moment/moment";
 import { useOutletContext } from "react-router-dom";
+import DetalhesVenda from "./DetalhesVenda";
 
 const FormularioConsulta = () => {
   const [mod, produtos, usuario, vendas, user, agenda, servicos] = useOutletContext();
+  const [agendamento, setAgendamento] = useState()
 
-  const [appointments, setAppointments] = useState([
-    {
-      date: "2025-01-17",
-      schedules: [
-        { name: "João Silva", status: 1, time: "10:00", id: 1 },
-        { name: "Maria Oliveira", status: 2, time: "14:00", id: 2 },
-      ],
-    },
-    {
-      date: "2025-01-18",
-      schedules: [
-        { name: "Carlos Pereira", status: 3, time: "09:00", id: 3 },
-        { name: "Ana Costa", status: 1, time: "15:00", id: 4 },
-      ],
-    },
-    {
-      date: "2025-01-19",
-      schedules: [
-        { name: "Paulo Souza", status: 2, time: "11:00", id: 5 },
-      ],
-    },
-    {
-      date: "2025-02-05",
-      schedules: [
-        { name: "Lucas Almeida", status: 1, time: "08:00", id: 6 },
-        { name: "Mariana Lima", status: 2, time: "12:00", id: 7 },
-      ],
-    },
-    {
-      date: "2025-02-15",
-      schedules: [
-        { name: "Roberta Santos", status: 3, time: "09:30", id: 8 },
-        { name: "Rafael Alves", status: 1, time: "17:00", id: 9 },
-      ],
-    },
-    {
-      date: "2025-03-01",
-      schedules: [
-        { name: "Fernanda Costa", status: 2, time: "10:30", id: 10 },
-      ],
-    },
-    {
-      date: "2025-03-10",
-      schedules: [
-        { name: "Juliano Mendes", status: 3, time: "13:00", id: 11 },
-      ],
-    },
-  ]);
 
   const [filter, setFilter] = useState({
     period: "todas", // "dia", "semana", "mes"
@@ -282,7 +236,10 @@ const FormularioConsulta = () => {
             appointment.agenda.map((schedule, scheduleIndex) => {
               if (schedule.nome) {
                 return (
-                  <tr key={`${index}-${scheduleIndex}`} className="tr">
+                  <tr key={`${index}-${scheduleIndex}`} className="tr" onClick={()=> setAgendamento(schedule)}
+                    data-bs-toggle="modal"
+                    data-bs-target={`#ModalView`}
+                  >
                     <td className="td">{schedule.id}</td>
                     <td className="td">{schedule.nome}</td>
                     <td className="td">{moment(appointment.date).format("DD/MM/YYYY")}</td>
@@ -298,6 +255,22 @@ const FormularioConsulta = () => {
           )}
         </tbody>
       </table>
+      
+      <div className="modal fade" id="ModalView" tabindex="-1" aria-labelledby="exampleModalLabel">
+            <div className={`modal-dialog modal-md`}>
+                <div className="modal-content">
+                    <DetalhesVenda
+                    agendamento = {agendamento}
+                    date={agendamento && agendamento.date}
+                    mod='Agenda'
+                    type="button" 
+                    aria_label="Close"
+                    data_bs_toggle="modal" 
+                    data_bs_target="#ModalDetalhesVenda"
+                    />
+                </div>
+            </div>
+        </div>
     </div>
   );
 };

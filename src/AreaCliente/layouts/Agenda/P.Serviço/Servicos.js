@@ -45,14 +45,20 @@ export default function Servicos () {
         <>
             {usuario && usuario[0].mod == 'Agenda' ? 
             <div>
+                {state == 1 && <button
+                onClick={()=> setState(2)}
+                className={`${styles.margin_Bottom} ${styles.button_new}`}
+                ><span><FaPlus/></span>  Novo</button>} 
+                
+                {state == 1 && <button
+                onClick={()=> setState(2)}
+                className={`${styles.margin_Bottom} ${styles.button_new_mob}`}
+                ><FaPlus/></button>} 
+
                 {state == 1  &&
                     <div
                     className={styles.container}
                     >
-                        <button
-                        onClick={()=> setState(2)}
-                        className={`${styles.margin_Bottom} ${styles.button_new}`}
-                        ><span><FaPlus/></span>  Novo</button>
                         <div>
                             <h5>Meus Serviços</h5>
                             <div className="line"/>

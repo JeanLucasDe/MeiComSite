@@ -1,14 +1,13 @@
 import { useState } from "react";
-import BoxConfirm from "../../components/BoxConfirm";
-import styles from "./DetalhesVenda.module.css"
-import {FaCheck, FaExclamation} from "react-icons/fa"
 import moment from "moment";
+import styles_ from "./DetalhesVenda.module.css"
 
 
 export default function DetalhesVenda (props) {
 
     const obj = props.obj && props.obj
     const agendamento = props.agendamento && props.agendamento || {}
+    var [count, setCount] = useState(0)
 
 
 
@@ -97,6 +96,7 @@ export default function DetalhesVenda (props) {
           fontSize: '16px',
           cursor: 'pointer',
           transition: 'background-color 0.3s',
+          display:'block'
         },
         buttonHover: {
           backgroundColor: '#2980b9',
@@ -119,6 +119,25 @@ export default function DetalhesVenda (props) {
         return `${hora12 < 10 ? '0': ''}${hora12}:00 ${periodo}`;
       }
       
+      const handleAlterStatus = (status) => {
+        setCount(count+=1)
+        
+        if (count == 1) {
+          console.log('clique 2 vezes')
+        } 
+        if (count == 2) {
+          console.log('confirmado')
+          if (status == "confirmar") {
+              agendamento.status = 2
+          }
+          if (status == "cancelar") {
+              agendamento.status = 3
+          }
+        }
+        setTimeout(()=> {
+          setCount(0)
+        },1000)
+      }
 
     return (
             <>
@@ -147,7 +166,7 @@ export default function DetalhesVenda (props) {
                         </div>
                         <div style={styles.detailRow}>
                         <span style={styles.label}>Hora:</span>
-                        <span style={styles.value}>{formatarHoraParaAMPM(agendamento.hora)}</span>
+                        <span style={styles.value}>{formatarHoraParaAMPM(agendamento.hora && agendamento.hora.split(':')[0])}</span>
                         </div>
                         <div style={styles.detailRow}>
                             <span style={styles.label}>Serviço:</span>
@@ -160,11 +179,24 @@ export default function DetalhesVenda (props) {
                         <div style={styles.detailRow}>
                         <span style={styles.label}>Status:</span>
                         <span style={styles.status[agendamento.status]}>
-                            {agendamento.status == 0 && 'Pendente'}
+                            {agendamento.status == 1 && 'Pendente'}
                             {agendamento.status == 2 && 'Concluído'}
-                            {agendamento.status == 1 && 'Cancelado'}
+                            {agendamento.status == 3 && 'Cancelado'}
                         </span>
-                        </div>
+                      </div>
+                        <button
+                        className={`${styles_.btn}`}
+                        onClick={()=> handleAlterStatus("confirmar")}
+                        >
+                        Confirmar Agenda
+                        </button>
+                        <button
+                        className={`${styles_.btn} ${styles_.cancel}`}
+                        onClick={()=> handleAlterStatus("cancelar")}
+                        >
+                        Cancelar Agenda
+                        </button>
+                          
                     </div>
 
                     
