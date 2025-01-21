@@ -331,7 +331,7 @@ export default function AgendaBrilhante () {
 
                 <div className="schedule">
                         {stage == 1 && (
-                            <div className="service-selection">
+                            <div className="service-selection w100">
                             <h2 className="schedule-title" style={{
                                 color:darkerColor
                             }}>Escolha o serviço</h2>
@@ -353,7 +353,7 @@ export default function AgendaBrilhante () {
                         )}
 
                         {stage == 2  && (
-                            <div className="time-selection">
+                            <div className="time-selection w100">
                                 <h1 className="schedule-title"
                                 style={{
                                     color:darkerColor

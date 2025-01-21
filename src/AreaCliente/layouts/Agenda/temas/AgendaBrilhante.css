@@ -23,7 +23,9 @@
     margin-bottom: 4rem;
     flex-wrap: wrap;
 }
-
+.w100 {
+  width: 100% !important;
+}
 .profile-image img {
     width: 200px;
     height: 200px;
