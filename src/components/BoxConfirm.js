@@ -98,7 +98,7 @@ export default function BoxConfirm (props) {
             especialidade: !obj.especialidade ? prod[0].especialidade : obj.especialidade
         });
         await updateDoc(doc(db, "MeiComSite", user.email), {
-            descrição: !obj.desc ? prod[0].desc : obj.desc
+            descrição: !obj.desc ? prod[0].desc || '' : obj.desc
         });
         await updateDoc(doc(db, "MeiComSite", user.email), {
             razao: !obj.razao ? prod[0].razao : obj.razao
