@@ -56,6 +56,7 @@ export default function AgendaBrilhante () {
 
     const SeparaHoras = (item, date) => {
 
+
         if(!selectedTime) {
 
             const listHour = []
@@ -63,7 +64,7 @@ export default function AgendaBrilhante () {
             const result = (parseInt(item.hora) + parseInt(selectedService.hora))
             agenda && agenda.map(dados => {
                 if (dados.date == date.date) {
-                    dados.agenda.map(item => {horas.push(item.hora)})
+                    dados.agenda.map(item => {horas.push(item.hora.split(':')[0])})
                 }
             })
             const max = Math.max.apply(null, horas)
@@ -71,7 +72,7 @@ export default function AgendaBrilhante () {
 
             if (result - 1  <= max) {
                 setFinalHour(result - 1)
-                for (let i = parseInt(item.hora); i < result; i++) {
+                for (let i = parseInt(item.hora.split(':')[0]); i < result; i++) {
                     listHour.push({'hora': i.toString()})
                 }
                 setListHoras(listHour)
@@ -80,7 +81,7 @@ export default function AgendaBrilhante () {
                     if (dados.date == date.date) {
                         dados.agenda.map(item => {
                             listHour.map(horas => {
-                                if (horas.hora == item.hora) {
+                                if (horas.hora == item.hora.split(':')[0]) {
                                     numbers.push(item.disp)
                                 }
                             })
@@ -88,6 +89,7 @@ export default function AgendaBrilhante () {
                         
                     }
                 })
+                console.log(numbers)
 
 
                 const allTrue = numbers.every(function(number) {
@@ -99,7 +101,7 @@ export default function AgendaBrilhante () {
                         if (dados.date == date.date) {
                             dados.agenda.map(item => {
                                 listHour.map(horas => {
-                                    if (horas.hora == item.hora) {
+                                    if (horas.hora == item.hora.split(':')[0]) {
                                         item.disp = false
                                         item.selected = true
                                     }
@@ -123,7 +125,7 @@ export default function AgendaBrilhante () {
                 if (dados.date == selectedDate.date) {
                     dados.agenda.map(item => {
                         listHoras.map(horas => {
-                            if (horas.hora == item.hora) {
+                            if (horas.hora == item.hora.split(':')[0]) {
                                 item.disp = true
                                 item.selected = false
                             }
@@ -212,7 +214,7 @@ export default function AgendaBrilhante () {
                     if (dados.id == selectedDate.date) {
                         dados.agenda.map(item=> {
                             listHoras.map(horas => {
-                                if (horas.hora == item.hora) {
+                                if (horas.hora == item.hora.split(':')[0]) {
                                     item.nome = user;
                                     item.telefone = targetNumber;
                                     item.servico = selectedService.nome
@@ -419,10 +421,10 @@ export default function AgendaBrilhante () {
                                                                 onClick={() => {
                                                                     SeparaHoras(item, dados)
                                                                     setSelectedDate(dados)
-                                                                    setSelectHora(item.hora)
+                                                                    setSelectHora(item.hora.split(':')[0])
                                                                 }}
                                                                 >
-                                                                {formatarHoraParaAMPM(item.hora)}
+                                                                {formatarHoraParaAMPM(item.hora.split(':')[0])}
                                                                 </button>
                                                             ))}
                                                         </div>
@@ -454,8 +456,24 @@ export default function AgendaBrilhante () {
                                 </div>
                             </div>
                         )}
+                        {console.log(selectedTime)}
                         {stage == 3 &&(
                         <div className="confirmation-container">
+                            <div className={`confirmation confi`}>
+                                <h2>Confirmação</h2>
+                                <p>
+                                    Serviço: <strong>{selectedService.nome}</strong>
+                                </p>
+                                <p>
+                                    Valor: <strong>{FormataValor(parseInt(selectedService.valor))}</strong>
+                                </p>
+                                <p>
+                                    Data: <strong>{moment(selectedDate.date).format('DD/MM/YYYY')}</strong>
+                                </p>
+                                <p>
+                                    Horário: <strong>{formatarHoraParaAMPM(selectHora)}</strong>
+                                </p>
+                            </div>
                             <h1 className="schedule-title">Confirmação via WhatsApp</h1>
                             <form >
                                 <input 

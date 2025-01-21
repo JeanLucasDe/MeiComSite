@@ -26,6 +26,9 @@ export default function HomeAgenda (props) {
     const [nome, setNome] = useState()
     const [celular, setCelular] = useState()
     var [finalHour, setFinalHour] = useState()
+    const [selectServico, setSelectServico] = useState()
+    const [selectData, setSelectData] = useState()
+    const [hora, setHora] = useState()
 
 
     const geraId = () => {
@@ -173,7 +176,7 @@ export default function HomeAgenda (props) {
                 if (dados.id == dataEscolhida) {
                     dados.agenda.map(item=> {
                         listHoras.map(horas => {
-                            if (horas.hora == item.hora) {
+                            if (horas.hora == item.hora.split(':')[0]) {
                                 item.nome = nome;
                                 item.telefone = celular;
                                 item.servico = Service
@@ -205,16 +208,16 @@ export default function HomeAgenda (props) {
         if (!selectHour) {
             const listHour = []
             const horas = []
-            const result = (parseInt(item.hora) + parseInt(escolhaServico.hora))
+            const result = (parseInt(item.hora.split(':')[0]) + parseInt(escolhaServico.hora))
             agenda && agenda.map(dados => {
                 if (dados.date == dataEscolhida) {
-                    dados.agenda.map(item => {horas.push(item.hora)})
+                    dados.agenda.map(item => {horas.push(item.hora.split(':')[0])})
                 }
             })
             const max = Math.max.apply(null, horas)
             if (result - 1 <= max) {
                 setFinalHour(result - 1)
-                for (let i = parseInt(item.hora); i < result; i++) {
+                for (let i = parseInt(item.hora.split(':')[0]); i < result; i++) {
                     listHour.push({'hora': i.toString()})
                 }
                 setListHoras(listHour)
@@ -223,7 +226,7 @@ export default function HomeAgenda (props) {
                     if (dados.date == dataEscolhida) {
                         dados.agenda.map(item => {
                             listHour.map(horas => {
-                                if (horas.hora == item.hora) {
+                                if (horas.hora == item.hora.split(':')[0]) {
                                     numbers.push(item.disp)
                                 }
                             })
@@ -239,7 +242,7 @@ export default function HomeAgenda (props) {
                         if (dados.date == dataEscolhida) {
                             dados.agenda.map(item => {
                                 listHour.map(horas => {
-                                    if (horas.hora == item.hora) {
+                                    if (horas.hora == item.hora.split(':')[0]) {
                                         item.disp = false
                                         rolarParaFinal()
                                     }
@@ -261,7 +264,7 @@ export default function HomeAgenda (props) {
             if (dados.date == hoje.getFullYear()+'-'+meses[mesAtual].id+'-'+selectDate) {
                 dados.agenda.map(item => {
                     listHoras.map(horas => {
-                        if (horas.hora == item.hora) {
+                        if (horas.hora == item.hora.split(':')[0]) {
                             item.disp = true
                         }
                     })
@@ -394,6 +397,7 @@ export default function HomeAgenda (props) {
                                     setSelectService(dados.nome)
                                     setValor(dados.valor)
                                     rolarParaFinal()
+                                    setSelectServico(dados)
                                 }
                                 }
                                 value={dados.nome}
@@ -475,6 +479,7 @@ export default function HomeAgenda (props) {
                                                     {
                                                         if (!selectDate) {
                                                             setSelectDate((dados.date.split('-')[2]))
+                                                            setSelectData(dados.date)
                                                         }    
                                                     }
                                                 }
@@ -534,13 +539,14 @@ export default function HomeAgenda (props) {
                                                         setEscolhaHora(item.hora)
                                                         if (item.disp) {
                                                             SeparaHoras(item)
+                                                            setHora(item.hora)
                                                         } else {
                                                             return
                                                         }
                                                     }}
                                                     value={item.hora}
                                                     >
-                                                        <p className={styles.hora_info}>{formatarHoraParaAMPM(item.hora)}</p>
+                                                        <p className={styles.hora_info}>{formatarHoraParaAMPM(item.hora.split(':')[0])}</p>
                                                     </li>
                                                 )
                                             })
@@ -567,12 +573,27 @@ export default function HomeAgenda (props) {
                         
 
 
+
                 {stage == 3 &&
                 <>
-                
                 <div className={styles.div_animada}>
                     <div className={`${styles.m_cont_3}`}>
-                        <div className={styles.container_3}>
+                        <div className={`${styles.container_3}`}>
+                            <div>
+                                <h2>Confirmação</h2>
+                                <p>
+                                Serviço: <strong>{selectServico.nome}</strong>
+                                </p>
+                                <p>
+                                Valor: <strong>{FormataValor(parseInt(selectServico.valor))}</strong>
+                                </p>
+                                <p>
+                                Data: <strong>{moment(selectData).format('DD/MM/YYYY')}</strong>
+                                </p>
+                                <p>
+                                Horário: <strong>{formatarHoraParaAMPM(hora.split(':')[0])}</strong>
+                                </p>
+                            </div>
                             <h1 className={styles.heading_3}>Quase lá</h1>
                             <div className={styles.inputGroup_3}>
                                 <label className={styles.label_3} htmlFor="nome">Nome:</label>
