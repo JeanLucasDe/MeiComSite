@@ -243,7 +243,7 @@ const FormularioConsulta = () => {
                     <td className="td">{schedule.id}</td>
                     <td className="td">{schedule.nome}</td>
                     <td className="td">{moment(appointment.date).format("DD/MM/YYYY")}</td>
-                    <td className="td">{formatarHoraParaAMPM(schedule.hora)}</td>
+                    <td className="td">{formatarHoraParaAMPM(schedule.hora.split(':')[0])}</td>
                     <td className="status">
                       <span className="status-text d-none d-lg-block">{getStatusText(schedule.status)}</span>
                       <span className="status-circle d-block d-lg-none" style={{ backgroundColor: getStatusColor(schedule.status) }}></span>
