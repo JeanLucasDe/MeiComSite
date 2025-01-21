@@ -233,9 +233,9 @@ export default function Relatório () {
                     onChange={(el) => setFiltroStatus(el.target.value)}
                     >
                       <option value=''/>
-                      <option>Concluído</option>
-                      <option>Pendente</option>
-                      <option>Cancelado</option>
+                      <option value={2}>Concluído</option>
+                      <option value={1}>Pendente</option>
+                      <option value={3}>Cancelado</option>
                     </select>
                   </div>
 
