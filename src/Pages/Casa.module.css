@@ -17,7 +17,7 @@
     background-color: #EE9126;
     padding: 15px;
     border-radius: 8px;
-    max-width: 600px;
+    width: 90%;
     margin-left: auto;
     margin-right: auto;
   }
@@ -26,13 +26,13 @@
     font-size: 1.5rem;
     font-weight: bold;
     margin-bottom: 10px;
-    font-style: italic;
   }
   
   .aboutUs p {
     font-size: 1.1rem;
     line-height: 1.6;
     color: #ffffff;
+    font-style: italic;
   }
   
   /* Paleta de Cores */
@@ -246,6 +246,9 @@
   @media screen and (min-width:700px) {
     .planCard {
         width: 40%;
+    }
+    .aboutUs {
+      width: 600px;
     }
   }
   /* Efeito de elevação nos planos ao passar o mouse */
