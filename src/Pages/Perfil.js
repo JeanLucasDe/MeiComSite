@@ -1,6 +1,5 @@
 
-import NavBar from "../components/NavBar";
-import Footer from "../layouts/layoutsHome/Footer";
+
 import NavBarUser from "../layouts/layoutsPerfil/NavBarUser";
 import styles from "../layouts/layoutsPerfil/NavBarUser.module.css"
 import Loading from "../components/Loading"
@@ -11,6 +10,7 @@ import '@firebase/firestore';
 import { getFirestore, collection, getDocs,doc, setDoc} from "@firebase/firestore";
 import {  Link, Outlet } from "react-router-dom"
 import { getMessaging, getToken } from "firebase/messaging";
+import NavBar from "../components/NavBar"
 
 
 
@@ -119,7 +119,6 @@ export default function Perfil () {
 
     return (
         <div>
-            <NavBar/>
             <div className={styles.container}>
                 {!loading ? <Loading/> : 
                 <div>
@@ -127,10 +126,10 @@ export default function Perfil () {
                     <div>
                         {usuario && usuario[0].mod == 'Alimentação' && 
                         <div className="row">
-                            <div className={`${styles.col} col-md-2`}>
+                            <div className={`${styles.col} col-lg-2`}>
                                 <NavBarUser mod={usuario && usuario[0].mod} usuario={usuario && usuario[0]} user={user}/>
                             </div>
-                            <div className={`${styles.main} col-md-10`}>
+                            <div className={`${styles.main} col-lg-10`}>
                                 
                                 <Outlet context={[mod, produtos && produtos, usuario, vendas, user]} className={styles.main}/>
                             </div>
@@ -138,15 +137,25 @@ export default function Perfil () {
                         
                         
                         {usuario && usuario[0].mod == 'Agenda' && 
-                            <div >
-                                <div className={`${styles.col}`}>
-                                    <NavBarUser mod={usuario && usuario[0].mod} usuario={usuario && usuario[0]} user={user}/>
+                            <div> 
+                                <div className={styles.navBar}>
+                                    <NavBar/>
                                 </div>
-                                <div className={`${styles.main}`}>
-                                    <Outlet context={[mod, produtos && produtos, usuario, vendas, user, agenda,servicos]}
-                                    />
+                                <div className="row">
+                                    <div className={`col-lg-3 col-md-4`}>
+                                        <div className={styles.col}>
+                                            <NavBarUser mod={usuario && usuario[0].mod} usuario={usuario && usuario[0]} user={user}/>
+                                        </div>
+                                    </div>
+                                    <div className={`col-lg-9 col-md-8 col-sm-12`}>
+                                        <div className={styles.main}>
+                                            <Outlet context={[mod, produtos && produtos, usuario, vendas, user, agenda,servicos]}
+                                            />
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>}
+                            </div>
+                            }
 
 
                     </div>

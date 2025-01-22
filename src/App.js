@@ -45,6 +45,8 @@ import FormularioTheme from "./Formularios/Cliente/FormularioTheme";
 import FormularioPainel from "./Formularios/Cliente/FormularioPainel";
 import FormularioAssinatura from "./Formularios/Cliente/FormularioAssinatura";
 import FormularioConsultas from "./Formularios/Cliente/FormularioConsultas";
+import Casa from "./Pages/Casa";
+import FormularioPlano from "./Formularios/Cliente/FormularioPlano";
 
 
 function App() {
@@ -58,8 +60,7 @@ function App() {
       <Router>
         <Container>
             <Routes>
-              
-              <Route path="/" element={<Home/>}/>
+              <Route path="/" element={<Casa/>}/>
               <Route path="/record" element={<Gravação/>}/>
 
               <Route path="suporte" element={<Suporte/>}>
@@ -98,7 +99,7 @@ function App() {
                 <Route path="/perfil/user/temas" element={<FormularioTheme/>}/>
                 <Route path="/perfil/user/painel" element={<FormularioPainel/>}/>
                 <Route path="/perfil/user/clientes" element={<FormularioClientes/>}/>
-                <Route path="/perfil/user/assinatura" element={<FormularioAssinatura/>}/>
+                <Route path="/perfil/user/planos" element={<FormularioPlano/>}/>
                 <Route path="/perfil/user/consultas" element={<FormularioConsultas/>}/>
                 <Route path="/perfil/user/relatorio" element={<Relatório/>}/>
                 <Route path="/perfil/user/vendas" element={<Vendas/>}>

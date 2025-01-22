@@ -64,10 +64,6 @@
     .login button:first-child {
     margin: 0em 0.2em 0em 0em;
     }
-    .icon_mobile {
-        font-size: 1.4em;
-        display: block;
-    }
     .avatar {
         width: 30px;
         height: 30px;
@@ -133,14 +129,34 @@
         font-family: 'PT Serif', serif;
         margin-bottom: -0.2em;
     }
+    .g_2 {
+        display: grid;
+        grid-template-columns: 48% 48%;
+        list-style-type: none;
+        padding: 0em;
+    }
+    .ico {
+        border: none !important;
+        font-size: 1.1em;
+        margin-left: 1em;
+        color: rgba(2, 2, 2, 0.733);
+    }
+}
+.icon_desk {
+    display: none;
 }
 @media screen and (min-width:790px) {
     .menu {
         display: flex;
         justify-content: space-around;
         }
+}
+@media screen and (min-width:991px) {
     .icon_mobile {
         display: none;
+    }
+    .icon_desk {
+        display: block;
     }
 }
 .width {

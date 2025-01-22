@@ -140,6 +140,7 @@ export default function FormularioCadastro () {
     especialidade,
     descrição: desc,
     ação:ação,
+    tempodecasa:1
     }
     
     var [listCidades, setListCidades] = useState([])

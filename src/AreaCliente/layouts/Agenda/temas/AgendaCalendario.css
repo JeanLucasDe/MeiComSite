@@ -89,6 +89,9 @@
   .time-selection ul {
     padding: 0em;
     list-style-type: none;
+    display: grid;
+    justify-content: space-between;
+    grid-template-columns: 48% 48%;
   }
   
   .service-item:hover {

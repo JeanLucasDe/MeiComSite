@@ -47,7 +47,7 @@ export default function BoxConfirm (props) {
     
     const AdicionarUSer = async () => {
         await setDoc(doc(db, `MeiComSite`, `${user.email}`), {
-            data: moment().format('DD/MM/YYYY'),
+            data: moment().format('YYYY-MM-DD'),
             email: user && user.email,
             mod:obj.mod,
             agenda:[],
