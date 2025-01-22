@@ -47,7 +47,7 @@ return (
                 <img src={logo} alt="logo" className={styles_.logo} />ei com Site
                 </Link>
                 <div>
-                    {user && <Link to="perfil/user/config" className={styles.icon_mobile}>
+                    {user && <Link to="/perfil/user/config" className={styles.icon_mobile}>
                         <FaUser className={styles.ico}/>
                     </Link>}
                     <button
@@ -121,7 +121,7 @@ return (
                         </li>}
                     </ul>
                 </div>
-                    {user && <Link to="perfil/user/config" className={styles.icon_desk}>
+                    {user && <Link to="/perfil/user/config" className={styles.icon_desk}>
                         <FaUser className={styles.ico}/>
                     </Link>}
             </div>
