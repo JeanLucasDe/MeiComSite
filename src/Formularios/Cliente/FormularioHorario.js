@@ -2,6 +2,7 @@ import { useState } from "react"
 import styles from "./FormularioEdit.module.css"
 import BoxConfirm from "../../components/BoxConfirm"
 import { useOutletContext } from "react-router-dom"
+import styles_form  from "./Form.module.css"
 
 
 export default function FormularioHorario () {
@@ -22,7 +23,8 @@ export default function FormularioHorario () {
 
     return (
         <>
-        <div className={styles.container}>
+        <div className={styles_form.container}>
+            <h2 className={styles.title_h2}>Horário de Funcionamento</h2>
             <label>Abertura *</label>
             <input type="time"
             onChange={(el)=> {
@@ -42,8 +44,8 @@ export default function FormularioHorario () {
 
             <button
             type="button"
-            data-bs-toggle="modal"
-            data-bs-target="#ModalAdd"
+            data-bs-toggle={abre || fecha && "modal"}
+            data-bs-target={abre || fecha && "#ModalAdd"}
             className={styles.btn_save_add}
             onClick={(el)=> {
                 el.preventDefault()

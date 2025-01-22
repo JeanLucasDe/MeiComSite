@@ -7,6 +7,8 @@ import { doc, getFirestore, updateDoc } from "@firebase/firestore"
 import { FaCopy, FaEdit, FaPauseCircle, FaPlayCircle } from "react-icons/fa"
 import copy from "copy-to-clipboard";
 import { toast, ToastContainer } from "react-toastify"
+import styles_form from "./Form.module.css"
+import moment from "moment"
 
 
 export default function FormularioEmpresa () {
@@ -69,7 +71,20 @@ export default function FormularioEmpresa () {
     return (
         <>
         <ToastContainer/>
-        <div className={styles.container}>
+        <div className={styles_form.card}>
+            <div className={styles_form.header}>
+                <div>
+                    <h2 className={styles_form.siteName}>{usuario && usuario[0].razao}</h2>
+                    <h5>ID: {usuario && usuario[0].idloja}</h5>
+                    <Link to={`http://sitemei.netlify.app/${usuario && usuario[0].site}`} className={styles_form.siteLink}>https://sitemei.netlify.app/{usuario && usuario[0].site}</Link>
+                    
+                </div>
+            </div>
+            <div>
+                <p className={styles_form.date}>Criado em: {usuario && moment(usuario[0].data).format('DD/MM/YYYY')}</p>
+            </div>
+        </div>
+        <div className={styles_form.container}>
             <h4>Seu negócio</h4>
             {usuario.map(dados => {
                 return (
@@ -103,7 +118,7 @@ export default function FormularioEmpresa () {
                     required
                     placeholder="Digite Aqui"
                     />
-<label>Número *</label>
+                <label>Número *</label>
                 <input type="text"
                 onChange={(el)=> {
                     setNumeroUser(el.target.value)
@@ -253,63 +268,7 @@ export default function FormularioEmpresa () {
                 )
             })}
         </div>
-        <div className={styles.container}>
-            <div className={styles.cont_btn_del}>
-                <h4>Meu Link</h4>
-                <div className={`${styles.cont_link} `}>
-                    <div className={`${styles.no_padding_no_margin}`}>
-                        <div className={styles.link}>
-                            <Link to={`/${usuario && usuario[0].site}`} target="_blank"
-                            className={styles.copy_link}
-                            >
-                            <span>sitemei.netlify.app{`/${usuario && usuario[0].site}`} </span>
-                            </Link>
-                        </div>
-                    </div>
-                    <div className={`${styles.no_padding_no_margin}`}>
-                        <div className={styles.copy}>
-                            <FaCopy
-                            type="button"
-                            onClick={() => 
-                                copyToClipboard(`sitemei.netlify.app/${usuario && usuario[0].site}`)
-                            }
-                            className={styles.icon}
-                            />
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div className={styles.container}>
-            <div className={styles.cont_btn_del}>
-                <h4>Meu ID</h4>
-                <div className={`${styles.cont_link} `}>
-                    <div className={`${styles.no_padding_no_margin}`}>
-                        <div className={styles.link}>
-                            <Link
-                            className={styles.copy_link}
-                            onClick={() => 
-                                copyToClipboard(`${usuario && usuario[0].idloja}`)
-                            }
-                            >
-                            <span>{usuario && usuario[0].idloja}</span>
-                            </Link>
-                        </div>
-                    </div>
-                    <div className={`${styles.no_padding_no_margin}`}>
-                        <div className={styles.copy}>
-                            <FaCopy
-                            type="button"
-                            onClick={() => 
-                                copyToClipboard(`${usuario && usuario[0].idloja}`)
-                            }
-                            className={styles.icon}
-                            />
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        
 
         <div className="modal fade" id="ModalAdd" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div className={`modal-dialog modal-md`}>

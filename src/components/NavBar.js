@@ -116,7 +116,7 @@ return (
                         <li className="nav-item">
                         <Link className="nav-link" to="/suporte">Ajuda</Link>
                         </li>
-                        {user && <li className="nav-item">
+                        {user && <li className="nav-item" type="button">
                         <a className="nav-link" onClick={() => handleClickLogOut()}>Sair</a>
                         </li>}
                     </ul>

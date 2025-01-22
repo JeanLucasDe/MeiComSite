@@ -8,14 +8,13 @@ export default function FormularioPainel () {
 
     const [mod, produtos, usuario, vendas, user,agenda, servicos] = useOutletContext()
 
-    const consultas = agenda && agenda.filter(agenda => {
-        return (
-            agenda.agenda.filter(dados => {
-                if (dados.nome) {
-                    return dados
-                }
-            })
-        )
+    const consultas = []
+    agenda && agenda.map(dados => {
+        dados.agenda.map(item => {
+            if (item.nome) {
+                consultas.push(item)
+            }
+        })
     }) 
     const clientes = 
     agenda &&
@@ -85,7 +84,6 @@ const data = [
 
     return (
         <>
-
 
         <div className={styles.box_infos}>
             <div className={`${styles.consultas} ${styles.info}`}>

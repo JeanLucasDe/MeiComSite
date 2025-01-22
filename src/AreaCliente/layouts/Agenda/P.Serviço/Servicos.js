@@ -57,6 +57,7 @@ export default function Servicos () {
 
                 {state == 1  &&
                         <div>
+                            <h3 className={styles.title}>Serviços</h3>
                             {servicos.length > 0 ?
                             
                             <ul

@@ -1,4 +1,5 @@
 import styles from "./FormularioEdit.module.css"
+import styles_form from "./Form.module.css"
 import BoxConfirm from "../../components/BoxConfirm"
 import { useState } from "react"
 import {App} from "../../Hooks/App"
@@ -34,11 +35,6 @@ export default function FormularioEdit () {
 
     const [cidadeUser, setCidadeUser] = useState()
     const [bairroUser, setBairroUser] = useState()
-    const [rua, setRua] = useState()
-    const [cep, setCep] = useState()
-    const [numeroUser, setNumeroUser] = useState()
-    const [abre,setAbertura] = useState()
-    const [fecha, setFecha] = useState()
 
 
     const [nome, setNome] = useState()
@@ -46,14 +42,12 @@ export default function FormularioEdit () {
     const [phone, setPhone] = useState()
     const [site, setSite]= useState()
     const [logo, setLogo] = useState()
-    const [modalidade, setModalidade] = useState('')
-    const [theme, setTheme] = useState()
-    const [alterMod, setAlterMod] = useState(false)
     const [addCidade, setAddCidade] = useState()
     const [addBairro, setAddBairro] = useState()
     const [deleteEmail, setDeleteEmail] = useState()
     const [desc, setDesc] = useState()
     const [especialidade, setEspecialidade] = useState()
+    const [targetNumber, setTargetNumber] = useState()
     
 
    const ApagaUsuário = async () => {
@@ -105,346 +99,109 @@ export default function FormularioEdit () {
 
     const obj = {
         nome,
-        razao,
         phone, 
-        mod: modalidade.trim(),
-        theme,
-        site,
         cidade: cidadeUser,
         bairro: bairroUser,
-        rua,
-        cep,
-        abre, 
-        fecha,
-        numero: numeroUser,
+        numero: targetNumber,
         novoBairro,
         novaCidade,
         deletebairro,
         deleteCidade,
         listBairros,
         listCidades,
-        especialidade,
-        descrição: desc,
-        cor,
         ação:ação
     }
 
     
-    
-
 
     return (
         <>
-        {user && usuario.length && usuario.map(dados => {
-            if (dados.iduser == user.id) {
-                return (
-                    <>
-                        {!dados.admin && 
-                        <div className={styles.status}>
-                            <p>Status : <strong>{dados.status}</strong></p>
-                        </div>}
-                        <div className={styles.container} key={dados.id}>
-                            <h4>Meu Perfil</h4>
-                            <form className={`row ${styles.form}`}>
-                                <div className={`row ${styles.dados}`}>
-                                    <div className="col-lg-6">
-                                        <label>Nome Completo </label>
-                                        <input type="text"
-                                        onChange={(el)=> {
-                                            setNome(el.target.value)
-                                        }}
-                                        defaultValue={dados.nome}/>
-                                        <label>Email </label>
-                                        <input type="text"
-                                        onChange={(el)=> {
-                                            setNome(el.target.value)
-                                        }}
-                                        disabled
-                                        defaultValue={dados.email}/>
-                                        
-                                        <label>Nascimento </label>
-                                        <input type="text"
-                                        defaultValue={moment(dados.nascimento).format('DD/MM/YYYY')}
-                                        disabled
-                                        />
-                                        
-                                    </div>
+         {usuario && !usuario[0].admin && 
+        <div className={styles.status}>
+            <p>Status : <strong>{usuario && usuario[0].status}</strong></p>
+        </div>}
+         <div className={styles_form.card}>
+            <div className={styles_form.header}>
+                <div>
+                    <h2 className={styles_form.siteName}>{usuario && usuario[0].razao}</h2>
+                    <h5>ID: {usuario && usuario[0].idloja}</h5>
+                    <Link to={`http://sitemei.netlify.app/${usuario && usuario[0].site}`} className={styles_form.siteLink}>https://sitemei.netlify.app/{usuario && usuario[0].site}</Link>
+                    <Link className={styles_form.configureButton}
+                    to="/perfil/user/empresa"
+                    >
+                    ⚙️ configurar
+                    </Link>
+                </div>
+            </div>
+            <div>
+                <p className={styles_form.date}>Criado em: {usuario && moment(usuario[0].data).format('DD/MM/YYYY')}</p>
+            </div>
+        </div>
 
-                                    
-                                    <div className={styles.cont_save}>
-                                        {desc|| especialidade || nome || phone || razao || site || logo || cor ?
-                                            <button
-                                            type="button" 
-                                            data-bs-toggle="modal" 
-                                            data-bs-target="#ModalAdd"
-                                            className={styles.btn_save_add}
-                                            onClick={(el)=> {
-                                                el.preventDefault()
-                                                setAção("Editar")
-                                            }}
-                                            >
-                                                Salvar
-                                            </button>
-                                        :
-                                        <button
-                                        className={` ${styles.btn_save_add} ${styles.disabled}`}
-                                        onClick={(el)=> {
-                                            el.preventDefault()
-                                        }}
-                                        >Salvar</button>
-                                        }   
-                                    </div>
-                                </div>
-                            </form>    
-                        </div>
-                        <div className={styles.line}/>
-
-                        <div className={styles.container}>
-                            <div className={styles.cont_btn_del}>
-                                <h4>Meu Link</h4>
-                                <div className={`${styles.cont_link} `}>
-                                    <div className={`${styles.no_padding_no_margin}`}>
-                                        <div className={styles.link}>
-                                            <Link to={`/${usuario && usuario[0].site}`} target="_blank"
-                                            className={styles.copy_link}
-                                            >
-                                            <span>sitemei.netlify.app{`/${usuario && usuario[0].site}`} </span>
-                                            </Link>
-                                        </div>
-                                    </div>
-                                    <div className={`${styles.no_padding_no_margin}`}>
-                                        <div className={styles.copy}>
-                                            <FaCopy
-                                            type="button"
-                                            onClick={() => 
-                                                copyToClipboard(`sitemei.netlify.app/${usuario && usuario[0].site}`)
-                                            }
-                                            className={styles.icon}
-                                            />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className={styles.container}>
-                            <div className={styles.cont_btn_del}>
-                                <h4>Meu ID</h4>
-                                <div className={`${styles.cont_link} `}>
-                                    <div className={`${styles.no_padding_no_margin}`}>
-                                        <div className={styles.link}>
-                                            <Link
-                                            className={styles.copy_link}
-                                            onClick={() => 
-                                                copyToClipboard(`${usuario && usuario[0].idloja}`)
-                                            }
-                                            >
-                                            <span>{usuario && usuario[0].idloja}</span>
-                                            </Link>
-                                        </div>
-                                    </div>
-                                    <div className={`${styles.no_padding_no_margin}`}>
-                                        <div className={styles.copy}>
-                                            <FaCopy
-                                            type="button"
-                                            onClick={() => 
-                                                copyToClipboard(`${usuario && usuario[0].idloja}`)
-                                            }
-                                            className={styles.icon}
-                                            />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-
-
-                        <div className={styles.line}/>
-                        <div className={styles.container}>
-                            <h4>Áreas Atendidas</h4>
-                            <div>
-                                <div className="row">
-                                    <div className="col-md-6">
-                                        <p className={styles.p}>Cidades</p>
-                                        {addCidade && 
-                                        <div>
-                                            <input type="text" 
-                                            onChange={(el)=> setNovaCidade(el.target.value)}
-                                            placeholder="Nome da Cidade"
-                                            className={styles.input}
-                                            />
-                                            <div className={styles.flex}>
-                                                <button
-                                                className={styles.btn_save}
-                                                onClick={(e)=> {
-                                                    e.preventDefault()
-                                                    if (!novaCidade) return 
-                                                    salvarLocal()
-                                                }}
-                                                >Salvar</button>
-                                                <button
-                                                onClick={(e)=> {
-                                                    e.preventDefault()
-                                                    setAddCidade(false)
-                                                }}
-                                                className={styles.btn_cancel}
-                                                >Cancelar</button>
-                                            </div>
-                                        </div>
-                                        }
-                                        {!addCidade &&
-                                            <button
-                                            className={styles.btn_add_cidade}
-                                            onClick={(e)=> {
-                                                e.preventDefault()
-                                                setAddCidade(true)
-                                            }}
-                                            ><FaPlusCircle/> Adicionar
-                                            </button>
-                                        }
-                                    </div>
-
-
-
-                                    <div className="col-md-6">
-                                        <div>
-                                            <h5>Cidades</h5>
-                                            <select
-                                            onChange={(el)=> setDeleteCidade(el.target.value)}
-                                            className={styles.input}
-                                            key={seed}
-                                            >
-                                                <option>--</option>
-                                                {dados.listCidades && dados.listCidades.map(item => {
-                                                    return (
-                                                        <option value={item.local}>
-                                                            {item.local}
-                                                        </option>
-                                                        )
-                                                })}
-                                            </select>
-                                            {!deleteCidade || deleteCidade != "--" &&
-                                                <button
-                                                type="button" 
-                                                data-bs-toggle="modal" 
-                                                data-bs-target="#ModalAdd"
-                                                onClick={(el)=> {
-                                                    el.preventDefault()
-                                                    setAção("Deletar Cidade")
-                                                }}
-                                                className={styles.btn_delete}
-                                                >Apagar</button>
-                                            }
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className={styles.line}/>
-                                <div className="row">
-                                    <div className="col-md-6">
-                                        <p className={styles.p}>Bairros</p>
-                                        {addBairro && 
-                                        <div className={styles.cont_input}>
-                                            <input type="text" 
-                                            placeholder="Nome do bairro"
-                                            onChange={(el)=> setNovoBairro(el.target.value)}
-                                            className={styles.input}
-                                            />
-                                            <input type="number" 
-                                            placeholder="Taxa de Entrega"
-                                            onChange={(el)=> setTaxa(el.target.value)}
-                                            className={styles.input}
-                                            />
-                                            <div className={styles.flex}>
-                                                <button
-                                                className={styles.btn_save}
-                                                onClick={(e)=> {
-                                                    e.preventDefault()
-                                                    if (!novoBairro && !taxa) return 
-                                                    salvarLocal()
-                                                }}
-                                                >Salvar</button>
-                                                <button
-                                                onClick={(e)=> {
-                                                    e.preventDefault()
-                                                    setAddBairro(false)
-                                                }}
-                                                className={styles.btn_cancel}
-                                                >Cancelar</button>
-                                            </div>
-                                        </div>
-                                        }
-                                        {!addBairro &&
-                                        <button
-                                        className={styles.btn_add_cidade}
-                                        onClick={(e)=> {
-                                            e.preventDefault()
-                                            setAddBairro(true)
-                                        }}
-                                        ><FaPlusCircle/> Adicionar</button>
-                                        }
-                                    </div>
-                                    <div className="col-md-6">
-                                        <div >
-                                            <h5>Bairros</h5>
-                                            <select onChange={(el)=> setDeleteBairro(el.target.value)}
-                                            className={styles.input}
-                                            key={seed}
-                                            >
-                                                <option>--</option>
-                                                {dados.listBairros && dados.listBairros.map(item => {
-                                                    return (
-                                                        <option value={item.local} key={item.local}>
-                                                            {item.local} - {item.taxa}
-                                                        </option>
-                                                        )
-                                                })}
-                                            </select>
-                                            {!deletebairro || deletebairro != "--" &&
-                                                <button
-                                                type="button" 
-                                                data-bs-toggle="modal" 
-                                                data-bs-target="#ModalAdd"
-                                                onClick={(el)=> {
-                                                    el.preventDefault()
-                                                    setAção("Deletar Bairro")
-                                                }}
-                                                className={styles.btn_delete}
-                                                >Apagar</button>
-                                            }
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-
-
-                        <div className={styles.line}/>
-                    <div className={styles.line}/>
-
-                    <div className={styles.container}>
-                        <div className={styles.cont_btn_del}>
-                            <h4>Área de Perigo</h4>
-                            <button
-                            type="button"
-                            data-bs-toggle="modal"
-                            data-bs-target="#ModalDeleteUser"
-                            className={styles.btn_delete_account}
-                            >Apagar esta conta</button>
-                            <button
-                            type="button"
-                            data-bs-toggle="modal"
-                            data-bs-target={`#ModalRecupera`}
-                            className={styles.btn_delete_account}
-                            >Alterar Senha</button>
-                        </div>
-                    </div>
-                </>
-                )
-            }
-        })        
-        
-        }
+        <div className={styles_form.container}>
+            <h1 className={styles_form.title}>Dados Pessoais</h1>
+            <form className={styles_form.form}>
+                <div className={styles_form.formGroup}>
+                <label htmlFor="name" className={styles_form.label}>Nome Completo</label>
+                <input
+                    type="text"
+                    id="name"
+                    className={styles_form.input}
+                    defaultValue={usuario && usuario[0].nome}
+                    onChange={(e)=> setNome(e.target.value)}
+                />
+                </div>
+                <div className={styles_form.formGroup}>
+                <label htmlFor="email" className={styles_form.label}>Email</label>
+                <input
+                    type="email"
+                    id="email"
+                    className={styles_form.input}
+                    defaultValue={user.email}
+                    placeholder="Enter your email"
+                    disabled
+                />
+                </div>
+                <div className={styles_form.formGroup}>
+                <label htmlFor="phone" className={styles_form.label}>Celular</label>
+                <input
+                    type="tel"
+                    id="phone"
+                    className={styles_form.input}
+                    defaultValue={usuario && usuario[0].telefone}
+                    onChange={(el) => setTargetNumber(el.target.value)}
+                    placeholder="Enter your phone number"
+                />
+                </div>
+                <button type="button" className={styles_form.button}
+                data-bs-toggle={targetNumber || nome &&  'modal'} 
+                data-bs-target={targetNumber || nome &&  '#ModalAdd'} 
+                onClick={(e)=> {
+                    e.preventDefault()
+                    if (targetNumber || nome) {
+                        setAção("Editar")
+                    }
+                }}
+                >Salvar</button>
+            </form>
+        </div>
+        <div className={styles_form.container}>
+            <div className={styles.cont_btn_del}>
+                <h4>Área de Perigo</h4>
+                <button
+                type="button"
+                data-bs-toggle="modal"
+                data-bs-target="#ModalDeleteUser"
+                className={styles.btn_delete_account}
+                >Apagar esta conta</button>
+                <button
+                type="button"
+                data-bs-toggle="modal"
+                data-bs-target={`#ModalRecupera`}
+                className={styles.btn_delete_account}
+                >Alterar Senha</button>
+            </div>
+        </div>
          
         <div className="modal fade" id="ModalDeleteUser" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div className={`modal-dialog modal-md`}>

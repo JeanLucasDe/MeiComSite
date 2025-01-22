@@ -2,6 +2,7 @@ import { useState } from "react"
 import styles from "./FormularioEdit.module.css"
 import { useOutletContext } from "react-router-dom"
 import BoxConfirm from "../../components/BoxConfirm"
+import styles_form from "./Form.module.css"
 
 
 export default function FormularioTheme () {
@@ -19,7 +20,7 @@ export default function FormularioTheme () {
 
     return (
         <>
-        <div className={styles.container}>
+        <div className={styles_form.container}>
             <label>Tema:</label>
             <select
             className={styles.input}
@@ -32,7 +33,7 @@ export default function FormularioTheme () {
                 <option value='Agenda Brilhante'>Agenda Brilhante</option>
                 <option value='Agenda Calendario'>Agenda Calendario</option>
             </select>  
-            <p>Cor</p>
+            <label>Cor:</label>
             <input type='text' 
             placeholder="#0000"
             defaultValue={usuario && usuario[0].cor}

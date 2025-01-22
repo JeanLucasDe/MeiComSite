@@ -289,9 +289,21 @@
         width: 100%;
         margin: 1em auto;
     }
+    .serv {
+        margin-top: -1.6em;
+        color: #585858;
+        
+    }
+    .nome {
+        font-size: 1em;
+        font-weight: 600;
+    }
     .info {
         padding: .5em;
         width: 100%;
+        margin: 0em 0.3em;
+        border-radius: 10px;
+        text-align: center;
     }
     .consultas {
         background-color: #bbbbbb;
@@ -304,7 +316,10 @@
         color: #fff;
     }
 }
-
+.title_h2 {
+    text-align: center;
+    margin-bottom: 1em;
+}
 @media screen and (min-width:576px) {
     .box_infos {
         width: 80%;

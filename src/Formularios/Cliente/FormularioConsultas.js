@@ -265,7 +265,10 @@ const FormularioConsulta = () => {
                     data-bs-target={`#ModalView`}
                   >
                     <td className="td">{schedule.id}</td>
-                    <td className="td">{schedule.nome}</td>
+                    <td className="td">
+                      <p className={styles.nome}>{schedule.nome}</p>
+                      <p className={styles.serv}>{schedule.servico}</p>
+                    </td>
                     <td className="td">{moment(appointment.date).format("DD/MM/YYYY")}</td>
                     <td className="td">{formatarHoraParaAMPM(schedule.hora.split(':')[0])}</td>
                     <td className="status">

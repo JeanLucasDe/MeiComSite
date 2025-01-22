@@ -12,8 +12,6 @@ export default function Suporte () {
         <div className={styles.container}>
             <Outlet/>
         </div>
-        
-        <Footer/>
         </>
             
         )
