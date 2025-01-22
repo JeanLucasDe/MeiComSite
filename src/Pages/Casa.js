@@ -175,7 +175,7 @@ function Casa() {
 
       <footer className={`bg-light text-center py-4 ${styles.footer}`} data-aos="fade-up">
         <div className="container">
-          <p>&copy; 2025 Minha Agenda Virtual. Todos os direitos reservados.</p>
+          <p>&copy; 2025 Mei Com Site. Todos os direitos reservados.</p>
           <p>
             <a href="#" className="text-decoration-none mx-2">Política de Privacidade</a>
             <a href="#" className="text-decoration-none mx-2">Termos de Serviço</a>
