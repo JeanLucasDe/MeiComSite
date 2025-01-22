@@ -105,7 +105,7 @@ function Casa() {
         <img src={calendario} alt="Tema Claro" className="card-img-top" />
         <div className="card-body">
           <h5 className={`${styles.title_card} card-title`}>Tema Calendário</h5>
-          <p className="card-text">Tema claro e moderno, ideal para ambientes mais iluminados.</p>
+          <p className="card-text">Para quem busca mais praticidade</p>
         </div>
       </div>
     </div>
@@ -116,7 +116,7 @@ function Casa() {
         <img src={brilhante} alt="Tema Escuro" className="card-img-top" />
         <div className="card-body">
           <h5 className={`${styles.title_card} card-title`}>Tema Brilhante</h5>
-          <p className="card-text">Tema escuro, perfeito para quem prefere um visual mais suave para os olhos.</p>
+          <p className="card-text">Para quem quer falar um pouco mais de si</p>
         </div>
       </div>
     </div>
@@ -127,7 +127,7 @@ function Casa() {
         <img src={padrao} alt="Tema Colorido" className="card-img-top" />
         <div className="card-body">
           <h5 className={`${styles.title_card} card-title`}>Tema Padrão</h5>
-          <p className="card-text">Um tema vibrante e dinâmico, perfeito para quem gosta de mais cor e energia.</p>
+          <p className="card-text">Design moderno, objetivo e rápido</p>
         </div>
       </div>
     </div>
