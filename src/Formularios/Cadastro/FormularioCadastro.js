@@ -321,7 +321,7 @@ export default function FormularioCadastro () {
             </div>
             <div className={styles.cont_save}>
                 {desc && especialidade && nome && modalidade && modalidade != '-' && phone 
-                && razao && cidadeUser && bairroUser && numeroUser && cep && alpha && SiteExiste < 0 && acento ?
+                && razao && theme && cidadeUser && bairroUser && numeroUser && cep && alpha && SiteExiste < 0 && acento ?
                     <button
                     type="button" 
                     data-bs-toggle="modal" 
