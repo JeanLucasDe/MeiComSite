@@ -81,7 +81,7 @@ export default function BoxConfirm (props) {
 
     const EditaUser = async () => {
         const prod = []
-
+        
         produtos && produtos.map(item=> {
             if (user && user.id == item.iduser) {
                 prod.push(item)
@@ -91,7 +91,7 @@ export default function BoxConfirm (props) {
             nome: !obj.nome ? prod[0].nome : obj.nome
         });
         await updateDoc(doc(db, "MeiComSite", user.email), {
-            especialidade: !obj.especialidade ? prod[0].especialidade : obj.especialidade
+            especialidade: !obj.especialidade ? prod[0].especialidade ? prod[0].especialidade: '' : obj.especialidade
         });
         await updateDoc(doc(db, "MeiComSite", user.email), {
             descrição: !obj.desc ? prod[0].descrição ? prod[0].descrição : '' : obj.desc
