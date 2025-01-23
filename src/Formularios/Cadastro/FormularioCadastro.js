@@ -33,7 +33,6 @@ export default function FormularioCadastro () {
                     })
                 }
             })
-            getNotificationToken()
         } catch (e) {
             <button> tentar novamente </button>
         }
@@ -51,12 +50,6 @@ export default function FormularioCadastro () {
     }
 
     const usuario = usuarios && user && usuarios.filter(dados => dados.email == user.email)
-    
-
-    const FormataValor = (valor) => {
-        var valorFormatado = valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-        return valorFormatado
-    }
     
     
     
@@ -84,14 +77,8 @@ export default function FormularioCadastro () {
     const [especialidade, setEspecialidade] = useState()
 
 
-    var [seed, setSeed] = useState(0)
     const [site, setSite] = useState('')
-    const [OnLogo, setOnLogo]= useState()
     const [nascimento,setNascimento] = useState()
-    const [novaCidade, setNovaCidade] = useState()
-    const [novoBairro, setNovoBairro] = useState()
-    const [addCidade, setAddCidade] = useState(false)
-    const [addBairro, setAddBairro] = useState(false)
 
     const geraId = () => {
         const numeroAleatorio = Math.floor(Math.random() * 10000000);
@@ -99,23 +86,7 @@ export default function FormularioCadastro () {
     }
     const idCat = geraId()
 
-    const getNotificationToken = () => {
-    // Obtém o token do dispositivo
-    getToken(messaging, { vapidKey })
-        .then((currentToken) => {
-        if (currentToken) {
-            console.log("Token obtido com sucesso:");
-            setTokenId(currentToken)
-            // Agora você pode salvar esse token no seu banco de dados
-        } else {
-            console.log("Não foi possível obter o token.");
-        }
-        })
-        .catch((err) => {
-        console.error("Erro ao obter o token:", err);
-        });
-    };
-
+    
     
     const obj = {
     nome,
@@ -132,9 +103,7 @@ export default function FormularioCadastro () {
     idLoja: parseFloat(idCat),
     numero: numeroUser,
     fecha: fecha,
-    listBairros,
-    listCidades,
-    theme:modalidade,
+    theme,
     cor,
     tokenID,
     especialidade,
@@ -146,40 +115,6 @@ export default function FormularioCadastro () {
     var [listCidades, setListCidades] = useState([])
     var [listBairros, setListBairros] = useState([])
 
-    const salvarCidade =  (local) => {
-        let index = listCidades.findIndex(prop => prop.local == local)
-
-        if (index < 0) {
-            setListCidades([...listCidades, {local:local}])
-            setNovaCidade("")
-            toast.success('Cidade Salva!')
-        }
-    }
-    const salvarBairro =  (local, taxa) => {
-        let index = listBairros.findIndex(prop => prop.local == local)
-
-        if (index < 0) {
-            setListBairros([...listBairros, {local:local, taxa:taxa}])
-            setNovoBairro("")
-            setTaxa("")
-            toast.success('Bairro Salvo!')
-        }
-    }
-    const deletaCidade = (local) => {
-        let index = listCidades.findIndex(prop => prop.cidade == local)
-        listCidades.splice(index, 1)
-        setListCidades(listCidades)
-        toast.success('Cidade Apagada!')
-    }
-
-    const deletaBairro = (local) => {
-        let index = listBairros.findIndex(prop => prop.local == local)
-        listBairros.splice(index, 1)
-        setListBairros(listBairros)
-        setSeed(seed += 1)
-        toast.success('Bairro Apagado!')
-    }
-    
 
     function temSomenteLetras() {
         const regex = /^[A-Za-z]+$/; // Expressão regular para verificar se contém somente letras (maiúsculas ou minúsculas)
@@ -192,6 +127,11 @@ export default function FormularioCadastro () {
 
     const acento = semAcento()
     const alpha = temSomenteLetras()
+
+
+    const SiteExiste = usuarios && site && usuarios.findIndex((dados) => {return dados.site == site})
+
+
 
     return (
         <>
@@ -332,6 +272,10 @@ export default function FormularioCadastro () {
                                                 required
                                                 placeholder="meusite"
                                                 />
+                                                <p>{SiteExiste > 0 ? <FaTimes className={!SiteExiste > 0 ? styles.ok : styles.off}/>: <FaCheck className={!SiteExiste > 0 ? styles.off : styles.ok}/>}
+                                                    <span>{SiteExiste > 0 ? " Indisponível": " Disponível"}</span>
+                                                </p>
+
                                                 <p>{acento ? <FaCheck className={acento ? styles.ok : styles.off}/>: <FaTimes className={acento ? styles.ok : styles.off}/>} Sem Acento</p>
                                                 <p>{alpha ? <FaCheck className={alpha ? styles.ok : styles.off}/>: <FaTimes className={alpha ? styles.ok : styles.off}/>} Somente Letras</p>
                                             </div>
@@ -341,178 +285,6 @@ export default function FormularioCadastro () {
                             </div>
                         </form>    
                     </div>
-                    <div className={styles.line}/>
-                    <div className={styles.container}>
-                            <h4>Áreas Atendidas</h4>
-                            <div>
-                                <div className="row">
-                                    <div className="col-md-6">
-                                        <div className={styles.cont_add}>
-                                            {addCidade ?
-                                            <div>
-                                                <label>Cidade:</label>
-                                                <input type="text"
-                                                onChange={(el)=> setNovaCidade(el.target.value)}
-                                                value={novaCidade}
-                                                placeholder="Digite Aqui..."
-                                                className={styles.input}
-                                                />
-                                                <div className={styles.flex}>
-                                                    <button
-                                                    className={styles.btn_save}
-                                                    onClick={(e)=> {
-                                                        e.preventDefault()
-                                                        if (!novaCidade) return
-                                                        salvarCidade(novaCidade)
-                                                    }}
-                                                    >
-                                                        Salvar
-                                                    </button>
-                                                    <button
-                                                    className={styles.btn_cancel}
-                                                    onClick={(e)=> {
-                                                        e.preventDefault()
-                                                        setAddCidade(!addCidade)
-                                                    }}
-                                                    >{!addCidade ? <FaPlusCircle/>: "Cancelar"}</button>
-                                                </div>
-                                            </div>
-                                            :
-                                            <div>
-                                                <label>Cidade:</label>
-                                                <button
-                                                type="button"
-                                                className={styles.btn_add_cidade}
-                                                onClick={(e)=> {
-                                                    e.preventDefault()
-                                                    setAddCidade(!addCidade)
-                                                }}
-                                                ><FaPlusCircle/> Adicionar</button>
-                                            </div>
-                                            
-                                            }
-                                        </div>
-                                    </div>
-                                    <div className="col-md-6">
-                                        <div className={styles.cont_select}>
-                                            <strong>Cidades</strong>
-                                            <select
-                                            onChange={(el)=> setDeleteCidade(el.target.value)
-                                            }
-                                            className={styles.input}
-                                            >
-                                                <option>--</option>
-                                                {listCidades.map(dados => {
-                                                    return (
-                                                            <option
-                                                            value={dados.local}
-                                                            >{dados.local}</option>
-                                                        )
-                                                })}
-                                            </select>
-                                            {!deleteCidade || deleteCidade != "--" &&
-                                                <button key={seed}
-                                                onClick={(el)=> {
-                                                    el.preventDefault()
-                                                    deletaCidade(deleteCidade)
-                                                }}
-                                                className={styles.btn_delete}
-                                                >
-                                                    Apagar
-                                                </button>
-                                            }
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className={styles.line}/>
-                                <div className="row">
-                                    <div className="col-md-6" >
-                                        <div className={styles.cont_add}>
-                                            {addBairro ?
-                                            <div>
-                                                <label>Bairro:</label>
-                                                <input type="text"
-                                                onChange={(el)=> setNovoBairro(el.target.value)}
-                                                value={novoBairro}
-                                                className={styles.input}
-                                                placeholder="Nome do Bairro"
-                                                />
-                                                <input type="number"
-                                                onChange={(el)=> setTaxa(el.target.value)}
-                                                value={taxa}
-                                                placeholder="Taxa de transporte"
-                                                className={styles.input}
-                                                />
-                                                <div className={styles.flex}>
-                                                    <button
-                                                    className={styles.btn_save}
-                                                    type="button"
-                                                    onClick={(e)=> {
-                                                        e.preventDefault()
-                                                        if (novoBairro && taxa) {
-                                                            salvarBairro(novoBairro, taxa)
-                                                        }
-                                                    }}
-                                                    >Salvar</button>
-                                                    <button
-                                                    className={styles.btn_cancel}
-                                                    onClick={(e)=> {
-                                                        e.preventDefault()
-                                                        setAddBairro(!addBairro)
-                                                    }}
-                                                    >{!addBairro ? <FaPlusCircle/> : "Cancelar"}</button>
-                                                </div>
-                                            </div>
-                                            :
-                                            <div>
-                                                <label>Bairro:</label>
-                                                <button
-                                                type="button"
-                                                className={styles.btn_add_cidade}
-                                                onClick={(e)=> {
-                                                        setAddBairro(!addBairro)
-                                                    e.preventDefault()
-                                                }}
-                                                ><FaPlusCircle/> Adicionar</button>
-                                            </div>
-                                            
-                                            }
-                                        </div>
-                                    </div>
-                                    <div className="col-md-6">
-                                        <div key={seed} className={styles.cont_select}>
-                                            <strong>Bairros</strong>
-                                            <select onChange={(el)=> setDeleteBairro(el.target.value)}
-                                            className={styles.input}
-                                            >
-                                                <option value="--">--</option>
-                                                {listBairros.map(dados => {
-                                                    return (
-                                                            <option
-                                                            value={dados.local}
-                                                            >{dados.local} - ({FormataValor(dados.taxa)})</option>
-                                                        )
-                                                })}
-                                            </select>
-                                            {!deletebairro || deletebairro != "--" &&
-                                                <button
-                                                key={seed}
-                                                className={styles.btn_delete}
-                                                onClick={(el)=> {
-                                                    el.preventDefault()
-                                                    deletaBairro(deletebairro)
-                                                }}
-                                                >
-                                                    Apagar
-                                                </button>
-                                            }
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-
                     <div className={styles.line}/>
                     <div className={styles.container}>
                 <h4>Seu negócio</h4>
@@ -531,10 +303,17 @@ export default function FormularioCadastro () {
                                             <option value="Agenda">Agendamento</option>
                                         </select>
                                     </div>
-                                </div>
-                                <div>
-                                    <div className={styles.cont_theme}>
-                                        <strong>{theme}</strong>
+                                    <div className={styles.cont_plan}>
+                                        <label>Escolha o tema:</label>
+                                        <select 
+                                        className={styles.input}
+                                        onChange={(el)=> setTheme(el.target.value)}
+                                        >
+                                            <option value="-" selected disabled defaultChecked>-</option>
+                                            <option value="Agenda">Agenda Padrão</option>
+                                            <option value="Agenda Brilhante">Agenda Brilhante</option>
+                                            <option value="Agenda Calendario">Agenda Calendário</option>
+                                        </select>
                                     </div>
                                 </div>
                             </div>
@@ -543,7 +322,7 @@ export default function FormularioCadastro () {
             </div>
             <div className={styles.cont_save}>
                 {desc && especialidade && nome && modalidade && modalidade != '-' && phone 
-                && razao && cidadeUser && bairroUser && numeroUser && cep && listBairros && listCidades && alpha && acento ?
+                && razao && cidadeUser && bairroUser && numeroUser && cep && alpha && SiteExiste < 0 && acento ?
                     <button
                     type="button" 
                     data-bs-toggle="modal" 
