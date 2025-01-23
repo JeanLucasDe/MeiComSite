@@ -154,17 +154,6 @@ export default function NavBarUser (props) {
                     {user.avatar && <img src={user.avatar} alt="Avatar" className={styles.avatar} />} {razao}
                   </h4>
                 </div>
-                <div className={styles.sidebar_links}>
-                  {navItems.map((item, index) => (
-                    <NavLink
-                      key={index}
-                      to={item.to}
-                      className={({ isActive }) => (isActive ? styles.active_link : styles.inactive_link)}
-                    >
-                      {item.icon} {item.label}
-                    </NavLink>
-                  ))}
-          
                   <div
                     className={`${styles.config_toggle} ${openTagConfig ? styles.expanded : styles.collapsed}`}
                     onClick={() => setOpenTagConfig(!openTagConfig)}
@@ -172,7 +161,7 @@ export default function NavBarUser (props) {
                     <FaCog className={styles.icon}/> Configurações {openTagConfig ? <FaAngleDown /> : <FaAngleLeft />}
                   </div>
                   {openTagConfig && (
-                    <div className={styles.config_links}>
+                    <div className={`${styles.sidebar_links} ${styles.config_links}`}>
                       {configItems.map((item, index) => (
                         <NavLink
                           key={index}
@@ -184,6 +173,16 @@ export default function NavBarUser (props) {
                       ))}
                     </div>
                   )}
+                <div className={styles.sidebar_links}>
+                  {navItems.map((item, index) => (
+                    <NavLink
+                      key={index}
+                      to={item.to}
+                      className={({ isActive }) => (isActive ? styles.active_link : styles.inactive_link)}
+                    >
+                      {item.icon} {item.label}
+                    </NavLink>
+                  ))}
           
                   <button className={styles.logout_button} onClick={handleClickLogOut}>
                     <FaDatabase /> Sair
