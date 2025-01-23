@@ -68,7 +68,6 @@ export default function BoxConfirm (props) {
             cep: obj.cep,
             admin: false,
             cor:obj.cor,
-            tokenID:obj.tokenID,
             descrição:obj.descrição,
             especialidade: obj.especialidade,
             pause:true

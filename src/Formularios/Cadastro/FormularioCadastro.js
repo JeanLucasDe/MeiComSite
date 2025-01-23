@@ -105,7 +105,6 @@ export default function FormularioCadastro () {
     fecha: fecha,
     theme,
     cor,
-    tokenID,
     especialidade,
     descrição: desc,
     ação:ação,
