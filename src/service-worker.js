@@ -1,4 +1,4 @@
-/*global this, clients*/
+
 
 this.addEventListener('install', (event) => {
     console.log('Service Worker instalado');
