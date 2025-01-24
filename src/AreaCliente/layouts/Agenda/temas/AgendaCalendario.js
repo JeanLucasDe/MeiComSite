@@ -251,14 +251,17 @@ let darkerColor = darkenColor(cor, 0.6);
                 })
                 
                 await updateDoc(doc(db, `MeiComSite/${email}/agenda`, selectedDate), {
-                    agenda: result
+                  agenda: result
                 });
-
+                
                 if (user && targetNumber) {
+                    handleSendNotification()
                     const message = `Olá,me chamo ${user} e gostaria de confirmar meu agendamento para o dia ${moment(selectedDate).format('DD/MM/YYYY')} as ${selectedTime}h para o serviço: ${selectedService.nome}, id: ${id}`; 
                     
                     const whatsappUrl = `https://wa.me/${telefone}?text=${message}`;
-                    handleSendNotification()
+                    setTimeout(()=> {
+                      window.open(whatsappUrl, '_blank');
+                    },2000)
                 } else {
                     alert('Por favor, preencha os dois campos corretamente.');
                 }
@@ -296,14 +299,11 @@ let darkerColor = darkenColor(cor, 0.6);
             });
           
             const data = await res.text();
-            console.log(data)
-            console.log('Resposta da API:', data);
           } catch (error) {
             console.error('Erro ao enviar notificação:', error.message);
           }
         };
 
-        console.log(tokenID)
 
   return (
 
