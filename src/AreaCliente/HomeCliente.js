@@ -3,10 +3,10 @@ import {App} from "../Hooks/App"
 import '@firebase/firestore';
 import { getFirestore, collection, getDocs} from "@firebase/firestore";
 import { Outlet, useParams } from "react-router-dom"
-import LinkMeiComSite from "./components/LinkMeiComSite"
 import styles from "./HomeCliente.module.css"
 import Loading from "../components/Loading";
 import moment from "moment/moment";
+import { getMessaging, getToken } from "firebase/messaging";
 
 
 export default function HomeCliente () {
@@ -70,6 +70,19 @@ export default function HomeCliente () {
                 setFuncionamento(0)
             }
         }
+        Notification.requestPermission().then((permission) => {
+        if (permission === "granted") {
+            getToken(messaging, { vapidKey: 'BA6S9WD0UpWmB94zmX9szFl2fICZb3N7BaBjTvt75i2mSm_MWjNzIktvsR7FHNTXGB3u5-JeUg_xLLzTFHJR6co' }).then((currentToken) => {
+            if (currentToken) {
+                setToken(currentToken); // Armazena o token do dispositivo
+            } else {
+                console.log("Nenhum token disponível.");
+            }
+            });
+        } else {
+            console.log("Permissão de notificação negada");
+        }
+        });
 
         setOk(true)
     }
@@ -89,6 +102,11 @@ export default function HomeCliente () {
     var horarioAtual = moment().format('HH')
     horarioAtual = parseFloat(horarioAtual)
 
+    const [token,setToken] = useState()
+    const messaging = getMessaging(App);
+
+    
+  
 
 
     return (
@@ -98,7 +116,7 @@ export default function HomeCliente () {
 
             {funcionamento == 2 &&
             <div>
-                <Outlet context={[prod && prod, cliente, vendas, agenda, servicos]}/>
+                <Outlet context={[prod && prod, cliente, vendas, agenda, servicos, token]}/>
             </div>}
 
             {funcionamento == 3 &&

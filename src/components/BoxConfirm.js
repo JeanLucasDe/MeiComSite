@@ -70,7 +70,8 @@ export default function BoxConfirm (props) {
             cor:obj.cor,
             descrição:obj.descrição,
             especialidade: obj.especialidade,
-            pause:true
+            pause:true,
+            tokenID:false
             });
 
         window.location.reload()

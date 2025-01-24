@@ -7,7 +7,7 @@ import { useState,useEffect } from "react"
 import {auth} from "../Service/firebase"
 import {App, vapidKey} from "../Hooks/App"
 import '@firebase/firestore';
-import { getFirestore, collection, getDocs,doc, setDoc} from "@firebase/firestore";
+import { getFirestore, collection, getDocs,doc, setDoc, updateDoc} from "@firebase/firestore";
 import {  Link, Outlet } from "react-router-dom"
 import { getMessaging, getToken } from "firebase/messaging";
 import NavBar from "../components/NavBar"
@@ -26,7 +26,7 @@ export default function Perfil () {
     const [vendas, setVendas] = useState([])
     const [loading, setLoading] = useState(false)
     const [tokens, setTokens] = useState([])
-    const [tokenID, setTokenId] = useState()
+    const [token, setToken] = useState()
     const db = getFirestore(App)
     const messaging = getMessaging(App);
     const Collec = collection(db, "MeiComSite")
@@ -56,6 +56,19 @@ export default function Perfil () {
                 const usuario = usuarios && user && usuarios.filter(dados => dados.email == user.email) || []
 
             };
+            Notification.requestPermission().then((permission) => {
+                if (permission === "granted") {
+                getToken(messaging, { vapidKey: 'BA6S9WD0UpWmB94zmX9szFl2fICZb3N7BaBjTvt75i2mSm_MWjNzIktvsR7FHNTXGB3u5-JeUg_xLLzTFHJR6co' }).then((currentToken) => {
+                    if (currentToken) {
+                    setToken(currentToken); // Armazena o token do dispositivo
+                    } else {
+                    console.log("Nenhum token disponível.");
+                    }
+                });
+                } else {
+                console.log("Permissão de notificação negada");
+                }
+            });
             getUsers()
         } catch (e) {
             <button> tentar novamente </button>
@@ -81,6 +94,16 @@ export default function Perfil () {
                         setAgenda((dataAgenda.docs.map((doc) => ({...doc.data(), id: doc.id}))))
                         const dataTokens = await getDocs(UserCollectionTokens);
                         setTokens((dataTokens.docs.map((doc) => ({...doc.data(), id: doc.id}))))
+                        VerificaToken()
+                    }
+                    const VerificaToken = async() => {
+                        if (usuario[0].tokenID) {
+                            return 
+                        } else {
+                            await updateDoc(doc(db, `MeiComSite`, `${user.email}`), {
+                                tokenID:token
+                            })
+                        }
                     }
                     dataSeach()
                     setLoading(true)
@@ -116,6 +139,12 @@ export default function Perfil () {
             setVerfica(true)
         } 
     }
+
+    
+
+    
+
+
 
     return (
         <div>

@@ -50,12 +50,6 @@ import FormularioPlano from "./Formularios/Cliente/FormularioPlano";
 
 
 function App() {
-
-
-  
-
-
-
   return (
       <Router>
         <Container>
@@ -107,10 +101,6 @@ function App() {
                 </Route>
 
               </Route>
-
-
-
-
               <Route path="/:site" element={<HomeCliente/>}>
                 <Route index element={<MarketHome/>}/>
                 <Route path="/:site/:id/:idproduto" element={<Categorias/>}/>
