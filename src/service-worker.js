@@ -1,17 +1,17 @@
-/*global self, clients*/
+/*global this, clients*/
 
-self.addEventListener('install', (event) => {
+this.addEventListener('install', (event) => {
     console.log('Service Worker instalado');
     // Realize tarefas de instalação aqui, como cache de recursos
   });
   
-  self.addEventListener('activate', (event) => {
+  this.addEventListener('activate', (event) => {
     console.log('Service Worker ativado');
     // Realize tarefas de ativação aqui, como limpar cache antigo
   });
   
   // Este evento é disparado quando uma notificação push é recebida
-  self.addEventListener('push', (event) => {
+  this.addEventListener('push', (event) => {
     const data = event.data ? event.data.json() : {};
     const title = data.notification.title || 'Notificação de Exemplo';
     const options = {
@@ -22,12 +22,12 @@ self.addEventListener('install', (event) => {
     };
   
     event.waitUntil(
-      self.registration.showNotification(title, options)
+      this.registration.showNotification(title, options)
     );
   });
   
   // Este evento é disparado quando o usuário clica na notificação
-  self.addEventListener('notificationclick', (event) => {
+  this.addEventListener('notificationclick', (event) => {
     const url = event.notification.data.url;
     event.notification.close();
     event.waitUntil(clients.openWindow(url));
