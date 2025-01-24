@@ -1,3 +1,5 @@
+/*global self, clients*/
+
 self.addEventListener('install', (event) => {
     console.log('Service Worker instalado');
     // Realize tarefas de instalação aqui, como cache de recursos
