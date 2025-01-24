@@ -298,6 +298,10 @@
         font-size: 1em;
         font-weight: 600;
     }
+    .token {
+        display: flex;
+        width: 100%;
+    }
     .info {
         padding: .5em;
         width: 100%;

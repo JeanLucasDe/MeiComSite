@@ -18,7 +18,7 @@ import copy from "copy-to-clipboard";
 
 export default function FormularioEdit () {
 
-    const [mod, produtos, usuario, vendas, user] = useOutletContext()
+    const [mod, produtos, usuario, vendas, user,agenda,servicos, token] = useOutletContext()
     const [Users, setUsers] = useState([])
     const db = getFirestore(App)
     const [Onlogo, setOnlogo] = useState(false)
@@ -65,38 +65,6 @@ export default function FormularioEdit () {
     const listBairros = []
 
     
-    
-    const salvarLocal = async () => {
-        await usuario.map(dados => {
-            dados.listCidades.map(item => {
-                listCidades.push({local: item.local})
-            })
-            dados.listBairros.map(item => {
-                listBairros.push({local: item.local, taxa: item.taxa})
-            })
-            
-        })
-
-        listCidades.push({local: novaCidade})
-        listBairros.push({local: novoBairro, taxa:parseFloat(taxa)})
-        setSeed(seed += 1)
-
-        if (novaCidade) {
-            await updateDoc(doc(db, `MeiComSite`, user.email), {
-                listCidades: listCidades
-            });
-            setAddCidade(!addCidade)
-            toast.success('Cidade Adicionada!')
-        }
-        if (novoBairro && taxa) {
-            await updateDoc(doc(db, `MeiComSite`, user.email), {
-                listBairros: listBairros
-            });
-            setAddBairro(!addBairro)
-            toast.success('Bairro Adicionado!')
-        } 
-    }
-
     const obj = {
         nome,
         phone, 
@@ -112,7 +80,6 @@ export default function FormularioEdit () {
         ação:ação
     }
 
-    
 
     return (
         <>
@@ -125,6 +92,7 @@ export default function FormularioEdit () {
                 <div>
                     <h2 className={styles_form.siteName}>{usuario && usuario[0].razao}</h2>
                     <h5>ID: {usuario && usuario[0].idloja}</h5>
+                    {token && <h5>TokenID: <input value={token}/></h5>}
                     <Link to={`http://sitemei.netlify.app/${usuario && usuario[0].site}`} className={styles_form.siteLink}>https://sitemei.netlify.app/{usuario && usuario[0].site}</Link>
                     <Link className={styles_form.configureButton}
                     to="/perfil/user/empresa"

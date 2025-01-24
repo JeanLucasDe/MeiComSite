@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
@@ -25,11 +25,11 @@ async function requestNotificationPermission() {
 
 function getFCMToken() {
   messaging
-    .getToken({
-      vapidKey: "BA6S9WD0UpWmB94zmX9szFl2fICZb3N7BaBjTvt75i2mSm_MWjNzIktvsR7FHNTXGB3u5-JeUg_xLLzTFHJR6co"
-    })
-    .then((currentToken) => {
-      if (currentToken) {
+  .getToken({
+    vapidKey: "BA6S9WD0UpWmB94zmX9szFl2fICZb3N7BaBjTvt75i2mSm_MWjNzIktvsR7FHNTXGB3u5-JeUg_xLLzTFHJR6co"
+  })
+  .then((currentToken) => {
+    if (currentToken) {
         console.log("Token FCM:", currentToken);
       } else {
         console.log("Sem token disponível.");
@@ -38,14 +38,15 @@ function getFCMToken() {
     .catch((err) => {
       console.log("Erro ao obter token:", err);
     });
-}
-
-// Chama para pedir permissão
-requestNotificationPermission();
-
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-  <React.StrictMode>
+  }
+  
+  
+  // Chama para pedir permissão
+  requestNotificationPermission();
+  
+  const root = ReactDOM.createRoot(document.getElementById('root'));
+  root.render(
+    <React.StrictMode>
     <App />
   </React.StrictMode>
 );

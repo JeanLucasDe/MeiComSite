@@ -77,6 +77,7 @@ export default function Perfil () {
 
     const usuario = usuarios && user && usuarios.filter(dados => dados.email == user.email) || []
 
+    console.log(token)
     
 
     if (user) {
@@ -94,7 +95,6 @@ export default function Perfil () {
                         setAgenda((dataAgenda.docs.map((doc) => ({...doc.data(), id: doc.id}))))
                         const dataTokens = await getDocs(UserCollectionTokens);
                         setTokens((dataTokens.docs.map((doc) => ({...doc.data(), id: doc.id}))))
-                        VerificaToken()
                     }
                     const VerificaToken = async() => {
                         if (usuario[0].tokenID) {
@@ -182,7 +182,7 @@ export default function Perfil () {
                                     </div>
                                     <div className={`col-lg-9 col-md-8 col-sm-12`}>
                                         <div className={styles.main}>
-                                            <Outlet context={[mod, produtos && produtos, usuario, vendas, user, agenda,servicos]}
+                                            <Outlet context={[mod, produtos && produtos, usuario, vendas, user, agenda,servicos, token]}
                                             />
                                         </div>
                                     </div>
