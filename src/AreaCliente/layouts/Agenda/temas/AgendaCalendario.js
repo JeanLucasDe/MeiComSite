@@ -258,7 +258,6 @@ let darkerColor = darkenColor(cor, 0.6);
                     const message = `Olá,me chamo ${user} e gostaria de confirmar meu agendamento para o dia ${moment(selectedDate).format('DD/MM/YYYY')} as ${selectedTime}h para o serviço: ${selectedService.nome}, id: ${id}`; 
                     
                     const whatsappUrl = `https://wa.me/${telefone}?text=${message}`;
-                    window.open(whatsappUrl, '_blank');
                     handleSendNotification()
                 } else {
                     alert('Por favor, preencha os dois campos corretamente.');
