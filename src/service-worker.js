@@ -1,8 +1,11 @@
 /* eslint-env serviceworker */
 
+
 import { precacheAndRoute } from 'workbox-precaching';
 
 precacheAndRoute(self.__WB_MANIFEST || []);
+
+
 
 self.addEventListener('install', (event) => {
     console.log('Service Worker instalado');
@@ -17,15 +20,17 @@ self.addEventListener('install', (event) => {
   // Este evento é disparado quando uma notificação push é recebida
   self.addEventListener('push', (event) => {
     const data = event.data ? event.data.json() : {};
-    
     const title = data.notification.title || 'Notificação de Exemplo';
-    self.registration.showNotification(title, {
-      body: data.notification.body,
-      icon: data.icon || 'images/icon.png',
+    const options = {
+      body: data.notification.body || 'Corpo da notificação',
+      icon: 'images/icon.png',
       badge: 'images/badge.png',
       data: { url: data.data.url },
-    });
-    
+    };
+  
+    event.waitUntil(
+      self.registration.showNotification(title, options)
+    );
   });
   
   // Este evento é disparado quando o usuário clica na notificação
