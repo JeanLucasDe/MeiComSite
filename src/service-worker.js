@@ -30,6 +30,5 @@ this.addEventListener('install', (event) => {
   this.addEventListener('notificationclick', (event) => {
     const url = event.notification.data.url;
     event.notification.close();
-    event.waitUntil(clients.openWindow(url));
   });
   
