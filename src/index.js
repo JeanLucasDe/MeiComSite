@@ -43,6 +43,7 @@ function getFCMToken() {
   
   // Chama para pedir permissão
   requestNotificationPermission();
+  register()
   
   const root = ReactDOM.createRoot(document.getElementById('root'));
   root.render(
@@ -50,4 +51,3 @@ function getFCMToken() {
     <App />
   </React.StrictMode>
 );
-register()

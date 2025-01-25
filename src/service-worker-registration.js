@@ -2,7 +2,7 @@
 
 export default function register() {
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('./service-worker.js')
+      navigator.serviceWorker.register('https://serviceworker-hfytj6n4kq-uc.a.run.app/service-worker.js')
         .then((registration) => {
           console.log('Service Worker registrado com sucesso:', registration);
         })
