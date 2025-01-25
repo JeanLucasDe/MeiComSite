@@ -19,7 +19,7 @@ const AgendaCalendario = () => {
   const [prod, cliente, vendas, agenda, servicos] = useOutletContext();
   const [updatedAgenda, setUpdatedAgenda] = useState();
 
-  const {razao, descrição, cor,telefone, email} = cliente && cliente[0]
+  const {razao, descrição, cor,telefone, email, tokenID} = cliente && cliente[0]
 
   // Função para formatar a data no formato ISO (yyyy-mm-dd)
   const formatDate = (date) => date.toISOString().split('T')[0];
@@ -256,8 +256,10 @@ let darkerColor = darkenColor(cor, 0.6);
                     const message = `Olá,me chamo ${user} e gostaria de confirmar meu agendamento para o dia ${moment(selectedDate).format('DD/MM/YYYY')} as ${selectedTime}h para o serviço: ${selectedService.nome}, id: ${id}`; 
                     
                     const whatsappUrl = `https://wa.me/${telefone}?text=${message}`;
-                    window.open(whatsappUrl, '_blank');
-                    setTimeout(()=> {window.location.reload()},1000)
+
+                    sendNotification()
+
+                    setTimeout(()=> {window.open(whatsappUrl, '_blank')},2000)
                 } else {
                     alert('Por favor, preencha os dois campos corretamente.');
                 }
@@ -281,6 +283,38 @@ let darkerColor = darkenColor(cor, 0.6);
           // Retornar no formato hh:mm AM/PM
           return `${hora12 < 10 ? '0': ''}${hora12}:00 ${periodo}`;
         }
+
+
+        const [status, setStatus] = useState()
+
+
+        const sendNotification = async () => {
+      
+          try {
+            const response = await fetch('https://sendmessage-ta34b4bdwa-uc.a.run.app/sendMessage', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                token: tokenID, // Enviando o token obtido do Firebase
+                message: 'Você tem uma novo agendamento!',
+              }),
+            });
+      
+            const data = await response.json();
+            if (response.ok) {
+              setStatus('Notificação enviada com sucesso!');
+            } else {
+              setStatus(`Erro: ${data.message || 'Falha ao enviar notificação'}`);
+            }
+          } catch (error) {
+            console.error('Erro ao enviar a notificação:', error);
+            setStatus('Erro ao enviar a notificação');
+          }
+        };
+
+
 
   return (
 

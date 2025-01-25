@@ -7,7 +7,7 @@ import { useState,useEffect } from "react"
 import {auth} from "../Service/firebase"
 import {App, vapidKey} from "../Hooks/App"
 import '@firebase/firestore';
-import { getFirestore, collection, getDocs,doc, setDoc} from "@firebase/firestore";
+import { getFirestore, collection, getDocs,doc, setDoc, updateDoc} from "@firebase/firestore";
 import {  Link, Outlet } from "react-router-dom"
 import { getMessaging, getToken } from "firebase/messaging";
 import NavBar from "../components/NavBar"
@@ -35,6 +35,7 @@ export default function Perfil () {
     const UserCollectionVendas = collection(db, `MeiComSite/${user && user.email}/vendas`)
     const UserCollectionServicos = collection(db, `MeiComSite/${user && user.email}/servicos`)
     const UserCollectionAgenda = collection(db, `MeiComSite/${user && user.email}/agenda`)
+    const token = localStorage.getItem('fcmToken');
 
     
     useEffect (()=>{
@@ -64,7 +65,6 @@ export default function Perfil () {
 
     const usuario = usuarios && user && usuarios.filter(dados => dados.email == user.email) || []
 
-    console.log(token)
     
 
     if (user) {
@@ -82,22 +82,20 @@ export default function Perfil () {
                         setAgenda((dataAgenda.docs.map((doc) => ({...doc.data(), id: doc.id}))))
                         const dataTokens = await getDocs(UserCollectionTokens);
                         setTokens((dataTokens.docs.map((doc) => ({...doc.data(), id: doc.id}))))
-<<<<<<< HEAD
+                        VerificaToken()
                     }
                     const VerificaToken = async() => {
                         if (usuario[0].tokenID) {
                             if (usuario[0].tokenID != token) {
                                 await updateDoc(doc(db, `MeiComSite`, `${user.email}`), {
-                                    tokenID:token
+                                    tokenID: token
                                 })
                             } 
                         } else {
                             await updateDoc(doc(db, `MeiComSite`, `${user.email}`), {
-                                tokenID:token
+                                tokenID: token
                             })
                         }
-=======
->>>>>>> parent of b2e953b (Notifications push com firebase functions)
                     }
                     dataSeach()
                     setLoading(true)
@@ -166,7 +164,7 @@ export default function Perfil () {
                                     </div>
                                     <div className={`col-lg-9 col-md-8 col-sm-12`}>
                                         <div className={styles.main}>
-                                            <Outlet context={[mod, produtos && produtos, usuario, vendas, user, agenda,servicos, token]}
+                                            <Outlet context={[mod, produtos && produtos, usuario, vendas, user, agenda,servicos, ]}
                                             />
                                         </div>
                                     </div>
