@@ -16,12 +16,10 @@ const AgendaCalendario = () => {
   const [finalHour, setFinalHour] = useState(null);
   const db = getFirestore(App)
   
-  const [prod, cliente, vendas, agenda, servicos,token] = useOutletContext();
-
+  const [prod, cliente, vendas, agenda, servicos] = useOutletContext();
   const [updatedAgenda, setUpdatedAgenda] = useState();
 
-
-  const {razao, descrição, cor,telefone, email,tokenID} = cliente && cliente[0]
+  const {razao, descrição, cor,telefone, email} = cliente && cliente[0]
 
   // Função para formatar a data no formato ISO (yyyy-mm-dd)
   const formatDate = (date) => date.toISOString().split('T')[0];
@@ -259,10 +257,13 @@ let darkerColor = darkenColor(cor, 0.6);
                     
                     const whatsappUrl = `https://wa.me/${telefone}?text=${message}`;
                     window.open(whatsappUrl, '_blank');
-                    handleSendNotification()
+                    setTimeout(()=> {window.location.reload()},1000)
                 } else {
                     alert('Por favor, preencha os dois campos corretamente.');
                 }
+
+
+
             } 
         }
         function formatarHoraParaAMPM(hora) {
@@ -280,31 +281,6 @@ let darkerColor = darkenColor(cor, 0.6);
           // Retornar no formato hh:mm AM/PM
           return `${hora12 < 10 ? '0': ''}${hora12}:00 ${periodo}`;
         }
-
-        const handleSendNotification = async () => {
-          try {
-            const res = await fetch('https://sendpushnotification-hfytj6n4kq-uc.a.run.app', {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify({
-                token: tokenID,
-                title: "Título de teste",
-                body: "Corpo de teste",
-                url: "https://sitemei.netlify.app/consultas",
-              }),
-            });
-          
-            const data = await res.text();
-            console.log(data)
-            console.log('Resposta da API:', data);
-          } catch (error) {
-            console.error('Erro ao enviar notificação:', error.message);
-          }
-        };
-
-        console.log(tokenID)
 
   return (
 
