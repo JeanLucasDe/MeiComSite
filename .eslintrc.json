@@ -9,7 +9,6 @@
       "react-app"
     ],
     "rules": {
-      "no-restricted-globals": "off",
-      "no-prototype-builtins": "off"
+      "no-restricted-globals": "off"
     }
   }

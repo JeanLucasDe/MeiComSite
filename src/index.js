@@ -15,14 +15,15 @@ firebase.initializeApp(firebaseConfig);
 const messaging = firebase.messaging();
 
 
-Notification.requestPermission().then((permission) => {
-  if (permission === 'granted') {
-    console.log("Permissão concedida.");
-    getFCMToken();
-  } else {
-    console.log("Permissão negada.");
+async function requestNotificationPermission() {
+  try {
+    await messaging.requestPermission(); // Solicita permissão do usuário
+    console.log('Permissão para notificações concedida.');
+    getFCMToken(); // Obtenha o token FCM
+  } catch (error) {
+    console.error('Permissão para notificações negada:', error);
   }
-});
+}
 
 
 function getFCMToken() {
@@ -43,7 +44,8 @@ function getFCMToken() {
   }
   
 
-  
+  register()
+  requestNotificationPermission()
   const root = ReactDOM.createRoot(document.getElementById('root'));
   root.render(
     <React.StrictMode>

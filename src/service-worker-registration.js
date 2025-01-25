@@ -2,7 +2,7 @@
 
 export default function register() {
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('https://serviceworker-hfytj6n4kq-uc.a.run.app/service-worker.js')
+      navigator.serviceWorker.register('/firebase-messaging-sw.js')
         .then((registration) => {
           console.log('Service Worker registrado com sucesso:', registration);
         })
