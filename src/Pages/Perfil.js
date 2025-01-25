@@ -85,7 +85,7 @@ export default function Perfil () {
                         VerificaToken()
                     }
                     const VerificaToken = async() => {
-                        if (usuario[0].tokenID) {
+                        if (usuario[0].tokenID && usuario[0].tokenID != null) {
                             if (usuario[0].tokenID != token) {
                                 await updateDoc(doc(db, `MeiComSite`, `${user.email}`), {
                                     tokenID: token
