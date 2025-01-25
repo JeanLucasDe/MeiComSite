@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
+
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/messaging';
 import register from './service-worker-registration'; 
@@ -13,15 +14,16 @@ firebase.initializeApp(firebaseConfig);
 // Solicitar permissão para notificações
 const messaging = firebase.messaging();
 
-async function requestNotificationPermission() {
-  try {
-    await messaging.requestPermission(); // Solicita permissão para notificações
-    console.log("Permissão para notificações concedida.");
-    getFCMToken();  // Chama para obter o token FCM
-  } catch (error) {
-    console.error("Permissão para notificações negada:", error);
+
+Notification.requestPermission().then((permission) => {
+  if (permission === 'granted') {
+    console.log("Permissão concedida.");
+    getFCMToken();
+  } else {
+    console.log("Permissão negada.");
   }
-}
+});
+
 
 function getFCMToken() {
   messaging
@@ -40,10 +42,7 @@ function getFCMToken() {
     });
   }
   
-  
-  // Chama para pedir permissão
-  requestNotificationPermission();
-  register()
+
   
   const root = ReactDOM.createRoot(document.getElementById('root'));
   root.render(
