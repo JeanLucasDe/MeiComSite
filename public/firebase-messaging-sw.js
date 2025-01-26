@@ -21,8 +21,23 @@ messaging.onBackgroundMessage((payload) => {
   const notificationTitle = payload.notification.title;
   const notificationOptions = {
     body: payload.notification.body,
-    icon: payload.notification.icon
+    icon: payload.notification.icon,
+    image: payload.notification.image,
+    data: {
+      click_action: payload.data.click_action || '/', // Link para redirecionamento
+    },
   };
 
   self.registration.showNotification(notificationTitle, notificationOptions);
+});
+
+self.addEventListener('notificationclick', (event) => {
+  console.log('[firebase-messaging-sw.js] Notificação clicada:', event);
+  event.notification.close();
+
+  // Abrir o link especificado no campo `click_action`
+  const clickAction = event.notification.data.click_action;
+  if (clickAction) {
+    event.waitUntil(clients.openWindow(clickAction));
+  }
 });
