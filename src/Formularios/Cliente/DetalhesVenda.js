@@ -13,6 +13,7 @@ export default function DetalhesVenda (props) {
     const agenda = props.agenda &&props.agenda
     const date = props.date && props.date
     const email = props.email && props.email
+    const [alter, setAlter] = useState(false)
     const db = getFirestore(App)
     var [count, setCount] = useState(0)
 
@@ -68,6 +69,17 @@ export default function DetalhesVenda (props) {
           marginBottom: '10px',
           fontSize: '16px',
           color: '#34495e',
+        },
+        statusBox: {
+          backgroundColor:"#28a745",
+          color: "#fff",
+          padding:"20px",
+          borderRadius:"5px",
+          fontSize:"16px",
+          fontWeight:"bold",
+          margin: "1em auto",
+          textAlign:"center",
+          boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)"
         },
         label: {
           fontWeight: 'bold',
@@ -151,7 +163,7 @@ export default function DetalhesVenda (props) {
           const listHours = []
           if (status == "confirmar") {
               agenda.filter(dados => {
-                if (dados.date == date.date){
+                if (dados.date == date){
                   dados.agenda.filter(item => {
                     if (item.id == agendamento.id) {
                       item.status = 2
@@ -160,14 +172,15 @@ export default function DetalhesVenda (props) {
                   })
                 }
               })
-              await updateDoc(doc(db, `MeiComSite/${email}/agenda`, date.id), {
+              await updateDoc(doc(db, `MeiComSite/${email}/agenda`, date), {
                 agenda: listHours
               });
+              setAlter(true)
             agendamento.status = 2
           }
           if (status == "cancelar") {
               agenda.filter(dados => {
-                if (dados.date == date.date){
+                if (dados.date == date){
                   dados.agenda.filter(item => {
                     if (item.id == agendamento.id) {
                       item.status = 3
@@ -176,16 +189,18 @@ export default function DetalhesVenda (props) {
                   })
                 }
               })
-              await updateDoc(doc(db, `MeiComSite/${email}/agenda`, date.id), {
+              await updateDoc(doc(db, `MeiComSite/${email}/agenda`, date), {
                 agenda: listHours
               });
               agendamento.status = 3
+              setAlter(true)
           }
         }
         setTimeout(()=> {
           setCount(0)
         },1000)
       }
+
 
     return (
             <>
@@ -210,11 +225,15 @@ export default function DetalhesVenda (props) {
                         </div>
                         <div style={styles.detailRow}>
                         <span style={styles.label}>Data:</span>
-                        <span style={styles.value}>{moment(date && date.date).format('DD/MM/YYYY')}</span>
+                        <span style={styles.value}>{moment(date && date).format('DD/MM/YYYY')}</span>
                         </div>
                         <div style={styles.detailRow}>
                         <span style={styles.label}>Hora:</span>
                         <span style={styles.value}>{formatarHoraParaAMPM(agendamento.hora && agendamento.hora.split(':')[0])}</span>
+                        </div>
+                        <div style={styles.detailRow}>
+                        <span style={styles.label}>Telefone:</span>
+                        <span style={styles.value}>{agendamento.telefone}</span>
                         </div>
                         <div style={styles.detailRow}>
                             <span style={styles.label}>Serviço:</span>
@@ -232,6 +251,9 @@ export default function DetalhesVenda (props) {
                             {agendamento.status == 3 && 'Cancelado'}
                         </span>
                       </div>
+                        {alter && <div style={styles.statusBox}>
+                          Status alterado com sucesso!
+                        </div>}
                         <div  style={styles.boxStyle}>
                           <p style={styles.textStyle}>Clique <strong style={styles.highlightStyle}>duas vezes</strong> para confirmar</p>
                         </div>

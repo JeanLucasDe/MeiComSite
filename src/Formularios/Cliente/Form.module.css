@@ -90,6 +90,7 @@
   display: flex;
   justify-content: space-between;
   align-items: end;
+  flex-wrap: wrap;
   margin: 2em auto !important;
   border: 1px solid #b6b6b6;
 }

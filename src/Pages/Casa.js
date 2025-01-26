@@ -96,7 +96,7 @@ function Casa() {
           </div>
         </div>
       </section>
-      <section>
+      <section data-aos="fade-up">
             <div style={{
                 display: "flex",
                 justifyContent: "center",
@@ -246,8 +246,8 @@ function Casa() {
         <div className="container">
           <p>&copy; 2025 Mei Com Site. Todos os direitos reservados.</p>
           <p>
-            <a href="#" className="text-decoration-none mx-2">Política de Privacidade</a>
-            <a href="#" className="text-decoration-none mx-2">Termos de Serviço</a>
+            <a href="/politica" className="text-decoration-none mx-2">Política de Privacidade</a>
+            <a href="/termosdeservico" className="text-decoration-none mx-2">Termos de Serviço</a>
           </p>
         </div>
       </footer>

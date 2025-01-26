@@ -10,6 +10,7 @@ import { FaArrowLeft } from "react-icons/fa";
 
 export default function Relatório () {
     const [mod, produtos, usuario, vendas, user,agenda,servicos] = useOutletContext()
+    const {email} = usuario && usuario[0]
     const [filtroData, setFiltroData] = useState('');
     const [stage, setStage] = useState(1)
     const [date, setDate] = useState()
@@ -21,36 +22,41 @@ export default function Relatório () {
     const [filtroId, setFiltroId] = useState('');
 
     
-    console.log(mesAtual)
     const filtrarAtendimentos = () => {
       const id = mesAtual ? meses.findIndex((mes)=> mes.mes == mesAtual) : ''
       const indice = id+1 < 10 ? '0'+(id+1) : id+1
+      let data = new Date(filtroData);
+      data.setDate(data.getDate() + 1);
+
         return agenda.filter((atendimento) => {
-          const dateMatch = filtroData === '' || atendimento.date === filtroData;
+          const dateMatch = filtroData === '' || atendimento.date === moment(data).format('YYYY-MM-DD');
           const MonthMatch = indice === '' || atendimento.date.split('-')[1] === indice;
           return dateMatch && MonthMatch;
         });
       };
 
-      
+       
+
       const filtrarAtendimentosHora = () => {
-        if (filtroStatus == 'Pendente') filtroStatus = 0
-        if (filtroStatus == 'Concluído') filtroStatus = 1
-        if (filtroStatus == 'Cancelado') filtroStatus = 2
+        if (filtroStatus == 'Pendente') filtroStatus = 1
+        if (filtroStatus == 'Concluído') filtroStatus = 2
+        if (filtroStatus == 'Cancelado') filtroStatus = 3
         return horarios.filter((atendimento) => {
-          const dataMatch = filtroData === '' || atendimento.date === filtroData;
           const nomeMatch = filtroNome === '' || atendimento.nome == filtroNome;
           const statusMatch = filtroStatus === '' || atendimento.status == filtroStatus 
           const idMatch = filtroId === '' || atendimento.id  == filtroId;
     
-          return dataMatch && nomeMatch && statusMatch && idMatch
+          return  nomeMatch && statusMatch && idMatch
         });
 
 
       };
      
     const s = (d) => {
-        setDate(d.date)
+        const data = new Date(d.date)
+        data.setDate(data.getDate()+1)
+        console.log(moment(data).format('YYYY-MM-DD'))
+        setDate(moment(data).format('YYYY-MM-DD'))
         setHorarios(d.agenda)
         setStage(2)
     }
@@ -196,7 +202,7 @@ export default function Relatório () {
                 </thead>
                 <tbody>
                 {filtrarAtendimentos().map((atendimento, id) => (
-                    <tr key={atendimento.id} style={styles.tableRow}
+                    <tr key={id} style={styles.tableRow}
                     onClick={()=> {
                         s(atendimento)
                     }}
@@ -261,9 +267,9 @@ export default function Relatório () {
                   </tr>
                   </thead>
                   <tbody>
-                  {filtrarAtendimentosHora().map((atendimento) => (
+                  {filtrarAtendimentosHora().map((atendimento,id) => (
                     
-                      <tr key={atendimento.id} style={styles.tableRow}
+                      <tr key={id} style={styles.tableRow}
                       data-bs-toggle="modal"
                       data-bs-target={`#ModalView`}
                       onClick={()=> setAgendamento(atendimento)}
@@ -271,8 +277,8 @@ export default function Relatório () {
                       <td style={styles.tableCell}>{formatarHoraParaAMPM(parseInt(atendimento.hora))}</td>
                       <td style={styles.tableCell}>{!atendimento.nome ? 'Vazio' : atendimento.nome.split(' ')[0]}</td>
                       <td style={styles.tableCell}>
-                          {atendimento.status == 0 && 'Pendente'}
-                          {atendimento.status == 1 && 'Cancelado'}
+                          {atendimento.status == 1 && 'Pendente'}
+                          {atendimento.status == 3 && 'Cancelado'}
                           {atendimento.status == 2 && 'Concluído'}
                       </td>
                       </tr>
@@ -289,11 +295,13 @@ export default function Relatório () {
                     <DetalhesVenda
                     agendamento = {agendamento}
                     date={date}
+                    agenda={agenda}
+                    email = {email}
                     mod='Agenda'
                     type="button" 
                     aria_label="Close"
                     data_bs_toggle="modal" 
-                    data_bs_target="#ModalDetalhesVenda"
+                    data_bs_target="#ModalView"
                     />
                 </div>
             </div>

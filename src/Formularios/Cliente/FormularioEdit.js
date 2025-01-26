@@ -5,7 +5,6 @@ import { useState } from "react"
 import {App} from "../../Hooks/App"
 import '@firebase/firestore';
 import { getFirestore, updateDoc, doc, deleteDoc} from "@firebase/firestore";
-import { FaPlusCircle} from "react-icons/fa"
 import moment from 'moment/moment';
 import { toast, ToastContainer } from "react-toastify"
 import 'react-toastify/dist/ReactToastify.css';

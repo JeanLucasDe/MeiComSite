@@ -37,17 +37,16 @@ import EntregaPedido from "./Pages/EntregaPedido";
 import Agenda from "./Formularios/Cliente/Agenda";
 import Servicos from "./AreaCliente/layouts/Agenda/P.Serviço/Servicos";
 import Relatório from "./Formularios/Cliente/Relatório";
-import { useEffect } from "react";
 import FormularioHorario from "./Formularios/Cliente/FormularioHorario";
 import FormularioEmpresa from "./Formularios/Cliente/FormularioEmpresa";
 import FormularioClientes from "./Formularios/Cliente/FormularioClientes";
 import FormularioTheme from "./Formularios/Cliente/FormularioTheme";
 import FormularioPainel from "./Formularios/Cliente/FormularioPainel";
-import FormularioAssinatura from "./Formularios/Cliente/FormularioAssinatura";
 import FormularioConsultas from "./Formularios/Cliente/FormularioConsultas";
 import Casa from "./Pages/Casa";
 import FormularioPlano from "./Formularios/Cliente/FormularioPlano";
-import NotificationButton from "./components/NotificationButton";
+import PrivacyPolicy from "./Pages/Politicadeprivacidade";
+import TermsOfService from "./Pages/TermosdeServico";
 
 
 function App() {
@@ -58,7 +57,8 @@ function App() {
             <Routes>
               <Route path="/" element={<Casa/>}/>
               <Route path="/record" element={<Gravação/>}/>
-
+              <Route path="/politica" element={<PrivacyPolicy/>}/>
+              <Route path="/termosdeservico" element={<TermsOfService/>}/>
               <Route path="suporte" element={<Suporte/>}>
                 <Route index element={<ControlSuporte/>}/>
                 <Route path="/suporte/:query" element={<Response/>}/>

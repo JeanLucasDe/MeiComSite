@@ -63,7 +63,7 @@ const FormularioConsulta = () => {
 
   // Função para filtrar o status
   const isStatusMatch = (scheduleStatus) => {
-    return filter.status === "todas" || scheduleStatus == filter.status;
+    return filter.status == "todas" || scheduleStatus == filter.status;
   };
 
   // Função para garantir que não haja agendamentos duplicados pelo id
@@ -97,6 +97,7 @@ const FormularioConsulta = () => {
     }));
   };
 
+
   // Função para obter a cor do status (para mobile)
   const getStatusColor = (status) => {
     switch (status) {
@@ -117,7 +118,7 @@ const FormularioConsulta = () => {
       case 1:
         return "Pendente";
       case 2:
-        return "Concluído";
+        return "Concluido";
       case 3:
         return "Cancelado";
       default:
@@ -254,6 +255,7 @@ const FormularioConsulta = () => {
           </tr>
         </thead>
         <tbody>
+
           {filterAppointments().length && filterAppointments().map((appointment, index) =>
             appointment.agenda.map((schedule, scheduleIndex) => {
               if (schedule.nome) {
@@ -289,7 +291,7 @@ const FormularioConsulta = () => {
                     <DetalhesVenda
                     agenda={agenda}
                     agendamento = {agendamento}
-                    date={Date}
+                    date={Date && Date.date}
                     email={email}
                     mod='Agenda'
                     type="button" 
