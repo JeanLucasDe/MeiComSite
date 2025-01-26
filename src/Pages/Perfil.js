@@ -164,7 +164,7 @@ export default function Perfil () {
                                     </div>
                                     <div className={`col-lg-9 col-md-8 col-sm-12`}>
                                         <div className={styles.main}>
-                                            <Outlet context={[mod, produtos && produtos, usuario, vendas, user, agenda,servicos, ]}
+                                            <Outlet context={[mod, produtos && produtos, usuario, vendas, user, agenda,servicos, token]}
                                             />
                                         </div>
                                     </div>

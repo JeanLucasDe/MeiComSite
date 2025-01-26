@@ -18,7 +18,7 @@ import copy from "copy-to-clipboard";
 
 export default function FormularioEdit () {
 
-    const [mod, produtos, usuario, vendas, user,agenda,servicos, token] = useOutletContext()
+    const [mod, produtos, usuario, vendas, user,agenda,servicos,token] = useOutletContext()
     const [Users, setUsers] = useState([])
     const db = getFirestore(App)
     const [Onlogo, setOnlogo] = useState(false)
@@ -92,7 +92,7 @@ export default function FormularioEdit () {
                 <div>
                     <h2 className={styles_form.siteName}>{usuario && usuario[0].razao}</h2>
                     <h5>ID: {usuario && usuario[0].idloja}</h5>
-                    {token && <h5>TokenID: <input value={token}/></h5>}
+                    {token && <h5>TokenID: <input value={token} className={styles_form.input}/></h5>}
                     <Link to={`http://sitemei.netlify.app/${usuario && usuario[0].site}`} className={styles_form.siteLink}>https://sitemei.netlify.app/{usuario && usuario[0].site}</Link>
                     <Link className={styles_form.configureButton}
                     to="/perfil/user/empresa"
