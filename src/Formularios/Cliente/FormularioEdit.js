@@ -18,34 +18,12 @@ import copy from "copy-to-clipboard";
 export default function FormularioEdit () {
 
     const [mod, produtos, usuario, vendas, user,agenda,servicos,token] = useOutletContext()
-    const [Users, setUsers] = useState([])
     const db = getFirestore(App)
-    const [Onlogo, setOnlogo] = useState(false)
     const [ação, setAção] = useState()
-    const [novaCidade, setNovaCidade] = useState()
-    const [novoBairro, setNovoBairro] = useState()
-    const [deleteCidade, setDeleteCidade] = useState()
-    var [seed, setSeed] = useState(0)
-    const [deletebairro, setDeleteBairro] = useState()
-    const [taxa, setTaxa] = useState()
-    const [pause, setPause] = useState()
-    const [cor, setCor] = useState()
-
-
-    const [cidadeUser, setCidadeUser] = useState()
-    const [bairroUser, setBairroUser] = useState()
 
 
     const [nome, setNome] = useState()
-    const [razao, setRazao] = useState()
-    const [phone, setPhone] = useState()
-    const [site, setSite]= useState()
-    const [logo, setLogo] = useState()
-    const [addCidade, setAddCidade] = useState()
-    const [addBairro, setAddBairro] = useState()
     const [deleteEmail, setDeleteEmail] = useState()
-    const [desc, setDesc] = useState()
-    const [especialidade, setEspecialidade] = useState()
     const [targetNumber, setTargetNumber] = useState()
     
 
@@ -60,22 +38,10 @@ export default function FormularioEdit () {
         toast.success('Copiado com sucesso!');
     }
 
-    const listCidades = []
-    const listBairros = []
-
     
     const obj = {
         nome,
-        phone, 
-        cidade: cidadeUser,
-        bairro: bairroUser,
-        numero: targetNumber,
-        novoBairro,
-        novaCidade,
-        deletebairro,
-        deleteCidade,
-        listBairros,
-        listCidades,
+        phone: targetNumber,
         ação:ação
     }
 
@@ -140,9 +106,12 @@ export default function FormularioEdit () {
                     placeholder="Enter your phone number"
                 />
                 </div>
+
+
+                {targetNumber || nome ?
                 <button type="button" className={styles_form.button}
-                data-bs-toggle={targetNumber || nome &&  'modal'} 
-                data-bs-target={targetNumber || nome &&  '#ModalAdd'} 
+                data-bs-toggle={'modal'} 
+                data-bs-target={'#ModalAdd'} 
                 onClick={(e)=> {
                     e.preventDefault()
                     if (targetNumber || nome) {
@@ -150,6 +119,14 @@ export default function FormularioEdit () {
                     }
                 }}
                 >Salvar</button>
+                :
+                <button type="button" className={styles_form.button}
+                disabled
+                style={{backgroundColor: "#cdcdcd"}}
+                >Salvar</button>
+                }
+
+
             </form>
         </div>
         <div className={styles_form.container}>
@@ -205,7 +182,7 @@ export default function FormularioEdit () {
             </div>
         </div>
 
-        <div className="modal fade" id="ModalAdd" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div className="modal fade" id="ModalAdd" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">   
         <div className={`modal-dialog modal-md`}>
                 <div className="modal-content">
                     <BoxConfirm

@@ -105,10 +105,7 @@ function Casa() {
                 background: "linear-gradient(to bottom right,rgb(255, 189, 65), #EE9126)",
                 padding: "20px",
               }}>
-              <motion.div
-                initial={{ opacity: 0, y: 50 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, ease: "easeOut" }}
+              <div
                 style={{
                   maxWidth: "600px",
                   background: "#fff",
@@ -137,15 +134,9 @@ function Casa() {
                   acesso de qualquer lugar e integração com outros serviços, você nunca
                   mais perderá um compromisso importante!
                 </p>
-                <motion.button
-                  initial={{ scale: 1 }}
-                  animate={{ scale: [1, 1.1, 1] }}
-                  transition={{ duration: 1, repeat: Infinity }}
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.95 }}
+                <Link
                   style={{
-                    marginTop: "24px",
-                    padding: "12px 24px",
+                    padding: "1em",
                     background: "#0047AB",
                     color: "#fff",
                     fontWeight: "600",
@@ -154,13 +145,13 @@ function Casa() {
                     cursor: "pointer",
                     boxShadow: "0 4px 12px rgba(0, 0, 0, 0.15)",
                     transition: "background 0.3s",
+                    textDecoration:"none"
                   }}
-                  onMouseEnter={(e) => (e.target.style.background = "#0047AB")}
-                  onMouseLeave={(e) => (e.target.style.background = "#0047AB")}
+                  className={styles.pulsante}
                 >
                   Quero uma agenda
-                </motion.button>
-              </motion.div>
+                </Link>
+              </div>
           </div>
       </section>
       <section className={`container mt-5 ${styles.themesSection}`} data-aos="fade-up">
