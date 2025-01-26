@@ -7,9 +7,10 @@ import calendario from "../imagens/calendario.png"
 import brilhante from "../imagens/brilhante.png"
 import padrao from "../imagens/padrao.png"
 import {Link} from "react-router-dom"
-import {FaCalendar, FaCalendarAlt, FaCalendarCheck, FaCheckCircle, FaClock, FaRegCheckCircle, FaTimes, FaWhatsapp} from "react-icons/fa"
+import {FaCalendarCheck, FaClock, FaRegCheckCircle, FaWhatsapp} from "react-icons/fa"
 import {auth} from "../Service/firebase"
 import NavBar from '../components/NavBar';
+import { motion } from "framer-motion";
 
 function Casa() {
 
@@ -88,12 +89,79 @@ function Casa() {
                 </div>
                 <div>
                     <h5 className="card-title">Integração</h5>
-                    <p className="card-text">Receba seus agendamentos por Whatsapp</p>
+                    <p className="card-text">Receba seus agendamentos por Whatsapp e pelo Navegador</p>
                 </div>
               </div>
             </div>
           </div>
         </div>
+      </section>
+      <section>
+            <div style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                minHeight: "100vh",
+                background: "linear-gradient(to bottom right,rgb(255, 189, 65), #EE9126)",
+                padding: "20px",
+              }}>
+              <motion.div
+                initial={{ opacity: 0, y: 50 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, ease: "easeOut" }}
+                style={{
+                  maxWidth: "600px",
+                  background: "#fff",
+                  borderRadius: "16px",
+                  boxShadow: "0 4px 20px rgba(0, 0, 0, 0.2)",
+                  padding: "24px",
+                  textAlign: "center",
+                }}
+              >
+                <h1 style={{
+                  fontSize: "1.7em",
+                  fontWeight: "bold",
+                  color: "#0047AB",
+                  marginBottom: "16px",
+                  textTransform:"uppercase"
+                }}>
+                  Por que preciso de uma agenda online?
+                </h1>
+                <p style={{
+                  fontSize: "18px",
+                  color: "#4a4a4a",
+                  lineHeight: "1.6",
+                }}>
+                  Uma agenda online facilita sua vida, permitindo que você gerencie seus
+                  compromissos de maneira prática e eficiente. Com notificações automáticas,
+                  acesso de qualquer lugar e integração com outros serviços, você nunca
+                  mais perderá um compromisso importante!
+                </p>
+                <motion.button
+                  initial={{ scale: 1 }}
+                  animate={{ scale: [1, 1.1, 1] }}
+                  transition={{ duration: 1, repeat: Infinity }}
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.95 }}
+                  style={{
+                    marginTop: "24px",
+                    padding: "12px 24px",
+                    background: "#0047AB",
+                    color: "#fff",
+                    fontWeight: "600",
+                    border: "none",
+                    borderRadius: "8px",
+                    cursor: "pointer",
+                    boxShadow: "0 4px 12px rgba(0, 0, 0, 0.15)",
+                    transition: "background 0.3s",
+                  }}
+                  onMouseEnter={(e) => (e.target.style.background = "#0047AB")}
+                  onMouseLeave={(e) => (e.target.style.background = "#0047AB")}
+                >
+                  Quero uma agenda
+                </motion.button>
+              </motion.div>
+          </div>
       </section>
       <section className={`container mt-5 ${styles.themesSection}`} data-aos="fade-up">
   <h2 className={`${styles.title} text-center`}>Escolha Seu Tema</h2>
@@ -145,6 +213,7 @@ function Casa() {
                     <li><FaRegCheckCircle/> Agendamento básico</li>
                     <li><FaRegCheckCircle/> Suporte por e-mail ou Whatsapp</li>
                     <li><FaRegCheckCircle/> Serviços ilimitados</li>
+                    <li><FaRegCheckCircle/> Notificação de agendamento</li>
                     <li><FaRegCheckCircle/> Todos os temas disponíveis</li>
                 </ul>
                 <Link className={`${styles.button} btn btn-primary`} to="perfil/user/planos">Escolhido</Link>
@@ -158,7 +227,7 @@ function Casa() {
           <div className="col-md-6">
             <div className={styles.testimonialCard}>
                 <p>Como eu crio meu Site?</p>
-                <p>"Preencha o formulário de cadastro, comece a adicionar seus serviços e abra sua agenda."</p>
+                <p>"Crie sua conta, preencha o formulário de cadastro, comece a adicionar seus serviços e abra sua agenda."</p>
                 <footer>João Silva</footer>
             </div>
           </div>
