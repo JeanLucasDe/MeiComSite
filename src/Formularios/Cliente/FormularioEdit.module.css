@@ -312,6 +312,10 @@
     .consultas {
         background-color: #bbbbbb;
     }
+    .b_white {
+        background-color: #fff;
+        box-shadow: -1px 1px 8px 2px #ccc;
+    }
     .servicos {
         background-color: #ffb451;
     }

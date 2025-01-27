@@ -130,6 +130,7 @@ export default function FormularioCadastro () {
 
     const SiteExiste = usuarios && site && usuarios.findIndex((dados) => {return dados.site == site})
 
+    
 
 
     return (
@@ -363,8 +364,8 @@ export default function FormularioCadastro () {
 
         <div className="modal fade" id="ModalAdd" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div className={`modal-dialog modal-md`}>
-                <div className={styles.cont_box}>
-                    <div className="modal-content">
+                <div className={`${styles.cont_box}`}>
+                    <div className={` modal-content`}>
                             <BoxConfirm
                             obj={obj}
                             type="button"
