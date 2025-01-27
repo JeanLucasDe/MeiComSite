@@ -44,34 +44,6 @@ export default function BoxConfirm (props) {
             <button> tentar novamente </button>
         }
     },[])
-
-    const [status, setStatus] = useState()
-    
-    const sendNotification = async () => {
-        
-        try {
-            const response = await fetch('https://sendmessage-ta34b4bdwa-uc.a.run.app/sendMessage', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                token: "eQzrQTvVQtLQpaUKl9JIDo:APA91bEIZHZQK8IeIRanLkuwF7jacd0EG5yfbjF-RYMaW-UpK6HDwU5M-eMNy06s44_cAV1jSO1VA06uCqzRirLjRwvHQTIY58GRXXmJ0rGHau8cHY6StvA", // Enviando o token 
-                message: 'Um novo usuário se cadastrou.',
-            }),
-            });
-    
-            const data = await response.json();
-            if (response.ok) {
-            setStatus('Notificação enviada com sucesso!');
-            } else {
-            setStatus(`Erro: ${data.message || 'Falha ao enviar notificação'}`);
-            }
-        } catch (error) {
-            console.error('Erro ao enviar a notificação:', error);
-            setStatus('Erro ao enviar a notificação');
-        }
-        };
     
     const AdicionarUSer = async () => {
         await setDoc(doc(db, `MeiComSite`, `${user.email}`), {
@@ -100,8 +72,8 @@ export default function BoxConfirm (props) {
             especialidade: obj.especialidade,
             pause:true
             });
-            sendNotification()
-            window.location.reload()
+
+        window.location.reload()
     };
 
 

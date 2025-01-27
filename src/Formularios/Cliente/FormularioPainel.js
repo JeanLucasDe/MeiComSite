@@ -1,10 +1,8 @@
 import styles from "./FormularioEdit.module.css"
-import { Box,  Paper, Typography } from "@mui/material";
+import { Box, Grid, Paper, Typography } from "@mui/material";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from "recharts";
 import { Link, useOutletContext } from "react-router-dom"
-import CircularProgress from "../../components/CircularProgress ";
-import moment from "moment/moment"
-import ServicePercentage from "../../components/PercentBar";
+import Loading from "../../components/Loading"
 
 export default function FormularioPainel () {
 
@@ -84,129 +82,6 @@ const data = [
       });
       
 
-
-      const getWeeklyData = () => {
-        const startOfWeek = moment().startOf("week"); // Início da semana
-        const endOfWeek = moment().endOf("week"); // Fim da semana
-
-        // Agendamentos da semana
-        const weeklyAppointments = agenda &&  agenda.filter((appointment) => {
-            const appointmentDate = moment(appointment.date); // Converte a data para Moment.js
-            return appointmentDate.isBetween(startOfWeek, endOfWeek, null, "[]"); // Inclui as bordas
-        });
-
-        // Serviços realizados na semana
-        const weeklyServices = weeklyAppointments.map((appointment) => {
-            return {
-            date: appointment.date,
-            agenda: appointment.agenda.filter(
-
-                (service) => service.status === 2 // Somente serviços concluídos
-            ),
-            };
-        });
-
-        
-        const servicos = weeklyServices.length > 0  && weeklyServices.filter((item) => item.agenda.length > 0)
-
-        const result = servicos.length > 0 && servicos[0].agenda.length
-        
-        return result
-
-
-      };
-
-      const Semana = getWeeklyData()
-
-      
-      
-
-
-      const getUniqueWeeklyServices = () => {
-        const startOfWeek = moment().startOf("week"); // Início da semana
-        const endOfWeek = moment().endOf("week"); // Fim da semana
-
-        // Agendamentos da semana
-        const weeklyAppointments = agenda &&  agenda.filter((appointment) => {
-            const appointmentDate = moment(appointment.date); // Converte a data para Moment.js
-            return appointmentDate.isBetween(startOfWeek, endOfWeek, null, "[]"); // Inclui as bordas
-        });
-
-        // Serviços realizados na semana
-        const weeklyServices = weeklyAppointments.map((appointment) => {
-            return {
-            date: appointment.date,
-            agenda: appointment.agenda.filter(
-
-                (service) => service.status === 2 // Somente serviços concluídos
-            ),
-            };
-        });
-
-        
-        const servicos = weeklyServices.length > 0  && weeklyServices.filter((item) => item.agenda.length > 0)
-
-
-        const serviceSet = new Set(); // Para controlar IDs únicos
-        const uniqueServices = [];
-        
-        servicos && servicos[0].agenda.forEach((service) => {
-        if (service.status === 2 && !serviceSet.has(service.servico)) {
-            serviceSet.add(service.servico); // Marca o ID como único
-            uniqueServices.push({servico: service.servico, }); // Adiciona o serviço único
-        }})
-
-
-        const serviceSete = new Set(); // Para controlar IDs únicos
-        const uniqueServicese = [];
-
-
-        servicos && servicos.map(dados => {
-            dados.agenda.forEach((service) => {
-            if (service.status == 2 ) {
-                serviceSete.add(service.servico); // Marca o ID como único
-                uniqueServicese.push({
-                    nome: service.servico, 
-                    id:service.id
-                }); // Adiciona o serviço único
-            }})
-        })
-        
-
-        const result = uniqueServicese && uniqueServicese.reduce((acc, item) => {
-            // Cria uma chave única apenas pelo nome do serviço
-            const serviceKey = item.nome;
-          
-            if (!acc.map[serviceKey]) {
-              acc.map[serviceKey] = {
-                nome: item.nome,
-                occurrences: 0,
-                uniqueCadastros: new Set() // Para rastrear IDs de cadastro únicos
-              };
-              acc.list.push(acc.map[serviceKey]); // Adiciona referência à lista final
-            }
-          
-            // Adiciona o ID de cadastro ao conjunto de únicos
-            acc.map[serviceKey].uniqueCadastros.add(item.cadastro);
-          
-            // Atualiza o contador de ocorrências únicas
-            acc.map[serviceKey].occurrences = acc.map[serviceKey].uniqueCadastros.size;
-          
-            return acc;
-          }, { map: {}, list: [] }).list;
-          
-          console.log(result);
-
-        return [uniqueServices.length]
-        
-
-      };
-      
-      const serviceSemana = getUniqueWeeklyServices()
-
-      
-
-
     return (
         <>
 
@@ -224,19 +99,6 @@ const data = [
                 <h5>{clientesLista.length}</h5>
             </div>
         </div>
-        <div className={styles.box_infos}>
-            <div className={`${styles.b_white} ${styles.info}`}>
-                <h5>Agendamentos da semana</h5>
-                <h5>+{Semana && Semana}</h5>
-                <CircularProgress percentage={Semana && Semana} max={40} />
-            </div>
-            
-            <div className={`${styles.b_white} ${styles.info}`}>
-                <h5>Serviços Realizados</h5>
-                <CircularProgress percentage={serviceSemana[0]} max={servicos.length} />
-            </div>
-        </div>
-        <ServicePercentage services={serviceSemana[1]}/>
         <Box sx={{ padding: "20px", minHeight: "100vh" }}>
             {/* Gráfico com rolagem horizontal */}
             <Paper elevation={3} sx={{ padding: "20px", borderRadius: "10px" }}>

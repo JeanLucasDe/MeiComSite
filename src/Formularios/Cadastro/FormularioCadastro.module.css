@@ -310,9 +310,3 @@
 .cont_box {
     margin-top: 5em;
 }
-.center {
-    display: flex !important;
-    justify-content: center;
-    align-items: center;
-    background-color: #00df00;
-}
